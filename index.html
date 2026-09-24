@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trading Review · SMC Trading Review System</title>
+<link rel="stylesheet" href="assets/app.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#/">
+    <span class="brand-mark">TR</span>
+    <span class="brand-text">
+      <strong>Trading Review</strong>
+      <em id="brand-sub">SMC Trading Review System</em>
+    </span>
+  </a>
+  <nav class="nav" id="nav">
+    <a href="#/" data-nav="dashboard">Dashboard</a>
+    <a href="#/weeks" data-nav="weeks">Weeks</a>
+    <a href="#/trades" data-nav="trades">Trades</a>
+    <a href="#/analytics" data-nav="analytics">Analytics</a>
+    <a href="#/rules" data-nav="rules">Rules</a>
+  </nav>
+  <div class="topbar-right">
+    <div class="range" id="range">
+      <button data-range="week">This Week</button>
+      <button data-range="month">This Month</button>
+      <button data-range="all" class="active">All</button>
+    </div>
+    <input id="search" class="search" type="search" placeholder="搜索 Protected Low / Front Run / ETH / MSB …">
+  </div>
+</header>
+
+<div class="meta-bar" id="meta-bar"></div>
+
+<main id="view" class="view"></main>
+
+<footer class="foot">
+  <span id="foot-src"></span>
+  <span class="foot-note">数据来源：Google Docs《交易复盘》→ Parser → JSON。缺失数据一律显示「未记录」，不推测、不补全。</span>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" id="lb-close" aria-label="关闭">✕</button>
+  <button class="lb-prev" id="lb-prev" aria-label="上一张">‹</button>
+  <button class="lb-next" id="lb-next" aria-label="下一张">›</button>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" alt=""></div>
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,2584 @@
+{
+ "meta": {
+  "sourceTitle": "交易复盘",
+  "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
+  "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
+  "parsedAt": "2026-09-24T14:24:17+08:00",
+  "schemaVersion": "1.0",
+  "sourceVersion": "9c46485cdb42b64a",
+  "sourceBytes": 707276,
+  "blocks": 81,
+  "unresolvedImageCount": 0,
+  "exportedImages": [
+   "images/2026-09-13-ethusdt-long-01-1.png",
+   "images/2026-09-18-ethusdt-long-02-1.png",
+   "images/2026-09-15-qqqusdt-long-03-1.png",
+   "images/2026-09-21-xauusdt-long-01-1.png"
+  ],
+  "analysisGeneratedAt": "2026-09-24",
+  "analysisRole": "ai-review",
+  "principle": "交易事实来自 Google Docs；带「AI」标记的字段是分析层，且必须附原文引用。缺失数据一律显示「未记录」，不用 0 或猜测填充。"
+ },
+ "stats": {
+  "closed": 4,
+  "open": 0,
+  "wins": 3,
+  "losses": 1,
+  "be": 0,
+  "winRate": 0.75,
+  "netR": 2.56,
+  "netRKnownCount": 3,
+  "avgR": 0.85,
+  "avgWinnerR": 1.78,
+  "avgLoserR": -1.0,
+  "htfLimitTrades": 1,
+  "ltfConfirmationTrades": 0,
+  "marketEntryTrades": 1,
+  "otherEntryModelTrades": 1,
+  "ruleViolations": 3,
+  "missingDataTrades": 4,
+  "rExcluded": [
+   {
+    "id": "2026-09-15-qqqusdt-long-03",
+    "symbolLabel": "QQQ/USDT",
+    "reason": "未记录准确 SL"
+   }
+  ],
+  "goodWins": 2,
+  "badWins": 1,
+  "goodLosses": 0,
+  "badLosses": 1
+ },
+ "weeks": [
+  {
+   "label": "第1周",
+   "index": 1,
+   "rawHeading": "第1周｜2026年9月13日–9月19日",
+   "start": "2026-09-13",
+   "end": "2026-09-19",
+   "year": 2026,
+   "isoWeek": 37,
+   "summaryRaw": "周总结：3 笔已结束交易，3 胜 0 负；其中 2 笔可计算 R，合计 +3.56R；QQQ 因未记录准确 SL，不纳入 R 统计。",
+   "stats": {
+    "closed": 3,
+    "wins": 3,
+    "losses": 0,
+    "be": 0,
+    "knownNetR": 3.56,
+    "rCounted": 2,
+    "rCountedIds": [
+     "2026-09-13-ethusdt-long-01",
+     "2026-09-18-ethusdt-long-02"
+    ],
+    "rExcluded": [
+     {
+      "id": "2026-09-15-qqqusdt-long-03",
+      "symbolLabel": "QQQ/USDT",
+      "reason": "未记录准确 SL，不计 R"
+     }
+    ],
+    "winRate": 1.0
+   },
+   "tradeIds": [
+    "2026-09-13-ethusdt-long-01",
+    "2026-09-18-ethusdt-long-02",
+    "2026-09-15-qqqusdt-long-03"
+   ],
+   "bestTrade": {
+    "id": "2026-09-13-ethusdt-long-01",
+    "symbolLabel": "ETH/USDT",
+    "actualR": 2.3
+   },
+   "worstTrade": {
+    "id": "2026-09-18-ethusdt-long-02",
+    "symbolLabel": "ETH/USDT",
+    "actualR": 1.26
+   },
+   "missingData": [
+    {
+     "field": "plannedRR",
+     "count": 3
+    },
+    {
+     "field": "mae",
+     "count": 3
+    },
+    {
+     "field": "mfe",
+     "count": 3
+    },
+    {
+     "field": "fees",
+     "count": 3
+    },
+    {
+     "field": "stopLoss",
+     "count": 1
+    },
+    {
+     "field": "actualR",
+     "count": 1
+    }
+   ],
+   "avgCompleteness": 68.7,
+   "review": {
+    "mainStrength": {
+     "text": "等到结构确认与深度回撤才入场，没有追涨；弱 MSB 也等到后续 BOS 才动手。",
+     "evidence": "没有追涨，而是等待深度回撤"
+    },
+    "mainProblem": {
+     "text": "提前单纪律没守住：QQQ 在价格进入计划 POI 之前就用市价买入。",
+     "evidence": "价格尚未进入计划区域就提前买入"
+    },
+    "repeatedMistake": {
+     "text": "SL / Protected Low 记录缺失（3 笔里 2 笔被点名），其中 1 笔因此完全不进入 R 统计。",
+     "evidence": "但具体 SL 未记录，因此本笔不计算 R"
+    },
+    "missingDataNote": "计划 TP、Protected Low、MAE/MFE 三类字段在本周没有被记录。",
+    "newRule": {
+     "text": "HTF 提前单只能挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL。",
+     "evidence": "HTF 提前单必须挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL"
+    },
+    "mainLesson": {
+     "text": "弱 MSB 不能单独当成反转确认，要等 BOS 或后续位移增强再动手。",
+     "evidence": "不能单独视为强反转确认"
+    },
+    "bestExecution": {
+     "id": "2026-09-13-ethusdt-long-01",
+     "symbolLabel": "ETH/USDT",
+     "text": "ETH/USDT 2026-09-13：风控清单 7 项通过 / 0 项未过（其余未记录）",
+     "compliance": {
+      "pass": 7,
+      "fail": 0,
+      "partial": 0,
+      "unknown": 3,
+      "known": 7,
+      "total": 10,
+      "rate": 1.0
+     }
+    }
+   }
+  },
+  {
+   "label": "第2周",
+   "index": 2,
+   "rawHeading": "第2周｜2026年9月20日–9月26日（截至9月23日）",
+   "start": "2026-09-20",
+   "end": "2026-09-26",
+   "year": 2026,
+   "isoWeek": 38,
+   "summaryRaw": "周总结：截至 2026年9月23日，1 笔已结束交易，0 胜 1 负，约 -1R；未结束交易暂不计入。",
+   "stats": {
+    "closed": 1,
+    "wins": 0,
+    "losses": 1,
+    "be": 0,
+    "knownNetR": -1.0,
+    "rCounted": 1,
+    "rCountedIds": [
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "rExcluded": [],
+    "winRate": 0.0
+   },
+   "tradeIds": [
+    "2026-09-21-xauusdt-long-01"
+   ],
+   "bestTrade": {
+    "id": "2026-09-21-xauusdt-long-01",
+    "symbolLabel": "XAU/USDT",
+    "actualR": -1.0
+   },
+   "worstTrade": {
+    "id": "2026-09-21-xauusdt-long-01",
+    "symbolLabel": "XAU/USDT",
+    "actualR": -1.0
+   },
+   "missingData": [
+    {
+     "field": "poi",
+     "count": 1
+    },
+    {
+     "field": "displacement",
+     "count": 1
+    },
+    {
+     "field": "mae",
+     "count": 1
+    },
+    {
+     "field": "mfe",
+     "count": 1
+    },
+    {
+     "field": "fees",
+     "count": 1
+    }
+   ],
+   "avgCompleteness": 67.0,
+   "review": {
+    "mainStrength": {
+     "text": "方向识别正确：SSL Sweep、Internal MSB、上方 BSL 都标对了，liquidity-to-liquidity 的思路完整。",
+     "evidence": "正确识别 SSL Sweep、Internal MSB 与上方 BSL"
+    },
+    "mainProblem": {
+     "text": "下单前没有把 RR 关口当硬性条件，0.74–0.78 的计划盈亏比仍然执行了。",
+     "evidence": "RR 在下单前已经不合格"
+    },
+    "repeatedMistake": {
+     "text": "Entry 与 SL 的结构级别不匹配：用内部结构入场，却用更大的结构失效位止损。",
+     "evidence": "Entry 与 SL 的结构级别不够匹配"
+    },
+    "missingDataNote": "本周期数据只有 1 笔，MAE/MFE 未记录。",
+    "newRule": {
+     "text": "下单前强制画出 Entry / SL / TP 并计算计划 RR；SL 太远就等更好的 HTF POI 或 LTF confirmation。",
+     "evidence": "下单前强制画出 Entry / SL / TP 并计算计划 RR"
+    },
+    "mainLesson": {
+     "text": "Internal MSB 只代表内部结构转强；用内部结构入场时，止损不能挂到更高周期结构失效位。",
+     "evidence": "不代表 15m 主趋势已经完成反转"
+    },
+    "bestExecution": {
+     "id": "2026-09-21-xauusdt-long-01",
+     "symbolLabel": "XAU/USDT",
+     "text": "XAU/USDT 2026-09-21：风控清单 3 项通过 / 2 项未过（其余未记录）",
+     "compliance": {
+      "pass": 3,
+      "fail": 2,
+      "partial": 0,
+      "unknown": 5,
+      "known": 5,
+      "total": 10,
+      "rate": 0.6
+     }
+    }
+   }
+  }
+ ],
+ "trades": [
+  {
+   "id": "2026-09-13-ethusdt-long-01",
+   "num": "01",
+   "symbol": "ETHUSDT",
+   "symbolLabel": "ETH/USDT",
+   "direction": "long",
+   "headingResult": "+2.30R",
+   "heading": "1｜ETH/USDT Long｜2026年9月13日–9月15日｜+2.30R",
+   "sourceBlockIndex": 5,
+   "entryTime": "2026-09-13T17:24:00+08:00",
+   "exitTime": "2026-09-15T04:22:00+08:00",
+   "holdingMinutes": 2098,
+   "timeText": "2026-09-13 17:24 → 2026-09-15 04:22（北京时间）",
+   "entry": 2483.71,
+   "stopLoss": 2434.0,
+   "exit": 2598.26,
+   "plannedPOI": null,
+   "targets": [
+    {
+     "label": "Planned Target",
+     "priceLow": null,
+     "priceHigh": null,
+     "priceText": null,
+     "sizePercent": null,
+     "types": [
+      "IMB",
+      "Internal Liquidity"
+     ],
+     "note": "以上方 1H IMB / 内部流动性作为主要目标。",
+     "source": "targetLogic"
+    }
+   ],
+   "executionRaw": "Entry 2483.71；SL 2434.00；Exit 2598.26。",
+   "resultStatus": "win",
+   "actualR": 2.3,
+   "plannedR": null,
+   "rIncluded": true,
+   "resultRaw": "约 +2.30R。",
+   "pnl": null,
+   "fees": null,
+   "plannedRiskPoints": null,
+   "plannedRewardLow": null,
+   "plannedRewardHigh": null,
+   "plannedRRLow": null,
+   "plannedRRHigh": null,
+   "plannedRR": null,
+   "plannedRRMidpointUsed": null,
+   "plannedRRText": null,
+   "riskCheckRaw": null,
+   "minRRThreshold": null,
+   "derived": {
+    "riskPoints": 49.71,
+    "rewardPoints": 114.55,
+    "rComputed": 2.304
+   },
+   "context": {
+    "raw": "1H 下方 SSL 被扫，随后出现强势 bullish displacement，并突破关键结构，说明卖方流动性被获取后买方开始重新定价。",
+    "timeframes": [
+     "1h"
+    ],
+    "trend": null
+   },
+   "setup": {
+    "raw": "SSL Sweep → Bullish Displacement → Structure Shift → Deep Discount HTF POI。",
+    "flow": [
+     "SSL Sweep",
+     "Bullish Displacement",
+     "Structure Shift",
+     "Deep Discount HTF POI"
+    ]
+   },
+   "entryReason": {
+    "raw": "价格从位移高点回撤到约 0.7–0.8 discount，同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI。",
+    "items": [
+     "价格从位移高点回撤到约 0.7–0.8 discount，同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI。"
+    ]
+   },
+   "entryModel": {
+    "planned": "HTF_LIMIT",
+    "actual": null,
+    "category": "HTF_LIMIT",
+    "note": "HTF Limit，未等待 LTF confirmation。",
+    "label": "HTF Limit"
+   },
+   "entryModelRaw": "HTF Limit，未等待 LTF confirmation。",
+   "liquidity": {
+    "raw": "1H 下方 SSL 被扫，随后出现强势 bullish displacement，并突破关键结构，说明卖方流动性被获取后买方开始重新定价。 价格从位移高点回撤到约 0.7–0.8 discount，同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI。 以上方 1H IMB / 内部流动性作为主要目标。",
+    "sslSwept": true,
+    "bslTarget": null,
+    "targetLiquidity": null,
+    "internalLiquidity": "Internal Liquidity",
+    "htfMagnet": null
+   },
+   "structure": {
+    "raw": "1H 下方 SSL 被扫，随后出现强势 bullish displacement，并突破关键结构，说明卖方流动性被获取后买方开始重新定价。 价格从位移高点回撤到约 0.7–0.8 discount，同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI。",
+    "internalMSB": null,
+    "msbNote": null,
+    "majorTrendReversal": null,
+    "protectedHigh": null,
+    "protectedLow": null
+   },
+   "displacement": {
+    "type": "bullish",
+    "strength": "strong",
+    "raw": "1H 下方 SSL 被扫，随后出现强势 bullish displacement，并突破关键结构，说明卖方流动性被获取后买方开始重新定价。"
+   },
+   "poi": [
+    {
+     "type": "IMB",
+     "timeframes": [
+      "1h"
+     ],
+     "source": "context/entryReason"
+    },
+    {
+     "type": "BB",
+     "timeframes": [
+      "1h"
+     ],
+     "source": "context/entryReason"
+    },
+    {
+     "type": "OB",
+     "timeframes": [
+      "1h"
+     ],
+     "source": "context/entryReason"
+    },
+    {
+     "type": "Discount",
+     "timeframes": [
+      "1h"
+     ],
+     "source": "context/entryReason"
+    }
+   ],
+   "invalidation": {
+    "raw": "止损应对应 POI/关键结构失效，而不是单纯因为回撤超过某个 Fib 数字。",
+    "logic": null,
+    "price": 2434.0,
+    "priceRecorded": true
+   },
+   "targetLogic": {
+    "raw": "以上方 1H IMB / 内部流动性作为主要目标。",
+    "targetType": [
+     "IMB",
+     "Internal Liquidity"
+    ],
+    "reason": "以上方 1H IMB / 内部流动性作为主要目标。"
+   },
+   "tradeManagement": {
+    "movedSL": null,
+    "partialTP": null,
+    "breakEven": null,
+    "earlyExit": null,
+    "addedPosition": null,
+    "reducedPosition": null,
+    "weekendExit": null,
+    "notes": null
+   },
+   "review": {
+    "worked": [
+     "Sweep、强位移、结构突破、Discount 与 POI 形成完整逻辑链；没有追涨，而是等待深度回撤。"
+    ],
+    "improve": [
+     "复盘时明确标注 Protected Low / 结构失效点，避免把 0.7–0.8 本身当作入场理由。"
+    ],
+    "mainProblem": null,
+    "nextRules": [
+     "强 displacement + 清晰 HTF POI 可以提前挂单，但 Entry、SL、TP 必须在下单前全部确定。"
+    ]
+   },
+   "mae": null,
+   "mfe": null,
+   "images": [
+    {
+     "media": "image2.png",
+     "order": 1,
+     "file": "images/2026-09-13-ethusdt-long-01-1.png",
+     "type": null,
+     "timeframe": null,
+     "sourceBlockIndex": 18,
+     "width": 2048,
+     "height": 935,
+     "sha256": "46ec3b95e628c30b",
+     "url": "images/2026-09-13-ethusdt-long-01-1.png",
+     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
+     "path": "images/2026-09-13-ethusdt-long-01-1.png"
+    }
+   ],
+   "tags": [
+    {
+     "group": "Direction",
+     "value": "Long"
+    },
+    {
+     "group": "Setup Step",
+     "value": "SSL Sweep"
+    },
+    {
+     "group": "Setup Step",
+     "value": "Bullish Displacement"
+    },
+    {
+     "group": "Setup Step",
+     "value": "Structure Shift"
+    },
+    {
+     "group": "Setup Step",
+     "value": "Deep Discount HTF POI"
+    },
+    {
+     "group": "Entry Model",
+     "value": "HTF_LIMIT"
+    },
+    {
+     "group": "POI",
+     "value": "IMB"
+    },
+    {
+     "group": "POI",
+     "value": "BB"
+    },
+    {
+     "group": "POI",
+     "value": "OB"
+    },
+    {
+     "group": "POI",
+     "value": "Discount"
+    },
+    {
+     "group": "Result",
+     "value": "Win"
+    }
+   ],
+   "rawSections": {
+    "context": "1H 下方 SSL 被扫，随后出现强势 bullish displacement，并突破关键结构，说明卖方流动性被获取后买方开始重新定价。",
+    "setup": "SSL Sweep → Bullish Displacement → Structure Shift → Deep Discount HTF POI。",
+    "entryReason": "价格从位移高点回撤到约 0.7–0.8 discount，同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI。",
+    "entryModel": "HTF Limit，未等待 LTF confirmation。",
+    "time": "2026-09-13 17:24 → 2026-09-15 04:22（北京时间）",
+    "execution": "Entry 2483.71；SL 2434.00；Exit 2598.26。",
+    "invalidation": "止损应对应 POI/关键结构失效，而不是单纯因为回撤超过某个 Fib 数字。",
+    "targetLogic": "以上方 1H IMB / 内部流动性作为主要目标。",
+    "result": "约 +2.30R。",
+    "worked": "Sweep、强位移、结构突破、Discount 与 POI 形成完整逻辑链；没有追涨，而是等待深度回撤。",
+    "improve": "复盘时明确标注 Protected Low / 结构失效点，避免把 0.7–0.8 本身当作入场理由。",
+    "nextRule": "强 displacement + 清晰 HTF POI 可以提前挂单，但 Entry、SL、TP 必须在下单前全部确定。"
+   },
+   "dataCompleteness": {
+    "percent": 73,
+    "missing": [
+     "plannedRR",
+     "mae",
+     "mfe",
+     "fees"
+    ],
+    "total": 15,
+    "filled": 11
+   },
+   "analysis": {
+    "source": "ai-review",
+    "errorType": {
+     "primary": "No Error",
+     "secondary": [],
+     "evidence": "没有追涨，而是等待深度回撤"
+    },
+    "classification": {
+     "value": "Good Win",
+     "reason": "逻辑链完整（Sweep → 强位移 → 结构突破 → Discount POI），且按规则等待深度回撤才入场，实际 +2.30R。",
+     "evidence": "并突破关键结构"
+    },
+    "ruleViolations": [],
+    "mistakes": [
+     {
+      "tag": "Missing Protected Low",
+      "evidence": "复盘时明确标注 Protected Low / 结构失效点"
+     }
+    ],
+    "riskCheck": [
+     {
+      "key": "liquiditySweep",
+      "status": "pass",
+      "evidence": "1H 下方 SSL 被扫",
+      "label": "流动性被扫 (Liquidity Sweep)"
+     },
+     {
+      "key": "displacement",
+      "status": "pass",
+      "evidence": "强势 bullish displacement",
+      "label": "位移 (Displacement)"
+     },
+     {
+      "key": "structureShift",
+      "status": "pass",
+      "evidence": "并突破关键结构",
+      "label": "结构变化 (Structure Shift)"
+     },
+     {
+      "key": "poi",
+      "status": "pass",
+      "evidence": "同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI",
+      "label": "计划 POI"
+     },
+     {
+      "key": "entryAtPOI",
+      "status": "pass",
+      "evidence": "没有追涨，而是等待深度回撤",
+      "label": "入场在 POI 内 (Entry at POI)"
+     },
+     {
+      "key": "slLogical",
+      "status": "unknown",
+      "note": "文档只写了原则（止损应对应 POI/关键结构失效），没有记录本笔的结构失效点。",
+      "label": "SL 结构逻辑一致 (SL Logical)"
+     },
+     {
+      "key": "rrMeetsRequirement",
+      "status": "unknown",
+      "note": "本笔没有记录计划 RR；只记录了实际 +2.30R。",
+      "label": "RR 达到要求 (RR Meets Requirement)"
+     },
+     {
+      "key": "chasing",
+      "status": "pass",
+      "evidence": "没有追涨，而是等待深度回撤",
+      "label": "未追价 (No Chasing)"
+     },
+     {
+      "key": "newsRisk",
+      "status": "unknown",
+      "label": "新闻风险已评估 (News Risk)"
+     },
+     {
+      "key": "slRecorded",
+      "status": "pass",
+      "evidence": "SL 2434.00",
+      "label": "SL 已记录 (SL Recorded)"
+     }
+    ],
+    "compliance": {
+     "pass": 7,
+     "fail": 0,
+     "partial": 0,
+     "unknown": 3,
+     "known": 7,
+     "total": 10,
+     "rate": 1.0
+    },
+    "notes": null
+   },
+   "weekLabel": "第1周",
+   "entryTrigger": {
+    "text": "HTF Limit，未等待 LTF confirmation。",
+    "modelLabel": "HTF Limit"
+   },
+   "entryReasonItems": [
+    "价格从位移高点回撤到约 0.7–0.8 discount，同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI。"
+   ],
+   "entryTimeLabel": "2026-09-13 17:24",
+   "exitTimeLabel": "2026-09-15 04:22",
+   "holdingLabel": "1 天 11 小时",
+   "riskPoints": 49.71,
+   "week": {
+    "label": "第1周",
+    "start": "2026-09-13",
+    "end": "2026-09-19",
+    "isoWeek": 37,
+    "id": "第1周"
+   },
+   "sectionsLabeled": [
+    {
+     "label": "市场背景 Context",
+     "text": "1H 下方 SSL 被扫，随后出现强势 bullish displacement，并突破关键结构，说明卖方流动性被获取后买方开始重新定价。",
+     "key": "context"
+    },
+    {
+     "label": "Setup",
+     "text": "SSL Sweep → Bullish Displacement → Structure Shift → Deep Discount HTF POI。",
+     "key": "setup"
+    },
+    {
+     "label": "入场原因",
+     "text": "价格从位移高点回撤到约 0.7–0.8 discount，同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI。",
+     "key": "entryReason"
+    },
+    {
+     "label": "入场模型",
+     "text": "HTF Limit，未等待 LTF confirmation。",
+     "key": "entryModel"
+    },
+    {
+     "label": "交易时间",
+     "text": "2026-09-13 17:24 → 2026-09-15 04:22（北京时间）",
+     "key": "time"
+    },
+    {
+     "label": "执行",
+     "text": "Entry 2483.71；SL 2434.00；Exit 2598.26。",
+     "key": "execution"
+    },
+    {
+     "label": "Invalidation",
+     "text": "止损应对应 POI/关键结构失效，而不是单纯因为回撤超过某个 Fib 数字。",
+     "key": "invalidation"
+    },
+    {
+     "label": "Target Logic",
+     "text": "以上方 1H IMB / 内部流动性作为主要目标。",
+     "key": "targetLogic"
+    },
+    {
+     "label": "结果",
+     "text": "约 +2.30R。",
+     "key": "result"
+    },
+    {
+     "label": "做得好的",
+     "text": "Sweep、强位移、结构突破、Discount 与 POI 形成完整逻辑链；没有追涨，而是等待深度回撤。",
+     "key": "worked"
+    },
+    {
+     "label": "需要改进",
+     "text": "复盘时明确标注 Protected Low / 结构失效点，避免把 0.7–0.8 本身当作入场理由。",
+     "key": "improve"
+    },
+    {
+     "label": "下次规则",
+     "text": "强 displacement + 清晰 HTF POI 可以提前挂单，但 Entry、SL、TP 必须在下单前全部确定。",
+     "key": "nextRule"
+    }
+   ],
+   "sections": {}
+  },
+  {
+   "id": "2026-09-18-ethusdt-long-02",
+   "num": "02",
+   "symbol": "ETHUSDT",
+   "symbolLabel": "ETH/USDT",
+   "direction": "long",
+   "headingResult": "+1.26R",
+   "heading": "2｜ETH/USDT Long｜2026年9月18日｜+1.26R",
+   "sourceBlockIndex": 19,
+   "entryTime": "2026-09-18T06:09:00+08:00",
+   "exitTime": "2026-09-18T11:16:00+08:00",
+   "holdingMinutes": 307,
+   "timeText": "2026-09-18 06:09 → 11:16（北京时间）",
+   "entry": 2441.57,
+   "stopLoss": 2414.0,
+   "exit": 2476.18,
+   "plannedPOI": null,
+   "targets": [
+    {
+     "label": "Planned Target",
+     "priceLow": null,
+     "priceHigh": null,
+     "priceText": null,
+     "sizePercent": null,
+     "types": [
+      "IMB",
+      "EQ"
+     ],
+     "note": "上方 1H IMB 与 Dealing Range 50% EQ 附近作为潜在目标，不把 50% 当作“必到”。",
+     "source": "targetLogic"
+    }
+   ],
+   "executionRaw": "Entry 2441.57；SL 2414.00；Exit 2476.18。",
+   "resultStatus": "win",
+   "actualR": 1.26,
+   "plannedR": 1.5,
+   "rIncluded": true,
+   "resultRaw": "原计划约 1.5R，实际约 +1.26R。",
+   "pnl": null,
+   "fees": null,
+   "plannedRiskPoints": null,
+   "plannedRewardLow": null,
+   "plannedRewardHigh": null,
+   "plannedRRLow": null,
+   "plannedRRHigh": null,
+   "plannedRR": null,
+   "plannedRRMidpointUsed": null,
+   "plannedRRText": null,
+   "riskCheckRaw": null,
+   "minRRThreshold": null,
+   "derived": {
+    "riskPoints": 27.57,
+    "rewardPoints": 34.61,
+    "rComputed": 1.255
+   },
+   "context": {
+    "raw": "下方 SSL 被扫后价格开始转强，但第一次 bullish MSB 的位移偏弱，不能单独视为强反转确认。",
+    "timeframes": null,
+    "trend": null
+   },
+   "setup": {
+    "raw": "SSL Sweep → Weak Bullish MSB → BOS → Pullback into OB/IMB。",
+    "flow": [
+     "SSL Sweep",
+     "Weak Bullish MSB",
+     "BOS",
+     "Pullback into OB/IMB"
+    ]
+   },
+   "entryReason": {
+    "raw": "后续 BOS 提高了多头结构可信度，价格再回踩 bullish OB 与 IMB 时，多头依据更完整。",
+    "items": [
+     "后续 BOS 提高了多头结构可信度，价格再回踩 bullish OB 与 IMB 时，多头依据更完整。"
+    ]
+   },
+   "entryModel": {
+    "planned": null,
+    "actual": null,
+    "category": "OTHER",
+    "note": "HTF/结构确认后回踩入场，未使用更低周期确认。",
+    "label": "Other（非标准分类）"
+   },
+   "entryModelRaw": "HTF/结构确认后回踩入场，未使用更低周期确认。",
+   "liquidity": {
+    "raw": "下方 SSL 被扫后价格开始转强，但第一次 bullish MSB 的位移偏弱，不能单独视为强反转确认。 后续 BOS 提高了多头结构可信度，价格再回踩 bullish OB 与 IMB 时，多头依据更完整。 上方 1H IMB 与 Dealing Range 50% EQ 附近作为潜在目标，不把 50% 当作“必到”。",
+    "sslSwept": true,
+    "bslTarget": null,
+    "targetLiquidity": null,
+    "internalLiquidity": null,
+    "htfMagnet": null
+   },
+   "structure": {
+    "raw": "下方 SSL 被扫后价格开始转强，但第一次 bullish MSB 的位移偏弱，不能单独视为强反转确认。 后续 BOS 提高了多头结构可信度，价格再回踩 bullish OB 与 IMB 时，多头依据更完整。",
+    "internalMSB": null,
+    "msbNote": null,
+    "majorTrendReversal": null,
+    "protectedHigh": null,
+    "protectedLow": null
+   },
+   "displacement": {
+    "type": "bullish",
+    "strength": "weak",
+    "raw": "下方 SSL 被扫后价格开始转强，但第一次 bullish MSB 的位移偏弱，不能单独视为强反转确认。"
+   },
+   "poi": [
+    {
+     "type": "IMB",
+     "timeframes": null,
+     "source": "context/entryReason"
+    },
+    {
+     "type": "OB",
+     "timeframes": null,
+     "source": "context/entryReason"
+    }
+   ],
+   "invalidation": {
+    "raw": "SL 放在回踩结构失效区域下方；以后应同时记录对应 Protected Low。",
+    "logic": null,
+    "price": 2414.0,
+    "priceRecorded": true
+   },
+   "targetLogic": {
+    "raw": "上方 1H IMB 与 Dealing Range 50% EQ 附近作为潜在目标，不把 50% 当作“必到”。",
+    "targetType": [
+     "IMB",
+     "EQ"
+    ],
+    "reason": "上方 1H IMB 与 Dealing Range 50% EQ 附近作为潜在目标，不把 50% 当作“必到”。"
+   },
+   "tradeManagement": {
+    "movedSL": null,
+    "partialTP": null,
+    "breakEven": null,
+    "earlyExit": null,
+    "addedPosition": null,
+    "reducedPosition": null,
+    "weekendExit": null,
+    "notes": null
+   },
+   "review": {
+    "worked": [
+     "没有在弱 MSB 后立即追多，而是等后续 BOS，提高了结构确认质量。"
+    ],
+    "improve": [
+     "记录 Planned TP 与 Actual TP，明确 2476.18 的退出是否来自规则，而不是利润回吐焦虑。"
+    ],
+    "mainProblem": null,
+    "nextRules": [
+     "弱 MSB 必须等待后续 BOS 或 LTF confirmation；目标只作为概率性 Magnet，不使用“至少会到”的表达。"
+    ]
+   },
+   "mae": null,
+   "mfe": null,
+   "images": [
+    {
+     "media": "image1.png",
+     "order": 1,
+     "file": "images/2026-09-18-ethusdt-long-02-1.png",
+     "type": null,
+     "timeframe": null,
+     "sourceBlockIndex": 32,
+     "width": 2048,
+     "height": 988,
+     "sha256": "b4f9e35f258b7391",
+     "url": "images/2026-09-18-ethusdt-long-02-1.png",
+     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
+     "path": "images/2026-09-18-ethusdt-long-02-1.png"
+    }
+   ],
+   "tags": [
+    {
+     "group": "Direction",
+     "value": "Long"
+    },
+    {
+     "group": "Setup Step",
+     "value": "SSL Sweep"
+    },
+    {
+     "group": "Setup Step",
+     "value": "Weak Bullish MSB"
+    },
+    {
+     "group": "Setup Step",
+     "value": "BOS"
+    },
+    {
+     "group": "Setup Step",
+     "value": "Pullback into OB/IMB"
+    },
+    {
+     "group": "Entry Model",
+     "value": "OTHER"
+    },
+    {
+     "group": "POI",
+     "value": "IMB"
+    },
+    {
+     "group": "POI",
+     "value": "OB"
+    },
+    {
+     "group": "Result",
+     "value": "Win"
+    }
+   ],
+   "rawSections": {
+    "context": "下方 SSL 被扫后价格开始转强，但第一次 bullish MSB 的位移偏弱，不能单独视为强反转确认。",
+    "setup": "SSL Sweep → Weak Bullish MSB → BOS → Pullback into OB/IMB。",
+    "entryReason": "后续 BOS 提高了多头结构可信度，价格再回踩 bullish OB 与 IMB 时，多头依据更完整。",
+    "entryModel": "HTF/结构确认后回踩入场，未使用更低周期确认。",
+    "time": "2026-09-18 06:09 → 11:16（北京时间）",
+    "execution": "Entry 2441.57；SL 2414.00；Exit 2476.18。",
+    "invalidation": "SL 放在回踩结构失效区域下方；以后应同时记录对应 Protected Low。",
+    "targetLogic": "上方 1H IMB 与 Dealing Range 50% EQ 附近作为潜在目标，不把 50% 当作“必到”。",
+    "result": "原计划约 1.5R，实际约 +1.26R。",
+    "worked": "没有在弱 MSB 后立即追多，而是等后续 BOS，提高了结构确认质量。",
+    "improve": "记录 Planned TP 与 Actual TP，明确 2476.18 的退出是否来自规则，而不是利润回吐焦虑。",
+    "nextRule": "弱 MSB 必须等待后续 BOS 或 LTF confirmation；目标只作为概率性 Magnet，不使用“至少会到”的表达。"
+   },
+   "dataCompleteness": {
+    "percent": 73,
+    "missing": [
+     "plannedRR",
+     "mae",
+     "mfe",
+     "fees"
+    ],
+    "total": 15,
+    "filled": 11
+   },
+   "analysis": {
+    "source": "ai-review",
+    "errorType": {
+     "primary": "No Error",
+     "secondary": [
+      "Execution Error"
+     ],
+     "evidence": "没有在弱 MSB 后立即追多",
+     "note": "唯一存疑处是退出（+1.26R vs 计划 1.5R）的原因未记录，文档自己列为待确认项。"
+    },
+    "classification": {
+     "value": "Good Win",
+     "reason": "弱 MSB 时没有立刻追多，等后续 BOS 提高结构可信度后才回踩入场；但退出原因未记录，是否规则性退出无法确认。",
+     "evidence": "后续 BOS 提高了多头结构可信度"
+    },
+    "ruleViolations": [],
+    "mistakes": [
+     {
+      "tag": "Missing Planned TP / Actual TP",
+      "evidence": "记录 Planned TP 与 Actual TP"
+     },
+     {
+      "tag": "Missing Protected Low",
+      "evidence": "以后应同时记录对应 Protected Low"
+     }
+    ],
+    "riskCheck": [
+     {
+      "key": "liquiditySweep",
+      "status": "pass",
+      "evidence": "下方 SSL 被扫后价格开始转强",
+      "label": "流动性被扫 (Liquidity Sweep)"
+     },
+     {
+      "key": "displacement",
+      "status": "partial",
+      "evidence": "但第一次 bullish MSB 的位移偏弱",
+      "note": "位移偏弱，靠后续 BOS 补足确认。",
+      "label": "位移 (Displacement)"
+     },
+     {
+      "key": "structureShift",
+      "status": "pass",
+      "evidence": "后续 BOS 提高了多头结构可信度",
+      "label": "结构变化 (Structure Shift)"
+     },
+     {
+      "key": "poi",
+      "status": "pass",
+      "evidence": "价格再回踩 bullish OB 与 IMB 时",
+      "label": "计划 POI"
+     },
+     {
+      "key": "entryAtPOI",
+      "status": "pass",
+      "evidence": "HTF/结构确认后回踩入场",
+      "label": "入场在 POI 内 (Entry at POI)"
+     },
+     {
+      "key": "slLogical",
+      "status": "pass",
+      "evidence": "SL 放在回踩结构失效区域下方",
+      "label": "SL 结构逻辑一致 (SL Logical)"
+     },
+     {
+      "key": "rrMeetsRequirement",
+      "status": "pass",
+      "evidence": "原计划约 1.5R",
+      "note": "用户尚未定义最低 RR 标准；此处只表示「下单前有计划 R」，实际只兑现 +1.26R。",
+      "label": "RR 达到要求 (RR Meets Requirement)"
+     },
+     {
+      "key": "chasing",
+      "status": "pass",
+      "evidence": "没有在弱 MSB 后立即追多",
+      "label": "未追价 (No Chasing)"
+     },
+     {
+      "key": "newsRisk",
+      "status": "unknown",
+      "label": "新闻风险已评估 (News Risk)"
+     },
+     {
+      "key": "slRecorded",
+      "status": "pass",
+      "evidence": "SL 2414.00",
+      "label": "SL 已记录 (SL Recorded)"
+     }
+    ],
+    "compliance": {
+     "pass": 8,
+     "fail": 0,
+     "partial": 1,
+     "unknown": 1,
+     "known": 9,
+     "total": 10,
+     "rate": 0.889
+    },
+    "notes": null
+   },
+   "weekLabel": "第1周",
+   "entryTrigger": {
+    "text": "HTF/结构确认后回踩入场，未使用更低周期确认。",
+    "modelLabel": "Other（非标准分类）"
+   },
+   "entryReasonItems": [
+    "后续 BOS 提高了多头结构可信度，价格再回踩 bullish OB 与 IMB 时，多头依据更完整。"
+   ],
+   "entryTimeLabel": "2026-09-18 06:09",
+   "exitTimeLabel": "2026-09-18 11:16",
+   "holdingLabel": "5.1 小时",
+   "riskPoints": 27.57,
+   "week": {
+    "label": "第1周",
+    "start": "2026-09-13",
+    "end": "2026-09-19",
+    "isoWeek": 37,
+    "id": "第1周"
+   },
+   "sectionsLabeled": [
+    {
+     "label": "市场背景 Context",
+     "text": "下方 SSL 被扫后价格开始转强，但第一次 bullish MSB 的位移偏弱，不能单独视为强反转确认。",
+     "key": "context"
+    },
+    {
+     "label": "Setup",
+     "text": "SSL Sweep → Weak Bullish MSB → BOS → Pullback into OB/IMB。",
+     "key": "setup"
+    },
+    {
+     "label": "入场原因",
+     "text": "后续 BOS 提高了多头结构可信度，价格再回踩 bullish OB 与 IMB 时，多头依据更完整。",
+     "key": "entryReason"
+    },
+    {
+     "label": "入场模型",
+     "text": "HTF/结构确认后回踩入场，未使用更低周期确认。",
+     "key": "entryModel"
+    },
+    {
+     "label": "交易时间",
+     "text": "2026-09-18 06:09 → 11:16（北京时间）",
+     "key": "time"
+    },
+    {
+     "label": "执行",
+     "text": "Entry 2441.57；SL 2414.00；Exit 2476.18。",
+     "key": "execution"
+    },
+    {
+     "label": "Invalidation",
+     "text": "SL 放在回踩结构失效区域下方；以后应同时记录对应 Protected Low。",
+     "key": "invalidation"
+    },
+    {
+     "label": "Target Logic",
+     "text": "上方 1H IMB 与 Dealing Range 50% EQ 附近作为潜在目标，不把 50% 当作“必到”。",
+     "key": "targetLogic"
+    },
+    {
+     "label": "结果",
+     "text": "原计划约 1.5R，实际约 +1.26R。",
+     "key": "result"
+    },
+    {
+     "label": "做得好的",
+     "text": "没有在弱 MSB 后立即追多，而是等后续 BOS，提高了结构确认质量。",
+     "key": "worked"
+    },
+    {
+     "label": "需要改进",
+     "text": "记录 Planned TP 与 Actual TP，明确 2476.18 的退出是否来自规则，而不是利润回吐焦虑。",
+     "key": "improve"
+    },
+    {
+     "label": "下次规则",
+     "text": "弱 MSB 必须等待后续 BOS 或 LTF confirmation；目标只作为概率性 Magnet，不使用“至少会到”的表达。",
+     "key": "nextRule"
+    }
+   ],
+   "sections": {}
+  },
+  {
+   "id": "2026-09-15-qqqusdt-long-03",
+   "num": "03",
+   "symbol": "QQQUSDT",
+   "symbolLabel": "QQQ/USDT",
+   "direction": "long",
+   "headingResult": "盈利",
+   "heading": "3｜QQQ/USDT Long｜2026年9月15日–9月19日｜盈利",
+   "sourceBlockIndex": 33,
+   "entryTime": "2026-09-15T13:09:00+08:00",
+   "exitTime": "2026-09-19T07:03:00+08:00",
+   "holdingMinutes": 5394,
+   "timeText": "2026-09-15 13:09 → 2026-09-19 07:03（北京时间）",
+   "entry": 707.02,
+   "stopLoss": null,
+   "exit": null,
+   "plannedPOI": 705.0,
+   "targets": [
+    {
+     "label": "TP1",
+     "priceLow": 720.48,
+     "priceHigh": 720.48,
+     "priceText": "720.48",
+     "sizePercent": 50.0,
+     "types": [
+      "External Liquidity"
+     ],
+     "source": "execution"
+    },
+    {
+     "label": "TP2",
+     "priceLow": 722.48,
+     "priceHigh": 722.48,
+     "priceText": "722.48",
+     "sizePercent": 50.0,
+     "types": [
+      "External Liquidity"
+     ],
+     "source": "execution"
+    }
+   ],
+   "executionRaw": "实际 Entry 707.02；计划 POI 约 705；TP1 720.48（50%）；TP2 722.48（50%）。",
+   "resultStatus": "win",
+   "actualR": null,
+   "plannedR": null,
+   "rIncluded": false,
+   "resultRaw": "盈利，但由于缺少准确 SL，无法评价真实计划 RR。",
+   "pnl": null,
+   "fees": null,
+   "plannedRiskPoints": null,
+   "plannedRewardLow": null,
+   "plannedRewardHigh": null,
+   "plannedRRLow": null,
+   "plannedRRHigh": null,
+   "plannedRR": null,
+   "plannedRRMidpointUsed": null,
+   "plannedRRText": null,
+   "riskCheckRaw": null,
+   "minRRThreshold": null,
+   "derived": null,
+   "context": {
+    "raw": "4H 下方 SSL 被扫后出现明显 bullish displacement，卖方延续失败，市场向上重新定价。",
+    "timeframes": [
+     "4h"
+    ],
+    "trend": null
+   },
+   "setup": {
+    "raw": "4H SSL Sweep → Strong Bullish Displacement → 1H IMB + BB HTF POI。",
+    "flow": [
+     "4H SSL Sweep",
+     "Strong Bullish Displacement",
+     "1H IMB + BB HTF POI"
+    ]
+   },
+   "entryReason": {
+    "raw": "位移后下方留下 1H IMB 与 BB 重叠区域，计划等待价格回踩该 POI 做多。",
+    "items": [
+     "位移后下方留下 1H IMB 与 BB 重叠区域，计划等待价格回踩该 POI 做多。"
+    ]
+   },
+   "entryModel": {
+    "planned": "HTF_LIMIT",
+    "actual": "MARKET_ENTRY",
+    "category": "MARKET_ENTRY",
+    "note": "原计划 HTF Limit；实际执行为 POI 上方提前市价入场。",
+    "label": "Market Entry",
+    "plannedDiffersFromActual": true
+   },
+   "entryModelRaw": "原计划 HTF Limit；实际执行为 POI 上方提前市价入场。",
+   "liquidity": {
+    "raw": "4H 下方 SSL 被扫后出现明显 bullish displacement，卖方延续失败，市场向上重新定价。 位移后下方留下 1H IMB 与 BB 重叠区域，计划等待价格回踩该 POI 做多。 上方流动性/结构目标分批兑现。",
+    "sslSwept": true,
+    "bslTarget": null,
+    "targetLiquidity": null,
+    "internalLiquidity": null,
+    "htfMagnet": null
+   },
+   "structure": {
+    "raw": "4H 下方 SSL 被扫后出现明显 bullish displacement，卖方延续失败，市场向上重新定价。 位移后下方留下 1H IMB 与 BB 重叠区域，计划等待价格回踩该 POI 做多。",
+    "internalMSB": null,
+    "msbNote": null,
+    "majorTrendReversal": null,
+    "protectedHigh": null,
+    "protectedLow": null
+   },
+   "displacement": {
+    "type": "bullish",
+    "strength": null,
+    "raw": "4H 下方 SSL 被扫后出现明显 bullish displacement，卖方延续失败，市场向上重新定价。"
+   },
+   "poi": [
+    {
+     "type": "IMB",
+     "timeframes": [
+      "4h",
+      "1h"
+     ],
+     "source": "context/entryReason"
+    },
+    {
+     "type": "BB",
+     "timeframes": [
+      "4h",
+      "1h"
+     ],
+     "source": "context/entryReason"
+    }
+   ],
+   "invalidation": {
+    "raw": "止损逻辑放在 Sweep Low 下方，但具体 SL 未记录，因此本笔不计算 R。",
+    "logic": "止损逻辑放在 Sweep Low 下方",
+    "price": null,
+    "priceRecorded": false
+   },
+   "targetLogic": {
+    "raw": "上方流动性/结构目标分批兑现。",
+    "targetType": [
+     "External Liquidity"
+    ],
+    "reason": "上方流动性/结构目标分批兑现。"
+   },
+   "tradeManagement": {
+    "movedSL": null,
+    "partialTP": true,
+    "breakEven": null,
+    "earlyExit": null,
+    "addedPosition": null,
+    "reducedPosition": null,
+    "weekendExit": null,
+    "notes": null
+   },
+   "review": {
+    "worked": [
+     "HTF 背景清楚，Sweep + 强 displacement + POI 共振；采用分批止盈管理仓位。"
+    ],
+    "improve": [
+     "707.02 属于 front-running POI：价格尚未进入计划区域就提前买入，同时失去最佳价格和确认优势。"
+    ],
+    "mainProblem": null,
+    "nextRules": [
+     "HTF 提前单必须挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL。"
+    ]
+   },
+   "mae": null,
+   "mfe": null,
+   "images": [
+    {
+     "media": "image3.png",
+     "order": 1,
+     "file": "images/2026-09-15-qqqusdt-long-03-1.png",
+     "type": null,
+     "timeframe": null,
+     "sourceBlockIndex": 46,
+     "width": 2048,
+     "height": 988,
+     "sha256": "57f1bb153ff906fa",
+     "url": "images/2026-09-15-qqqusdt-long-03-1.png",
+     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
+     "path": "images/2026-09-15-qqqusdt-long-03-1.png"
+    }
+   ],
+   "tags": [
+    {
+     "group": "Direction",
+     "value": "Long"
+    },
+    {
+     "group": "Setup Step",
+     "value": "4H SSL Sweep"
+    },
+    {
+     "group": "Setup Step",
+     "value": "Strong Bullish Displacement"
+    },
+    {
+     "group": "Setup Step",
+     "value": "1H IMB + BB HTF POI"
+    },
+    {
+     "group": "Entry Model",
+     "value": "MARKET_ENTRY"
+    },
+    {
+     "group": "POI",
+     "value": "IMB"
+    },
+    {
+     "group": "POI",
+     "value": "BB"
+    },
+    {
+     "group": "Result",
+     "value": "Win"
+    }
+   ],
+   "rawSections": {
+    "context": "4H 下方 SSL 被扫后出现明显 bullish displacement，卖方延续失败，市场向上重新定价。",
+    "setup": "4H SSL Sweep → Strong Bullish Displacement → 1H IMB + BB HTF POI。",
+    "entryReason": "位移后下方留下 1H IMB 与 BB 重叠区域，计划等待价格回踩该 POI 做多。",
+    "entryModel": "原计划 HTF Limit；实际执行为 POI 上方提前市价入场。",
+    "time": "2026-09-15 13:09 → 2026-09-19 07:03（北京时间）",
+    "execution": "实际 Entry 707.02；计划 POI 约 705；TP1 720.48（50%）；TP2 722.48（50%）。",
+    "invalidation": "止损逻辑放在 Sweep Low 下方，但具体 SL 未记录，因此本笔不计算 R。",
+    "targetLogic": "上方流动性/结构目标分批兑现。",
+    "result": "盈利，但由于缺少准确 SL，无法评价真实计划 RR。",
+    "worked": "HTF 背景清楚，Sweep + 强 displacement + POI 共振；采用分批止盈管理仓位。",
+    "improve": "707.02 属于 front-running POI：价格尚未进入计划区域就提前买入，同时失去最佳价格和确认优势。",
+    "nextRule": "HTF 提前单必须挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL。"
+   },
+   "dataCompleteness": {
+    "percent": 60,
+    "missing": [
+     "stopLoss",
+     "plannedRR",
+     "actualR",
+     "mae",
+     "mfe",
+     "fees"
+    ],
+    "total": 15,
+    "filled": 9
+   },
+   "analysis": {
+    "source": "ai-review",
+    "errorType": {
+     "primary": "Execution Error",
+     "secondary": [
+      "Risk Management Error"
+     ],
+     "evidence": "价格尚未进入计划区域就提前买入",
+     "note": "逻辑（Sweep + 位移 + POI）成立，错在执行：抢跑 POI，并且没有记录 SL，导致这笔盈利无法计入 R 统计。"
+    },
+    "classification": {
+     "value": "Bad Win",
+     "reason": "违反规则三「只在计划 POI 执行」提前市价买入，且 SL 未记录；结果是盈利，但属于侥幸赢，不能当作系统有效性的证据。",
+     "evidence": "707.02 属于 front-running POI"
+    },
+    "ruleViolations": [
+     {
+      "tag": "Front Run POI",
+      "evidence": "707.02 属于 front-running POI"
+     },
+     {
+      "tag": "Missing SL",
+      "evidence": "但具体 SL 未记录"
+     }
+    ],
+    "mistakes": [
+     {
+      "tag": "Front Run",
+      "evidence": "同时失去最佳价格和确认优势"
+     },
+     {
+      "tag": "No SL",
+      "evidence": "但具体 SL 未记录，因此本笔不计算 R"
+     }
+    ],
+    "riskCheck": [
+     {
+      "key": "liquiditySweep",
+      "status": "pass",
+      "evidence": "4H 下方 SSL 被扫",
+      "label": "流动性被扫 (Liquidity Sweep)"
+     },
+     {
+      "key": "displacement",
+      "status": "pass",
+      "evidence": "明显 bullish displacement",
+      "label": "位移 (Displacement)"
+     },
+     {
+      "key": "structureShift",
+      "status": "partial",
+      "evidence": "卖方延续失败，市场向上重新定价",
+      "note": "文档没有记录 MSB/BOS，只记录了位移与重新定价。",
+      "label": "结构变化 (Structure Shift)"
+     },
+     {
+      "key": "poi",
+      "status": "pass",
+      "evidence": "1H IMB 与 BB 重叠区域",
+      "label": "计划 POI"
+     },
+     {
+      "key": "entryAtPOI",
+      "status": "fail",
+      "evidence": "价格尚未进入计划区域就提前买入",
+      "label": "入场在 POI 内 (Entry at POI)"
+     },
+     {
+      "key": "slLogical",
+      "status": "partial",
+      "evidence": "止损逻辑放在 Sweep Low 下方，但具体 SL 未记录",
+      "note": "逻辑写了层级（Sweep Low 下方），但没有价格。",
+      "label": "SL 结构逻辑一致 (SL Logical)"
+     },
+     {
+      "key": "rrMeetsRequirement",
+      "status": "unknown",
+      "note": "没有 SL 就无法计算 RR，本笔不参与 R 统计。",
+      "label": "RR 达到要求 (RR Meets Requirement)"
+     },
+     {
+      "key": "chasing",
+      "status": "fail",
+      "evidence": "价格尚未进入计划区域就提前买入",
+      "label": "未追价 (No Chasing)"
+     },
+     {
+      "key": "newsRisk",
+      "status": "unknown",
+      "label": "新闻风险已评估 (News Risk)"
+     },
+     {
+      "key": "slRecorded",
+      "status": "fail",
+      "evidence": "但具体 SL 未记录",
+      "label": "SL 已记录 (SL Recorded)"
+     }
+    ],
+    "compliance": {
+     "pass": 3,
+     "fail": 3,
+     "partial": 2,
+     "unknown": 2,
+     "known": 8,
+     "total": 10,
+     "rate": 0.375
+    },
+    "notes": null
+   },
+   "weekLabel": "第1周",
+   "entryTrigger": {
+    "text": "原计划 HTF Limit；实际执行为 POI 上方提前市价入场。",
+    "modelLabel": "Market Entry"
+   },
+   "entryReasonItems": [
+    "位移后下方留下 1H IMB 与 BB 重叠区域，计划等待价格回踩该 POI 做多。"
+   ],
+   "entryTimeLabel": "2026-09-15 13:09",
+   "exitTimeLabel": "2026-09-19 07:03",
+   "holdingLabel": "3 天 18 小时",
+   "riskPoints": null,
+   "rExcludeReason": "未记录准确 SL，无法判断计划 RR 与实际 R —— 按规则不纳入 R 统计",
+   "week": {
+    "label": "第1周",
+    "start": "2026-09-13",
+    "end": "2026-09-19",
+    "isoWeek": 37,
+    "id": "第1周"
+   },
+   "sectionsLabeled": [
+    {
+     "label": "市场背景 Context",
+     "text": "4H 下方 SSL 被扫后出现明显 bullish displacement，卖方延续失败，市场向上重新定价。",
+     "key": "context"
+    },
+    {
+     "label": "Setup",
+     "text": "4H SSL Sweep → Strong Bullish Displacement → 1H IMB + BB HTF POI。",
+     "key": "setup"
+    },
+    {
+     "label": "入场原因",
+     "text": "位移后下方留下 1H IMB 与 BB 重叠区域，计划等待价格回踩该 POI 做多。",
+     "key": "entryReason"
+    },
+    {
+     "label": "入场模型",
+     "text": "原计划 HTF Limit；实际执行为 POI 上方提前市价入场。",
+     "key": "entryModel"
+    },
+    {
+     "label": "交易时间",
+     "text": "2026-09-15 13:09 → 2026-09-19 07:03（北京时间）",
+     "key": "time"
+    },
+    {
+     "label": "执行",
+     "text": "实际 Entry 707.02；计划 POI 约 705；TP1 720.48（50%）；TP2 722.48（50%）。",
+     "key": "execution"
+    },
+    {
+     "label": "Invalidation",
+     "text": "止损逻辑放在 Sweep Low 下方，但具体 SL 未记录，因此本笔不计算 R。",
+     "key": "invalidation"
+    },
+    {
+     "label": "Target Logic",
+     "text": "上方流动性/结构目标分批兑现。",
+     "key": "targetLogic"
+    },
+    {
+     "label": "结果",
+     "text": "盈利，但由于缺少准确 SL，无法评价真实计划 RR。",
+     "key": "result"
+    },
+    {
+     "label": "做得好的",
+     "text": "HTF 背景清楚，Sweep + 强 displacement + POI 共振；采用分批止盈管理仓位。",
+     "key": "worked"
+    },
+    {
+     "label": "需要改进",
+     "text": "707.02 属于 front-running POI：价格尚未进入计划区域就提前买入，同时失去最佳价格和确认优势。",
+     "key": "improve"
+    },
+    {
+     "label": "下次规则",
+     "text": "HTF 提前单必须挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL。",
+     "key": "nextRule"
+    }
+   ],
+   "sections": {}
+  },
+  {
+   "id": "2026-09-21-xauusdt-long-01",
+   "num": "01",
+   "symbol": "XAUUSDT",
+   "symbolLabel": "XAU/USDT",
+   "direction": "long",
+   "headingResult": "-1R",
+   "heading": "1｜XAU/USDT Long｜2026年9月21日–9月22日｜-1R",
+   "sourceBlockIndex": 49,
+   "entryTime": "2026-09-21T20:27:00+08:00",
+   "exitTime": "2026-09-22T15:54:00+08:00",
+   "holdingMinutes": 1167,
+   "timeText": "2026-09-21 20:27 → 2026-09-22 15:54（北京时间）",
+   "entry": 4352.77,
+   "stopLoss": 4305.2,
+   "exit": null,
+   "plannedPOI": null,
+   "targets": [
+    {
+     "label": "Target",
+     "priceLow": 4388.0,
+     "priceHigh": 4390.0,
+     "priceText": "4388–4390",
+     "sizePercent": null,
+     "types": [
+      "BSL"
+     ],
+     "source": "execution"
+    }
+   ],
+   "executionRaw": "Entry 4352.77；SL 4305.20；Target 4388–4390。",
+   "resultStatus": "loss",
+   "actualR": -1.0,
+   "plannedR": null,
+   "rIncluded": true,
+   "resultRaw": "止损，约 -1R。",
+   "pnl": null,
+   "fees": null,
+   "plannedRiskPoints": 47.57,
+   "plannedRewardLow": 35.23,
+   "plannedRewardHigh": 37.23,
+   "plannedRRLow": 0.74,
+   "plannedRRHigh": 0.78,
+   "plannedRR": 0.76,
+   "plannedRRMidpointUsed": true,
+   "plannedRRText": "计划 RR 约 0.74–0.78",
+   "riskCheckRaw": "风险 47.57 点；目标空间约 35.23–37.23 点；计划 RR 约 0.74–0.78，不符合高质量交易的收益风险结构。",
+   "minRRThreshold": null,
+   "derived": {
+    "riskPoints": 47.57
+   },
+   "context": {
+    "raw": "15m 仍处于主要下跌结构中，下方 SSL 被扫后出现 bullish reaction，并突破内部 LH，形成 internal bullish MSB。",
+    "timeframes": [
+     "15m"
+    ],
+    "trend": "bearish"
+   },
+   "setup": {
+    "raw": "SSL Sweep → Internal Bullish MSB → Liquidity-to-Liquidity Long。",
+    "flow": [
+     "SSL Sweep",
+     "Internal Bullish MSB",
+     "Liquidity-to-Liquidity Long"
+    ]
+   },
+   "entryReason": {
+    "raw": "Internal MSB 表明短期卖方节奏被打断，上方 4388–4390 存在明确 BSL / Liquidity Pool，因此尝试交易从下方流动性向上方流动性的移动。",
+    "items": [
+     "Internal MSB 表明短期卖方节奏被打断，上方 4388–4390 存在明确 BSL / Liquidity Pool，因此尝试交易从下方流动性向上方流动性的移动。"
+    ]
+   },
+   "entryModel": {
+    "planned": null,
+    "actual": null,
+    "category": null,
+    "note": null,
+    "label": "未记录"
+   },
+   "entryModelRaw": null,
+   "liquidity": {
+    "raw": "15m 仍处于主要下跌结构中，下方 SSL 被扫后出现 bullish reaction，并突破内部 LH，形成 internal bullish MSB。 Internal MSB 表明短期卖方节奏被打断，上方 4388–4390 存在明确 BSL / Liquidity Pool，因此尝试交易从下方流动性向上方流动性的移动。 4388–4390 为上方 Buy-side Liquidity，是本次 Long 的主要 external liquidity target。",
+    "sslSwept": true,
+    "bslTarget": "4388–4390",
+    "targetLiquidity": "Buy-side Liquidity",
+    "internalLiquidity": null,
+    "htfMagnet": null
+   },
+   "structure": {
+    "raw": "15m 仍处于主要下跌结构中，下方 SSL 被扫后出现 bullish reaction，并突破内部 LH，形成 internal bullish MSB。 Internal MSB 只代表内部结构转强，不代表 15m 主趋势已经完成反转。 Internal MSB 表明短期卖方节奏被打断，上方 4388–4390 存在明确 BSL / Liquidity Pool，因此尝试交易从下方流动性向上方流动性的移动。",
+    "internalMSB": "bullish",
+    "msbNote": "Internal MSB 只代表内部结构转强，不代表 15m 主趋势已经完成反转。",
+    "majorTrendReversal": false,
+    "protectedHigh": null,
+    "protectedLow": null
+   },
+   "displacement": null,
+   "poi": null,
+   "invalidation": {
+    "raw": "SL 使用较大的结构失效位，但入场依据主要来自内部结构，Entry 与 SL 的结构级别不够匹配。",
+    "logic": null,
+    "price": 4305.2,
+    "priceRecorded": true
+   },
+   "targetLogic": {
+    "raw": "4388–4390 为上方 Buy-side Liquidity，是本次 Long 的主要 external liquidity target。",
+    "targetType": [
+     "BSL"
+    ],
+    "reason": "4388–4390 为上方 Buy-side Liquidity，是本次 Long 的主要 external liquidity target。"
+   },
+   "tradeManagement": {
+    "movedSL": null,
+    "partialTP": null,
+    "breakEven": null,
+    "earlyExit": null,
+    "addedPosition": null,
+    "reducedPosition": null,
+    "weekendExit": null,
+    "notes": null
+   },
+   "review": {
+    "worked": [
+     "正确识别 SSL Sweep、Internal MSB 与上方 BSL，方向逻辑具有完整的 liquidity-to-liquidity 思路。"
+    ],
+    "improve": null,
+    "mainProblem": "最大问题不是“看多错误”，而是 RR 在下单前已经不合格；同时小级别入场依据配了过大的结构止损。",
+    "nextRules": [
+     "下单前强制画出 Entry / SL / TP 并计算计划 RR；若 SL 必须很远，则等更好的 HTF POI 或 LTF confirmation。",
+     "4388–4390 是本笔多单目标；若到达后考虑做空，另等 Sweep High → Bearish Displacement → Bearish MSS。"
+    ]
+   },
+   "mae": null,
+   "mfe": null,
+   "images": [
+    {
+     "media": "image4.png",
+     "order": 1,
+     "file": "images/2026-09-21-xauusdt-long-01-1.png",
+     "type": null,
+     "timeframe": null,
+     "sourceBlockIndex": 63,
+     "width": 2048,
+     "height": 937,
+     "sha256": "92573e7776b1de2c",
+     "url": "images/2026-09-21-xauusdt-long-01-1.png",
+     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
+     "path": "images/2026-09-21-xauusdt-long-01-1.png"
+    }
+   ],
+   "tags": [
+    {
+     "group": "Direction",
+     "value": "Long"
+    },
+    {
+     "group": "Setup Step",
+     "value": "SSL Sweep"
+    },
+    {
+     "group": "Setup Step",
+     "value": "Internal Bullish MSB"
+    },
+    {
+     "group": "Setup Step",
+     "value": "Liquidity-to-Liquidity Long"
+    },
+    {
+     "group": "Result",
+     "value": "Loss"
+    },
+    {
+     "group": "Risk",
+     "value": "Low RR"
+    }
+   ],
+   "rawSections": {
+    "context": "15m 仍处于主要下跌结构中，下方 SSL 被扫后出现 bullish reaction，并突破内部 LH，形成 internal bullish MSB。",
+    "setup": "SSL Sweep → Internal Bullish MSB → Liquidity-to-Liquidity Long。",
+    "entryReason": "Internal MSB 表明短期卖方节奏被打断，上方 4388–4390 存在明确 BSL / Liquidity Pool，因此尝试交易从下方流动性向上方流动性的移动。",
+    "structureNote": "Internal MSB 只代表内部结构转强，不代表 15m 主趋势已经完成反转。",
+    "time": "2026-09-21 20:27 → 2026-09-22 15:54（北京时间）",
+    "execution": "Entry 4352.77；SL 4305.20；Target 4388–4390。",
+    "invalidation": "SL 使用较大的结构失效位，但入场依据主要来自内部结构，Entry 与 SL 的结构级别不够匹配。",
+    "targetLogic": "4388–4390 为上方 Buy-side Liquidity，是本次 Long 的主要 external liquidity target。",
+    "riskCheck": "风险 47.57 点；目标空间约 35.23–37.23 点；计划 RR 约 0.74–0.78，不符合高质量交易的收益风险结构。",
+    "result": "止损，约 -1R。",
+    "worked": "正确识别 SSL Sweep、Internal MSB 与上方 BSL，方向逻辑具有完整的 liquidity-to-liquidity 思路。",
+    "mainProblem": "最大问题不是“看多错误”，而是 RR 在下单前已经不合格；同时小级别入场依据配了过大的结构止损。",
+    "nextRule": "下单前强制画出 Entry / SL / TP 并计算计划 RR；若 SL 必须很远，则等更好的 HTF POI 或 LTF confirmation。4388–4390 是本笔多单目标；若到达后考虑做空，另等 Sweep High → Bearish Displacement → Bearish MSS。"
+   },
+   "dataCompleteness": {
+    "percent": 67,
+    "missing": [
+     "poi",
+     "displacement",
+     "mae",
+     "mfe",
+     "fees"
+    ],
+    "total": 15,
+    "filled": 10
+   },
+   "analysis": {
+    "source": "ai-review",
+    "errorType": {
+     "primary": "Risk Management Error",
+     "secondary": [
+      "Execution Error"
+     ],
+     "evidence": "RR 在下单前已经不合格",
+     "note": "方向与流动性思路正确（文档原话：最大问题不是看多错误），问题出在下单前的风控关口没有把住。"
+    },
+    "classification": {
+     "value": "Bad Loss",
+     "reason": "方向逻辑成立但计划 RR 只有 0.74–0.78 仍执行，违反规则四「未达到最低要求则跳过」；止损是规则被违反后的自然结果。",
+     "evidence": "RR 在下单前已经不合格"
+    },
+    "ruleViolations": [
+     {
+      "tag": "Low RR",
+      "evidence": "计划 RR 约 0.74–0.78，不符合高质量交易的收益风险结构"
+     }
+    ],
+    "mistakes": [
+     {
+      "tag": "Low RR",
+      "evidence": "RR 在下单前已经不合格"
+     },
+     {
+      "tag": "Entry / SL 结构级别不匹配",
+      "evidence": "小级别入场依据配了过大的结构止损"
+     }
+    ],
+    "riskCheck": [
+     {
+      "key": "liquiditySweep",
+      "status": "pass",
+      "evidence": "下方 SSL 被扫后出现 bullish reaction",
+      "label": "流动性被扫 (Liquidity Sweep)"
+     },
+     {
+      "key": "displacement",
+      "status": "unknown",
+      "note": "本笔没有记录位移质量，Setup 只有 SSL Sweep → Internal MSB。",
+      "label": "位移 (Displacement)"
+     },
+     {
+      "key": "structureShift",
+      "status": "pass",
+      "evidence": "形成 internal bullish MSB",
+      "note": "只是内部结构转强，文档明确指出不代表 15m 主趋势反转。",
+      "label": "结构变化 (Structure Shift)"
+     },
+     {
+      "key": "poi",
+      "status": "unknown",
+      "note": "Setup 里没有记录 POI（只有 Internal MSB 与 liquidity-to-liquidity）。",
+      "label": "计划 POI"
+     },
+     {
+      "key": "entryAtPOI",
+      "status": "unknown",
+      "note": "没有记录计划 POI，因此无法判断入场是否在 POI 内。",
+      "label": "入场在 POI 内 (Entry at POI)"
+     },
+     {
+      "key": "slLogical",
+      "status": "fail",
+      "evidence": "Entry 与 SL 的结构级别不够匹配",
+      "label": "SL 结构逻辑一致 (SL Logical)"
+     },
+     {
+      "key": "rrMeetsRequirement",
+      "status": "fail",
+      "evidence": "计划 RR 约 0.74–0.78，不符合高质量交易的收益风险结构",
+      "label": "RR 达到要求 (RR Meets Requirement)"
+     },
+     {
+      "key": "chasing",
+      "status": "unknown",
+      "note": "文档没有记录是否追价。",
+      "label": "未追价 (No Chasing)"
+     },
+     {
+      "key": "newsRisk",
+      "status": "unknown",
+      "label": "新闻风险已评估 (News Risk)"
+     },
+     {
+      "key": "slRecorded",
+      "status": "pass",
+      "evidence": "SL 4305.20",
+      "label": "SL 已记录 (SL Recorded)"
+     }
+    ],
+    "compliance": {
+     "pass": 3,
+     "fail": 2,
+     "partial": 0,
+     "unknown": 5,
+     "known": 5,
+     "total": 10,
+     "rate": 0.6
+    },
+    "notes": null
+   },
+   "weekLabel": "第2周",
+   "entryTrigger": {
+    "text": null,
+    "modelLabel": "未记录"
+   },
+   "entryReasonItems": [
+    "Internal MSB 表明短期卖方节奏被打断，上方 4388–4390 存在明确 BSL / Liquidity Pool，因此尝试交易从下方流动性向上方流动性的移动。"
+   ],
+   "entryTimeLabel": "2026-09-21 20:27",
+   "exitTimeLabel": "2026-09-22 15:54",
+   "holdingLabel": "19.4 小时",
+   "riskPoints": 47.57,
+   "week": {
+    "label": "第2周",
+    "start": "2026-09-20",
+    "end": "2026-09-26",
+    "isoWeek": 38,
+    "id": "第2周"
+   },
+   "sectionsLabeled": [
+    {
+     "label": "市场背景 Context",
+     "text": "15m 仍处于主要下跌结构中，下方 SSL 被扫后出现 bullish reaction，并突破内部 LH，形成 internal bullish MSB。",
+     "key": "context"
+    },
+    {
+     "label": "Setup",
+     "text": "SSL Sweep → Internal Bullish MSB → Liquidity-to-Liquidity Long。",
+     "key": "setup"
+    },
+    {
+     "label": "入场原因",
+     "text": "Internal MSB 表明短期卖方节奏被打断，上方 4388–4390 存在明确 BSL / Liquidity Pool，因此尝试交易从下方流动性向上方流动性的移动。",
+     "key": "entryReason"
+    },
+    {
+     "label": "交易时间",
+     "text": "2026-09-21 20:27 → 2026-09-22 15:54（北京时间）",
+     "key": "time"
+    },
+    {
+     "label": "执行",
+     "text": "Entry 4352.77；SL 4305.20；Target 4388–4390。",
+     "key": "execution"
+    },
+    {
+     "label": "Invalidation",
+     "text": "SL 使用较大的结构失效位，但入场依据主要来自内部结构，Entry 与 SL 的结构级别不够匹配。",
+     "key": "invalidation"
+    },
+    {
+     "label": "Target Logic",
+     "text": "4388–4390 为上方 Buy-side Liquidity，是本次 Long 的主要 external liquidity target。",
+     "key": "targetLogic"
+    },
+    {
+     "label": "结果",
+     "text": "止损，约 -1R。",
+     "key": "result"
+    },
+    {
+     "label": "Risk Check",
+     "text": "风险 47.57 点；目标空间约 35.23–37.23 点；计划 RR 约 0.74–0.78，不符合高质量交易的收益风险结构。",
+     "key": "riskCheck"
+    },
+    {
+     "label": "做得好的",
+     "text": "正确识别 SSL Sweep、Internal MSB 与上方 BSL，方向逻辑具有完整的 liquidity-to-liquidity 思路。",
+     "key": "worked"
+    },
+    {
+     "label": "主要问题",
+     "text": "最大问题不是“看多错误”，而是 RR 在下单前已经不合格；同时小级别入场依据配了过大的结构止损。",
+     "key": "mainProblem"
+    },
+    {
+     "label": "下次规则",
+     "text": "下单前强制画出 Entry / SL / TP 并计算计划 RR；若 SL 必须很远，则等更好的 HTF POI 或 LTF confirmation。4388–4390 是本笔多单目标；若到达后考虑做空，另等 Sweep High → Bearish Displacement → Bearish MSS。",
+     "key": "nextRule"
+    },
+    {
+     "label": "结构理解",
+     "text": "Internal MSB 只代表内部结构转强，不代表 15m 主趋势已经完成反转。",
+     "key": "structureNote"
+    }
+   ],
+   "sections": {}
+  }
+ ],
+ "rules": {
+  "doc": [
+   {
+    "id": "规则一",
+    "title": "先看流动性",
+    "body": "标出高周期 SSL（下方流动性）与 BSL（上方流动性）。Sweep 只启动观察，不能单独触发入场。",
+    "sourceBlockIndex": 65,
+    "createdFrom": null,
+    "source": "doc:rules"
+   },
+   {
+    "id": "规则二",
+    "title": "再看位移和结构",
+    "body": "Sweep 后需有明确 displacement 与 MSS/BOS。弱 MSB 等后续 BOS 或低周期确认；internal MSB 只说明内部结构转强，要判断主趋势反转还需观察是否有效突破 protected high。",
+    "sourceBlockIndex": 66,
+    "createdFrom": null,
+    "source": "doc:rules"
+   },
+   {
+    "id": "规则三",
+    "title": "只在计划 POI 执行",
+    "body": "在 discount/premium 中寻找 OB、BB、IMB 等重叠区域。HTF 限价单放在 POI 内；价格未到就不提前抢入。",
+    "sourceBlockIndex": 67,
+    "createdFrom": null,
+    "source": "doc:rules"
+   },
+   {
+    "id": "规则四",
+    "title": "止损与目标成对",
+    "body": "SL 放在能否定交易逻辑的结构点，并记录准确价格；TP 对应对侧流动性或 IMB。下单前计算计划盈亏比，未达到自己预设的最低要求则跳过。",
+    "sourceBlockIndex": 68,
+    "createdFrom": null,
+    "source": "doc:rules"
+   },
+   {
+    "id": "规则五",
+    "title": "复盘执行偏差",
+    "body": "分别记录 HTF 限价与 HTF+低周期确认；逐笔填写计划/实际 Entry、SL、TP、R 和提前出场原因。缺少 SL 的交易不统计 R。",
+    "sourceBlockIndex": 69,
+    "createdFrom": null,
+    "source": "doc:rules"
+   }
+  ],
+  "template": [
+   {
+    "text": "① 基本信息：标的、日期、方向、分析周期、Entry Model、Entry、SL、TP、计划 R、实际 R、结果。",
+    "sourceBlockIndex": 71
+   },
+   {
+    "text": "② Context：HTF 趋势/区间、Premium/Discount、SSL/BSL、关键 POI。",
+    "sourceBlockIndex": 72
+   },
+   {
+    "text": "③ Setup：用一句话定义交易模型，例如 SSL Sweep → Displacement → MSB/BOS → POI。",
+    "sourceBlockIndex": 73
+   },
+   {
+    "text": "④ Entry Reasons：列出流动性、位移、结构、POI 共振等入场原因。",
+    "sourceBlockIndex": 74
+   },
+   {
+    "text": "⑤ Entry Trigger：HTF Limit 或 HTF + LTF Confirmation。",
+    "sourceBlockIndex": 75
+   },
+   {
+    "text": "⑥ Invalidation：说明“什么发生就证明我错了”，并对应到 SL。",
+    "sourceBlockIndex": 76
+   },
+   {
+    "text": "⑦ Target Logic：TP 对应 IMB、内部流动性、BSL/SSL 或 HTF Magnet。",
+    "sourceBlockIndex": 77
+   },
+   {
+    "text": "⑧ Risk Check：下单前确认 RR、是否追价、是否偏离计划 POI。",
+    "sourceBlockIndex": 78
+   },
+   {
+    "text": "⑨ Trade Management：是否减仓、移动 SL、提前退出及原因。",
+    "sourceBlockIndex": 79
+   },
+   {
+    "text": "⑩ Review：做得好的、做错的、下一次可执行规则；同时记录 MAE/MFE。",
+    "sourceBlockIndex": 80
+   }
+  ],
+  "generated": [
+   {
+    "text": "强 displacement + 清晰 HTF POI 可以提前挂单，但 Entry、SL、TP 必须在下单前全部确定",
+    "category": "Entry Rules",
+    "createdFrom": "2026-09-13-ethusdt-long-01",
+    "createdFromLabel": "ETH/USDT 2026-09-13",
+    "evidence": "强 displacement + 清晰 HTF POI 可以提前挂单，但 Entry、SL、TP 必须在下单前全部确定。",
+    "source": "trade.nextRule"
+   },
+   {
+    "text": "弱 MSB 必须等待后续 BOS 或 LTF confirmation",
+    "category": "Structure Rules",
+    "createdFrom": "2026-09-18-ethusdt-long-02",
+    "createdFromLabel": "ETH/USDT 2026-09-18",
+    "evidence": "弱 MSB 必须等待后续 BOS 或 LTF confirmation；目标只作为概率性 Magnet，不使用“至少会到”的表达。",
+    "source": "trade.nextRule"
+   },
+   {
+    "text": "目标只作为概率性 Magnet，不使用“至少会到”的表达",
+    "category": "Management Rules",
+    "createdFrom": "2026-09-18-ethusdt-long-02",
+    "createdFromLabel": "ETH/USDT 2026-09-18",
+    "evidence": "弱 MSB 必须等待后续 BOS 或 LTF confirmation；目标只作为概率性 Magnet，不使用“至少会到”的表达。",
+    "source": "trade.nextRule"
+   },
+   {
+    "text": "HTF 提前单必须挂在计划 POI 内，宁可错过也不抢跑",
+    "category": "Entry Rules",
+    "createdFrom": "2026-09-15-qqqusdt-long-03",
+    "createdFromLabel": "QQQ/USDT 2026-09-15",
+    "evidence": "HTF 提前单必须挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL。",
+    "source": "trade.nextRule"
+   },
+   {
+    "text": "每笔必须记录准确 SL",
+    "category": "Risk Rules",
+    "createdFrom": "2026-09-15-qqqusdt-long-03",
+    "createdFromLabel": "QQQ/USDT 2026-09-15",
+    "evidence": "HTF 提前单必须挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL。",
+    "source": "trade.nextRule"
+   },
+   {
+    "text": "下单前强制画出 Entry / SL / TP 并计算计划 RR",
+    "category": "Risk Rules",
+    "createdFrom": "2026-09-21-xauusdt-long-01",
+    "createdFromLabel": "XAU/USDT 2026-09-21",
+    "evidence": "下单前强制画出 Entry / SL / TP 并计算计划 RR；若 SL 必须很远，则等更好的 HTF POI 或 LTF confirmation。4388–4390 是本笔多单目标；若到达后考虑做空，另等 Sweep High → Bearish Displacement → Bearish MSS。",
+    "source": "trade.nextRule"
+   },
+   {
+    "text": "若 SL 必须很远，则等更好的 HTF POI 或 LTF confirmation",
+    "category": "Entry Rules",
+    "createdFrom": "2026-09-21-xauusdt-long-01",
+    "createdFromLabel": "XAU/USDT 2026-09-21",
+    "evidence": "下单前强制画出 Entry / SL / TP 并计算计划 RR；若 SL 必须很远，则等更好的 HTF POI 或 LTF confirmation。4388–4390 是本笔多单目标；若到达后考虑做空，另等 Sweep High → Bearish Displacement → Bearish MSS。",
+    "source": "trade.nextRule"
+   },
+   {
+    "text": "4388–4390 是本笔多单目标",
+    "category": "Management Rules",
+    "createdFrom": "2026-09-21-xauusdt-long-01",
+    "createdFromLabel": "XAU/USDT 2026-09-21",
+    "evidence": "下单前强制画出 Entry / SL / TP 并计算计划 RR；若 SL 必须很远，则等更好的 HTF POI 或 LTF confirmation。4388–4390 是本笔多单目标；若到达后考虑做空，另等 Sweep High → Bearish Displacement → Bearish MSS。",
+    "source": "trade.nextRule"
+   },
+   {
+    "text": "若到达后考虑做空，另等 Sweep High → Bearish Displacement → Bearish MSS",
+    "category": "Liquidity Rules",
+    "createdFrom": "2026-09-21-xauusdt-long-01",
+    "createdFromLabel": "XAU/USDT 2026-09-21",
+    "evidence": "下单前强制画出 Entry / SL / TP 并计算计划 RR；若 SL 必须很远，则等更好的 HTF POI 或 LTF confirmation。4388–4390 是本笔多单目标；若到达后考虑做空，另等 Sweep High → Bearish Displacement → Bearish MSS。",
+    "source": "trade.nextRule"
+   }
+  ],
+  "categories": [
+   "Liquidity Rules",
+   "Structure Rules",
+   "Entry Rules",
+   "Risk Rules",
+   "Management Rules",
+   "General Rules"
+  ]
+ },
+ "analytics": {
+  "cumulativeR": [
+   {
+    "id": "2026-09-13-ethusdt-long-01",
+    "symbolLabel": "ETH/USDT",
+    "date": "2026-09-13",
+    "r": 2.3,
+    "cum": 2.3
+   },
+   {
+    "id": "2026-09-18-ethusdt-long-02",
+    "symbolLabel": "ETH/USDT",
+    "date": "2026-09-18",
+    "r": 1.26,
+    "cum": 3.56
+   },
+   {
+    "id": "2026-09-21-xauusdt-long-01",
+    "symbolLabel": "XAU/USDT",
+    "date": "2026-09-21",
+    "r": -1.0,
+    "cum": 2.56
+   }
+  ],
+  "setupPerformance": [
+   {
+    "key": "SSL Sweep → Bullish Displacement → Structure Shift → Deep Discount HTF POI",
+    "trades": [
+     "2026-09-13-ethusdt-long-01"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": 2.3,
+    "avgR": 2.3,
+    "rCounted": 1
+   },
+   {
+    "key": "SSL Sweep → Weak Bullish MSB → BOS → Pullback into OB/IMB",
+    "trades": [
+     "2026-09-18-ethusdt-long-02"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": 1.26,
+    "avgR": 1.26,
+    "rCounted": 1
+   },
+   {
+    "key": "SSL Sweep → Internal Bullish MSB → Liquidity-to-Liquidity Long",
+    "trades": [
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "count": 1,
+    "wins": 0,
+    "closed": 1,
+    "winRate": 0.0,
+    "netR": -1.0,
+    "avgR": -1.0,
+    "rCounted": 1
+   },
+   {
+    "key": "4H SSL Sweep → Strong Bullish Displacement → 1H IMB + BB HTF POI",
+    "trades": [
+     "2026-09-15-qqqusdt-long-03"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": null,
+    "avgR": null,
+    "rCounted": 0
+   }
+  ],
+  "setupTagPerformance": [
+   {
+    "key": "Liquidity Sweep",
+    "trades": [
+     "2026-09-13-ethusdt-long-01",
+     "2026-09-18-ethusdt-long-02",
+     "2026-09-15-qqqusdt-long-03",
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "count": 4,
+    "wins": 3,
+    "closed": 4,
+    "winRate": 0.75,
+    "netR": 2.56,
+    "avgR": 0.85,
+    "rCounted": 3
+   },
+   {
+    "key": "POI",
+    "trades": [
+     "2026-09-13-ethusdt-long-01",
+     "2026-09-18-ethusdt-long-02",
+     "2026-09-15-qqqusdt-long-03"
+    ],
+    "count": 3,
+    "wins": 3,
+    "closed": 3,
+    "winRate": 1.0,
+    "netR": 3.56,
+    "avgR": 1.78,
+    "rCounted": 2
+   },
+   {
+    "key": "Displacement",
+    "trades": [
+     "2026-09-13-ethusdt-long-01",
+     "2026-09-15-qqqusdt-long-03"
+    ],
+    "count": 2,
+    "wins": 2,
+    "closed": 2,
+    "winRate": 1.0,
+    "netR": 2.3,
+    "avgR": 2.3,
+    "rCounted": 1
+   },
+   {
+    "key": "MSB / MSS",
+    "trades": [
+     "2026-09-18-ethusdt-long-02",
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "count": 2,
+    "wins": 1,
+    "closed": 2,
+    "winRate": 0.5,
+    "netR": 0.26,
+    "avgR": 0.13,
+    "rCounted": 2
+   },
+   {
+    "key": "BOS",
+    "trades": [
+     "2026-09-18-ethusdt-long-02"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": 1.26,
+    "avgR": 1.26,
+    "rCounted": 1
+   },
+   {
+    "key": "Pullback",
+    "trades": [
+     "2026-09-18-ethusdt-long-02"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": 1.26,
+    "avgR": 1.26,
+    "rCounted": 1
+   },
+   {
+    "key": "Liquidity-to-Liquidity",
+    "trades": [
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "count": 1,
+    "wins": 0,
+    "closed": 1,
+    "winRate": 0.0,
+    "netR": -1.0,
+    "avgR": -1.0,
+    "rCounted": 1
+   }
+  ],
+  "entryModelPerformance": [
+   {
+    "key": "HTF_LIMIT",
+    "trades": [
+     "2026-09-13-ethusdt-long-01"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": 2.3,
+    "avgR": 2.3,
+    "rCounted": 1
+   },
+   {
+    "key": "OTHER",
+    "trades": [
+     "2026-09-18-ethusdt-long-02"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": 1.26,
+    "avgR": 1.26,
+    "rCounted": 1
+   },
+   {
+    "key": "UNKNOWN",
+    "trades": [
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "count": 1,
+    "wins": 0,
+    "closed": 1,
+    "winRate": 0.0,
+    "netR": -1.0,
+    "avgR": -1.0,
+    "rCounted": 1
+   },
+   {
+    "key": "MARKET_ENTRY",
+    "trades": [
+     "2026-09-15-qqqusdt-long-03"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": null,
+    "avgR": null,
+    "rCounted": 0
+   }
+  ],
+  "mistakeFrequency": [
+   {
+    "key": "Missing Protected Low",
+    "trades": [
+     "2026-09-13-ethusdt-long-01",
+     "2026-09-18-ethusdt-long-02"
+    ],
+    "count": 2,
+    "wins": 2,
+    "closed": 2,
+    "winRate": 1.0,
+    "netR": 3.56,
+    "avgR": 1.78,
+    "rCounted": 2
+   },
+   {
+    "key": "Missing Planned TP / Actual TP",
+    "trades": [
+     "2026-09-18-ethusdt-long-02"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": 1.26,
+    "avgR": 1.26,
+    "rCounted": 1
+   },
+   {
+    "key": "Low RR",
+    "trades": [
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "count": 1,
+    "wins": 0,
+    "closed": 1,
+    "winRate": 0.0,
+    "netR": -1.0,
+    "avgR": -1.0,
+    "rCounted": 1
+   },
+   {
+    "key": "Entry / SL 结构级别不匹配",
+    "trades": [
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "count": 1,
+    "wins": 0,
+    "closed": 1,
+    "winRate": 0.0,
+    "netR": -1.0,
+    "avgR": -1.0,
+    "rCounted": 1
+   },
+   {
+    "key": "Front Run",
+    "trades": [
+     "2026-09-15-qqqusdt-long-03"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": null,
+    "avgR": null,
+    "rCounted": 0
+   },
+   {
+    "key": "No SL",
+    "trades": [
+     "2026-09-15-qqqusdt-long-03"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": null,
+    "avgR": null,
+    "rCounted": 0
+   }
+  ],
+  "violationFrequency": [
+   {
+    "key": "Low RR",
+    "trades": [
+     "2026-09-21-xauusdt-long-01"
+    ],
+    "count": 1,
+    "wins": 0,
+    "closed": 1,
+    "winRate": 0.0,
+    "netR": -1.0,
+    "avgR": -1.0,
+    "rCounted": 1
+   },
+   {
+    "key": "Front Run POI",
+    "trades": [
+     "2026-09-15-qqqusdt-long-03"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": null,
+    "avgR": null,
+    "rCounted": 0
+   },
+   {
+    "key": "Missing SL",
+    "trades": [
+     "2026-09-15-qqqusdt-long-03"
+    ],
+    "count": 1,
+    "wins": 1,
+    "closed": 1,
+    "winRate": 1.0,
+    "netR": null,
+    "avgR": null,
+    "rCounted": 0
+   }
+  ],
+  "holding": {
+   "perTrade": [
+    {
+     "id": "2026-09-13-ethusdt-long-01",
+     "symbolLabel": "ETH/USDT",
+     "hours": 35.0,
+     "status": "win"
+    },
+    {
+     "id": "2026-09-18-ethusdt-long-02",
+     "symbolLabel": "ETH/USDT",
+     "hours": 5.1,
+     "status": "win"
+    },
+    {
+     "id": "2026-09-15-qqqusdt-long-03",
+     "symbolLabel": "QQQ/USDT",
+     "hours": 89.9,
+     "status": "win"
+    },
+    {
+     "id": "2026-09-21-xauusdt-long-01",
+     "symbolLabel": "XAU/USDT",
+     "hours": 19.4,
+     "status": "loss"
+    }
+   ],
+   "avgWinnerHours": 43.3,
+   "avgLoserHours": 19.4,
+   "note": "样本数量少时均值仅供参考。"
+  },
+  "maeMfe": {
+   "recorded": 0,
+   "total": 4,
+   "note": "MAE / MFE 目前全部未记录，因此无法分析「SL 是否过紧」「TP 是否过早」。"
+  },
+  "weeklyR": [
+   {
+    "label": "第1周",
+    "netR": 3.56,
+    "rCounted": 2
+   },
+   {
+    "label": "第2周",
+    "netR": -1.0,
+    "rCounted": 1
+   }
+  ],
+  "dataCompletenessAvg": 68.2
+ },
+ "unknownFields": [
+  {
+   "field": "mae",
+   "count": 4,
+   "trades": [
+    "2026-09-13-ethusdt-long-01",
+    "2026-09-18-ethusdt-long-02",
+    "2026-09-15-qqqusdt-long-03",
+    "2026-09-21-xauusdt-long-01"
+   ]
+  },
+  {
+   "field": "mfe",
+   "count": 4,
+   "trades": [
+    "2026-09-13-ethusdt-long-01",
+    "2026-09-18-ethusdt-long-02",
+    "2026-09-15-qqqusdt-long-03",
+    "2026-09-21-xauusdt-long-01"
+   ]
+  },
+  {
+   "field": "fees",
+   "count": 4,
+   "trades": [
+    "2026-09-13-ethusdt-long-01",
+    "2026-09-18-ethusdt-long-02",
+    "2026-09-15-qqqusdt-long-03",
+    "2026-09-21-xauusdt-long-01"
+   ]
+  },
+  {
+   "field": "plannedRR",
+   "count": 3,
+   "trades": [
+    "2026-09-13-ethusdt-long-01",
+    "2026-09-18-ethusdt-long-02",
+    "2026-09-15-qqqusdt-long-03"
+   ]
+  },
+  {
+   "field": "stopLoss",
+   "count": 1,
+   "trades": [
+    "2026-09-15-qqqusdt-long-03"
+   ]
+  },
+  {
+   "field": "actualR",
+   "count": 1,
+   "trades": [
+    "2026-09-15-qqqusdt-long-03"
+   ]
+  },
+  {
+   "field": "poi",
+   "count": 1,
+   "trades": [
+    "2026-09-21-xauusdt-long-01"
+   ]
+  },
+  {
+   "field": "displacement",
+   "count": 1,
+   "trades": [
+    "2026-09-21-xauusdt-long-01"
+   ]
+  }
+ ]
+}

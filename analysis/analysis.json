@@ -1,0 +1,143 @@
+{
+  "_doc": "AI 分析层（analysis），与 Google Docs 原始记录（sourceData）严格分离。规则：任何 pass/fail/partial 判定都必须给出 evidence —— 一段能在该笔交易原文里逐字找到的引用；parser/build.py 会做子串校验，对不上就直接构建失败。unknown 表示文档没写，不允许为了填满表格而编造。",
+  "meta": {
+    "role": "ai-review",
+    "generatedAt": "2026-09-24",
+    "checklist": [
+      { "key": "liquiditySweep", "label": "流动性被扫 (Liquidity Sweep)" },
+      { "key": "displacement", "label": "位移 (Displacement)" },
+      { "key": "structureShift", "label": "结构变化 (Structure Shift)" },
+      { "key": "poi", "label": "计划 POI" },
+      { "key": "entryAtPOI", "label": "入场在 POI 内 (Entry at POI)" },
+      { "key": "slLogical", "label": "SL 结构逻辑一致 (SL Logical)" },
+      { "key": "rrMeetsRequirement", "label": "RR 达到要求 (RR Meets Requirement)" },
+      { "key": "chasing", "label": "未追价 (No Chasing)" },
+      { "key": "newsRisk", "label": "新闻风险已评估 (News Risk)" },
+      { "key": "slRecorded", "label": "SL 已记录 (SL Recorded)" }
+    ]
+  },
+  "trades": {
+    "2026-09-13-ethusdt-long-01": {
+      "errorType": { "primary": "No Error", "secondary": [], "evidence": "没有追涨，而是等待深度回撤" },
+      "classification": {
+        "value": "Good Win",
+        "reason": "逻辑链完整（Sweep → 强位移 → 结构突破 → Discount POI），且按规则等待深度回撤才入场，实际 +2.30R。",
+        "evidence": "并突破关键结构"
+      },
+      "ruleViolations": [],
+      "mistakes": [
+        { "tag": "Missing Protected Low", "evidence": "复盘时明确标注 Protected Low / 结构失效点" }
+      ],
+      "riskCheck": [
+        { "key": "liquiditySweep", "status": "pass", "evidence": "1H 下方 SSL 被扫" },
+        { "key": "displacement", "status": "pass", "evidence": "强势 bullish displacement" },
+        { "key": "structureShift", "status": "pass", "evidence": "并突破关键结构" },
+        { "key": "poi", "status": "pass", "evidence": "同时与 1H IMB、BB、OB 重叠，形成高周期共振 POI" },
+        { "key": "entryAtPOI", "status": "pass", "evidence": "没有追涨，而是等待深度回撤" },
+        { "key": "slLogical", "status": "unknown", "note": "文档只写了原则（止损应对应 POI/关键结构失效），没有记录本笔的结构失效点。" },
+        { "key": "rrMeetsRequirement", "status": "unknown", "note": "本笔没有记录计划 RR；只记录了实际 +2.30R。" },
+        { "key": "chasing", "status": "pass", "evidence": "没有追涨，而是等待深度回撤" },
+        { "key": "newsRisk", "status": "unknown" },
+        { "key": "slRecorded", "status": "pass", "evidence": "SL 2434.00" }
+      ]
+    },
+    "2026-09-18-ethusdt-long-02": {
+      "errorType": { "primary": "No Error", "secondary": ["Execution Error"], "evidence": "没有在弱 MSB 后立即追多", "note": "唯一存疑处是退出（+1.26R vs 计划 1.5R）的原因未记录，文档自己列为待确认项。" },
+      "classification": {
+        "value": "Good Win",
+        "reason": "弱 MSB 时没有立刻追多，等后续 BOS 提高结构可信度后才回踩入场；但退出原因未记录，是否规则性退出无法确认。",
+        "evidence": "后续 BOS 提高了多头结构可信度"
+      },
+      "ruleViolations": [],
+      "mistakes": [
+        { "tag": "Missing Planned TP / Actual TP", "evidence": "记录 Planned TP 与 Actual TP" },
+        { "tag": "Missing Protected Low", "evidence": "以后应同时记录对应 Protected Low" }
+      ],
+      "riskCheck": [
+        { "key": "liquiditySweep", "status": "pass", "evidence": "下方 SSL 被扫后价格开始转强" },
+        { "key": "displacement", "status": "partial", "evidence": "但第一次 bullish MSB 的位移偏弱", "note": "位移偏弱，靠后续 BOS 补足确认。" },
+        { "key": "structureShift", "status": "pass", "evidence": "后续 BOS 提高了多头结构可信度" },
+        { "key": "poi", "status": "pass", "evidence": "价格再回踩 bullish OB 与 IMB 时" },
+        { "key": "entryAtPOI", "status": "pass", "evidence": "HTF/结构确认后回踩入场" },
+        { "key": "slLogical", "status": "pass", "evidence": "SL 放在回踩结构失效区域下方" },
+        { "key": "rrMeetsRequirement", "status": "pass", "evidence": "原计划约 1.5R", "note": "用户尚未定义最低 RR 标准；此处只表示「下单前有计划 R」，实际只兑现 +1.26R。" },
+        { "key": "chasing", "status": "pass", "evidence": "没有在弱 MSB 后立即追多" },
+        { "key": "newsRisk", "status": "unknown" },
+        { "key": "slRecorded", "status": "pass", "evidence": "SL 2414.00" }
+      ]
+    },
+    "2026-09-15-qqqusdt-long-03": {
+      "errorType": { "primary": "Execution Error", "secondary": ["Risk Management Error"], "evidence": "价格尚未进入计划区域就提前买入", "note": "逻辑（Sweep + 位移 + POI）成立，错在执行：抢跑 POI，并且没有记录 SL，导致这笔盈利无法计入 R 统计。" },
+      "classification": {
+        "value": "Bad Win",
+        "reason": "违反规则三「只在计划 POI 执行」提前市价买入，且 SL 未记录；结果是盈利，但属于侥幸赢，不能当作系统有效性的证据。",
+        "evidence": "707.02 属于 front-running POI"
+      },
+      "ruleViolations": [
+        { "tag": "Front Run POI", "evidence": "707.02 属于 front-running POI" },
+        { "tag": "Missing SL", "evidence": "但具体 SL 未记录" }
+      ],
+      "mistakes": [
+        { "tag": "Front Run", "evidence": "同时失去最佳价格和确认优势" },
+        { "tag": "No SL", "evidence": "但具体 SL 未记录，因此本笔不计算 R" }
+      ],
+      "riskCheck": [
+        { "key": "liquiditySweep", "status": "pass", "evidence": "4H 下方 SSL 被扫" },
+        { "key": "displacement", "status": "pass", "evidence": "明显 bullish displacement" },
+        { "key": "structureShift", "status": "partial", "evidence": "卖方延续失败，市场向上重新定价", "note": "文档没有记录 MSB/BOS，只记录了位移与重新定价。" },
+        { "key": "poi", "status": "pass", "evidence": "1H IMB 与 BB 重叠区域" },
+        { "key": "entryAtPOI", "status": "fail", "evidence": "价格尚未进入计划区域就提前买入" },
+        { "key": "slLogical", "status": "partial", "evidence": "止损逻辑放在 Sweep Low 下方，但具体 SL 未记录", "note": "逻辑写了层级（Sweep Low 下方），但没有价格。" },
+        { "key": "rrMeetsRequirement", "status": "unknown", "note": "没有 SL 就无法计算 RR，本笔不参与 R 统计。" },
+        { "key": "chasing", "status": "fail", "evidence": "价格尚未进入计划区域就提前买入" },
+        { "key": "newsRisk", "status": "unknown" },
+        { "key": "slRecorded", "status": "fail", "evidence": "但具体 SL 未记录" }
+      ]
+    },
+    "2026-09-21-xauusdt-long-01": {
+      "errorType": { "primary": "Risk Management Error", "secondary": ["Execution Error"], "evidence": "RR 在下单前已经不合格", "note": "方向与流动性思路正确（文档原话：最大问题不是看多错误），问题出在下单前的风控关口没有把住。" },
+      "classification": {
+        "value": "Bad Loss",
+        "reason": "方向逻辑成立但计划 RR 只有 0.74–0.78 仍执行，违反规则四「未达到最低要求则跳过」；止损是规则被违反后的自然结果。",
+        "evidence": "RR 在下单前已经不合格"
+      },
+      "ruleViolations": [
+        { "tag": "Low RR", "evidence": "计划 RR 约 0.74–0.78，不符合高质量交易的收益风险结构" }
+      ],
+      "mistakes": [
+        { "tag": "Low RR", "evidence": "RR 在下单前已经不合格" },
+        { "tag": "Entry / SL 结构级别不匹配", "evidence": "小级别入场依据配了过大的结构止损" }
+      ],
+      "riskCheck": [
+        { "key": "liquiditySweep", "status": "pass", "evidence": "下方 SSL 被扫后出现 bullish reaction" },
+        { "key": "displacement", "status": "unknown", "note": "本笔没有记录位移质量，Setup 只有 SSL Sweep → Internal MSB。" },
+        { "key": "structureShift", "status": "pass", "evidence": "形成 internal bullish MSB", "note": "只是内部结构转强，文档明确指出不代表 15m 主趋势反转。" },
+        { "key": "poi", "status": "unknown", "note": "Setup 里没有记录 POI（只有 Internal MSB 与 liquidity-to-liquidity）。" },
+        { "key": "entryAtPOI", "status": "unknown", "note": "没有记录计划 POI，因此无法判断入场是否在 POI 内。" },
+        { "key": "slLogical", "status": "fail", "evidence": "Entry 与 SL 的结构级别不够匹配" },
+        { "key": "rrMeetsRequirement", "status": "fail", "evidence": "计划 RR 约 0.74–0.78，不符合高质量交易的收益风险结构" },
+        { "key": "chasing", "status": "unknown", "note": "文档没有记录是否追价。" },
+        { "key": "newsRisk", "status": "unknown" },
+        { "key": "slRecorded", "status": "pass", "evidence": "SL 4305.20" }
+      ]
+    }
+  },
+  "weeks": {
+    "第1周": {
+      "mainStrength": { "text": "等到结构确认与深度回撤才入场，没有追涨；弱 MSB 也等到后续 BOS 才动手。", "evidence": "没有追涨，而是等待深度回撤" },
+      "mainProblem": { "text": "提前单纪律没守住：QQQ 在价格进入计划 POI 之前就用市价买入。", "evidence": "价格尚未进入计划区域就提前买入" },
+      "repeatedMistake": { "text": "SL / Protected Low 记录缺失（3 笔里 2 笔被点名），其中 1 笔因此完全不进入 R 统计。", "evidence": "但具体 SL 未记录，因此本笔不计算 R" },
+      "missingDataNote": "计划 TP、Protected Low、MAE/MFE 三类字段在本周没有被记录。",
+      "newRule": { "text": "HTF 提前单只能挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL。", "evidence": "HTF 提前单必须挂在计划 POI 内，宁可错过也不抢跑；每笔必须记录准确 SL" },
+      "mainLesson": { "text": "弱 MSB 不能单独当成反转确认，要等 BOS 或后续位移增强再动手。", "evidence": "不能单独视为强反转确认" }
+    },
+    "第2周": {
+      "mainStrength": { "text": "方向识别正确：SSL Sweep、Internal MSB、上方 BSL 都标对了，liquidity-to-liquidity 的思路完整。", "evidence": "正确识别 SSL Sweep、Internal MSB 与上方 BSL" },
+      "mainProblem": { "text": "下单前没有把 RR 关口当硬性条件，0.74–0.78 的计划盈亏比仍然执行了。", "evidence": "RR 在下单前已经不合格" },
+      "repeatedMistake": { "text": "Entry 与 SL 的结构级别不匹配：用内部结构入场，却用更大的结构失效位止损。", "evidence": "Entry 与 SL 的结构级别不够匹配" },
+      "missingDataNote": "本周期数据只有 1 笔，MAE/MFE 未记录。",
+      "newRule": { "text": "下单前强制画出 Entry / SL / TP 并计算计划 RR；SL 太远就等更好的 HTF POI 或 LTF confirmation。", "evidence": "下单前强制画出 Entry / SL / TP 并计算计划 RR" },
+      "mainLesson": { "text": "Internal MSB 只代表内部结构转强；用内部结构入场时，止损不能挂到更高周期结构失效位。", "evidence": "不代表 15m 主趋势已经完成反转" }
+    }
+  }
+}
