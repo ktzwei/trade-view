@@ -724,7 +724,15 @@ def main():
     blocks, zf = docx_blocks(raw)
     doc = parse(blocks, zf)
     exported = export_images(zf, doc["trades"], doc["unresolvedImages"])
-    doc["meta"]["sourceVersion"] = digest[:16]
+    # sourceVersion 用「正文内容哈希」而不是 docx 字节哈希：
+    # Google 每次导出的 docx 字节都不完全一样（时间戳/压缩差异），字节哈希无法判断「文档到底改没改」。
+    # 内容哈希 = 全部段落文本 + 每张图的 sha256，文档真改了才会变。
+    content_sig = "\n".join(b.get("text", "") for b in blocks)
+    for t in doc["trades"]:
+        for im in t["images"]:
+            content_sig += "\n" + im["sha256"]
+    doc["meta"]["sourceVersion"] = hashlib.sha256(content_sig.encode("utf-8")).hexdigest()[:16]
+    doc["meta"]["exportBytesHash"] = digest[:16]      # 本次导出的字节哈希，仅供排查
     doc["meta"]["sourceBytes"] = len(raw)
     doc["meta"]["blocks"] = len(blocks)
     doc["meta"]["unresolvedImageCount"] = len(doc["unresolvedImages"])
@@ -745,7 +753,7 @@ def main():
         print(f"  {t['id']:38s} {str(t['resultStatus']):5s} R={t['actualR']} "
               f"RR={t['plannedRR']} imgs={len(t['images'])} "
               f"completeness={t['dataCompleteness']['percent']}%")
-    print(f"[OK] 写出 data/source.json（sourceVersion={digest[:16]}）")
+    print(f"[OK] 写出 data/source.json（sourceVersion={doc['meta']['sourceVersion']}）")
     return doc
 
 

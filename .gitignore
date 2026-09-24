@@ -1,3 +1,7 @@
+# 文档快照：Google 每次导出的 docx 字节都不稳定（700KB~1.5MB），
+# 提交它只会让仓库每次发布都多一个几 MB 的 blob，信息量为零。
+# 判断「文档有没有改」请用 data/trades.json 里的 meta.sourceVersion（正文内容哈希）。
+cache/
 parser/cache/
 .DS_Store
 __pycache__/

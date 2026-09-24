@@ -210,14 +210,14 @@ trade-view/
 ├── analysis/analysis.json      # AI 分析层（每条判定带原文引用）
 ├── parser/parse_gdoc.py        # Google Docs → structured trades（含图片绑定）
 ├── parser/build.py             # 证据校验 + 统计口径 + 合并输出
-├── parser/cache/doc.docx       # 文档快照（含 sha256 版本）
+├── cache/doc.docx              # 文档快照（不进 git；文档改没改看 meta.sourceVersion 内容哈希）
 ├── images/<tradeId>-N.png      # 图片按交易一一绑定命名
 └── publish.sh                  # 一键发布到 ktzwei.github.io/trade-view/
 ```
 
 **Data Flow**
 ```
-Google Docs ──(export?format=docx)──► parser/cache/doc.docx ──► parse_gdoc.py
+Google Docs ──(export?format=docx)──► cache/doc.docx ──► parse_gdoc.py
    ├─ 按 document.xml 顺序切块：H1=Week、H2=Trade、【=字段、drawing=图片
    ├─ 图片按「文档顺序」绑定到当前 Trade（注意：不能用 media 文件名，Google 每次导出会重命名！）
    └─► data/source.json（纯事实，缺失一律 null）
@@ -228,10 +228,10 @@ analysis/analysis.json ──(evidence 逐条校验)──► build.py ──►
 - 标题映射：H1=Week（`第N周｜起始–结束`）、H2=Trade（`序号｜标的 方向｜结果`），正文 `【字段】` 归位；H1「SMC 执行规则」→ rules。
 - 图片绑定：按 XML 顺序，Trade 标题之后的图片归该笔；归属无法判定 → 标 `unresolved`，不猜（§53）。
 - 不确定即空：不认识的字段进 `_notes` 原文保留，不硬塞进 schema。
-- 同步（§54）：当前手动跑 `parse_gdoc.py && build.py`；文档哈希写进 `meta.sourceVersion`，可对比是否变过。
+- 同步（§54）：当前手动跑 `./publish.sh`（解析 → 校验 → 自检 → push）；`meta.sourceVersion` 是**正文内容哈希**（段落文本 + 每张图 sha256）—— Google 每次导出的 docx 字节都不同（9c46… 和 5f19… 是同一份文档），所以不能用字节哈希判断「文档改没改」。
 
-**Deployment**：`./publish.sh` → 同步到 `ktzwei.github.io` 仓库的 `trade-view/` 子目录并 push，线上 `https://ktzwei.github.io/trade-view/`。
-（PRD §77 写的仓库是 `zzjanuary/trade-view`：当前凭据对该仓库只有读权限，推不上去；代码本身与仓库名无关，随时可以整目录搬过去。）
+**Deployment**：`./publish.sh` → 推送到 `ktzwei/trade-view` 仓库（GitHub Pages 已开启，main 分支根目录），线上 `https://ktzwei.github.io/trade-view/`；`ktzwei.github.io` 首页的「项目导航」已加入口卡片。
+（PRD §77 写的仓库是 `zzjanuary/trade-view`：现有凭据对它是只读，推不上去；代码与仓库名无关，随时可整目录搬过去。）
 
 ---
 
