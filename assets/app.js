@@ -252,7 +252,7 @@
         <div class="tcard-thesis">${esc((t.sections || {}).entryReason || '')}</div>
         <div class="tcard-tags">
           ${setupTags(t).map((s) => `<a class="chip tag" href="#/trades?setup=${encodeURIComponent(s)}">${esc(s)}</a>`).join('')}
-          ${(t.poi || []).map((p) => `<span class="chip">${esc(p.label)}</span>`).join('')}
+          ${poiChips(t.poi)}
           <span class="chip ghost">${esc(t.week.label)}</span>
         </div>
       </div>
@@ -401,8 +401,8 @@
             ${s.displacement ? `<div class="raw small" style="margin-top:8px">${esc(s.displacement)}</div>` : ''}</div>
 
           <div class="panel"><h3>POI</h3>
-            ${(t.poi || []).length ? `<div class="badges-row">${t.poi.map((p) => `<span class="chip">${esc(p.label)}</span>`).join('')}</div>
-              <div class="small muted" style="margin-top:6px">POI Confluence：${esc((t.poi || []).map((p) => p.label).join(' + '))}</div>`
+            ${(t.poi || []).length ? `<div class="badges-row">${poiChips(t.poi)}</div>
+              <div class="small muted" style="margin-top:6px">POI Confluence：${esc((t.poi || []).map(poiLabel).filter(Boolean).join(' + '))}</div>`
               : '<div class="muted small">未记录。文档里没有把这笔的 POI（OB / BB / IMB / FVG）单独写出来，因此这里保持空白 —— 不推测。</div>'}</div>
 
           <div class="panel"><h3>Setup Flow</h3>
@@ -486,7 +486,7 @@
           <div class="panel"><h3>Tags</h3><div class="badges-row">
             ${dirChip(t.direction)}
             ${setupTags(t).map((x) => `<a class="chip tag" href="#/trades?setup=${encodeURIComponent(x)}">${esc(x)}</a>`).join('')}
-            ${(t.poi || []).map((p) => `<span class="chip">${esc(p.label)}</span>`).join('')}
+            ${poiChips(t.poi)}
             ${resChip(t)}
             ${(a.mistakes || []).map((m) => `<a class="chip tag warn" href="#/trades?mistake=${encodeURIComponent(m.tag)}">${esc(m.tag)}</a>`).join('')}
             <span class="chip ghost">${esc((t.entryModel || {}).label || '')}</span>
@@ -523,6 +523,18 @@
     </svg>`;
   }
 
+  function poiLabel(p) {
+    const t = p.label || p.type;
+    if (!t) return '';
+    const tf = (p.timeframes || []).join('/').toUpperCase();
+    return tf ? `${t} ${tf}` : t;
+  }
+  function poiChips(list) {
+    return (list || []).map((p) => {
+      const s = poiLabel(p);
+      return s ? `<span class="chip poi">${esc(s)}</span>` : '';
+    }).join('');
+  }
   function shortId(id) {
     const p = String(id).split('-');
     const d = p.length > 2 ? p.slice(1, 3).join('-') : id;

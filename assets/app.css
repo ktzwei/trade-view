@@ -90,6 +90,7 @@ code,.mono{font-family:var(--mono);font-size:.92em}
 .chip.ghost{background:transparent;color:var(--ink-3)}
 .chip.tag{cursor:pointer}
 .chip.tag:hover{border-color:#c9c8c4;color:var(--ink)}
+.chip.poi{color:var(--ink-2);background:#f4f3f0;border-color:#e3e2de}
 .rpos{color:var(--green);font-weight:650}
 .rneg{color:var(--red);font-weight:650}
 .rzero{color:var(--ink-2);font-weight:650}
