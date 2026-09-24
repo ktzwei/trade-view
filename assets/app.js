@@ -464,9 +464,10 @@
             ? `<ul class="reasons">${t.review.worked.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
             : '<div class="muted small">未记录 —— 一笔亏损交易也应该有做得对的地方，缺这一块就只剩情绪结论。</div>'}</div>
 
-          <div class="panel"><h3>What Went Wrong</h3>${(t.review.mistakes || []).length
-            ? `<ul class="reasons">${t.review.mistakes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
-            : '<div class="muted small">未记录</div>'}
+          <div class="panel"><h3>What Went Wrong <span class="hint small">【需要改进】/【主要问题】</span></h3>${(t.review.improve || []).length || t.review.mainProblem
+            ? `${(t.review.improve || []).length ? `<ul class="reasons">${(t.review.improve || []).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+               ${t.review.mainProblem ? `<div class="callout warn" style="margin-top:8px"><b>Main Problem：</b>${esc(t.review.mainProblem)}</div>` : ''}`
+            : '<div class="muted small">未记录 —— 一笔亏损交易也应该有做得对的地方，缺这一块就只剩情绪结论。</div>'}
             ${(a.mistakes || []).length ? `<div style="margin-top:8px">${a.mistakes.map((m) => `<span class="chip warn">${esc(m.tag)}</span>`).join(' ')}<div class="small muted" style="margin-top:4px">AI 标签（依据原文）：${a.mistakes.map((m) => '“' + esc(m.evidence) + '”').join(' / ')}</div></div>` : ''}</div>
 
           <div class="panel"><h3>Next Rule</h3>${(t.review.nextRules || []).length

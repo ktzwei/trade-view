@@ -3,9 +3,9 @@
     "sourceTitle": "交易复盘",
     "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
     "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
-    "parsedAt": "2026-09-24T14:24:17+08:00",
+    "parsedAt": "2026-09-24T14:40:22+08:00",
     "schemaVersion": "1.0",
-    "sourceVersion": "9c46485cdb42b64a",
+    "sourceVersion": "5f19c99ceecfa7e3",
     "sourceBytes": 707276,
     "blocks": 81,
     "unresolvedImageCount": 0,
@@ -238,7 +238,7 @@
       "mfe": null,
       "images": [
         {
-          "media": "image2.png",
+          "media": "image4.png",
           "order": 1,
           "file": "images/2026-09-13-ethusdt-long-01-1.png",
           "type": null,
@@ -441,7 +441,7 @@
       ],
       "invalidation": {
         "raw": "SL 放在回踩结构失效区域下方；以后应同时记录对应 Protected Low。",
-        "logic": null,
+        "logic": "SL 放在回踩结构失效区域下方",
         "price": 2414.0,
         "priceRecorded": true
       },
@@ -582,7 +582,7 @@
           "priceText": "720.48",
           "sizePercent": 50.0,
           "types": [
-            "External Liquidity"
+            "Liquidity"
           ],
           "source": "execution"
         },
@@ -593,7 +593,7 @@
           "priceText": "722.48",
           "sizePercent": 50.0,
           "types": [
-            "External Liquidity"
+            "Liquidity"
           ],
           "source": "execution"
         }
@@ -693,7 +693,7 @@
       "targetLogic": {
         "raw": "上方流动性/结构目标分批兑现。",
         "targetType": [
-          "External Liquidity"
+          "Liquidity"
         ],
         "reason": "上方流动性/结构目标分批兑现。"
       },
@@ -723,7 +723,7 @@
       "mfe": null,
       "images": [
         {
-          "media": "image3.png",
+          "media": "image2.png",
           "order": 1,
           "file": "images/2026-09-15-qqqusdt-long-03-1.png",
           "type": null,
@@ -824,7 +824,8 @@
           "priceText": "4388–4390",
           "sizePercent": null,
           "types": [
-            "BSL"
+            "BSL",
+            "External Liquidity"
           ],
           "source": "execution"
         }
@@ -905,7 +906,8 @@
       "targetLogic": {
         "raw": "4388–4390 为上方 Buy-side Liquidity，是本次 Long 的主要 external liquidity target。",
         "targetType": [
-          "BSL"
+          "BSL",
+          "External Liquidity"
         ],
         "reason": "4388–4390 为上方 Buy-side Liquidity，是本次 Long 的主要 external liquidity target。"
       },
@@ -934,7 +936,7 @@
       "mfe": null,
       "images": [
         {
-          "media": "image4.png",
+          "media": "image3.png",
           "order": 1,
           "file": "images/2026-09-21-xauusdt-long-01-1.png",
           "type": null,
