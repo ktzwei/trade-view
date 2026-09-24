@@ -523,10 +523,16 @@
     </svg>`;
   }
 
+  function shortId(id) {
+    const p = String(id).split('-');
+    const d = p.length > 2 ? p.slice(1, 3).join('-') : id;
+    const sym = (p[3] || '').replace('usdt', '').toUpperCase();
+    return `${d} ${sym}`.trim();
+  }
   function perfTable(rows, firstCol) {
     if (!rows.length) return '<div class="muted small">暂无数据</div>';
     return `<table class="plain"><thead><tr><th>${esc(firstCol)}</th><th class="num">Trades</th><th class="num">Win Rate</th><th class="num">Avg R</th><th class="num">Net R</th></tr></thead>
-      <tbody>${rows.map((r) => `<tr><td>${esc(r.key)}<div class="small muted">${r.trades.map((id) => `<a href="#/trade/${encodeURIComponent(id)}" style="text-decoration:underline">${esc(id.replace(/^20/, '').slice(0, 12))}</a>`).join(' · ')}</div></td>
+      <tbody>${rows.map((r) => `<tr><td>${esc(r.key)}<div class="small muted">${r.trades.map((id) => `<a href="#/trade/${encodeURIComponent(id)}" style="text-decoration:underline">${esc(shortId(id))}</a>`).join(' · ')}</div></td>
         <td class="num">${r.count}</td><td class="num">${r.winRate === null ? '—' : pct(r.winRate)}</td>
         <td class="num">${r.avgR === null ? '—' : (r.avgR > 0 ? '+' : '') + r.avgR + 'R'}</td>
         <td class="num">${r.netR === null ? '—' : (r.netR > 0 ? '+' : '') + r.netR + 'R'}</td></tr>`).join('')}</tbody></table>`;

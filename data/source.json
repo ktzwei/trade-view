@@ -3,10 +3,10 @@
     "sourceTitle": "交易复盘",
     "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
     "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
-    "parsedAt": "2026-09-24T14:45:19+08:00",
+    "parsedAt": "2026-09-24T14:46:47+08:00",
     "schemaVersion": "1.0",
     "sourceVersion": "598bddcf7c0ebf7b",
-    "exportBytesHash": "a8d9892b80012bf1",
+    "exportBytesHash": "431521930d466370",
     "sourceBytes": 707276,
     "blocks": 81,
     "unresolvedImageCount": 0,
@@ -480,7 +480,7 @@
       "mfe": null,
       "images": [
         {
-          "media": "image2.png",
+          "media": "image1.png",
           "order": 1,
           "file": "images/2026-09-18-ethusdt-long-02-1.png",
           "type": null,
@@ -724,7 +724,7 @@
       "mfe": null,
       "images": [
         {
-          "media": "image1.png",
+          "media": "image3.png",
           "order": 1,
           "file": "images/2026-09-15-qqqusdt-long-03-1.png",
           "type": null,
@@ -937,7 +937,7 @@
       "mfe": null,
       "images": [
         {
-          "media": "image3.png",
+          "media": "image2.png",
           "order": 1,
           "file": "images/2026-09-21-xauusdt-long-01-1.png",
           "type": null,
