@@ -46,10 +46,11 @@ Week 层级在页面里明显大于 Trade（H1 23px / Trade 16px + 独立卡片�
 4. **止损与目标成对**：SL 放在能否定逻辑的结构点并记录准确价格；TP 对应对侧流动性或 IMB；下单前算计划盈亏比，未达最低要求则跳过。
 5. **复盘执行偏差**：分别记录 HTF 限价与 HTF+低周期确认；逐笔填计划/实际 Entry、SL、TP、R 与提前出场原因；缺少 SL 的交易不统计 R。
 
-### A.4 数据完整?（机器算出来的，不是感觉）
-- 4 笔已结束、3 胜 1 负、**Known Net R +2.56R**（3 笔可计 R）
-- 平均数据完整度：**68%**（逐笔 73% / 73% / 60% / 67%）
-- 最常缺：`mae` 4 笔、`mfe` 4 笔、`fees` 4 笔、`plannedRR` 3 笔、`stopLoss` 1 笔、`actualR` 1 笔、`poi` 1 笔、`displacement` 1 笔
+### A.4 数据完整度（机器算出来的，不是感觉）
+- 6 笔已结束、4 胜 2 负、**Known Net R +3.61R**（5 笔可计 R，1 笔因缺 SL 排除）
+- 平均数据完整度：**61%**（逐笔 73% / 73% / 60% / 67% / 40% / 53%）
+- 最常缺：`mae`、`mfe`、`fees`（6 笔 0 记录）、`plannedRR` 4 笔、`stopLoss` 2 笔、`poi` 3 笔、`displacement` 3 笔
+- 新增两笔（2026-09-28 解析时的文档状态）：`XAU/USDT Short`（开仓时间未记录、只有风险金额 0.4 = 1R → 文档写明 +2.05R）、`HYPE/USDT Long`（无【交易时间】行，开仓日取自标题 → -1R）
 - **QQQ 缺 SL → 按规则不计 R**（页面显示「R 未计入」，而不是硬算一个假数）
 - XAU 那笔：Entry / SL / Target / 计划 RR 齐全（0.74–0.78），却违反规则四 → 说明问题不在「没记」，在「记了也照做」
 
@@ -120,15 +121,23 @@ data/trades.json     ← 合并结果（网页唯一数据源），每笔交易�
 
 ## C. Information Architecture
 
+**v2 简化原则（用户反馈「内容繁琐，弄简单些，目的是好复盘、能进步」）**：一屏只回答三个问题 —— 这笔为什么做 / 结果怎样 / 下次怎么改。原始字段一个不丢，但全部折叠进「原始记录」，默认不出现。
+
 ```
-Dashboard  #/            → 顶部统计条 + Recent Mistakes + Recent Rules + 按周的交易卡片
-Weeks      #/weeks       → 全部周列表（周标题明显大于交易）
-Week       #/week/第1周   → 该周统计 + Weekly Review + 本周交易卡片
-Trades     #/trades      → 全部交易 + 多维筛选（结果/方向/标的/入场模型/错误/违规/Setup）
-Trade      #/trade/<id>  → 单笔完整复盘（图表在第一屏，详见 D）
-Analytics  #/analytics   → 累计 R、Setup 表现、Entry Model 对比、错误频次、持仓时间、完整度
-Rules      #/rules       → 文档内规则 + 由交易生成的 Next Rules（每条显示 Created From）
+Dashboard  #/            → 4 个关键数字 + 最该盯的重复错误 + 最近长出来的规则 + 按周：周复盘三行 + 一笔一行
+Weeks      #/weeks       → 同上（周维度）
+Week       #/week/第1周  → 该周三行复盘 + 一笔一行 + 折叠的周复盘其他条目
+Trades     #/trades      → 一笔一行 + 筛选
+Trade      #/trade/<id>  → ① 头部三价格 + 大图 ② 复盘三问（做对了/问题/下次）③ 原始记录（折叠）
+Analytics  #/analytics   → 累计 R、Setup 表现、最常犯错、缺记录热点（统计用，可不下钻）
+Rules      #/rules       → 文档规则 + 从交易里长出来的规则（按类别分组，每条挂来源）
 ```
+
+单笔页三层（复盘优先，避免信息平铺）：
+1. **这是什么交易**：品种 / 方向 / 开平时间（缺就写「未记录」）/ Entry · SL · Exit · 计划 TP · Planned RR · Actual R + 大图（图表仍是第一优先级）。
+2. **复盘三问**：① 做对了什么 ② 问题在哪（含 AI 归类错因 + 规则卡点）③ 下次怎么做（文档里写了的就照抄，没写就明说这格空着）。
+3. **原始记录（折叠）**：文档逐字段原文 + Liquidity/Displacement/POI + 下单前风控自查 + Google Docs 原文对照。
+
 切换维度：`This Week / This Month / All`（全局，作用于首页统计与列表）+ 全文搜索 + 可分享的筛选 URL（如 `#/trades?violation=Low%20RR`）。
 
 ---
@@ -140,8 +149,7 @@ Rules      #/rules       → 文档内规则 + 由交易生成的 Next Rules（�
 ┌ Trading Review ─────── Dashboard Weeks Trades Analytics Rules ─ [This Week|Month|All] [搜索] ┐
 │ 数据源：交易复盘(Google Docs) · 解析时间 · 版本哈希 · 可计 R 3 笔 / 1 笔因缺 SL 不计入            │
 ├──────────────────────────────────────────────────────────────────────────────────────────┤
-│ [Closed 4] [Win/Loss/BE 3/1/0] [WinRate 75%] [Net R +2.56R] [AvgR +0.85R] [HTF 1][LTF 0]  │
-│ [Rule Violations 3] [Missing Data 4]                                                      │
+│ [Known Net R +3.61R · 5 笔可计 R] [Win/Loss 4/2 · 67%] [规则违反 7] [待补记录 6]              │
 ├─ Recent Mistakes ──────────────────┬─ Recent Rules ──────────────────────────────────────┤
 │ 条形：Missing Protected Low 2 笔    │ 规则文本 + 来源：QQQ/USDT 2026-09-15                 │
 ├─ Weeks ───────────────────────────┴────────────────────────────────────────────────────────┤

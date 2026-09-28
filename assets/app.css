@@ -241,3 +241,66 @@ details.raw-src .kvraw b{display:block;font-size:11px;color:var(--ink-3);text-tr
   .trade-header .rr{text-align:left}
   .week-title h2{font-size:20px}
 }
+
+/* ================= 简化版：一行一笔 + 三问复盘 ================= */
+.stats.stats-4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.warnv{color:var(--red)}
+.week-nums .wk-r{font-weight:660}
+.week-core{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:12px}
+.week-core .wr.good{border-left:3px solid #cfe4d8}
+.week-core .wr.bad{border-left:3px solid #f0d3d0}
+.week-core .wr.rule{border-left:3px solid #e0d6f0}
+
+.trows{display:grid;gap:0;margin-top:12px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+.trow{display:grid;grid-template-columns:62px 160px 96px 150px 1fr 16px;gap:12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line-2);font-size:13.5px}
+.trow:last-child{border-bottom:0}
+.trow:hover{background:var(--panel-2)}
+.trow .td{min-width:0}
+.trow .td.d{color:var(--ink-3);font-size:12.5px;font-variant-numeric:tabular-nums}
+.trow .td.sym{font-weight:620}
+.trow .td.r{font-variant-numeric:tabular-nums}
+.trow .td.res{display:flex;gap:5px;flex-wrap:wrap}
+.trow .td.note{color:var(--ink-2);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow .td.note.bad{color:#9c4a44}
+.trow .td.go{color:var(--ink-3);text-align:right}
+
+.td-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-top:10px;padding:16px 18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.td-head h1{font-size:24px;letter-spacing:-.02em}
+.td-head .sub{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.td-head .d-long{color:var(--green)}
+.td-head .d-short{color:var(--red)}
+.td-r{display:flex;align-items:center;gap:10px;font-size:26px;font-weight:680;letter-spacing:-.02em;white-space:nowrap}
+.pricebar{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-top:12px}
+.pricebar span{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:8px 12px}
+.pricebar i{display:block;font-style:normal;font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.pricebar b{font-size:15.5px;font-variant-numeric:tabular-nums}
+.logic-line{margin-top:14px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:16px;align-items:start}
+.three .panel{margin-top:0}
+.three .panel.good{border-top:3px solid #bcdccb}
+.three .panel.bad{border-top:3px solid #eec7c3}
+.three .panel.rule{border-top:3px solid #d8cdea}
+.rule-item{border-left:3px solid var(--ink);margin-bottom:8px}
+
+details.fold{margin-top:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--shadow);padding:2px 0}
+details.fold > summary{cursor:pointer;font-size:13px;color:var(--ink-2);padding:11px 16px;list-style:none}
+details.fold > summary::-webkit-details-marker{display:none}
+details.fold > summary::before{content:'▸  ';color:var(--ink-3)}
+details.fold[open] > summary::before{content:'▾  '}
+.rawgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;padding:6px 14px 14px}
+.rawgrid .panel + .panel{margin-top:0}
+.rawgrid .panel.span2{grid-column:1/-1}
+.rawgrid .kvraw{font-size:12.5px;color:var(--ink-2);border-left:2px solid var(--line);padding-left:10px;margin:8px 0}
+.rawgrid .kvraw b{display:block;font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.kvraw-lite{display:grid;gap:6px;padding:0 16px 12px;font-size:12.5px;color:var(--ink-2)}
+.kvraw-lite b{display:inline-block;min-width:66px;color:var(--ink-3);font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-right:8px}
+.analytics-grid .panel.span2{grid-column:span 2}
+@media (max-width:1360px){.analytics-grid .panel.span2{grid-column:auto}}
+@media (max-width:900px){
+  .trow{grid-template-columns:54px 1fr 84px;row-gap:3px}
+  .trow .td.res{grid-column:3;grid-row:1}
+  .trow .td.r{grid-column:2;grid-row:2}
+  .trow .td.note{grid-column:1/-1;grid-row:3;white-space:normal}
+  .trow .td.go{display:none}
+  .td-head{flex-direction:column}
+}

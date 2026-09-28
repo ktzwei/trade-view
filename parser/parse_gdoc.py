@@ -50,6 +50,10 @@ SECTION_KEYS = {
     "需要改进": "improve",
     "主要问题": "mainProblem",
     "下次规则": "nextRule",
+    "复盘分析": "reviewAnalysis",
+    "复盘结论": "reviewConclusion",
+    "trade management": "tradeManagement",
+    "交易管理": "tradeManagement",
 }
 
 MISSING = "Not Recorded"  # 前端展示缺失值时使用，实际数据里是 null
@@ -216,13 +220,19 @@ def parse(blocks, zf):
     unresolved_images = []
 
     for bi, b in enumerate(blocks):
+        text = (b.get("text") or "").strip()
+        # 文档里部分字段行/周总结被排版成了「标题 1」（第3周那笔），它们不是结构标题。
+        if b["kind"] == "h1" and (text.startswith("【") or text.startswith("周总结")
+                                 or text.startswith("固定复盘模板")):
+            b = {"kind": "para", "text": text}
         if b["kind"] == "h1":
             t = b["text"]
             if "规则" in t:
                 rules_section = {"title": t, "lines": [], "index": bi}
                 cur_week = cur_trade = None
                 continue
-            if "周" in t:
+            # 只有真正的「第 N 周｜日期区间」才算周标题；含“周”字的正文不算
+            if re.match(r"^第\s*[0-9一二三四五六七八九十]+\s*周", t.strip()):
                 m = re.match(r"第\s*(\d+)\s*周", t)
                 idx = int(m.group(1)) if m else None
                 dates = re.findall(r"(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日", t)
@@ -264,6 +274,7 @@ def parse(blocks, zf):
                     "symbolLabel": h["symbolLabel"],
                     "direction": h["direction"],
                     "headingResult": h["resultText"],
+                    "dateText": h["dateText"],
                     "rawHeading": h["raw"],
                     "sections": {},
                     "rawSections": {},
@@ -304,7 +315,6 @@ def parse(blocks, zf):
     for t in trades:
         s = t["sections"]
         d = {}
-        d["id"] = build_id(t)
         d["num"] = t["num"]
         d["symbol"] = t["symbol"]
         d["symbolLabel"] = t["symbolLabel"]
@@ -313,9 +323,12 @@ def parse(blocks, zf):
         d["heading"] = t["rawHeading"]
         d["sourceBlockIndex"] = t["sourceBlockIndex"]
 
-        # 交易时间
+        # 交易时间（可能整段缺失、也可能只记录了平仓时间）
         et = xt = None
+        edate = xdate = None
         hold = None
+        partial_closes = []
+        hd_text = t.get("dateText") or ""
         stext = s.get("time", "")
         m = re.search(
             r"(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})\s*→\s*(?:(\d{4}-\d{2}-\d{2})\s+)?(\d{2}:\d{2})",
@@ -324,28 +337,74 @@ def parse(blocks, zf):
         if m:
             d1, t1, d2, t2 = m.group(1), m.group(2), m.group(3) or m.group(1), m.group(4)
             et, xt = to_iso(d1, t1), to_iso(d2, t2)
+            edate, xdate = d1, d2
             hold = int(
                 (datetime.fromisoformat(xt) - datetime.fromisoformat(et)).total_seconds() // 60
             )
+        else:
+            times = re.findall(r"(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})", stext)
+            # 「分批平仓时间为 2026-09-28 08:31 与 14:57」→ 第二笔共用前一个日期
+            for hh, mm in re.findall(r"与\s*(\d{1,2}):(\d{2})", stext):
+                if times:
+                    times.append((times[-1][0], f"{int(hh):02d}:{mm}"))
+            entry_missing = bool(re.search(r"开仓时间未记录|具体开仓时间未记录|未记录.*开仓时间", stext))
+            if times and (entry_missing or "平仓" in stext):
+                # 只记录到平仓（含分批平仓）→ 取最后一次平仓作为出场，绝不用它冒充开仓时间
+                partial_closes = [to_iso(a, b) for a, b in times]
+                xdate, xt = times[-1][0], to_iso(*times[-1])
+            elif len(times) >= 2:
+                edate, et = times[0][0], to_iso(*times[0])
+                xdate, xt = times[-1][0], to_iso(*times[-1])
+        # 标题里的日期区间是文档明确写的；「上一周未完成」那种只代表完成时间，不当开仓日
+        hdate = parse_cn_date(hd_text)
+        if edate is None and hdate and not re.search(r"未完成|上一周", hd_text):
+            edate = hdate
+        if xdate is None and re.search(r"未完成|完成", hd_text):
+            xdate = parse_cn_date(hd_text)
+        if et and xt:
+            hold = int((datetime.fromisoformat(xt) - datetime.fromisoformat(et)).total_seconds() // 60)
+        d["entryDate"] = edate
+        d["exitDate"] = xdate
         d["entryTime"] = et
         d["exitTime"] = xt
+        d["partialCloses"] = partial_closes or None
         d["holdingMinutes"] = hold
         d["timeText"] = stext or None
+        d["id"] = build_id(t, edate)
 
         # 执行价格
         ex = s.get("execution", "")
-        d["entry"] = num(re.search(r"(?:实际\s*)?Entry\s*([\d.]+)", ex).group(1)) if re.search(r"(?:实际\s*)?Entry\s*([\d.]+)", ex) else None
-        d["stopLoss"] = num(re.search(r"SL\s*([\d.]+)", ex).group(1)) if re.search(r"SL\s*([\d.]+)", ex) else None
-        d["exit"] = num(re.search(r"Exit\s*([\d.]+)", ex).group(1)) if re.search(r"Exit\s*([\d.]+)", ex) else None
+
+        def _price(pat):
+            m2 = re.search(pat, ex)
+            if not m2:
+                return None, False
+            return num(m2.group(1)), ("约" in m2.group(0))
+
+        entry_val, entry_approx = _price(r"(?:实际\s*)?Entry\s*(?:约\s*)?([\d.]+)")
+        sl_val, sl_approx = _price(r"(?:初始\s*)?SL\s*(?:约\s*)?([\d.]+)")
+        exit_val, _ = _price(r"Exit\s*(?:约\s*)?([\d.]+)")
+        d["entry"] = entry_val
+        d["entryApprox"] = True if (entry_val is not None and entry_approx) else None
+        d["stopLoss"] = sl_val
+        d["stopLossApprox"] = True if (sl_val is not None and sl_approx) else None
+        d["exit"] = exit_val
         plan_poi = re.search(r"计划\s*POI\s*约?\s*([\d.]+)", ex)
         d["plannedPOI"] = num(plan_poi.group(1)) if plan_poi else None
+        mrk = re.search(r"总止损风险\s*([\d.]+)", ex)
+        d["riskAmount"] = num(mrk.group(1)) if mrk else None
+        d["riskAmountIsOneR"] = bool(mrk and re.search(r"总止损风险\s*[\d.]+\s*=?\s*1\s*R", ex)) or None
 
         targets = []
-        tgt = re.search(r"Target\s*([\d.]+\s*[–\-—]\s*[\d.]+)", ex)
+        tgt = re.search(r"Target\s*(?:约\s*)?([\d.]+(?:\s*[–\-—]\s*[\d.]+)?)", ex)
         if tgt:
-            lo, hi = split_range(tgt.group(1))
+            ptext = tgt.group(1).replace(" ", "")
+            if re.search(r"[–\-—]", ptext):
+                lo, hi = split_range(ptext)
+            else:
+                lo = hi = num(ptext)
             targets.append({"label": "Target", "priceLow": lo, "priceHigh": hi,
-                            "priceText": tgt.group(1).replace(" ", ""), "sizePercent": None,
+                            "priceText": ptext, "sizePercent": None,
                             "types": extract_target_types(s.get("targetLogic", "")),
                             "source": "execution"})
         for m2 in re.finditer(r"TP(\d)\s*([\d.]+)\s*（(\d+)%）", ex):
@@ -392,6 +451,11 @@ def parse(blocks, zf):
         d["plannedR"] = plannedR
         d["rIncluded"] = rIncluded
         d["resultRaw"] = res or None
+        if actualR is not None:
+            # R 是文档自己写明的（不是我们算的）；如果只有风险金额没有 SL 价格，单独标记口径
+            d["rBasis"] = "doc:risk_amount" if d.get("riskAmount") is not None else "doc:r_stated"
+        else:
+            d["rBasis"] = None
         d["pnl"] = None          # 文档未记录金额盈亏
         d["fees"] = None         # 文档未记录手续费
 
@@ -598,11 +662,9 @@ def _join_sections(s):
     return " ".join(parts)
 
 
-def build_id(t):
-    d = t["sections"].get("time", "")
-    m = re.search(r"(\d{4}-\d{2}-\d{2})", d)
-    date = m.group(1) if m else "0000-00-00"
-    return f"{date}-{slug(t['symbol'])}-{t['direction']}-{t['num']}"
+def build_id(t, entry_date=None):
+    # 开仓日未知就写 undated —— 不允许拿「仍为持仓」那天的日期冒充开仓日
+    return f"{entry_date or 'undated'}-{slug(t['symbol'])}-{t['direction']}-{t['num']}"
 
 
 def classify_entry_model(text: str):

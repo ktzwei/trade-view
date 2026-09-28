@@ -20,10 +20,19 @@ for t in d["trades"]:
     for item in a.get("riskCheck", []):
         if item["status"] in ("pass", "fail", "partial") and not item.get("evidence"):
             errs.append(f"{t['id']}: riskCheck「{item['label']}」状态为 {item['status']} 但没有原文引用")
-    if t.get("stopLoss") is None and t.get("rIncluded"):
+    if t.get("stopLoss") is None and t.get("rIncluded") and t.get("rBasis") != "doc:risk_amount":
         errs.append(f"{t['id']}: 缺 SL 却把 R 计入了统计")
-    if t.get("stopLoss") is None and t.get("actualR") is not None:
+    if (t.get("stopLoss") is None and t.get("actualR") is not None
+            and t.get("rBasis") != "doc:risk_amount"):
         errs.append(f"{t['id']}: 缺 SL 却写出 actualR（禁止硬算 R）")
+    if t.get("rBasis") == "doc:risk_amount" and not t.get("riskAmount"):
+        errs.append(f"{t['id']}: 标记为按风险金额计 R，但没有 riskAmount")
+    if t.get("rIncluded") and t.get("actualR") is None:
+        errs.append(f"{t['id']}: 计入 R 统计却没有 actualR")
+    if t.get("rIncluded") is not True and not t.get("rExcludeReason"):
+        errs.append(f"{t['id']}: R 未计入统计但没有说明原因")
+    if t.get("entryDate") is None and t.get("entryTime") is None and "undated" not in t["id"]:
+        errs.append(f"{t['id']}: 开仓日期未知，id 必须带 undated 前缀")
     if t.get("dataCompleteness", {}).get("percent", 100) < 70:
         warns.append(f"{t['id']}: 数据完整度 {t['dataCompleteness']['percent']}%，建议补记录")
 

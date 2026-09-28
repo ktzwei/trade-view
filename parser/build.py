@@ -232,12 +232,15 @@ def setup_tags(t):
 def analytics(trades, weeks):
     # 累计 R 曲线（只含可计 R 的交易，按入场时间排序）
     r_trades = sorted([t for t in trades if t.get("rIncluded") and t.get("actualR") is not None],
-                      key=lambda t: t.get("entryTime") or "")
+                      key=lambda t: (t.get("entryTime") or t.get("entryDate")
+                                     or t.get("exitTime") or t.get("exitDate") or ""))
     cum, curve = 0.0, []
     for t in r_trades:
         cum += t["actualR"]
         curve.append({"id": t["id"], "symbolLabel": t["symbolLabel"],
-                      "date": (t.get("entryTime") or "")[:10], "r": t["actualR"],
+                      "date": (t.get("entryTime") or t.get("entryDate")
+                               or t.get("exitTime") or t.get("exitDate") or "")[:10],
+                      "r": t["actualR"],
                       "cum": round(cum, 2)})
 
     def group(keyfn, items):
@@ -407,14 +410,25 @@ def enrich(t, weeks_by_id):
     }
     t["entryReasonItems"] = (t.get("entryReason") or {}).get("items") or []
 
+    ed, xd = t.get("entryDate"), t.get("exitDate")
     et, xt = t.get("entryTime"), t.get("exitTime")
-    t["entryTimeLabel"] = (et or "").replace("T", " ")[:16] or None
-    t["exitTimeLabel"] = (xt or "").replace("T", " ")[:16] or None
+    t["entryTimeLabel"] = ((et or "").replace("T", " ")[:16]
+                           or (f"{ed}（时间未记录）" if ed else "开仓时间未记录"))
+    t["exitTimeLabel"] = ((xt or "").replace("T", " ")[:16]
+                          or (f"{xd}（时间未记录）" if xd else None))
+    t["entryDateLabel"] = ed
+    t["exitDateLabel"] = xd
+    t["partialCloseLabels"] = [p.replace("T", " ")[:16] for p in (t.get("partialCloses") or [])]
     t["holdingLabel"] = human_duration(t.get("holdingMinutes"))
     t["riskPoints"] = (t.get("derived") or {}).get("riskPoints")
 
     if t.get("rIncluded") is not True:
-        t["rExcludeReason"] = "未记录准确 SL，无法判断计划 RR 与实际 R —— 按规则不纳入 R 统计"
+        if not t.get("stopLoss") and t.get("riskAmount"):
+            t["rExcludeReason"] = "文档只记录了风险金额、没有止损价格，也没有写出 Actual R —— 按要求不强行换算"
+        elif not t.get("stopLoss"):
+            t["rExcludeReason"] = "未记录准确 SL，无法判断计划 RR 与实际 R —— 按规则不纳入 R 统计"
+        else:
+            t["rExcludeReason"] = "文档没有写出 Actual R，不代算"
 
     w = weeks_by_id.get(t.get("weekLabel"))
     t["week"] = {"label": w["label"], "start": w["start"], "end": w["end"],
@@ -429,11 +443,20 @@ def enrich(t, weeks_by_id):
     return t
 
 
+RULE_INSTRUCTION = re.compile(
+    r"必须|不能|不要|不准|禁止|避免|宁可|只[能要]|应当|应该|需要|需|强制|确保|允许|等待|等更好|先|优先|记录")
+
+
 def build_rules(src, trades):
     doc = [dict(r, createdFrom=None, source="doc:rules") for r in src["rules"]["items"]]
-    generated = []
+    generated, skipped = [], []
     for t in trades:
         for s in sentences(t.get("sections", {}).get("nextRule") or t.get("rawSections", {}).get("nextRule") or ""):
+            # 只把「可执行的指令句」收进规则库；纯事实/价格描述（如“4388–4390 是本笔多单目标”）
+            # 仍留在该笔的原文里，但不冒充规则。
+            if not RULE_INSTRUCTION.search(s):
+                skipped.append(s)
+                continue
             cat = "General Rules"
             for pat, name in RULE_CATEGORY:
                 if re.search(pat, s):
@@ -445,6 +468,7 @@ def build_rules(src, trades):
                               "evidence": t["rawSections"].get("nextRule"),
                               "source": "trade.nextRule"})
     return {"doc": doc, "template": src["rules"]["template"], "generated": generated,
+            "skippedNonRule": skipped,
             "categories": ["Liquidity Rules", "Structure Rules", "Entry Rules", "Risk Rules",
                            "Management Rules", "General Rules"]}
 

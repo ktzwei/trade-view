@@ -120,6 +120,62 @@
         { "key": "newsRisk", "status": "unknown" },
         { "key": "slRecorded", "status": "pass", "evidence": "SL 4305.20" }
       ]
+    },
+    "undated-xauusdt-short-02": {
+      "errorType": { "primary": "Unknown", "secondary": [], "evidence": "不评价为 Good Win / Bad Win", "note": "文档自己拒绝用盈亏结果反推当时判断；计划层信息（Setup / Trigger / Invalidation / Planned TP）全部缺失，因此无法判定这笔对错。" },
+      "classification": {
+        "value": "Unclassified",
+        "reason": "只确认了执行结果 +2.05R 与风险口径（0.4 = 1R），Setup、入场触发、止损价格均未记录，不具备策略层评价条件。",
+        "evidence": "不评价为 Good Win / Bad Win"
+      },
+      "ruleViolations": [
+        { "tag": "Missing SL", "evidence": "具体止损价格、结构失效逻辑、原始目标与 Planned RR 未记录" },
+        { "tag": "Missing Setup", "evidence": "Setup、Entry Trigger、Invalidation、Planned TP 等原始计划缺失" }
+      ],
+      "mistakes": [
+        { "tag": "计划未归档", "evidence": "需要原始分析图或当时的交易计划后才能补充" },
+        { "tag": "只有风险金额没有止损价", "evidence": "当前只确认总止损风险 0.4" }
+      ],
+      "riskCheck": [
+        { "key": "liquiditySweep", "status": "unknown", "note": "文档明确写了原始市场背景未记录，不做反推。" },
+        { "key": "displacement", "status": "unknown" },
+        { "key": "structureShift", "status": "unknown" },
+        { "key": "poi", "status": "unknown" },
+        { "key": "entryAtPOI", "status": "unknown" },
+        { "key": "slLogical", "status": "unknown", "note": "只有风险金额 0.4 = 1R，没有止损价格可核对。" },
+        { "key": "rrMeetsRequirement", "status": "unknown", "note": "Planned RR 未记录。" },
+        { "key": "chasing", "status": "unknown" },
+        { "key": "newsRisk", "status": "unknown" },
+        { "key": "slRecorded", "status": "fail", "evidence": "具体止损价格、结构失效逻辑、原始目标与 Planned RR 未记录" }
+      ]
+    },
+    "2026-09-28-hypeusdt-long-01": {
+      "errorType": { "primary": "Entry Error", "secondary": ["Trade Management Error"], "evidence": "确认力度偏弱", "note": "文档自评：把 EQL（流动性）当成入场依据，入场前没有位移 / 结构确认；止损上移也没有可复述的规则。" },
+      "classification": {
+        "value": "Bad Loss",
+        "reason": "入场依据（EQL + 1H IMB）缺少规则二要求的位移与 MSS/BOS 确认，属于提前限价入场；止损本身按计划执行，亏的是 -1R。",
+        "evidence": "本单在入场前没有记录到 EQL 被 sweep 后的 bullish displacement、MSS/BOS 或更低周期确认"
+      },
+      "ruleViolations": [
+        { "tag": "HTF Limit 缺少确认", "evidence": "本单在入场前没有记录到 EQL 被 sweep 后的 bullish displacement、MSS/BOS 或更低周期确认" },
+        { "tag": "SL 移动无规则", "evidence": "没有记录“为什么在该位置上移止损”的结构触发条件" }
+      ],
+      "mistakes": [
+        { "tag": "把流动性当支撑", "evidence": "不能单独视为支撑" },
+        { "tag": "SL 移动无规则", "evidence": "移动 SL 必须有明确规则" }
+      ],
+      "riskCheck": [
+        { "key": "liquiditySweep", "status": "fail", "evidence": "本单在入场前没有记录到 EQL 被 sweep 后的 bullish displacement、MSS/BOS 或更低周期确认" },
+        { "key": "displacement", "status": "fail", "evidence": "本单在入场前没有记录到 EQL 被 sweep 后的 bullish displacement、MSS/BOS 或更低周期确认" },
+        { "key": "structureShift", "status": "fail", "evidence": "本单在入场前没有记录到 EQL 被 sweep 后的 bullish displacement、MSS/BOS 或更低周期确认" },
+        { "key": "poi", "status": "partial", "evidence": "以及 1H IMB", "note": "只有 1H IMB 单点位置，没有记录更完整的 POI 共振。" },
+        { "key": "entryAtPOI", "status": "unknown", "note": "没有记录计划 POI 的价格区间，无法判断成交价 89.582 是否在其内。" },
+        { "key": "slLogical", "status": "pass", "evidence": "初始 SL 约 88.322" },
+        { "key": "rrMeetsRequirement", "status": "unknown", "note": "文档只为 Entry / SL / Target 记了约数，没有写计划 RR，不代算。" },
+        { "key": "chasing", "status": "unknown", "note": "限价单成交，文档没有记录是否追价。" },
+        { "key": "newsRisk", "status": "unknown" },
+        { "key": "slRecorded", "status": "pass", "evidence": "初始 SL 约 88.322" }
+      ]
     }
   },
   "weeks": {
@@ -132,12 +188,20 @@
       "mainLesson": { "text": "弱 MSB 不能单独当成反转确认，要等 BOS 或后续位移增强再动手。", "evidence": "不能单独视为强反转确认" }
     },
     "第2周": {
-      "mainStrength": { "text": "方向识别正确：SSL Sweep、Internal MSB、上方 BSL 都标对了，liquidity-to-liquidity 的思路完整。", "evidence": "正确识别 SSL Sweep、Internal MSB 与上方 BSL" },
-      "mainProblem": { "text": "下单前没有把 RR 关口当硬性条件，0.74–0.78 的计划盈亏比仍然执行了。", "evidence": "RR 在下单前已经不合格" },
-      "repeatedMistake": { "text": "Entry 与 SL 的结构级别不匹配：用内部结构入场，却用更大的结构失效位止损。", "evidence": "Entry 与 SL 的结构级别不够匹配" },
-      "missingDataNote": "本周期数据只有 1 笔，MAE/MFE 未记录。",
+      "mainStrength": { "text": "同一周两种打法都执行到位：XAU Long 的 SSL Sweep / Internal MSB / 上方 BSL 识别正确；XAU Short 按计划分批平仓兑现。", "evidence": "采用分批平仓" },
+      "mainProblem": { "text": "RR 关口没守住：XAU Long 计划 RR 只有 0.74–0.78 仍然下单，这是本周唯一的真正亏损。", "evidence": "RR 在下单前已经不合格" },
+      "repeatedMistake": { "text": "计划层信息不进档：止损价格、Planned RR、原始目标连续两周缺失，其中一笔只能靠风险金额反推 R。", "evidence": "具体止损价格、结构失效逻辑、原始目标与 Planned RR 未记录" },
+      "missingDataNote": "本周 2 笔里 XAU Short 只有风险金额与结果，没有 Setup / Entry Trigger / 止损价；MAE/MFE 依然未记录。",
       "newRule": { "text": "下单前强制画出 Entry / SL / TP 并计算计划 RR；SL 太远就等更好的 HTF POI 或 LTF confirmation。", "evidence": "下单前强制画出 Entry / SL / TP 并计算计划 RR" },
       "mainLesson": { "text": "Internal MSB 只代表内部结构转强；用内部结构入场时，止损不能挂到更高周期结构失效位。", "evidence": "不代表 15m 主趋势已经完成反转" }
+    },
+    "第3周": {
+      "mainStrength": { "text": "开仓前就把 Entry、初始 SL、Target 三个价格写清楚，成交后主动收紧风险，避免承受完整止损。", "evidence": "提前规划了 Entry、初始 SL 与 Target" },
+      "mainProblem": { "text": "把 EQL 当成入场支撑：EQL 本质是可被价格获取的流动性，用它做多却没有等位移与结构确认。", "evidence": "不能单独视为支撑" },
+      "repeatedMistake": { "text": "HTF 提前限价单的确认标准还是没有落成硬条件，本周再次用「位置共振」代替确认。", "evidence": "HTF Limit 模型要记录为什么可以不等 Sweep / LTF confirmation" },
+      "missingDataNote": "本周 1 笔：平仓时间、Exit 价格、MAE/MFE 未记录，止损上移的结构触发条件也没有记。",
+      "newRule": { "text": "看到 EQL 先标记为 Liquidity；要在此做多就等 Sweep EQL → Bullish Displacement → MSS/BOS → Pullback；SL 只按预设的结构条件移动。", "evidence": "看到 EQL 时先按 Liquidity 标记" },
+      "mainLesson": { "text": "流动性池不等于支撑位：EQL 的第一身份是待获取的 sell-side liquidity。", "evidence": "EQL 本质上首先是可被价格获取的 sell-side liquidity" }
     }
   }
 }
