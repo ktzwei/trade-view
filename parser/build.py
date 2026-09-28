@@ -192,9 +192,10 @@ def global_stats(trades):
         "rExcluded": [{"id": t["id"], "symbolLabel": t["symbolLabel"],
                        "reason": t.get("rExcludeReason")
                                  or ("未记录准确 SL" if not t.get("stopLoss") else "未记录实际 R")}
-                      for t in r_unknown] + [
-            {"id": t["id"], "symbolLabel": t["symbolLabel"], "reason": "未结束（挂单 / 持仓中），不计入胜负与 R 统计"}
-            for t in trades if t.get("resultStatus") not in ("win", "loss", "be")],
+                      for t in r_unknown if t.get("resultStatus") in ("win", "loss", "be")],
+        "openTrades": [{"id": t["id"], "symbolLabel": t["symbolLabel"],
+                        "reason": "未结束（挂单 / 持仓中），不计入胜负与 R 统计"}
+                       for t in trades if t.get("resultStatus") not in ("win", "loss", "be")],
         "goodWins": len([t for t in trades if ((t.get("analysis") or {}).get("classification") or {}).get("value") == "Good Win"]),
         "badWins": len([t for t in trades if ((t.get("analysis") or {}).get("classification") or {}).get("value") == "Bad Win"]),
         "goodLosses": len([t for t in trades if ((t.get("analysis") or {}).get("classification") or {}).get("value") == "Good Loss"]),
