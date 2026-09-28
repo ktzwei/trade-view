@@ -8,7 +8,11 @@
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
   const NR = '<span class="nr">未记录</span>';
-  const nr = (v, fmt) => (v === null || v === undefined || v === '' ? NR : (fmt ? fmt(v) : esc(v)));
+  const nr = (v, fmt) => {
+    if (v === null || v === undefined || v === '') return NR;
+    if (typeof v === 'object') return esc(v.raw || '');   // MAE/MFE 这类 {raw, r, price}
+    return fmt ? fmt(v) : esc(v);
+  };
   const num = (v, d = 2) => (v === null || v === undefined ? NR : Number(v).toFixed(d));
   const rTxt = (v) => (v === null || v === undefined ? NR
     : `<span class="${v > 0 ? 'rpos' : v < 0 ? 'rneg' : 'rzero'}">${v > 0 ? '+' : ''}${Number(v).toFixed(2)}R</span>`);
@@ -307,6 +311,12 @@
         <span><i>Entry Model</i><b>${esc((t.entryModel || {}).label || '未记录')}</b></span>
       </div>
 
+      ${(t.mae || t.mfe || t.fees !== null) ? `<div class="pricebar" style="margin-top:8px">
+        ${t.mae ? `<span><i>MAE 最大浮亏</i><b>${esc(t.mae.raw)}</b></span>` : ''}
+        ${t.mfe ? `<span><i>MFE 最大浮盈</i><b>${esc(t.mfe.raw)}</b></span>` : ''}
+        ${t.pnl !== null ? `<span><i>PnL</i><b>${esc(t.pnl)}</b></span>` : ''}
+        ${t.fees !== null ? `<span><i>Fees</i><b>${esc(t.fees)}</b></span>` : ''}
+      </div>` : ''}
       ${imgs.length ? `<div class="card chart-wrap" style="margin-top:14px">
         <img class="chart-main" id="main-chart" src="${esc(imgs[0].path)}" alt="${esc(t.symbolLabel)} 图表">
         <div class="chart-bar"><span>${esc(imgs[0].caption || '文档内嵌交易图')}（点击放大）</span>

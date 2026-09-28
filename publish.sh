@@ -6,7 +6,11 @@ cd "$(dirname "$0")"
 PY=python3
 
 echo "[1/4] 拉取 Google Docs 并解析 sourceData"
-$PY parser/parse_gdoc.py
+# Google 偶尔连不上（SSL EOF）——回落到 cache/doc.docx，避免整个发布被网络卡死
+if ! $PY parser/parse_gdoc.py; then
+  echo "[warn] 拉取失败 → 用 cache/doc.docx 离线解析（数据为上次成功拉取的版本）"
+  $PY parser/parse_gdoc.py --offline
+fi
 
 echo "[2/4] 证据校验 + 统计口径 + 合并输出"
 $PY parser/build.py

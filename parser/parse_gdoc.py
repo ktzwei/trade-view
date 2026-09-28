@@ -54,6 +54,29 @@ SECTION_KEYS = {
     "复盘结论": "reviewConclusion",
     "trade management": "tradeManagement",
     "交易管理": "tradeManagement",
+    # 复盘必填字段（2026-09-28 加入，配合文档模板）
+    "mae": "mae",
+    "mfe": "mfe",
+    "最大浮亏": "mae",
+    "最大浮盈": "mfe",
+    "最大不利偏移": "mae",
+    "最大有利偏移": "mfe",
+    "最大回撤": "mae",
+    "最大浮盈点": "mfe",
+    "fees": "fees",
+    "fee": "fees",
+    "手续费": "fees",
+    "费用": "fees",
+    "保护低点": "protectedLow",
+    "保护高点": "protectedHigh",
+    "protected low": "protectedLow",
+    "protected high": "protectedHigh",
+    "计划 rr": "plannedRRText",
+    "计划rr": "plannedRRText",
+    "planned rr": "plannedRRText",
+    "风险金额": "riskAmount",
+    "实际 r": "actualRText",
+    "actual r": "actualRText",
 }
 
 MISSING = "Not Recorded"  # 前端展示缺失值时使用，实际数据里是 null
@@ -225,6 +248,12 @@ def parse(blocks, zf):
         if b["kind"] == "h1" and (text.startswith("【") or text.startswith("周总结")
                                  or text.startswith("固定复盘模板")):
             b = {"kind": "para", "text": text}
+        # 规则段可能被排版成正文段落（不是标题）——按内容识别，避免整段规则丢失
+        if b["kind"] in ("h1", "h2", "para") and re.match(
+                r"^(SMC\s*)?执行规则|^交易规则|^规则库|^交易规则库|^SMC\s*规则", text):
+            rules_section = {"title": text, "lines": [], "index": bi}
+            cur_week = cur_trade = None
+            continue
         if b["kind"] == "h1":
             t = b["text"]
             if "规则" in t:
@@ -588,8 +617,27 @@ def parse(blocks, zf):
             "nextRules": sentences(s.get("nextRule", "")) or None,
         }
 
-        d["mae"] = None
-        d["mfe"] = None
+        # MAE / MFE / 手续费 / 保护点：只记录原文与原文数字，缺就 None（不猜、不代算）
+        def _measured(raw):
+            if not raw:
+                return None
+            txt = raw.strip()
+            m1 = re.search(r"(-?\d[\d,]*(?:\.\d+)?)\s*[Rr]\b", txt)
+            m2 = re.search(r"(-?\d[\d,]*(?:\.\d+)?)", txt)
+            return {
+                "raw": txt,
+                "r": num(m1.group(1).replace(",", "")) if m1 else None,
+                "price": None if m1 else (num(m2.group(1).replace(",", "")) if m2 else None),
+            }
+        d["mae"] = _measured(s.get("mae"))
+        d["mfe"] = _measured(s.get("mfe"))
+        d["fees"] = num((s.get("fees") or "").replace(",", "").strip()
+                        .split()[0]) if (s.get("fees") or "").strip() else None
+        if (s.get("riskAmount") or "").strip():
+            d["riskAmount"] = num(s["riskAmount"].replace(",", "").strip().split()[0])
+        d["plannedRRText"] = (s.get("plannedRRText") or d.get("plannedRRText"))
+        d["protectedLow"] = s.get("protectedLow") or None
+        d["protectedHigh"] = s.get("protectedHigh") or None
 
         # 图片绑定（保持原文顺序）
         imgs = []
