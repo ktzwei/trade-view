@@ -3,12 +3,12 @@
   "sourceTitle": "交易复盘",
   "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
   "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
-  "parsedAt": "2026-09-28T22:49:18+08:00",
+  "parsedAt": "2026-09-28T22:53:50+08:00",
   "schemaVersion": "1.0",
-  "sourceVersion": "7bfb7ef4f2f986f2",
-  "exportBytesHash": "efa6c022e404dea7",
-  "sourceBytes": 1135355,
-  "blocks": 119,
+  "sourceVersion": "0755c761e73e188b",
+  "exportBytesHash": "28b5be6c4f9e26cc",
+  "sourceBytes": 1364760,
+  "blocks": 121,
   "unresolvedImageCount": 0,
   "exportedImages": [
    "images/2026-09-13-ethusdt-long-01-1.png",
@@ -17,7 +17,8 @@
    "images/undated-xauusdt-short-02-1.png",
    "images/undated-xauusdt-short-02-2.png",
    "images/2026-09-28-hypeusdt-long-01-1.png",
-   "images/2026-09-28-btcusdt-long-挂单-1.png"
+   "images/2026-09-28-btcusdt-long-挂单-1.png",
+   "images/2026-09-28-btcusdt-long-挂单-2.png"
   ],
   "analysisGeneratedAt": "2026-09-24",
   "analysisRole": "ai-review",
@@ -45,12 +46,17 @@
    {
     "id": "2026-09-15-qqqusdt-long-03",
     "symbolLabel": "QQQ/USDT",
-    "reason": "未记录准确 SL"
+    "reason": "未记录准确 SL，无法判断计划 RR 与实际 R —— 按规则不纳入 R 统计"
    },
    {
     "id": "2026-09-28-btcusdt-long-挂单",
     "symbolLabel": "BTC/USDT",
-    "reason": "未记录实际 R"
+    "reason": "文档没有写出 Actual R，不代算"
+   },
+   {
+    "id": "2026-09-28-btcusdt-long-挂单",
+    "symbolLabel": "BTC/USDT",
+    "reason": "未结束（挂单 / 持仓中），不计入胜负与 R 统计"
    }
   ],
   "goodWins": 2,
@@ -356,17 +362,9 @@
     {
      "field": "actualR",
      "count": 1
-    },
-    {
-     "field": "context",
-     "count": 1
-    },
-    {
-     "field": "structure",
-     "count": 1
     }
    ],
-   "avgCompleteness": 43.0,
+   "avgCompleteness": 50.0,
    "review": {
     "mainStrength": {
      "text": "开仓前就把 Entry、初始 SL、Target 三个价格写清楚，成交后主动收紧风险，避免承受完整止损。",
@@ -591,7 +589,7 @@
    "mfe": null,
    "images": [
     {
-     "media": "image5.png",
+     "media": "image8.png",
      "order": 1,
      "file": "images/2026-09-13-ethusdt-long-01-1.png",
      "type": null,
@@ -1017,7 +1015,7 @@
    "mfe": null,
    "images": [
     {
-     "media": "image6.png",
+     "media": "image5.png",
      "order": 1,
      "file": "images/2026-09-18-ethusdt-long-02-1.png",
      "type": null,
@@ -1456,7 +1454,7 @@
    "mfe": null,
    "images": [
     {
-     "media": "image1.png",
+     "media": "image2.png",
      "order": 1,
      "file": "images/2026-09-15-qqqusdt-long-03-1.png",
      "type": null,
@@ -2146,7 +2144,7 @@
    "exit": null,
    "plannedPOI": null,
    "riskAmount": 0.4,
-   "riskAmountIsOneR": true,
+   "riskAmountIsOneR": null,
    "targets": [],
    "executionRaw": "Entry 4334.9；总止损风险 0.4 = 1R。确认的本单平仓：4246.9 平 3 张，收益 +0.218；4168.6 平 4 张，收益 +0.603。",
    "resultStatus": "win",
@@ -2240,7 +2238,7 @@
    "mfe": null,
    "images": [
     {
-     "media": "image7.png",
+     "media": "image6.png",
      "order": 1,
      "file": "images/undated-xauusdt-short-02-1.png",
      "type": null,
@@ -2254,7 +2252,7 @@
      "path": "images/undated-xauusdt-short-02-1.png"
     },
     {
-     "media": "image2.png",
+     "media": "image3.png",
      "order": 2,
      "file": "images/undated-xauusdt-short-02-2.png",
      "type": null,
@@ -2615,7 +2613,7 @@
    "mfe": null,
    "images": [
     {
-     "media": "image3.png",
+     "media": "image1.png",
      "order": 1,
      "file": "images/2026-09-28-hypeusdt-long-01-1.png",
      "type": null,
@@ -2867,9 +2865,9 @@
    "holdingMinutes": null,
    "timeText": null,
    "id": "2026-09-28-btcusdt-long-挂单",
-   "entry": 82.0,
+   "entry": 82953.7,
    "entryApprox": true,
-   "stopLoss": 82.0,
+   "stopLoss": 82348.7,
    "stopLossApprox": true,
    "exit": null,
    "plannedPOI": null,
@@ -2878,16 +2876,18 @@
    "targets": [
     {
      "label": "Planned Target",
-     "priceLow": null,
-     "priceHigh": null,
-     "priceText": null,
+     "priceLow": 84924.1,
+     "priceHigh": 84924.1,
+     "priceText": "84,924.1",
      "sizePercent": null,
-     "types": null,
-     "note": "图中目标设在约 84,924.1；目标附近上方另有更高水平线。当前仅记录价格计划，不根据截图补充未明确写出的流动性逻辑。",
+     "types": [
+      "BSL"
+     ],
+     "note": "目标写在文字描述里，原文照抄：计划 TP 约 84,924.1。当前截图只明确给出目标价格，没有明确标注该目标属于 BSL、Swing High 或其他 HTF Liquidity，因此暂不替用户补充目标类型。",
      "source": "targetLogic"
     }
    ],
-   "executionRaw": "按 TradingView 仓位工具标注：Planned Entry 约 82,953.7；SL 约 82,348.7；TP 约 84,924.1。",
+   "executionRaw": "按 TradingView 仓位工具标注：Planned Entry 约 82,953.7（计划价约 82,950）；SL 约 82,348.7；TP 约 84,924.1。",
    "resultStatus": null,
    "actualR": null,
    "plannedR": null,
@@ -2907,19 +2907,21 @@
    "riskCheckRaw": null,
    "minRRThreshold": null,
    "derived": {
-    "riskPoints": 0.0
+    "riskPoints": 605.0
    },
    "context": {
-    "raw": null,
-    "timeframes": null,
+    "raw": "1H Dealing Range 中价格已回落到 Discount 区；图中标注存在 1H IMB，当前大周期倾向做多。下方流动性已经被扫，但截图备注也明确指出当时没有出现理想的 Pin Bar / 明确反转K线，因此 HTF 只提供方向与区域，不把扫流动性本身当成直接入场信号。",
+    "timeframes": [
+     "1h"
+    ],
     "trend": null
    },
    "setup": {
-    "raw": "15m Structure Shift / MSB → Pullback → IMB / OB POI → Limit Long。",
+    "raw": "1H Discount + 1H IMB + 下方流动性 Sweep → 15m MSB → 15m IMB / Discount Pullback → Limit Long。",
     "flow": [
-     "15m Structure Shift / MSB",
-     "Pullback",
-     "IMB / OB POI",
+     "1H Discount + 1H IMB + 下方流动性 Sweep",
+     "15m MSB",
+     "15m IMB / Discount Pullback",
      "Limit Long"
     ]
    },
@@ -2936,15 +2938,15 @@
    },
    "entryModelRaw": null,
    "liquidity": {
-    "raw": "图中目标设在约 84,924.1；目标附近上方另有更高水平线。当前仅记录价格计划，不根据截图补充未明确写出的流动性逻辑。",
+    "raw": "1H Dealing Range 中价格已回落到 Discount 区；图中标注存在 1H IMB，当前大周期倾向做多。下方流动性已经被扫，但截图备注也明确指出当时没有出现理想的 Pin Bar / 明确反转K线，因此 HTF 只提供方向与区域，不把扫流动性本身当成直接入场信号。 计划 TP 约 84,924.1。当前截图只明确给出目标价格，没有明确标注该目标属于 BSL、Swing High 或其他 HTF Liquidity，因此暂不替用户补充目标类型。",
     "sslSwept": null,
     "bslTarget": null,
-    "targetLiquidity": null,
+    "targetLiquidity": "Buy-side Liquidity",
     "internalLiquidity": null,
-    "htfMagnet": null
+    "htfMagnet": "HTF Magnet"
    },
    "structure": {
-    "raw": null,
+    "raw": "1H Dealing Range 中价格已回落到 Discount 区；图中标注存在 1H IMB，当前大周期倾向做多。下方流动性已经被扫，但截图备注也明确指出当时没有出现理想的 Pin Bar / 明确反转K线，因此 HTF 只提供方向与区域，不把扫流动性本身当成直接入场信号。",
     "internalMSB": null,
     "msbNote": null,
     "majorTrendReversal": null,
@@ -2956,28 +2958,24 @@
     {
      "type": "IMB",
      "timeframes": [
-      "15m"
-     ],
-     "source": "context/entryReason"
-    },
-    {
-     "type": "OB",
-     "timeframes": [
+      "1h",
       "15m"
      ],
      "source": "context/entryReason"
     }
    ],
    "invalidation": {
-    "raw": "当前按图记录为跌破约 82,348.7；具体对应哪个结构失效点，等成交或最终复盘时再确认，不提前补写。",
+    "raw": "当前计划 SL 约 82,348.7，位于下方结构/POI 之外。截图没有明确写出该价格对应的具体 Protected Low 或结构失效定义，因此先保留为价格级 Invalidation，成交后再验证结构依据。",
     "logic": null,
-    "price": 82.0,
+    "price": 82348.7,
     "priceRecorded": true
    },
    "targetLogic": {
-    "raw": "图中目标设在约 84,924.1；目标附近上方另有更高水平线。当前仅记录价格计划，不根据截图补充未明确写出的流动性逻辑。",
-    "targetType": null,
-    "reason": "图中目标设在约 84,924.1；目标附近上方另有更高水平线。当前仅记录价格计划，不根据截图补充未明确写出的流动性逻辑。"
+    "raw": "计划 TP 约 84,924.1。当前截图只明确给出目标价格，没有明确标注该目标属于 BSL、Swing High 或其他 HTF Liquidity，因此暂不替用户补充目标类型。",
+    "targetType": [
+     "BSL"
+    ],
+    "reason": "计划 TP 约 84,924.1。当前截图只明确给出目标价格，没有明确标注该目标属于 BSL、Swing High 或其他 HTF Liquidity，因此暂不替用户补充目标类型。"
    },
    "tradeManagement": {
     "movedSL": null,
@@ -2999,18 +2997,32 @@
    "mfe": null,
    "images": [
     {
-     "media": "image4.png",
+     "media": "image7.png",
      "order": 1,
      "file": "images/2026-09-28-btcusdt-long-挂单-1.png",
      "type": null,
      "timeframe": null,
-     "sourceBlockIndex": 101,
+     "sourceBlockIndex": 102,
      "width": 2048,
      "height": 988,
-     "sha256": "f8168566e255bc3d",
+     "sha256": "b8c0635f3d670465",
      "url": "images/2026-09-28-btcusdt-long-挂单-1.png",
      "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
      "path": "images/2026-09-28-btcusdt-long-挂单-1.png"
+    },
+    {
+     "media": "image4.png",
+     "order": 2,
+     "file": "images/2026-09-28-btcusdt-long-挂单-2.png",
+     "type": null,
+     "timeframe": null,
+     "sourceBlockIndex": 103,
+     "width": 2048,
+     "height": 988,
+     "sha256": "689d87277438ee01",
+     "url": "images/2026-09-28-btcusdt-long-挂单-2.png",
+     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
+     "path": "images/2026-09-28-btcusdt-long-挂单-2.png"
     }
    ],
    "tags": [
@@ -3020,15 +3032,15 @@
     },
     {
      "group": "Setup Step",
-     "value": "15m Structure Shift / MSB"
+     "value": "1H Discount + 1H IMB + 下方流动性 Sweep"
     },
     {
      "group": "Setup Step",
-     "value": "Pullback"
+     "value": "15m MSB"
     },
     {
      "group": "Setup Step",
-     "value": "IMB / OB POI"
+     "value": "15m IMB / Discount Pullback"
     },
     {
      "group": "Setup Step",
@@ -3037,44 +3049,39 @@
     {
      "group": "POI",
      "value": "IMB"
-    },
-    {
-     "group": "POI",
-     "value": "OB"
     }
    ],
    "rawSections": {
     "_extra": [
      "【状态】Pending / 未成交，不计入本周已结束交易统计。",
-     "【记录时间】2026-09-28 22:37（UTC+8，按截图时间）。",
-     "【分析周期】15m。",
-     "【市场结构】图中已标注 15m MSB、0.5 回撤位置、15m IMB 与下方 OB；当前计划是在回撤进入预设区域后接多。",
+     "【记录时间】2026-09-28 22:49–22:50（UTC+8，按最新截图时间）。",
+     "【分析周期】1H 定位 + 15m 执行。",
+     "【Entry Reasons / Trigger】15m 小周期已出现 MSB，并留下 15m IMB；计划在 Discount 区约 82,950 挂限价多单。该模型属于 HTF Context + 15m Structure/POI 后的预设 Limit Entry，而不是等成交时再追价。",
      "【Planned Risk】约 605.0 点。",
      "【Planned Reward】约 1,970.4 点。",
      "【Planned RR】约 3.26R。",
      "【待成交后补充】实际成交价、是否出现 LTF confirmation、成交后的结构变化、是否移动 SL、最终退出、Actual R、MAE/MFE。"
     ],
-    "setup": "15m Structure Shift / MSB → Pullback → IMB / OB POI → Limit Long。",
-    "execution": "按 TradingView 仓位工具标注：Planned Entry 约 82,953.7；SL 约 82,348.7；TP 约 84,924.1。",
-    "invalidation": "当前按图记录为跌破约 82,348.7；具体对应哪个结构失效点，等成交或最终复盘时再确认，不提前补写。",
-    "targetLogic": "图中目标设在约 84,924.1；目标附近上方另有更高水平线。当前仅记录价格计划，不根据截图补充未明确写出的流动性逻辑。"
+    "context": "1H Dealing Range 中价格已回落到 Discount 区；图中标注存在 1H IMB，当前大周期倾向做多。下方流动性已经被扫，但截图备注也明确指出当时没有出现理想的 Pin Bar / 明确反转K线，因此 HTF 只提供方向与区域，不把扫流动性本身当成直接入场信号。",
+    "setup": "1H Discount + 1H IMB + 下方流动性 Sweep → 15m MSB → 15m IMB / Discount Pullback → Limit Long。",
+    "execution": "按 TradingView 仓位工具标注：Planned Entry 约 82,953.7（计划价约 82,950）；SL 约 82,348.7；TP 约 84,924.1。",
+    "invalidation": "当前计划 SL 约 82,348.7，位于下方结构/POI 之外。截图没有明确写出该价格对应的具体 Protected Low 或结构失效定义，因此先保留为价格级 Invalidation，成交后再验证结构依据。",
+    "targetLogic": "计划 TP 约 84,924.1。当前截图只明确给出目标价格，没有明确标注该目标属于 BSL、Swing High 或其他 HTF Liquidity，因此暂不替用户补充目标类型。"
    },
    "dataCompleteness": {
-    "percent": 33,
+    "percent": 47,
     "missing": [
      "plannedRR",
      "actualR",
      "entryTime",
      "exitTime",
-     "context",
-     "structure",
      "displacement",
      "mae",
      "mfe",
      "fees"
     ],
     "total": 15,
-    "filled": 5
+    "filled": 7
    },
    "analysis": {
     "source": "ai-review",
@@ -3157,7 +3164,7 @@
    "exitDateLabel": null,
    "partialCloseLabels": [],
    "holdingLabel": null,
-   "riskPoints": 0.0,
+   "riskPoints": 605.0,
    "rExcludeReason": "文档没有写出 Actual R，不代算",
    "week": {
     "label": "第3周",
@@ -3168,23 +3175,28 @@
    },
    "sectionsLabeled": [
     {
+     "label": "市场背景 Context",
+     "text": "1H Dealing Range 中价格已回落到 Discount 区；图中标注存在 1H IMB，当前大周期倾向做多。下方流动性已经被扫，但截图备注也明确指出当时没有出现理想的 Pin Bar / 明确反转K线，因此 HTF 只提供方向与区域，不把扫流动性本身当成直接入场信号。",
+     "key": "context"
+    },
+    {
      "label": "Setup",
-     "text": "15m Structure Shift / MSB → Pullback → IMB / OB POI → Limit Long。",
+     "text": "1H Discount + 1H IMB + 下方流动性 Sweep → 15m MSB → 15m IMB / Discount Pullback → Limit Long。",
      "key": "setup"
     },
     {
      "label": "执行",
-     "text": "按 TradingView 仓位工具标注：Planned Entry 约 82,953.7；SL 约 82,348.7；TP 约 84,924.1。",
+     "text": "按 TradingView 仓位工具标注：Planned Entry 约 82,953.7（计划价约 82,950）；SL 约 82,348.7；TP 约 84,924.1。",
      "key": "execution"
     },
     {
      "label": "Invalidation",
-     "text": "当前按图记录为跌破约 82,348.7；具体对应哪个结构失效点，等成交或最终复盘时再确认，不提前补写。",
+     "text": "当前计划 SL 约 82,348.7，位于下方结构/POI 之外。截图没有明确写出该价格对应的具体 Protected Low 或结构失效定义，因此先保留为价格级 Invalidation，成交后再验证结构依据。",
      "key": "invalidation"
     },
     {
      "label": "Target Logic",
-     "text": "图中目标设在约 84,924.1；目标附近上方另有更高水平线。当前仅记录价格计划，不根据截图补充未明确写出的流动性逻辑。",
+     "text": "计划 TP 约 84,924.1。当前截图只明确给出目标价格，没有明确标注该目标属于 BSL、Swing High 或其他 HTF Liquidity，因此暂不替用户补充目标类型。",
      "key": "targetLogic"
     }
    ],
@@ -3192,90 +3204,8 @@
   }
  ],
  "rules": {
-  "doc": [
-   {
-    "id": "规则一",
-    "title": "先看流动性",
-    "body": "标出高周期 SSL（下方流动性）与 BSL（上方流动性）。Sweep 只启动观察，不能单独触发入场。",
-    "sourceBlockIndex": 103,
-    "createdFrom": null,
-    "source": "doc:rules"
-   },
-   {
-    "id": "规则二",
-    "title": "再看位移和结构",
-    "body": "Sweep 后需有明确 displacement 与 MSS/BOS。弱 MSB 等后续 BOS 或低周期确认；internal MSB 只说明内部结构转强，要判断主趋势反转还需观察是否有效突破 protected high。",
-    "sourceBlockIndex": 104,
-    "createdFrom": null,
-    "source": "doc:rules"
-   },
-   {
-    "id": "规则三",
-    "title": "只在计划 POI 执行",
-    "body": "在 discount/premium 中寻找 OB、BB、IMB 等重叠区域。HTF 限价单放在 POI 内；价格未到就不提前抢入。",
-    "sourceBlockIndex": 105,
-    "createdFrom": null,
-    "source": "doc:rules"
-   },
-   {
-    "id": "规则四",
-    "title": "止损与目标成对",
-    "body": "SL 放在能否定交易逻辑的结构点，并记录准确价格；TP 对应对侧流动性或 IMB。下单前计算计划盈亏比，未达到自己预设的最低要求则跳过。",
-    "sourceBlockIndex": 106,
-    "createdFrom": null,
-    "source": "doc:rules"
-   },
-   {
-    "id": "规则五",
-    "title": "复盘执行偏差",
-    "body": "分别记录 HTF 限价与 HTF+低周期确认；逐笔填写计划/实际 Entry、SL、TP、R 和提前出场原因。缺少 SL 的交易不统计 R。",
-    "sourceBlockIndex": 107,
-    "createdFrom": null,
-    "source": "doc:rules"
-   }
-  ],
-  "template": [
-   {
-    "text": "① 基本信息：标的、日期、方向、分析周期、Entry Model、Entry、SL、TP、计划 R、实际 R、结果。",
-    "sourceBlockIndex": 109
-   },
-   {
-    "text": "② Context：HTF 趋势/区间、Premium/Discount、SSL/BSL、关键 POI。",
-    "sourceBlockIndex": 110
-   },
-   {
-    "text": "③ Setup：用一句话定义交易模型，例如 SSL Sweep → Displacement → MSB/BOS → POI。",
-    "sourceBlockIndex": 111
-   },
-   {
-    "text": "④ Entry Reasons：列出流动性、位移、结构、POI 共振等入场原因。",
-    "sourceBlockIndex": 112
-   },
-   {
-    "text": "⑤ Entry Trigger：HTF Limit 或 HTF + LTF Confirmation。",
-    "sourceBlockIndex": 113
-   },
-   {
-    "text": "⑥ Invalidation：说明“什么发生就证明我错了”，并对应到 SL。",
-    "sourceBlockIndex": 114
-   },
-   {
-    "text": "⑦ Target Logic：TP 对应 IMB、内部流动性、BSL/SSL 或 HTF Magnet。",
-    "sourceBlockIndex": 115
-   },
-   {
-    "text": "⑧ Risk Check：下单前确认 RR、是否追价、是否偏离计划 POI。",
-    "sourceBlockIndex": 116
-   },
-   {
-    "text": "⑨ Trade Management：是否减仓、移动 SL、提前退出及原因。",
-    "sourceBlockIndex": 117
-   },
-   {
-    "text": "⑩ Review：做得好的、做错的、下一次可执行规则；同时记录 MAE/MFE。",
-    "sourceBlockIndex": 118
-   }
-  ],
+  "doc": [],
+  "template": [],
   "generated": [
    {
     "text": "强 displacement + 清晰 HTF POI 可以提前挂单，但 Entry、SL、TP 必须在下单前全部确定",
@@ -3490,7 +3420,7 @@
     "rCounted": 0
    },
    {
-    "key": "15m Structure Shift / MSB → Pullback → IMB / OB POI → Limit Long",
+    "key": "1H Discount + 1H IMB + 下方流动性 Sweep → 15m MSB → 15m IMB / Discount Pullback → Limit Long",
     "trades": [
      "2026-09-28-btcusdt-long-挂单"
     ],
@@ -3505,12 +3435,12 @@
   ],
   "setupTagPerformance": [
    {
-    "key": "POI",
+    "key": "Liquidity Sweep",
     "trades": [
      "2026-09-13-ethusdt-long-01",
      "2026-09-18-ethusdt-long-02",
      "2026-09-15-qqqusdt-long-03",
-     "2026-09-28-hypeusdt-long-01",
+     "2026-09-21-xauusdt-long-01",
      "2026-09-28-btcusdt-long-挂单"
     ],
     "count": 5,
@@ -3522,14 +3452,15 @@
     "rCounted": 3
    },
    {
-    "key": "Liquidity Sweep",
+    "key": "POI",
     "trades": [
      "2026-09-13-ethusdt-long-01",
      "2026-09-18-ethusdt-long-02",
      "2026-09-15-qqqusdt-long-03",
-     "2026-09-21-xauusdt-long-01"
+     "2026-09-28-hypeusdt-long-01",
+     "2026-09-28-btcusdt-long-挂单"
     ],
-    "count": 4,
+    "count": 5,
     "wins": 3,
     "closed": 4,
     "winRate": 0.75,
@@ -3944,7 +3875,7 @@
     "rCounted": 1
    }
   ],
-  "dataCompletenessAvg": 57.0
+  "dataCompletenessAvg": 59.0
  },
  "unknownFields": [
   {
@@ -4054,20 +3985,6 @@
    "count": 1,
    "trades": [
     "undated-xauusdt-short-02"
-   ]
-  },
-  {
-   "field": "context",
-   "count": 1,
-   "trades": [
-    "2026-09-28-btcusdt-long-挂单"
-   ]
-  },
-  {
-   "field": "structure",
-   "count": 1,
-   "trades": [
-    "2026-09-28-btcusdt-long-挂单"
    ]
   }
  ]

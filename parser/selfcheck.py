@@ -38,8 +38,8 @@ for t in d["trades"]:
 
 s = d["stats"]
 assert s["closed"] == s["wins"] + s["losses"] + s["be"], "胜负平数量对不上"
-if s["rExcluded"] and s["netRKnownCount"] + len(s["rExcluded"]) != s["closed"]:
-    warns.append("可计 R 笔数 + 未计入笔数 ≠ 已结束笔数，请检查 SL 记录")
+if s["rExcluded"] and s["netRKnownCount"] + len(s["rExcluded"]) != s["closed"] + s.get("open", 0):
+    warns.append("可计 R 笔数 + 未计入笔数 ≠ 全部交易笔数，请检查 SL 记录")
 
 for w in warns:
     print(f"[warn] {w}")

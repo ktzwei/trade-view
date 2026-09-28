@@ -375,34 +375,37 @@ def parse(blocks, zf):
         # 执行价格
         ex = s.get("execution", "")
 
+        # 价格必须容忍千分位逗号（82,953.7）——否则会把 82,953.7 读成 82.0（这是编造价格）
+        NUM = r"(\d[\d,]*(?:\.\d+)?)"
         def _price(pat):
             m2 = re.search(pat, ex)
             if not m2:
                 return None, False
-            return num(m2.group(1)), ("约" in m2.group(0))
+            v = num(m2.group(1).replace(",", ""))
+            return v, ("约" in m2.group(0))
 
-        entry_val, entry_approx = _price(r"(?:实际\s*)?Entry\s*(?:约\s*)?([\d.]+)")
-        sl_val, sl_approx = _price(r"(?:初始\s*)?SL\s*(?:约\s*)?([\d.]+)")
-        exit_val, _ = _price(r"Exit\s*(?:约\s*)?([\d.]+)")
+        entry_val, entry_approx = _price(r"(?:实际\s*)?Entry\s*(?:约\s*)?" + NUM)
+        sl_val, sl_approx = _price(r"(?:初始\s*)?SL\s*(?:约\s*)?" + NUM)
+        exit_val, _ = _price(r"Exit\s*(?:约\s*)?" + NUM)
         d["entry"] = entry_val
         d["entryApprox"] = True if (entry_val is not None and entry_approx) else None
         d["stopLoss"] = sl_val
         d["stopLossApprox"] = True if (sl_val is not None and sl_approx) else None
         d["exit"] = exit_val
-        plan_poi = re.search(r"计划\s*POI\s*约?\s*([\d.]+)", ex)
-        d["plannedPOI"] = num(plan_poi.group(1)) if plan_poi else None
-        mrk = re.search(r"总止损风险\s*([\d.]+)", ex)
-        d["riskAmount"] = num(mrk.group(1)) if mrk else None
-        d["riskAmountIsOneR"] = bool(mrk and re.search(r"总止损风险\s*[\d.]+\s*=?\s*1\s*R", ex)) or None
+        plan_poi = re.search(r"计划\s*POI\s*约?\s*" + NUM, ex)
+        d["plannedPOI"] = num(plan_poi.group(1).replace(",", "")) if plan_poi else None
+        mrk = re.search(r"总止损风险\s*" + NUM, ex)
+        d["riskAmount"] = num(mrk.group(1).replace(",", "")) if mrk else None
+        d["riskAmountIsOneR"] = bool(mrk and re.search(r"总止损风险\s*[\d,]+\s*=?\s*1\s*R", ex)) or None
 
         targets = []
-        tgt = re.search(r"Target\s*(?:约\s*)?([\d.]+(?:\s*[–\-—]\s*[\d.]+)?)", ex)
+        tgt = re.search(r"Target\s*(?:约\s*)?" + NUM + r"(?:\s*[–\-—]\s*(\d[\d,]*(?:\.\d+)?))?", ex)
         if tgt:
-            ptext = tgt.group(1).replace(" ", "")
-            if re.search(r"[–\-—]", ptext):
+            ptext = (tgt.group(1) + ("–" + tgt.group(2) if tgt.group(2) else "")).replace(" ", "")
+            if tgt.group(2):
                 lo, hi = split_range(ptext)
             else:
-                lo = hi = num(ptext)
+                lo = hi = num(tgt.group(1).replace(",", ""))
             targets.append({"label": "Target", "priceLow": lo, "priceHigh": hi,
                             "priceText": ptext, "sizePercent": None,
                             "types": extract_target_types(s.get("targetLogic", "")),
@@ -414,12 +417,22 @@ def parse(blocks, zf):
                             "types": extract_target_types(s.get("targetLogic", "")),
                             "source": "execution"})
         if not targets and s.get("targetLogic"):
-            # 只有文字描述、没有价格的计划目标（保持 price 为 null，不猜价格）
-            targets.append({"label": "Planned Target", "priceLow": None, "priceHigh": None,
-                            "priceText": None, "sizePercent": None,
-                            "types": extract_target_types(s.get("targetLogic", "")),
-                            "note": s.get("targetLogic"),
-                            "source": "targetLogic"})
+            # 文档把目标写成了句子（例如「图中目标设在约 84,924.1」）——记原文数字，不补逻辑
+            m3 = re.search(r"(?:目标设在|目标|TP)\s*约?\s*" + NUM, s.get("targetLogic", ""))
+            if m3:
+                v = num(m3.group(1).replace(",", ""))
+                targets.append({"label": "Planned Target", "priceLow": v, "priceHigh": v,
+                                "priceText": m3.group(1), "sizePercent": None,
+                                "types": extract_target_types(s.get("targetLogic", "")),
+                                "note": "目标写在文字描述里，原文照抄：" + s.get("targetLogic", ""),
+                                "source": "targetLogic"})
+            else:
+                # 只有文字描述、没有价格的计划目标（保持 price 为 null，不猜价格）
+                targets.append({"label": "Planned Target", "priceLow": None, "priceHigh": None,
+                                "priceText": None, "sizePercent": None,
+                                "types": extract_target_types(s.get("targetLogic", "")),
+                                "note": s.get("targetLogic"),
+                                "source": "targetLogic"})
         d["targets"] = targets
         d["executionRaw"] = ex or None
 

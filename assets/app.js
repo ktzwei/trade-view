@@ -22,8 +22,10 @@
   const dirWord = (d) => d === 'long' ? '多' : d === 'short' ? '空' : '方向未知';
   const resChip = (t) => {
     const s = t.resultStatus;
-    const label = { win: 'Win', loss: 'Loss', be: 'BE' }[s] || '未记录';
-    return `<span class="chip ${s === 'win' ? 'win' : s === 'loss' ? 'loss' : s === 'be' ? 'be' : ''}">${label}</span>`;
+    // 未结束的（挂单 / 持仓中）用文档标题里的结果词，例如「未成交」
+    const label = { win: 'Win', loss: 'Loss', be: 'BE' }[s]
+      || (t.headingResult ? short(t.headingResult, 8) : '未记录');
+    return `<span class="chip ${s === 'win' ? 'win' : s === 'loss' ? 'loss' : s === 'be' ? 'be' : 'ghost'}">${esc(label)}</span>`;
   };
   const dateOf = (t) => String(t.entryTime || t.entryDate || '').slice(5, 10)
     || (t.exitDate ? String(t.exitDate).slice(5, 10) + ' 平' : '开仓未记录');
@@ -123,7 +125,9 @@
     const cell = (k, v, s) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div>${s ? `<div class="s">${s}</div>` : ''}</div>`;
     return `<div class="stats stats-4">
       ${cell('Known Net R', rTxt(rk.length ? net : null), `${rk.length} 笔可计 R`)}
-      ${cell('Win / Loss', `${wins} / ${losses}`, closed.length ? `Win Rate ${pct(wins / closed.length)}` : '无已结束交易')}
+      ${cell('Win / Loss', `${wins} / ${losses}`, closed.length
+        ? `Win Rate ${pct(wins / closed.length)}${ts.length > closed.length ? ` · ${ts.length - closed.length} 笔未结束` : ''}`
+        : '无已结束交易')}
       ${cell('规则违反', viol ? `<span class="warnv">${viol}</span>` : '0', viol ? '点开交易看依据' : '全部通过')}
       ${cell('待补记录', miss, '完整度 < 100%')}
     </div>`;
@@ -191,7 +195,7 @@
     return `<a class="trow" href="#/trade/${encodeURIComponent(t.id)}">
       <span class="td d">${esc(dateOf(t))}</span>
       <span class="td sym">${esc(t.symbolLabel)} <span class="muted">${dirWord(t.direction)}</span></span>
-      <span class="td r">${t.actualR !== null ? rTxt(t.actualR) : `<span class="small muted">R 未计入</span>`}</span>
+      <span class="td r">${t.actualR !== null ? rTxt(t.actualR) : `<span class="small muted">${['win','loss','be'].includes(t.resultStatus) ? 'R 未计入' : '未结束'}</span>`}</span>
       <span class="td res">${resChip(t)}${viol ? `<span class="chip warn">⚠ ${viol}</span>` : ''}</span>
       <span class="td note ${bad ? 'bad' : ''}">${esc(note)}</span>
       <span class="td go">›</span>

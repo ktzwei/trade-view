@@ -190,8 +190,11 @@ def global_stats(trades):
         "ruleViolations": violations,
         "missingDataTrades": len(missing),
         "rExcluded": [{"id": t["id"], "symbolLabel": t["symbolLabel"],
-                       "reason": "未记录准确 SL" if not t.get("stopLoss") else "未记录实际 R"}
-                      for t in r_unknown],
+                       "reason": t.get("rExcludeReason")
+                                 or ("未记录准确 SL" if not t.get("stopLoss") else "未记录实际 R")}
+                      for t in r_unknown] + [
+            {"id": t["id"], "symbolLabel": t["symbolLabel"], "reason": "未结束（挂单 / 持仓中），不计入胜负与 R 统计"}
+            for t in trades if t.get("resultStatus") not in ("win", "loss", "be")],
         "goodWins": len([t for t in trades if ((t.get("analysis") or {}).get("classification") or {}).get("value") == "Good Win"]),
         "badWins": len([t for t in trades if ((t.get("analysis") or {}).get("classification") or {}).get("value") == "Bad Win"]),
         "goodLosses": len([t for t in trades if ((t.get("analysis") or {}).get("classification") or {}).get("value") == "Good Loss"]),
@@ -500,7 +503,7 @@ def main():
     s = data["stats"]
     print(f"[OK] 写出 {OUT.relative_to(ROOT)}  "
           f"{s['closed']} 笔已结束 / 胜 {s['wins']} 负 {s['losses']} / 已知净值 {s['netR']:+}R "
-          f"（{s['netRKnownCount']} 笔可计 R，{len(s['rExcluded'])} 笔因缺 SL 排除）")
+          f"（{s['netRKnownCount']} 笔可计 R，{len(s['rExcluded'])} 笔未计入 R 统计）")
     print(f"     规则库：文档规则 {len(data['rules']['doc'])} 条 + 逐笔生成 {len(data['rules']['generated'])} 条；"
           f"平均数据完整度 {data['analytics']['dataCompletenessAvg']}%")
 
