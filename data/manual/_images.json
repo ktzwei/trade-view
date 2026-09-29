@@ -1,0 +1,54 @@
+{
+  "2026-09-13-ethusdt-long-01": {
+    "46ec3b95e628c30b": {
+      "type": "HTF Context",
+      "timeframe": "1H",
+      "caption": "图上标「1小时」· 结构(扫流动性/MSB/折价)+入场+止盈 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改"
+    }
+  },
+  "2026-09-18-ethusdt-long-02": {
+    "b4f9e35f258b7391": {
+      "type": "HTF Context",
+      "timeframe": "1H",
+      "caption": "图上标「1小时」· 含入场标注 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改"
+    }
+  },
+  "2026-09-15-qqqusdt-long-03": {
+    "57f1bb153ff906fa": {
+      "type": "HTF Context",
+      "timeframe": "1H",
+      "caption": "图上标「1小时」· 含入场标注 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改"
+    }
+  },
+  "undated-xauusdt-short-02": {
+    "3711a3939ad8a049": {
+      "type": "After Trade",
+      "timeframe": null,
+      "caption": "平仓记录（第2/3批平仓明细），交易结束状态 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改"
+    },
+    "92573e7776b1de2c": {
+      "type": "LTF Entry",
+      "timeframe": "15m",
+      "caption": "图上标「15」· 扫单(liq sweep)/MSB/BB/IMB + 入场与SL —— 夜一按图上标注的周期预填，可随时在「截图分类」页改"
+    }
+  },
+  "2026-09-28-hypeusdt-long-01": {
+    "9e2aac209e12d0fe": {
+      "type": "HTF Context",
+      "timeframe": "1H",
+      "caption": "图上标「1小时」· eql 流动性 + IMB 1H + 限价成交/SL 被扫 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改"
+    }
+  },
+  "2026-09-28-btcusdt-long-挂单": {
+    "b8c0635f3d670465": {
+      "type": "HTF Context",
+      "timeframe": "1H",
+      "caption": "图上标「1小时」· discount 区/IMB/OB + 大周期做多倾向 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改"
+    },
+    "689d87277438ee01": {
+      "type": "LTF Entry",
+      "timeframe": "15m",
+      "caption": "图上标「15」· MSB 15min/IMB/OB + 82950 限价挂单 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改"
+    }
+  }
+}

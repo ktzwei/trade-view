@@ -205,6 +205,14 @@ def _entry_mode(text_sections):
     return planned, actual, evidence
 
 
+# 数值字段的标签表：(字段, 标签正则, 默认单位)。只认「标签 + 数字」，写「未记录」不会命中。
+NUMERO = [
+    ("mae", r"(?:MAE|最大不利偏移|最大浮亏|最大不利移动|不利偏移)", "R"),
+    ("mfe", r"(?:MFE|最大有利偏移|最大浮盈|最大有利移动|有利偏移)", "R"),
+    ("protectedPrice", r"(?:Protected\s*(?:High|Low)?\s*Price|Protect(?:ed)?\s*Price|受保护(?:高点|低点|结构)?价格|保护价)", None),
+]
+
+
 def extract_structured(t):
     struct = {"fields": {}, "unparsed": [], "sources": {},
               "stats": {"confirmed": 0, "suggested": 0}}
@@ -348,6 +356,33 @@ def extract_structured(t):
             struct["fields"][src_field] = {"value": val, "source": "doc:keyword",
                                            "evidence": " ⏐ ".join(f"[{s}] {x}" for s, x in ev[:3]),
                                            "confirmed": False, "multi": False}
+
+    # ---------- 3.5) 数值字段（§13 Protected Price、§19 MAE / MFE）
+    # 选项式字段靠枚举匹配；数值字段靠「标签 + 数字」直取。文档写「未记录」时没有数字，
+    # 自然取不到 → 保持未记录（§37 不猜、不填 0）。
+    num_texts = [f"[{k}] {c}" for k, v in (t.get("rawSections") or {}).items()
+                 for c in (v if isinstance(v, list) else [v]) if c]
+    num_texts += [f"[{k}] {b}" for k, bodies in struct_raw.items() for b in bodies]
+    for field, pat, unit in NUMERO:
+        if struct["fields"].get(field):
+            continue  # 文档标签行已给出（更强证据）
+        for txt in num_texts:
+            m = re.search(pat + r"\s*(?:Price|价|价格)?\s*[:：=]?\s*([+-]?\d+(?:\.\d+)?)\s*(R|r|%|％)?", txt)
+            if not m:
+                continue
+            try:
+                val = float(m.group(1))
+            except ValueError:
+                continue
+            spec_u = (FIELD_BY_KEY.get(field) or {}).get("unit")
+            u = (m.group(2) or unit or spec_u or "").strip()
+            if u.lower() == "r":
+                u = "R"
+            struct["fields"][field] = {
+                "value": val, "source": "doc:keyword", "confirmed": False,
+                "evidence": txt.strip()[:160], "multi": False, "unit": u or None}
+            struct["sources"]["doc:keyword"] = struct["sources"].get("doc:keyword", 0) + 1
+            break
 
     # ---------- 4) 统计
     struct["stats"]["confirmed"] = sum(1 for f in struct["fields"].values() if f.get("confirmed"))

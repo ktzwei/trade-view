@@ -284,7 +284,7 @@ analysis/analysis.json ──(evidence 逐条校验)──► build.py ──►
 | `parser/schema.py` | 枚举唯一真源：5 个周期、12 组字段、错误标签分组、规则三桶 |
 | `parser/rules.py` | 逐句识别规则（含否定处理、区块范围限定，避免「没等 Sweep」被读成 Sweep=Yes） |
 | `parser/struct_extract.py` | 抽取引擎：字段行 + 逐句识别 + 证据留痕 |
-| `parser/stats_v2.py` | 统计层：来源合并 → 单笔派生 → **30 个**维度聚合 → 周报 → §41 问答自动作答 |
+| `parser/stats_v2.py` | 统计层：来源合并 → 单笔派生 → **31 个**维度聚合 → 周报 → §41 问答自动作答 |
 | `tools/tagedit.py` | 本地手填编辑器（默认 8791），写 `data/manual/`，含周复盘三问表单 |
 | `docs/record-template.md` | 可复制到 Google Docs 的记录模板（含「少一行少哪种统计」对照表） |
 
@@ -334,7 +334,7 @@ python3 tools/tagedit.py --port 8791   # 本机手填/确认（浏览器打开 1
 | §25 Trade Review 三问 | 详情页 + 周报三问 |
 | §26 Confidence | 字段（提示必须交易前记） |
 | §27 Dashboard 指标 | 首页 8 项：Trades / Win Rate / Net R / Avg R / Expectancy / Profit Factor / Rule Compliance Rate / Good Trade Rate |
-| §28 Analytics 全维度 | 30 个维度表 + 错误分析 + 策略 vs 执行 |
+| §28 Analytics 全维度 | 31 个维度表 + 错误分析 + 策略 vs 执行 |
 | §29 MAE/MFE Analytics | Avg MAE / Avg MFE / 盈利单 MAE / 亏损单 MFE |
 | §30–31 R 优先 + Expectancy | 所有指标以 R 计；Expectancy 独立成卡 |
 | §32 Weekly Review | 周卡新增 7 项指标 + 三问 |
@@ -359,7 +359,7 @@ python3 tools/tagedit.py --port 8791   # 本机手填/确认（浏览器打开 1
 5. **「Setup」仍是自由文本**：`setup.flow` 拆步骤做了标签，但没有独立的 Setup 枚举字段——跨交易的 Setup 对比目前用「结构形态 × 入场方式」组合代替。
 6. **周复盘三问**优先用手填（`data/manual/_weeks.json`）；没手填时显示 AI 复盘层的周判定（做得好 / 主要问题 / 新规则，每条带原文引用）。
 7. **`analysis.json` 没有绑定文档版本**：文档被重写后，引用对不上的复盘块会被**整块隔离**（CLI 打 `[warn] 隔离`，不进页面、不当成编造错误），需要重做 AI 复盘；隔离清单在 `trades.json` → `meta.staleQuarantine`。
-7. Markdown 里 `app.js` 的筛选是前端内存筛选，数据量大（>1000 笔）时需要改预计算索引。
+8. Markdown 里 `app.js` 的筛选是前端内存筛选，数据量大（>1000 笔）时需要改预计算索引。
 
 ### H.7 文档改版适配（2026-09-29 晚）
 
@@ -375,4 +375,18 @@ python3 tools/tagedit.py --port 8791   # 本机手填/确认（浏览器打开 1
 | 缺项词（未记录 / 未单独记录 / 未明确记录 / 无法判定）统一按未记录处理 | §37：不猜、不补 | `parse_gdoc.py` `_is_unrecorded()` |
 | AI 复盘引用对不上原文 → 整块隔离 + `meta.staleQuarantine` | 文档重写后旧复盘会变成「看起来有据其实无据」 | `parser/build.py` `check_block()` |
 
-**文档改版后的实际数据**（2026-09-29）：7 笔 / 3 周 / 平均完整度 50.6% / 已知净值 +3.61R / 30 个维度有值 / 文档规则 4 条 + 逐笔生成 7 条。
+**文档改版后的实际数据**（2026-09-29）：7 笔 / 3 周 / 平均完整度 50.6% / 已知净值 +3.61R / 31 个维度有值 / 文档规则 4 条 + 逐笔生成 7 条。
+
+### H.8 v3.1 · 数值字段 + 截图分类（2026-09-29 晚，补 §13 / §19 / §24）
+
+| 能力 | 说明 |
+| --- | --- |
+| 数值字段类型 | `schema.py` 的 `F()` 增加 `kind`（`enum` 默认 / `number`）与 `unit`；新增 `protectedPrice`（价格）、`mae` / `mfe`（R），字段总数 43 枚举 + 3 数值 = 46 |
+| 数值抽取 | 文档写 `MAE：-0.35R`、`Protected Low Price：4380` 这类带标签数字会被抽出来（含 `+` / `-` / `%`）；写「未记录」一律跳过，不补 0 |
+| 数值手填 | tagedit 对数值字段渲染数字输入框；手填优先级最高，来源恒 `manual` |
+| 数值展示 | 详情页 ⑥ 结构步骤多一行 Protected Price；Analytics 新增「数值字段」面板（已记录笔数 / 平均 / 范围），只对真写了的笔算平均 |
+| 截图分类（§24） | tagedit 新增「截图分类」页（`/images`）：每张图选 HTF Context / LTF Entry / After Trade / Review Screen + Timeframe + 说明 → `data/manual/_images.json`（键 = 图的 sha256，图不变键不变，原图不动） |
+| 分类展示 | 详情页相册每张图带分类角标 + 分类条（跨图汇总）；Analytics「截图分类」面板给每类张数与周期分布 |
+
+一句话原则没变：**系统只按你写的算，缺了就说未记录。** 数值字段空着不影响完整度（§4.1：不是必填）。
+

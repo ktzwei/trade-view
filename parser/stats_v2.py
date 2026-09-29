@@ -420,6 +420,95 @@ def mistake_analysis(trades):
             "totalLostR": r2(sum(x["lostR"] or 0 for x in rows))}
 
 
+IMAGE_KINDS = ["HTF Context", "LTF Entry", "After Trade", "Review Screen"]
+
+
+def load_image_meta():
+    """data/manual/_images.json：{tradeId: {sha256: {type, timeframe, caption}}}（需求 §24）。"""
+    p = MANUAL_DIR / "_images.json"
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def apply_image_meta(trades, meta):
+    """把手填的截图分类合并到交易图上（原图与原始数据不动，§37）。
+
+    未分类的图保持 type=None，前端显示「未分类」，不猜它是 HTF 还是 LTF。
+    """
+    n = 0
+    for t in trades:
+        cur = (meta or {}).get(t["id"]) or {}
+        for im in t.get("images") or []:
+            key = str(im.get("sha256") or im.get("order"))
+            m = cur.get(key)
+            if not m:
+                im.setdefault("type", None)
+                im.setdefault("kindSource", None)
+                continue
+            if m.get("type"):
+                im["type"] = m["type"]
+            if m.get("timeframe"):
+                im["timeframe"] = m["timeframe"]
+            if m.get("caption"):
+                im["caption"] = m["caption"]
+            im["kindSource"] = "manual"
+            n += 1
+    return n
+
+
+def image_summary(trades):
+    """截图分类统计（需求 §24）：每类几张、还差几张没标。"""
+    rows, total, labeled = {}, 0, 0
+    for t in trades:
+        for im in t.get("images") or []:
+            total += 1
+            k = im.get("type")
+            if k:
+                labeled += 1
+                r = rows.setdefault(k, {"kind": k, "count": 0, "trades": [], "tf": {}})
+                r["count"] += 1
+                if t["id"] not in r["trades"]:
+                    r["trades"].append(t["id"])
+                if im.get("timeframe"):
+                    r["tf"][im["timeframe"]] = r["tf"].get(im["timeframe"], 0) + 1
+    order = [k for k in IMAGE_KINDS if k in rows] + [k for k in rows if k not in IMAGE_KINDS]
+    return {"total": total, "labeled": labeled, "unlabeled": total - labeled,
+            "rows": [rows[k] for k in order]}
+
+
+def numeric_summary(trades):
+    """数值字段汇总（需求 §13 Protected Price、§19 MAE/MFE）。
+
+    没有数字就记 0 笔，不填 0、不算均值——§37「只统计文档里真实写了的」。
+    """
+    from schema import FIELDS
+    out = []
+    for spec in FIELDS:
+        if spec.get("kind") != "number":
+            continue
+        k = spec["key"]
+        rows = []
+        for t in trades:
+            f = (t.get("fields") or {}).get(k) or {}
+            v = fnum(f.get("value"))
+            if v is None:
+                continue
+            rows.append({"tradeId": t["id"],
+                         "label": t.get("symbolLabel") or t["id"],
+                         "value": v, "unit": f.get("unit") or spec.get("unit"),
+                         "source": f.get("source"), "confirmed": bool(f.get("confirmed")),
+                         "evidence": (f.get("evidence") or "")[:200]})
+        vals = [r["value"] for r in rows]
+        out.append({"key": k, "label": spec["label"], "unit": spec.get("unit"),
+                    "group": spec.get("group"), "note": spec.get("note"),
+                    "recorded": len(rows), "total": len(trades),
+                    "avg": mean(vals), "min": round(min(vals), 4) if vals else None,
+                    "max": round(max(vals), 4) if vals else None, "rows": rows})
+    return out
+
+
 def mae_mfe_analysis(trades):
     rec = [t for t in trades if t.get("mae") is not None or t.get("mfe") is not None]
     def pick(ts, f):
@@ -791,6 +880,7 @@ def pct_str(v):
 def build_result(trades, src):
     """主入口：合并手填层 → 单笔派生 → 全维度聚合。返回写进 trades.json 的 "v2" 对象。"""
     manual = load_manual()
+    apply_image_meta(trades, load_image_meta())
     for t in trades:
         merge_fields(t, manual.get(t["id"]))
         t["complianceV2"] = derive_checklist(t)
@@ -813,6 +903,14 @@ def build_result(trades, src):
             f["source"], f["confirmed"] = "derived:checklist", False
             f["evidence"] = "；".join(x["evidence"] for x in sug["suggestions"])[:300]
             t["mistakeTags"] = list(f["value"])
+        # 数值字段（§13 Protected Price、§19 MAE/MFE）：文档/手填层取到的数值同步成交易级属性，
+        # 供 MAE·MFE 统计与详情页使用；取不到就保持未记录（不填 0）。
+        for nk in ("mae", "mfe", "protectedPrice"):
+            nf = (t.get("fields") or {}).get(nk) or {}
+            nv = fnum(nf.get("value"))
+            if nv is not None:
+                t[nk] = nv
+                t[nk + "Source"] = nf.get("source")
         t["maeMfe"] = {"mae": fnum(t.get("mae")), "mfe": fnum(t.get("mfe"))}
 
     tables = dimension_tables(trades)
@@ -829,11 +927,13 @@ def build_result(trades, src):
         "setupPerformance": dims["structureShiftType"],
         "mistakes": mistake_analysis(trades),
         "maeMfe": mae_mfe_analysis(trades),
+        "numeric": numeric_summary(trades),
+        "images": image_summary(trades),
         "quality": quality_summary(trades),
         "strategyVsExecution": strategy_vs_execution(trades),
         "confidence": confidence_vs_result(trades),
         "weekly": weekly_v2(src, trades, manual),
-        "manualTrades": sorted(manual.keys()),
+        "manualTrades": sorted(k for k in manual if not k.startswith("_")),
         "emptyDimensions": [k for k, v in dims.items() if all(x["key"] == "(未记录)" for x in v["rows"])],
         "answers": answers(trades, dims, mistake_analysis(trades), mae_mfe_analysis(trades),
                            strategy_vs_execution(trades), dashboard(trades)),

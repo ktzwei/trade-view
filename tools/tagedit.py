@@ -29,14 +29,19 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "parser"))
-from schema import FIELDS, MISTAKE_GROUPS, SCHEMA_VERSION  # noqa: E402
+from schema import ALL_TF, FIELDS, MISTAKE_GROUPS, SCHEMA_VERSION  # noqa: E402
 
 MANUAL = ROOT / "data" / "manual"
 TRADES = ROOT / "data" / "trades.json"
 WEEK_KEYS = [("didWell", "This Week I Did Well（哪里做得对）"),
              ("mainProblem", "Main Problem（本周主要问题）"),
              ("nextFocus", "Next Week Focus（下周重点改进）")]
-NUMERIC = {"plannedRR", "mae", "mfe", "confidence", "plannedEntry", "plannedSL"}
+# 数值字段（需求 §13 Protected Price、§19 MAE/MFE）+ 旧的手填数值项；从 schema 派生，避免两处维护
+NUMERIC = {f["key"] for f in FIELDS if f.get("kind") == "number"} | {
+    "plannedRR", "confidence", "plannedEntry", "plannedSL"}
+# 需求 §24：截图四类分类（写进 data/manual/_images.json，原图不动）
+IMG_KINDS = ["HTF Context", "LTF Entry", "After Trade", "Review Screen"]
+IMAGES = MANUAL / "_images.json"
 CHECKLIST = {
     "Must Have": ["htfBias", "htfPOIType", "invalidationLogic", "plannedRR"],
     "Confirmation": ["liquiditySweep", "displacementQuality", "brokenStructure", "entryTriggerType"],
@@ -187,7 +192,10 @@ def index_page(trades):
     body = ("<h1>交易复盘 · 手填结构化层</h1>"
             f"<div class=sub>schema v{SCHEMA_VERSION} ｜ 自动识别只是建议（需求 §37），确认后写入 "
             f"<code>data/manual/</code>，手填层优先级最高。</div>"
-            "<div class=card><div class=row><form method=post action='/build' style='margin:0'>"
+            "<div class=card><div class=row>"
+            "<a class=p href='/images' style='text-decoration:none'>截图分类（§24）</a> "
+            "<a class=p href='/weeks' style='text-decoration:none'>周复盘（§32）</a> "
+            "<form method=post action='/build' style='margin:0'>"
             "<button class=p>保存后重建站点数据</button></form>"
             f"<span class=sub style='margin:0'>手动确认 {sum(1 for t in trades if (t.get('fieldStats') or {}).get('confirmed'))}"
             f" / {len(trades)} 笔</span></div></div>"
@@ -250,6 +258,53 @@ def weeks_page(weeks, manual_weeks):
 
 
 # ---------------------------------------------------------------- handlers
+def images_page(trades):
+    """需求 §24：截图分类（HTF Context / LTF Entry / After Trade / Review Screen + Timeframe）。
+
+    分类只写 data/manual/_images.json，原图与原始数据不动（§37）。
+    """
+    data = load_json(IMAGES, {})
+    total = sum(len(t.get("images") or []) for t in trades)
+    done = sum(len(v or {}) for v in data.values())
+    parts = [f"<div class=nav><a href='/'>← 全部交易</a></div>",
+             "<h1>截图分类 · 手填层</h1>",
+             "<div class=sub>需求 §24：每张图分四类，并标周期。分类写进 <code>data/manual/_images.json</code>，"
+             "原图与 Google Docs 数据都不动。</div>",
+             f"<div class=card>共 {total} 张图 ｜ 已分类 {done} 张 ｜ 未分类 {max(0, total - done)} 张</div>"]
+    for t in trades:
+        imgs = t.get("images") or []
+        if not imgs:
+            continue
+        cur = data.get(t["id"]) or {}
+        parts.append(f"<form method=post action='/images'><h2>{html.escape(t['id'])} "
+                     f"<span class=badge>{html.escape(str(t.get('symbolLabel') or ''))}</span></h2><div class=card>")
+        for im in imgs:
+            key = str(im.get("sha256") or im.get("order"))
+            m = cur.get(key) or {}
+            opts = "".join(f"<option value='{html.escape(o)}'"
+                           f"{' selected' if m.get('type') == o else ''}>{html.escape(o)}</option>"
+                           for o in [""] + IMG_KINDS)
+            tfs = "".join(f"<option value='{html.escape(v)}'"
+                          f"{' selected' if m.get('timeframe') == v else ''}>{html.escape(v)}</option>"
+                          for v in [""] + list(ALL_TF))
+            path = urllib.parse.quote(str(im.get("file") or im.get("path") or ""))
+            parts.append(
+                f"<div class=fld><div class=lbl><b>图 {im.get('order')}</b> "
+                f"<span class=badge>{html.escape(str(im.get('width')))}×{html.escape(str(im.get('height')))}</span>"
+                f"<div class=ev>sha {html.escape(key)} ｜ {html.escape(str(im.get('file') or ''))}</div>"
+                f"<a href='/{path}' target=_blank><img src='/{path}' "
+                f"style='max-width:280px;margin-top:6px;border:1px solid #30363d;border-radius:6px'></a></div>"
+                f"<div><input type=hidden name='t__{html.escape(key)}' value='{html.escape(t['id'])}'>"
+                f"<select name='k__{html.escape(key)}'>{opts}</select> "
+                f"<select name='tf__{html.escape(key)}'>{tfs}</select>"
+                f"<input type=text name='cap__{html.escape(key)}' placeholder='说明（可留空）' "
+                f"value='{html.escape(str(m.get('caption') or ''))}' style='width:300px;margin-top:6px'>"
+                f"<div class=ev>当前：{html.escape(json.dumps(m, ensure_ascii=False))}</div></div></div>")
+        parts.append("<div class=row><button class=p type=submit>保存本笔图片分类</button>"
+                     "<span class=sub style='margin:0'>保存后自动重建站点数据</span></div></div></form>")
+    return page("截图分类", "".join(parts))
+
+
 class H(BaseHTTPRequestHandler):
     trades = []
     weeks = []
@@ -265,8 +320,26 @@ class H(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(b)
 
+    def send_bytes(self, data, ctype):
+        self.send_response(200)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
     def do_GET(self):
         u = urllib.parse.urlparse(self.path)
+        if u.path.startswith("/images/"):
+            # 只读放行仓库里的 images/（本地标注看图用，越界一律 404）
+            rel = urllib.parse.unquote(u.path.lstrip("/"))
+            fp = (ROOT / rel).resolve()
+            if str(fp).startswith(str((ROOT / "images").resolve())) and fp.is_file():
+                ct = "image/png" if fp.suffix.lower() == ".png" else (
+                    "image/jpeg" if fp.suffix.lower() in (".jpg", ".jpeg") else "application/octet-stream")
+                return self.send_bytes(fp.read_bytes(), ct)
+            return self.send_html(page("404", "<h1>404</h1>"), 404)
+        if u.path == "/images":
+            return self.send_html(images_page(self.trades))
         if u.path == "/":
             return self.send_html(index_page(self.trades))
         if u.path == "/weeks":
@@ -288,6 +361,30 @@ class H(BaseHTTPRequestHandler):
             self.send_html(page("重建", f"<div class=nav><a href='/'>← 返回</a></div><h1>重建结果</h1>"
                                       f"<pre>{html.escape(out)}</pre>"))
             return
+        if u.path == "/images":
+            data = load_json(IMAGES, {})
+            for k, v in qs.items():
+                if not k.startswith("k__"):
+                    continue
+                key = k[3:]
+                tid = (qs.get(f"t__{key}") or [""])[0].strip()
+                if not tid:
+                    continue
+                kind = (v[0] or "").strip()
+                tf = (qs.get(f"tf__{key}") or [""])[0].strip()
+                cap = (qs.get(f"cap__{key}") or [""])[0].strip()
+                if not (kind or tf or cap):
+                    data.get(tid, {}).pop(key, None)   # 三项全空 = 撤销这张图的分类
+                    continue
+                data.setdefault(tid, {})[key] = {"type": kind or None,
+                                                 "timeframe": tf or None,
+                                                 "caption": cap or None}
+            MANUAL.mkdir(parents=True, exist_ok=True)
+            IMAGES.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            out = rebuild()
+            return self.send_html(page("图片分类已保存",
+                                      f"<div class=nav><a href='/images'>← 返回截图分类</a></div>"
+                                      f"<h1>已保存</h1><pre>{html.escape(out)}</pre>"))
         if u.path == "/weeks":
             data = load_json(MANUAL / "_weeks.json", {})
             for k, v in qs.items():

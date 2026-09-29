@@ -35,18 +35,18 @@
 | §10 | Reaction + Reaction Type | ✅ | `reaction`(2 行) / `reactionType`(2 行) |
 | §11 | Displacement：Yes/No + Quality + 周期 | 🟡 | **本次补上 `displacement`(Yes/No) 字段与维度**（原来只有 Quality/TF）；文档 7 笔都写「未记录」→ 全空 |
 | §12 | Structure Shift（MSB/MSS/BOS/CHOCH/None）+ Broken Structure | ✅ | 选项齐全；`structureShiftType`(4 行) / `brokenStructure`(2 行，Internal/Key 分开) |
-| §13 | Protected High/Low + **Price** + Timeframe | 🟡 | `protectedStructure` / `protectedTF` 已就位；**缺 `protectedPrice` 独立数值字段**（见缺口 1）；文档里 7 笔都没写 Protected |
+| §13 | Protected High/Low + **Price** + Timeframe | ✅ | v3.1 补齐：`schema.py` 新增数值字段 `protectedPrice`（`kind="number"`, unit=价格）；手填 → `t.fields.protectedPrice`（source=manual）→ `v2.numeric` 汇总 → Analytics「数值字段」面板。**文档 7 笔仍都没写 Protected，所以显示未记录**（不补 0） |
 | §14 | Entry Mode（Limit / LTF Confirmation / Market）+ Limit 子类 | ✅ | `entryMode`(2 行) + `limitStyle`(HTF POI Limit / OB Limit / FVG Limit / 50% FVG Limit) |
 | §15 | Entry Trigger 11 种 + 周期 | ✅ | `entryTriggerType`(5 行) / `entryTriggerTF` |
 | §16 | Planned vs Actual（Entry/SL/TP/RR 四处比对） | ✅ | 详情页偏离表；本批 2 笔「提前进场」被抓出 |
 | §17 | Invalidation Logic + 周期 | ✅ | `invalidationLogic`(3 行：Sweep Low / Protected Low / Structure Invalidated) |
 | §18 | Target 层级（TP1 LTF → Final 1D/4H） | ✅ | `targetLevel`(4 行) + 原文档 targets 列表 |
-| §19 | MAE / MFE（以 R 记） | 🟡 | **解析链路已打通**（①/⑩ 段 `MAE：-0.35R` → `sections['mae']` → `t.mae`）；文档 7 笔全「未记录」→ 无数据 |
+| §19 | MAE / MFE（以 R 记） | 🟡 | v3.1 起 `mae`/`mfe` 也是数值字段：文档写 `MAE：-0.35R` 会抽成数值 + 单位 R（实测样句 `MAE：-0.35R，MFE：+1.8R` → `-0.35 / 1.8`），手填也可，进 `v2.numeric` 与 Analytics「数值字段」；**文档 7 笔全「未记录」→ 无数据** |
 | §20 | Trade Management（Style + 4 个是否） | ✅ | `managementStyle` + `movedSL/earlyExit/reducedPosition/addedPosition` |
 | §21 | Rule Compliance（Fully/Minor/Major）+ Should I Take | ✅ | `ruleCompliance` / `shouldTake`；合规组 vs 违规组 Expectancy 已算 |
 | §22 | Mistake Tags 多选分组 | ✅ | 31 个标签 / 5 类（Setup/Entry/Risk/Exit/Psychology） |
 | §23 | Trade Quality 四象限 + Good Trade Rate | ✅ | `v2.quality` 四行 + Dashboard Good Trade Rate |
-| §24 | 截图 4 类（HTF / LTF Entry / After / Review） | ⬜ | **8 张图 `kind` 全为 null**，没有分类入口（缺口 2） |
+| §24 | 截图 4 类（HTF / LTF Entry / After / Review） | ✅ | v3.1 补齐：tagedit 新增「截图分类」页（`/images`，点图选 4 类 + Timeframe + 说明）→ `data/manual/_images.json` → `v2.images` 统计 + 详情页相册角标 / Analytics「截图分类」面板。实测 **8/8 张已分类**（HTF Context 5 · LTF Entry 2 · After Trade 1），原图未动 |
 | §25 | Trade Review 三问 | ✅ | 详情页 + 周报卡片（文档未写时显示 AI 复盘层判定） |
 | §26 | Confidence 1–5（必须交易前记录） | 🟡 | 字段 + note（「不允许交易后回填」）已就位；文档没记 → 空 |
 | §27 | Dashboard 8 指标 | ✅ | 本次补齐 **Avg R / Profit Factor / Trades** 三格（原来缺 §27 点名的 Avg R 与 Profit Factor） |
@@ -92,18 +92,20 @@
 
 ## 三、缺口清单（没做到 / 做不到的部分）
 
-### 缺口 1 · §13 Protected Price 没有独立字段（优先级：中）
+### 缺口 1 · §13 Protected Price 独立字段 —— ✅ 已补齐（v3.1，2026-09-29）
 
-- 现状：`protectedStructure`（Protected High/Low/None）+ `protectedTF` 有；**PRD 要求的 Price 没有独立字段**。
-- 原因：`schema.py` 是**纯枚举模型**（`F(key,label,options,group)`，42 个字段全是选项式），数值字段（Price）需要新增字段类型 + 前端渲染 + 统计口径。
-- 影响：Protected 结构与价格只能从原文段落/`stopLoss` 里看到，不能按「Protected 价格 vs 实际 SL」做统计。
-- 建议做法：给 schema 加 `kind="number"` 字段类型（最小侵入：新增 `protectedPrice`、`mae`、`mfe` 三个数值字段），前端在详情页结构区多一行，统计层只做分布不做判定。
+- 做法：`schema.py` 的 `F()`增加 `kind`（默认 `enum`，可 `number`）与 `unit`；新增三个数值字段 `protectedPrice`（unit=价格）、`mae`（unit=R）、`mfe`（unit=R），共 46 字段（43 枚举 + 3 数值）。
+- 抽取：文档里带标签的数字会被抽成数值。实测样句 `MAE：-0.35R，MFE：+1.8R` → `mae=-0.35` / `mfe=1.8`；`MAE / MFE：未记录` 一律跳过，不补 0。
+- 手填：tagedit 对数值字段渲染 `type=number` 输入。实测 POST `f__protectedPrice=2455.5` → `data/manual/<id>.json` → `t.fields.protectedPrice = {value: 2455.5, source: manual, confirmed: true}`（**测完已清除，站上不留假数据**）。
+- 展示与统计：详情页 ⑥ 结构步骤多一行「Protected Price（受保护结构价格） 单位 价格」；Analytics 新增「数值字段」面板（已记录笔数 / 平均 / 范围），只对真写了值的笔算平均。
+- 仍然 0/7 的原因：**文档里 7 笔都没有写 Protected 价格**——按 §37 不猜、不补。
 
-### 缺口 2 · §24 截图分类没做（优先级：中）
+### 缺口 2 · §24 截图分类 —— ✅ 已补齐（v3.1，2026-09-29）
 
-- 现状：从文档抽到 8 张原图，`images[].kind` 全为 `null`，`caption` 统一写「文档内嵌交易图（原图，未标注 Timeframe）」。
-- PRD 要求分 4 类：HTF Context / LTF Entry / After Trade / Review Screen。
-- 建议做法：`tools/tagedit.py` 加「图片分类」入口（点图 → 选 4 类 + Timeframe），写 `data/manual/images.json`，`build.py` 合并后详情页分组展示。**没有做这一步之前，页面不会假装知道图属于哪一类。**
+- 入口：`tools/tagedit.py` 新增「截图分类」页（首页按钮或 `/images`）：每张图一个下拉（HTF Context / LTF Entry / After Trade / Review Screen）+ Timeframe（1D/4H/1H/15m/5m）+ 说明；本地加了只读静态图路由 `/images/<file>`，能直接看图。
+- 落盘：`data/manual/_images.json`，键是图自己的 `sha256`（图不变、键不变）；**原图与 Google Doc 数据不动**（§37）。三个字段全空 = 撤销分类。
+- 合并与展示：`stats_v2.apply_image_meta()` 合并 → `v2.images`（每类几张 / 周期分布 / 未分类数）→ 详情页相册角标 + 分类条 + Analytics「截图分类」面板。
+- 实测结果：**8 张图 8/8 已分类** —— HTF Context 5（都是 1H 图：ETH×2、QQQ、HYPE、BTC）、LTF Entry 2（15m：XAU、BTC）、After Trade 1（XAU 平仓明细）。分类依据是**图上自己标的周期**（「1小时」/「15」），每个说明里都写明了，不对随时在编辑器里改。
 
 ### 缺口 3 · 文档侧的记录缺口（不是系统缺口，优先级：高——直接影响 §44）
 
@@ -143,5 +145,5 @@
 
 下一步建议（按收益排序）：
 1. 以后每笔记 **MAE / MFE / Displacement Yes-No / Protected + 价格 / Sweep Quality**（三行字，直接决定 §19/§11/§13/§8 能不能出结论）。
-2. 补齐 `protectedPrice` 数值字段与截图分类入口（缺口 1、2）。
+2. ~~补齐 `protectedPrice` 数值字段与截图分类入口（缺口 1、2）。~~ —— 2026-09-29 已完成（见上）。
 3. 记到 20 笔后重跑 `v2.answers`，看哪几张卡先脱离「样本不足」。

@@ -62,8 +62,10 @@
     if (!FBYK()[k]) return '';
     const v = valTxt(f);
     const tf = f && f.tf && f.tf.length ? `<span class="srcb">${esc(f.tf.join('/'))}</span>` : '';
+    const spec = FBYK()[k] || {};
+    const unit = spec.kind === 'number' && spec.unit ? `<span class="srcb">单位 ${esc(spec.unit)}</span>` : '';
     return `<div class="cfield"><div class="k">${esc(LBL(k))}${tf}</div>
-      <div class="v">${v ? esc(v) : NR}${srcBadge(f)}</div>
+      <div class="v">${v ? esc(v) : NR}${unit}${srcBadge(f)}</div>
       ${f && f.evidence ? `<div class="ev">“${esc(short(f.evidence, 92))}”</div>` : ''}</div>`;
   };
   const CHAIN = [
@@ -72,13 +74,23 @@
     ['③ HTF POI 兴趣点', ['htfPOIType', 'htfPOITF', 'poiConfluence', 'ltfPOIType', 'ltfPOITF'], 'HTF POI 与 LTF Entry POI 是两个不同概念。'],
     ['④ LTF Reaction 反应', ['reaction', 'reactionType', 'reactionTF'], '到达 POI 后市场有没有反应。'],
     ['⑤ Displacement 位移', ['displacementQuality', 'displacementTF'], '有没有位移、强不强、在哪一级周期。'],
-    ['⑥ Structure Shift 结构改变', ['structureShiftType', 'structureShiftTF', 'brokenStructure', 'protectedStructure', 'protectedTF', 'invalidationLogic', 'invalidationTF'], '要能区分 Internal Structure 与 Key / Protected Structure。'],
+    ['⑥ Structure Shift 结构改变', ['structureShiftType', 'structureShiftTF', 'brokenStructure', 'protectedStructure', 'protectedTF', 'protectedPrice', 'invalidationLogic', 'invalidationTF'], '要能区分 Internal Structure 与 Key / Protected Structure。'],
     ['⑦ Entry 入场', ['entryMode', 'limitStyle', 'entryTriggerType', 'entryTriggerTF'], 'Limit 挂单 / LTF Confirmation / Market 三选一，统计口径靠它。'],
     ['⑧ Target 目标', ['targetLevel'], '目标按结构层级记录。'],
     ['⑨ Trade Management 持仓管理', ['managementStyle', 'movedSL', 'earlyExit', 'reducedPosition', 'addedPosition']],
     ['⑩ Result 结果', ['mae', 'mfe', 'confidence'], 'MAE / MFE 一律记成 R。'],
     ['⑪ Review 复盘', ['ruleCompliance', 'shouldTake', 'tradeQuality', 'mistakes']],
   ];
+  const IMG_KIND_WORD = { 'HTF Context': 'HTF 环境', 'LTF Entry': 'LTF 入场', 'After Trade': '事后全图', 'Review Screen': '复盘屏' };
+  const imgKind = (i) => (i.type ? `${i.type}${i.timeframe ? ' · ' + i.timeframe : ''}` : '未分类');
+  function imgStrip(imgs, t) {
+    const counts = {};
+    imgs.forEach((i) => { const k = i.type || '未分类'; counts[k] = (counts[k] || 0) + 1; });
+    const parts = Object.keys(counts).map((k) => `<span class="chip">${esc(IMG_KIND_WORD[k] || k)} × ${counts[k]}</span>`);
+    const un = imgs.filter((i) => !i.type).length;
+    return `${parts.join(' ')} <span class="muted">需求 §24 四类（HTF Context / LTF Entry / After Trade / Review Screen）在本地编辑器 <b>截图分类</b> 页勾选，原图不改。</span>`
+      + (un ? ` <span class="muted">还有 ${un} 张没标。</span>` : '');
+  }
   function chainBlock(t) {
     const used = CHAIN.flatMap((c) => c[1]);
     const steps = CHAIN.map(([title, keys, note]) => {
@@ -515,8 +527,10 @@
       ${imgs.length ? `<div class="card chart-wrap" style="margin-top:14px">
         <img class="chart-main" id="main-chart" src="${esc(imgs[0].path)}" alt="${esc(t.symbolLabel)} 图表">
         <div class="chart-bar"><span>${esc(imgs[0].caption || '文档内嵌交易图')}（点击放大）</span>
+          <span>${imgs[0].type ? `分类：${esc(imgs[0].type)}${imgs[0].timeframe ? ' · ' + esc(imgs[0].timeframe) : ''}` : '分类：未标注（§24 四类之一）'}${imgs[0].kindSource === 'manual' ? ' · 手填' : ''}</span>
           <span>${lens.length ? '参考周期 ' + esc(lens.join('/').toUpperCase()) : ''}</span></div>
-        ${imgs.length > 1 ? `<div class="gallery">${imgs.map((i, n) => `<img src="${esc(i.path)}" data-lb="${n}" alt="图 ${n + 1}">`).join('')}</div>` : ''}
+        ${imgs.length > 1 ? `<div class="gallery">${imgs.map((i, n) => `<figure class="gal-item"><img src="${esc(i.path)}" data-lb="${n}" alt="图 ${n + 1}"><figcaption>${esc(imgKind(i))}</figcaption></figure>`).join('')}</div>` : ''}
+        <div class="imgstrip small">${imgStrip(imgs, t)}</div>
       </div>` : '<div class="empty">这笔交易还没有绑定图表。</div>'}
 
       ${chainBlock(t)}
@@ -606,6 +620,7 @@
   function analyticsV2() {
     const D = V2(), dims = D.dimensions || {}, order = D.dimensionOrder || [];
     const M = D.mistakes || {}, S = D.strategyVsExecution || {}, MM = D.maeMfe || {}, tf = D.timeframes || {};
+    const NUM = D.numeric || [], IMGS = D.images || {};
     const FOCUS = ['structureShiftType', 'entryMode', 'htfPOITF', 'ltfPOITF', 'marketCondition', 'liquiditySweep',
       'liquiditySweep', 'sweepQuality', 'displacementQuality', 'brokenStructure', 'protectedStructure', 'ruleCompliance', 'tradeQuality', 'shouldTake'];
     const focus = [...new Set(FOCUS)].filter((k) => dims[k]);
@@ -635,6 +650,19 @@
             <div><div class="k">盈利单 MAE</div><div class="v">${cellR(MM.winMAE)}</div></div>
             <div><div class="k">亏损单 MFE</div><div class="v">${cellR(MM.lossMFE)}</div></div></div>
           <div class="small muted" style="margin-top:8px">${esc(MM.note || '')}</div></div>
+        <div class="panel"><h3>数值字段 <span class="hint small">§13 Protected Price / §19 MAE·MFE</span></h3>
+          ${NUM.length ? `<table class="plain"><thead><tr><th>字段</th><th class="num">已记录</th><th class="num">平均</th><th class="num">范围</th></tr></thead><tbody>
+            ${NUM.map((n) => `<tr><td>${esc(n.label)}<span class="srcb">${esc(n.group || '其他')}</span></td>
+              <td class="num">${n.recorded}/${n.total}</td>
+              <td class="num">${n.avg === null ? NR : (n.avg > 0 ? '+' : '') + n.avg + (n.unit ? ' ' + esc(n.unit) : '')}</td>
+              <td class="num">${n.min === null ? NR : n.min + ' ~ ' + n.max}</td></tr>`).join('')}
+            </tbody></table><div class="small muted" style="margin-top:6px">没记录的行不计入平均，也不补 0（§4.1）。</div>`
+            : '<div class="muted small">没有数值字段定义。</div>'}</div>
+        <div class="panel"><h3>截图分类 <span class="hint small">§24</span></h3>
+          ${(IMGS.rows || []).length ? `<div class="kv">${IMGS.rows.map((r) => `<div><div class="k">${esc(IMG_KIND_WORD[r.kind] || r.kind)}</div>
+              <div class="v">${r.count} 张<span class="srcb">${esc(Object.keys(r.tf || {}).join('/') || '周期未标')}</span></div></div>`).join('')}</div>`
+            : '<div class="muted small">还没有分类记录。</div>'}
+          <div class="small muted" style="margin-top:8px">共 ${IMGS.total || 0} 张 · 已分类 ${IMGS.labeled || 0} · 未分类 ${IMGS.unlabeled || 0}。分类在本地编辑器「截图分类」页勾选。</div></div>
         <div class="panel"><h3>错误标签统计 <span class="hint small">§22 / §28</span></h3>
           ${(M.rows || []).length ? `<table class="plain"><thead><tr><th>错误</th><th class="num">出现</th><th class="num">已确认</th><th class="num">可计 R</th><th class="num">Lost R</th></tr></thead><tbody>${M.rows.map(mk).join('')}</tbody></table>
             <div class="small muted" style="margin-top:6px">最常出现：<b>${esc(M.mostCommon || '未记录')}</b>${M.costliest ? ` · 损失最大：<b>${esc(M.costliest.tag)}</b>（${M.costliest.lostR === null ? 'R 未计' : M.costliest.lostR.toFixed(2) + 'R'}）` : ''}</div>`

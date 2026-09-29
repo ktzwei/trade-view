@@ -3,7 +3,7 @@
   "sourceTitle": "交易复盘",
   "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
   "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
-  "parsedAt": "2026-09-29T20:31:57+08:00",
+  "parsedAt": "2026-09-29T21:19:37+08:00",
   "schemaVersion": "2.0",
   "vocab": {
    "version": "2.0",
@@ -35,7 +35,9 @@
      "group": "HTF Context",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "biasSourceTF",
@@ -48,7 +50,9 @@
      "group": "HTF Context",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "marketCondition",
@@ -64,7 +68,9 @@
      "group": "HTF Context",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "htfStructureTF",
@@ -77,7 +83,9 @@
      "group": "HTF Context",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "htfStructureKind",
@@ -91,7 +99,9 @@
      "group": "HTF Context",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "liquidityType",
@@ -111,7 +121,9 @@
      "group": "Liquidity",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "liquidityTF",
@@ -126,7 +138,9 @@
      "group": "Liquidity",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "liquiditySweep",
@@ -139,7 +153,9 @@
      "group": "Liquidity",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "sweepQuality",
@@ -152,7 +168,9 @@
      "group": "Liquidity",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "sweepTF",
@@ -164,7 +182,9 @@
      "group": "Liquidity",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "htfPOIType",
@@ -188,7 +208,9 @@
      "group": "POI",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "htfPOITF",
@@ -201,7 +223,9 @@
      "group": "POI",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "ltfPOIType",
@@ -225,7 +249,9 @@
      "group": "POI",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "ltfPOITF",
@@ -237,7 +263,9 @@
      "group": "POI",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "poiConfluence",
@@ -259,7 +287,9 @@
      "group": "POI",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "reaction",
@@ -272,7 +302,9 @@
      "group": "LTF Entry",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "reactionTF",
@@ -284,7 +316,9 @@
      "group": "LTF Entry",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "reactionType",
@@ -300,7 +334,9 @@
      "group": "LTF Entry",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "displacementTF",
@@ -312,7 +348,9 @@
      "group": "LTF Entry",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "displacement",
@@ -324,7 +362,9 @@
      "group": "LTF Entry",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "displacementQuality",
@@ -337,7 +377,9 @@
      "group": "LTF Entry",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "structureShiftType",
@@ -352,7 +394,9 @@
      "group": "Structure",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "structureShiftTF",
@@ -364,7 +408,9 @@
      "group": "Structure",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "brokenStructure",
@@ -383,7 +429,9 @@
      "group": "Structure",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "protectedStructure",
@@ -396,7 +444,9 @@
      "group": "Structure",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "protectedTF",
@@ -411,7 +461,9 @@
      "group": "Structure",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "entryMode",
@@ -424,7 +476,9 @@
      "group": "Entry",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "limitStyle",
@@ -438,7 +492,9 @@
      "group": "Entry",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "entryTriggerType",
@@ -459,7 +515,9 @@
      "group": "Entry",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "entryTriggerTF",
@@ -471,7 +529,9 @@
      "group": "Entry",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "invalidationLogic",
@@ -488,7 +548,9 @@
      "group": "Invalidation",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "invalidationTF",
@@ -503,7 +565,9 @@
      "group": "Invalidation",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "targetLevel",
@@ -517,7 +581,9 @@
      "group": "Target",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "managementStyle",
@@ -532,7 +598,9 @@
      "group": "Management",
      "multi": true,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "movedSL",
@@ -544,7 +612,9 @@
      "group": "Management",
      "multi": false,
      "tier": "advanced",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "earlyExit",
@@ -556,7 +626,9 @@
      "group": "Management",
      "multi": false,
      "tier": "advanced",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "reducedPosition",
@@ -568,7 +640,9 @@
      "group": "Management",
      "multi": false,
      "tier": "advanced",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "addedPosition",
@@ -580,7 +654,9 @@
      "group": "Management",
      "multi": false,
      "tier": "advanced",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "ruleCompliance",
@@ -593,7 +669,9 @@
      "group": "Review",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "shouldTake",
@@ -606,7 +684,9 @@
      "group": "Review",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "tradeQuality",
@@ -620,7 +700,9 @@
      "group": "Review",
      "multi": false,
      "tier": "core",
-     "note": null
+     "note": null,
+     "kind": "enum",
+     "unit": null
     },
     {
      "key": "confidence",
@@ -635,7 +717,42 @@
      "group": "Review",
      "multi": false,
      "tier": "advanced",
-     "note": "必须交易前记录，不允许交易结束后回填。"
+     "note": "必须交易前记录，不允许交易结束后回填。",
+     "kind": "enum",
+     "unit": null
+    },
+    {
+     "key": "protectedPrice",
+     "label": "Protected Price（受保护结构价格）",
+     "options": [],
+     "group": "Structure",
+     "multi": false,
+     "tier": "advanced",
+     "note": "需求 §13：Protected High/Low 的「价格」单独成字段，用于统计实际 SL 是否落在 Protected 内侧。",
+     "kind": "number",
+     "unit": "价格"
+    },
+    {
+     "key": "mae",
+     "label": "MAE（最大不利偏移）",
+     "options": [],
+     "group": "Review",
+     "multi": false,
+     "tier": "advanced",
+     "note": "需求 §19：以 R 记，入场后最大浮亏。缺失显示「未记录」，不填 0。",
+     "kind": "number",
+     "unit": "R"
+    },
+    {
+     "key": "mfe",
+     "label": "MFE（最大有利偏移）",
+     "options": [],
+     "group": "Review",
+     "multi": false,
+     "tier": "advanced",
+     "note": "需求 §19：以 R 记，入场后最大浮盈。缺失显示「未记录」，不填 0。",
+     "kind": "number",
+     "unit": "R"
     },
     {
      "key": "mistakes",
@@ -907,7 +1024,7 @@
    }
   },
   "sourceVersion": "8bff9aa8a1916e2a",
-  "exportBytesHash": "a85be73d6c324c30",
+  "exportBytesHash": "b2e5e430c7574c13",
   "sourceBytes": 1366635,
   "blocks": 125,
   "unresolvedImageCount": 0,
@@ -3405,6 +3522,87 @@
    "note": "MAE / MFE 全部未记录，无法判断「SL 是否过紧 / TP 是否过早」。",
    "sampleNote": "样本不足"
   },
+  "numeric": [
+   {
+    "key": "protectedPrice",
+    "label": "Protected Price（受保护结构价格）",
+    "unit": "价格",
+    "group": "Structure",
+    "note": "需求 §13：Protected High/Low 的「价格」单独成字段，用于统计实际 SL 是否落在 Protected 内侧。",
+    "recorded": 0,
+    "total": 7,
+    "avg": null,
+    "min": null,
+    "max": null,
+    "rows": []
+   },
+   {
+    "key": "mae",
+    "label": "MAE（最大不利偏移）",
+    "unit": "R",
+    "group": "Review",
+    "note": "需求 §19：以 R 记，入场后最大浮亏。缺失显示「未记录」，不填 0。",
+    "recorded": 0,
+    "total": 7,
+    "avg": null,
+    "min": null,
+    "max": null,
+    "rows": []
+   },
+   {
+    "key": "mfe",
+    "label": "MFE（最大有利偏移）",
+    "unit": "R",
+    "group": "Review",
+    "note": "需求 §19：以 R 记，入场后最大浮盈。缺失显示「未记录」，不填 0。",
+    "recorded": 0,
+    "total": 7,
+    "avg": null,
+    "min": null,
+    "max": null,
+    "rows": []
+   }
+  ],
+  "images": {
+   "total": 8,
+   "labeled": 8,
+   "unlabeled": 0,
+   "rows": [
+    {
+     "kind": "HTF Context",
+     "count": 5,
+     "trades": [
+      "2026-09-13-ethusdt-long-01",
+      "2026-09-18-ethusdt-long-02",
+      "2026-09-15-qqqusdt-long-03",
+      "2026-09-28-hypeusdt-long-01",
+      "2026-09-28-btcusdt-long-挂单"
+     ],
+     "tf": {
+      "1H": 5
+     }
+    },
+    {
+     "kind": "LTF Entry",
+     "count": 2,
+     "trades": [
+      "undated-xauusdt-short-02",
+      "2026-09-28-btcusdt-long-挂单"
+     ],
+     "tf": {
+      "15m": 2
+     }
+    },
+    {
+     "kind": "After Trade",
+     "count": 1,
+     "trades": [
+      "undated-xauusdt-short-02"
+     ],
+     "tf": {}
+    }
+   ]
+  },
   "quality": {
    "rows": [
     {
@@ -3874,7 +4072,9 @@
     "group": "HTF Context",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "biasSourceTF",
@@ -3887,7 +4087,9 @@
     "group": "HTF Context",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "marketCondition",
@@ -3903,7 +4105,9 @@
     "group": "HTF Context",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "htfStructureTF",
@@ -3916,7 +4120,9 @@
     "group": "HTF Context",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "htfStructureKind",
@@ -3930,7 +4136,9 @@
     "group": "HTF Context",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "liquidityType",
@@ -3950,7 +4158,9 @@
     "group": "Liquidity",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "liquidityTF",
@@ -3965,7 +4175,9 @@
     "group": "Liquidity",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "liquiditySweep",
@@ -3978,7 +4190,9 @@
     "group": "Liquidity",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "sweepQuality",
@@ -3991,7 +4205,9 @@
     "group": "Liquidity",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "sweepTF",
@@ -4003,7 +4219,9 @@
     "group": "Liquidity",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "htfPOIType",
@@ -4027,7 +4245,9 @@
     "group": "POI",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "htfPOITF",
@@ -4040,7 +4260,9 @@
     "group": "POI",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "ltfPOIType",
@@ -4064,7 +4286,9 @@
     "group": "POI",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "ltfPOITF",
@@ -4076,7 +4300,9 @@
     "group": "POI",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "poiConfluence",
@@ -4098,7 +4324,9 @@
     "group": "POI",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "reaction",
@@ -4111,7 +4339,9 @@
     "group": "LTF Entry",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "reactionTF",
@@ -4123,7 +4353,9 @@
     "group": "LTF Entry",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "reactionType",
@@ -4139,7 +4371,9 @@
     "group": "LTF Entry",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "displacementTF",
@@ -4151,7 +4385,9 @@
     "group": "LTF Entry",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "displacement",
@@ -4163,7 +4399,9 @@
     "group": "LTF Entry",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "displacementQuality",
@@ -4176,7 +4414,9 @@
     "group": "LTF Entry",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "structureShiftType",
@@ -4191,7 +4431,9 @@
     "group": "Structure",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "structureShiftTF",
@@ -4203,7 +4445,9 @@
     "group": "Structure",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "brokenStructure",
@@ -4222,7 +4466,9 @@
     "group": "Structure",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "protectedStructure",
@@ -4235,7 +4481,9 @@
     "group": "Structure",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "protectedTF",
@@ -4250,7 +4498,9 @@
     "group": "Structure",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "entryMode",
@@ -4263,7 +4513,9 @@
     "group": "Entry",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "limitStyle",
@@ -4277,7 +4529,9 @@
     "group": "Entry",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "entryTriggerType",
@@ -4298,7 +4552,9 @@
     "group": "Entry",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "entryTriggerTF",
@@ -4310,7 +4566,9 @@
     "group": "Entry",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "invalidationLogic",
@@ -4327,7 +4585,9 @@
     "group": "Invalidation",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "invalidationTF",
@@ -4342,7 +4602,9 @@
     "group": "Invalidation",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "targetLevel",
@@ -4356,7 +4618,9 @@
     "group": "Target",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "managementStyle",
@@ -4371,7 +4635,9 @@
     "group": "Management",
     "multi": true,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "movedSL",
@@ -4383,7 +4649,9 @@
     "group": "Management",
     "multi": false,
     "tier": "advanced",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "earlyExit",
@@ -4395,7 +4663,9 @@
     "group": "Management",
     "multi": false,
     "tier": "advanced",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "reducedPosition",
@@ -4407,7 +4677,9 @@
     "group": "Management",
     "multi": false,
     "tier": "advanced",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "addedPosition",
@@ -4419,7 +4691,9 @@
     "group": "Management",
     "multi": false,
     "tier": "advanced",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "ruleCompliance",
@@ -4432,7 +4706,9 @@
     "group": "Review",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "shouldTake",
@@ -4445,7 +4721,9 @@
     "group": "Review",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "tradeQuality",
@@ -4459,7 +4737,9 @@
     "group": "Review",
     "multi": false,
     "tier": "core",
-    "note": null
+    "note": null,
+    "kind": "enum",
+    "unit": null
    },
    {
     "key": "confidence",
@@ -4474,7 +4754,42 @@
     "group": "Review",
     "multi": false,
     "tier": "advanced",
-    "note": "必须交易前记录，不允许交易结束后回填。"
+    "note": "必须交易前记录，不允许交易结束后回填。",
+    "kind": "enum",
+    "unit": null
+   },
+   {
+    "key": "protectedPrice",
+    "label": "Protected Price（受保护结构价格）",
+    "options": [],
+    "group": "Structure",
+    "multi": false,
+    "tier": "advanced",
+    "note": "需求 §13：Protected High/Low 的「价格」单独成字段，用于统计实际 SL 是否落在 Protected 内侧。",
+    "kind": "number",
+    "unit": "价格"
+   },
+   {
+    "key": "mae",
+    "label": "MAE（最大不利偏移）",
+    "options": [],
+    "group": "Review",
+    "multi": false,
+    "tier": "advanced",
+    "note": "需求 §19：以 R 记，入场后最大浮亏。缺失显示「未记录」，不填 0。",
+    "kind": "number",
+    "unit": "R"
+   },
+   {
+    "key": "mfe",
+    "label": "MFE（最大有利偏移）",
+    "options": [],
+    "group": "Review",
+    "multi": false,
+    "tier": "advanced",
+    "note": "需求 §19：以 R 记，入场后最大浮盈。缺失显示「未记录」，不填 0。",
+    "kind": "number",
+    "unit": "R"
    },
    {
     "key": "mistakes",
@@ -4751,18 +5066,19 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image4.png",
+     "media": "image7.png",
      "order": 1,
      "file": "images/2026-09-13-ethusdt-long-01-1.png",
-     "type": null,
-     "timeframe": null,
+     "type": "HTF Context",
+     "timeframe": "1H",
      "sourceBlockIndex": 18,
      "width": 2048,
      "height": 935,
      "sha256": "46ec3b95e628c30b",
      "url": "images/2026-09-13-ethusdt-long-01-1.png",
-     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
-     "path": "images/2026-09-13-ethusdt-long-01-1.png"
+     "caption": "图上标「1小时」· 结构(扫流动性/MSB/折价)+入场+止盈 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改",
+     "path": "images/2026-09-13-ethusdt-long-01-1.png",
+     "kindSource": "manual"
     }
    ],
    "tags": [
@@ -5789,18 +6105,19 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image3.png",
+     "media": "image6.png",
      "order": 1,
      "file": "images/2026-09-18-ethusdt-long-02-1.png",
-     "type": null,
-     "timeframe": null,
+     "type": "HTF Context",
+     "timeframe": "1H",
      "sourceBlockIndex": 32,
      "width": 2048,
      "height": 988,
      "sha256": "b4f9e35f258b7391",
      "url": "images/2026-09-18-ethusdt-long-02-1.png",
-     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
-     "path": "images/2026-09-18-ethusdt-long-02-1.png"
+     "caption": "图上标「1小时」· 含入场标注 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改",
+     "path": "images/2026-09-18-ethusdt-long-02-1.png",
+     "kindSource": "manual"
     }
    ],
    "tags": [
@@ -6763,15 +7080,16 @@
      "media": "image2.png",
      "order": 1,
      "file": "images/2026-09-15-qqqusdt-long-03-1.png",
-     "type": null,
-     "timeframe": null,
+     "type": "HTF Context",
+     "timeframe": "1H",
      "sourceBlockIndex": 46,
      "width": 2048,
      "height": 988,
      "sha256": "57f1bb153ff906fa",
      "url": "images/2026-09-15-qqqusdt-long-03-1.png",
-     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
-     "path": "images/2026-09-15-qqqusdt-long-03-1.png"
+     "caption": "图上标「1小时」· 含入场标注 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改",
+     "path": "images/2026-09-15-qqqusdt-long-03-1.png",
+     "kindSource": "manual"
     }
    ],
    "tags": [
@@ -8735,32 +9053,34 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image8.png",
+     "media": "image5.png",
      "order": 1,
      "file": "images/undated-xauusdt-short-02-1.png",
-     "type": null,
+     "type": "After Trade",
      "timeframe": null,
      "sourceBlockIndex": 75,
      "width": 1255,
      "height": 132,
      "sha256": "3711a3939ad8a049",
      "url": "images/undated-xauusdt-short-02-1.png",
-     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
-     "path": "images/undated-xauusdt-short-02-1.png"
+     "caption": "平仓记录（第2/3批平仓明细），交易结束状态 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改",
+     "path": "images/undated-xauusdt-short-02-1.png",
+     "kindSource": "manual"
     },
     {
-     "media": "image5.png",
+     "media": "image4.png",
      "order": 2,
      "file": "images/undated-xauusdt-short-02-2.png",
-     "type": null,
-     "timeframe": null,
+     "type": "LTF Entry",
+     "timeframe": "15m",
      "sourceBlockIndex": 76,
      "width": 2048,
      "height": 937,
      "sha256": "92573e7776b1de2c",
      "url": "images/undated-xauusdt-short-02-2.png",
-     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
-     "path": "images/undated-xauusdt-short-02-2.png"
+     "caption": "图上标「15」· 扫单(liq sweep)/MSB/BB/IMB + 入场与SL —— 夜一按图上标注的周期预填，可随时在「截图分类」页改",
+     "path": "images/undated-xauusdt-short-02-2.png",
+     "kindSource": "manual"
     }
    ],
    "tags": [
@@ -9454,18 +9774,19 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image1.png",
+     "media": "image8.png",
      "order": 1,
      "file": "images/2026-09-28-hypeusdt-long-01-1.png",
-     "type": null,
-     "timeframe": null,
+     "type": "HTF Context",
+     "timeframe": "1H",
      "sourceBlockIndex": 91,
      "width": 2048,
      "height": 988,
      "sha256": "9e2aac209e12d0fe",
      "url": "images/2026-09-28-hypeusdt-long-01-1.png",
-     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
-     "path": "images/2026-09-28-hypeusdt-long-01-1.png"
+     "caption": "图上标「1小时」· eql 流动性 + IMB 1H + 限价成交/SL 被扫 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改",
+     "path": "images/2026-09-28-hypeusdt-long-01-1.png",
+     "kindSource": "manual"
     }
    ],
    "tags": [
@@ -10409,32 +10730,34 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image6.png",
+     "media": "image3.png",
      "order": 1,
      "file": "images/2026-09-28-btcusdt-long-挂单-1.png",
-     "type": null,
-     "timeframe": null,
+     "type": "HTF Context",
+     "timeframe": "1H",
      "sourceBlockIndex": 106,
      "width": 2048,
      "height": 988,
      "sha256": "b8c0635f3d670465",
      "url": "images/2026-09-28-btcusdt-long-挂单-1.png",
-     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
-     "path": "images/2026-09-28-btcusdt-long-挂单-1.png"
+     "caption": "图上标「1小时」· discount 区/IMB/OB + 大周期做多倾向 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改",
+     "path": "images/2026-09-28-btcusdt-long-挂单-1.png",
+     "kindSource": "manual"
     },
     {
-     "media": "image7.png",
+     "media": "image1.png",
      "order": 2,
      "file": "images/2026-09-28-btcusdt-long-挂单-2.png",
-     "type": null,
-     "timeframe": null,
+     "type": "LTF Entry",
+     "timeframe": "15m",
      "sourceBlockIndex": 107,
      "width": 2048,
      "height": 988,
      "sha256": "689d87277438ee01",
      "url": "images/2026-09-28-btcusdt-long-挂单-2.png",
-     "caption": "文档内嵌交易图（原图，未标注 Timeframe）",
-     "path": "images/2026-09-28-btcusdt-long-挂单-2.png"
+     "caption": "图上标「15」· MSB 15min/IMB/OB + 82950 限价挂单 —— 夜一按图上标注的周期预填，可随时在「截图分类」页改",
+     "path": "images/2026-09-28-btcusdt-long-挂单-2.png",
+     "kindSource": "manual"
     }
    ],
    "tags": [

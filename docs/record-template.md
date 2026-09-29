@@ -213,3 +213,26 @@ python3 tools/tagedit.py --port 8791    # 浏览器打开 http://127.0.0.1:8791
 2. `undated-xauusdt-short-02`（XAU Short）：只有风险金额 0.4 → 补 SL 价格或补【MAE】。
 3. `2026-09-28-hypeusdt-long-01`（HYPE）：补【MAE】就能判断「上移 SL 是否太早」。
 4. 其余 3 笔（ETH ×2、XAU Long）：补【MAE】【MFE】即可把完整度推到 80%+。
+
+---
+
+## 9. 截图怎么放（§24）
+
+每笔交易建议按四类放图，图本身不用改名，分类在本地编辑器里点：
+
+| 类别 | 放什么 | 建议周期 |
+| --- | --- | --- |
+| HTF Context | 大周期结构 / 流动性 / POI / Bias / Target | 1D / 4H / 1H |
+| LTF Entry | 扫单 / 反应 / 位移 / MSB / 入场 / SL | 15min / 5min |
+| After Trade | 交易结束时的状态（含平仓明细） | — |
+| Review Screen | 重新复盘后的正确标注 | — |
+
+分类入口：
+
+```bash
+python3 tools/tagedit.py --port 8791
+# 浏览器打开 http://127.0.0.1:8791/images → 每张图选类别 + 周期 + 说明 → 保存
+```
+
+写进 `data/manual/_images.json`，**原图与 Google Doc 一律不动**（§37）；页面上会自动按类别统计与打角标。三个字段全留空 = 撤销这张图的分类。
+

@@ -23,9 +23,12 @@ LTF_TF = ["15m", "5m"]
 ALL_TF = HTF_TF + LTF_TF
 
 
-def F(key, label, options, group, multi=False, tier="core", note=None):
+def F(key, label, options, group, multi=False, tier="core", note=None,
+      kind="enum", unit=None):
+    """字段定义。kind="enum" 是选项式（默认，§36 尽量 Tag/Select 化）；
+    kind="number" 是数值式（如 §13 Protected Price、§19 MAE/MFE 以 R 记）。"""
     return {"key": key, "label": label, "options": list(options), "group": group,
-            "multi": multi, "tier": tier, "note": note}
+            "multi": multi, "tier": tier, "note": note, "kind": kind, "unit": unit}
 
 
 # ---------------------------------------------------------------- 枚举字段
@@ -125,7 +128,19 @@ FIELDS = [
     F("confidence", "Confidence Before Trade（交易前信心 1–5）", ["1", "2", "3", "4", "5"],
       "Review", tier="advanced",
       note="必须交易前记录，不允许交易结束后回填。"),
+
+    # --- 数值字段（§13 Protected Price、§19 MAE / MFE）——不是选项，写多少记多少
+    F("protectedPrice", "Protected Price（受保护结构价格）", [], "Structure",
+      kind="number", unit="价格", tier="advanced",
+      note="需求 §13：Protected High/Low 的「价格」单独成字段，用于统计实际 SL 是否落在 Protected 内侧。"),
+    F("mae", "MAE（最大不利偏移）", [], "Review", kind="number", unit="R", tier="advanced",
+      note="需求 §19：以 R 记，入场后最大浮亏。缺失显示「未记录」，不填 0。"),
+    F("mfe", "MFE（最大有利偏移）", [], "Review", kind="number", unit="R", tier="advanced",
+      note="需求 §19：以 R 记，入场后最大浮盈。缺失显示「未记录」，不填 0。"),
 ]
+
+# 数值字段（前端渲染 / 统计层都要按「数值」处理，不能当选项校验）
+NUMERIC_FIELDS = [f["key"] for f in FIELDS if f["kind"] == "number"]
 
 FIELD_BY_KEY = {f["key"]: f for f in FIELDS}
 
