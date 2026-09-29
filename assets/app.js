@@ -411,15 +411,27 @@
   const isGood = (v) => /Good/.test(String(v || ''));
 
   /* ---------------- 截图：Tab / Gallery（§10，默认只显示一张大图） ---------------- */
+  /* 归一周期写法：15m / M15 / 15min / 15分钟 → '15'；5m / M5 → '5'；1h / H1 / 1小时 → 'h1' */
+  function tfBucket(raw) {
+    const s = String(raw || '').toLowerCase().replace(/\s/g, '');
+    if (!s) return '';
+    if (/^(1d|d1|日线|1日)$/.test(s)) return 'd1';
+    if (/^(4h|h4|4小时)$/.test(s)) return 'h4';
+    if (/^(1h|h1|1小时|60m|m60)$/.test(s)) return 'h1';
+    if (/^(15|15m|m15|15min|15分钟)$/.test(s)) return '15';
+    if (/^(5|5m|m5|5min|5分钟)$/.test(s)) return '5';
+    if (/^(1m|m1|1min)$/.test(s)) return '1';
+    return s;
+  }
   function imgGroupOf(im) {
     const ty = im.type || '';
-    const tf = String(im.timeframe || '').toLowerCase();
-    if (ty === 'LTF Entry') return /5\s*m|5分钟/.test(tf) ? '5min' : '15min';
+    const b = tfBucket(im.timeframe);
+    if (ty === 'LTF Entry') return b === '5' ? '5min' : '15min';   // 低周期入场：只有明确写 5m 才进 5min，其余归 15min
     if (ty === 'HTF Context') return 'HTF';
     if (ty === 'After Trade' || ty === 'Review Screen') return 'Result';
-    if (/1h|4h|1d|1小时|4小时|日线/.test(tf)) return 'HTF';
-    if (/5\s*m|5分钟/.test(tf)) return '5min';
-    if (/15|分钟|\bm\b/.test(tf)) return '15min';
+    if (b === 'd1' || b === 'h4' || b === 'h1') return 'HTF';
+    if (b === '5') return '5min';
+    if (b === '15') return '15min';
     return '其他';
   }
   const IMG_TABS = [['HTF', 'HTF 1D/4H/1H'], ['15min', '15min'], ['5min', '5min'], ['Result', 'Result / 事后'], ['其他', '其他']];
