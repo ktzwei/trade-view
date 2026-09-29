@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trading Review · SMC Trading Review System</title>
 <link rel="stylesheet" href="assets/app.css">
+<script>/* 需求 §43：默认 Dark Mode，可切浅色。先于渲染设置，避免闪白。 */
+  try{var th=localStorage.getItem('tr-theme')||'dark';document.documentElement.dataset.theme=th;}catch(e){document.documentElement.dataset.theme='dark';}</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
 </head>
 <body>
@@ -30,6 +32,7 @@
       <button data-range="all" class="active">All</button>
     </div>
     <input id="search" class="search" type="search" placeholder="搜索 Protected Low / Front Run / ETH / MSB …">
+    <button class="themebtn" id="theme-toggle" title="切换 Dark / Light（需求 §43）">◐ Dark</button>
   </div>
 </header>
 

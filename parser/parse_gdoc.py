@@ -33,6 +33,10 @@ IMAGES = os.path.join(ROOT, "images")
 DATA = os.path.join(ROOT, "data")
 TZ = "+08:00"  # 北京时间
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from schema import (FIELD_BY_KEY, MISTAKE_TAGS, ALL_TF, HTF_TF, LTF_TF, EXTRACT,  # noqa: E402
+                    RULE_BUCKETS, SCHEMA_VERSION, vocab)
+
 # 文档中可识别的字段标签 → 内部 key
 SECTION_KEYS = {
     "市场背景": "context",
@@ -236,6 +240,228 @@ def iso_week(d: str):
 
 
 # ---------------------------------------------------------------- 主解析
+
+# ---------------------------------------------------------------- 紧凑分节（①–⑩）
+# 2026-09 起文档改用「【① Basic Info】…；…」这种一行一节的写法。
+# 这里把它翻译回 legacy section key + structRaw，后面的价格/R/结构抽取逻辑完全复用。
+_CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫"
+_UNREC = ("未记录", "未单独记录", "未完整记录", "未明确记录", "未指定", "未标注",
+          "无法计算", "无法确定", "原记录未明确", "原记录未说明", "暂不", "缺失", "None")
+
+COMPACT_HEADS = {
+    "basic info": "basic",
+    "htf context": "htfctx",
+    "htf liquidity & poi": "liqpoi",
+    "htf liquidity and poi": "liqpoi",
+    "ltf reaction": "ltfreact",
+    "ltf confirmation": "ltfconfirm",
+    "entry": "entryb",
+    "invalidation & sl": "invalid",
+    "invalidation and sl": "invalid",
+    "target & risk check": "target",
+    "target and risk check": "target",
+    "trade management": "mgmt",
+    "result & review": "result",
+    "result and review": "result",
+    "rule violation / 改进": "violation",
+    "rule violation": "violation",
+    "next rule": "nextrule",
+}
+
+# 子键 → 结构化字段（值直接交给 schema/options 匹配，认不出就不写）
+SUB_STRUCT = {
+    "basic": {"entrymode": "entryMode"},
+    "liqpoi": {"liquidity": "liquidityType", "sweep": "liquiditySweep",
+               "sweepquality": "sweepQuality", "htfpoi": "htfPOIType",
+               "poi": "htfPOIType", "poiconfluence": "poiConfluence",
+               "marketcondition": "marketCondition", "bias": "htfBias"},
+    "ltfreact": {"reaction": "reaction", "reactionquality": "reaction",
+                 "reactiontype": "reactionType"},
+    "ltfconfirm": {"structureshift": "structureShiftType", "displacement": "displacementQuality",
+                   "brokenstructure": "brokenStructure"},
+    "entryb": {"entrytrigger": "entryTriggerType"},
+    "invalid": {"invalidation": "invalidationLogic"},
+    "target": {"target": "targetLevel", "targetlogic": "targetLevel"},
+    "mgmt": {"management": "managementStyle", "managementstyle": "managementStyle"},
+    "result": {"result": None, "tradequality": "tradeQuality"},
+    "violation": {},
+    "nextrule": {},
+}
+# 周期字段：子键 → TF 字段
+SUB_TF = {
+    "liqpoi": {"liquidity": "liquidityTF", "htfpoi": "htfPOITF", "poi": "htfPOITF"},
+    "ltfreact": {"reaction": "reactionTF", "reactionquality": "reactionTF"},
+    "ltfconfirm": {"structureshift": "structureShiftTF", "displacement": "displacementTF"},
+}
+
+
+def _is_unrecorded(v: str) -> bool:
+    """「未记录 / 未单独记录 / 无法计算」这类明确写着的缺失，必须保持缺失（§37 不猜）。"""
+    t = (v or "").strip()
+    if not t:
+        return True
+    return any(u in t for u in _UNREC)
+
+
+def _split_pairs(body: str):
+    """把一节正文拆成 (子键, 值) —— 用 ；。 换行切，绝不拿 ， 切（那是句子内部）。"""
+    out = []
+    for chunk in re.split(r"[；;。\n]+", body or ""):
+        c = chunk.strip()
+        if not c:
+            continue
+        m = re.match(r"^([^：:]{1,16})[：:]\s*(.+)$", c)
+        if m:
+            out.append((re.sub(r"\s+", "", m.group(1)).lower(), m.group(2).strip(), c))
+        else:
+            out.append((None, c, c))
+    return out
+
+
+
+_TF_ALIASES = {"1d": "1D", "d1": "1D", "日线": "1D", "4h": "4H", "h4": "4H", "1h": "1H", "h1": "1H",
+               "15m": "15m", "m15": "15m", "15min": "15m", "15分钟": "15m",
+               "5m": "5m", "m5": "5m", "5min": "5m", "5分钟": "5m"}
+
+
+def parse_tf_tokens(text):
+    """从文本里抽周期，统一成 1D / 4H / 1H / 15m / 5m；认不出就返回 []。"""
+    out = []
+    for tok in re.findall(r"([MmHhDd]\s*\d+|\d+\s*(?:min|m|h|小时|分钟)|\d+[Dd]\b|日线)", text or "", re.I):
+        tf = _TF_ALIASES.get(re.sub(r"\s+", "", tok).lower())
+        if tf and tf not in out:
+            out.append(tf)
+    return out
+
+
+
+def compact_sections(text: str):
+    """【① Basic Info】…  → {'sections': {...}, 'struct': {...}}；不是这种写法就返回 None。"""
+    m = re.match(r"^【([^】]+)】\s*(.*)$", (text or "").strip(), re.S)
+    if not m:
+        return None
+    head_raw = m.group(1).strip().lstrip(_CIRCLED).strip()
+    body = m.group(2).strip()
+    sec = COMPACT_HEADS.get(head_raw.lower().replace("  ", " "))
+    if not sec:
+        return None
+
+    sections, struct = {}, {}
+
+    def add(k, v, raw=False):
+        # raw=True 用于「整节正文」：正文里出现「未记录」不代表这节没内容（否则整节被吞）
+        if raw or not _is_unrecorded(v):
+            sections[k] = (sections.get(k, "") + " " + v).strip() if sections.get(k) else v
+
+    def put_struct(field, v):
+        if field and not _is_unrecorded(v):
+            struct.setdefault(field, []).append(v.replace("BB", "Breaker"))
+
+    pairs = _split_pairs(body)
+
+    if sec == "basic":
+        # 整行都给 execution：Entry / SL / Exit / TP1 / TP2 / 计划 POI 的价格正则直接命中
+        add("execution", body, raw=True)
+        for k, v, _raw in pairs:
+            if k is None:
+                continue
+            if "使用周期" in k or k in ("htf 使用周期", "ltf 使用周期"):
+                add("htfTF" if k.startswith("htf") else "ltfTF", v)
+            elif k in ("entrymode", "入场方式"):
+                add("entryModel", f"Entry Mode：{v}")
+            elif k == "exchange":
+                add("exchange", v)
+            elif k in ("plannedr", "plannedrr", "计划r", "计划rr"):
+                add("plannedRRText", v)
+            elif k in ("actualr", "实际r"):
+                add("actualRText", v)
+        for f, vals in SUB_STRUCT.get(sec, {}).items():
+            pass
+        put_struct("entryMode", next((v for k, v, _ in pairs if k == "entrymode"), ""))
+        return {"sections": sections, "struct": struct}
+
+    if sec == "htfctx":
+        add("context", body, raw=True)
+        for k, v, _raw in pairs:
+            if k is None:
+                continue
+            if "bias" in k:
+                put_struct("htfBias", v)
+            elif "marketcondition" in k or "市场环境" in k:
+                put_struct("marketCondition", v)
+            elif "structure" in k or "结构" in k:
+                put_struct("htfStructureKind", v)
+        tfs = parse_tf_tokens(body)
+        if tfs:
+            struct.setdefault("biasSourceTF", []).extend(tfs)
+        return {"sections": sections, "struct": struct}
+
+    if sec == "liqpoi":
+        # 上下文 / 流动性 / POI 都放进来：POI 帧识别读 context，Liquidity 读 liquidity
+        add("context", body, raw=True)
+        add("liquidity", body, raw=True)
+    elif sec == "ltfreact":
+        add("reaction", body, raw=True)
+    elif sec == "ltfconfirm":
+        add("confirmation", body, raw=True)
+        add("structureNote", body, raw=True)
+    elif sec == "entryb":
+        add("setup", body, raw=True)
+        for k, v, _raw in pairs:
+            if k and k.startswith("setup"):
+                add("setup", v)
+            elif k and ("入场原因" in k or k == "entryreason"):
+                add("entryReason", v)
+            elif k and ("trigger" in k or "触发" in k):
+                add("entryTrigger", v)
+        if "setup" not in sections:
+            add("setup", body, raw=True)
+    elif sec == "invalid":
+        add("invalidation", body, raw=True)
+        add("execution", body, raw=True)
+    elif sec == "target":
+        add("targetLogic", body, raw=True)
+        for k, v, _raw in pairs:
+            if k is None:
+                continue
+            if "riskcheck" in k or "风险检查" in k:
+                add("riskCheck", v)
+            elif k in ("plannedr", "plannedrr", "计划r", "计划rr"):
+                add("plannedRRText", v)
+            elif k in ("actualr", "实际r"):
+                add("actualRText", v)
+    elif sec == "mgmt":
+        add("tradeManagement", body, raw=True)
+    elif sec == "result":
+        add("result", body, raw=True)
+        for k, v, _raw in pairs:
+            if k is not None and ("做得好" in k or "worked" in k):
+                add("worked", v)
+            elif k is None and "做得好" in v:
+                add("worked", v)
+            elif k in ("actualr", "实际r"):
+                add("actualRText", v)
+        put_struct("tradeQuality", body)
+    elif sec == "violation":
+        add("improve", body, raw=True)
+        add("mainProblem", body, raw=True)
+    elif sec == "nextrule":
+        add("nextRule", body, raw=True)
+
+    for k, v, _raw in pairs:
+        if k is None:
+            continue
+        f = (SUB_STRUCT.get(sec) or {}).get(k)
+        put_struct(f, v)
+        tf_field = (SUB_TF.get(sec) or {}).get(k)
+        if tf_field:
+            tfs = parse_tf_tokens(v)
+            if tfs:
+                struct.setdefault(tf_field, []).extend(tfs)
+    return {"sections": sections, "struct": struct}
+
+
+
 def parse(blocks, zf):
     weeks, trades, images_index = [], [], {}
     rules_section = None
@@ -249,49 +475,63 @@ def parse(blocks, zf):
                                  or text.startswith("固定复盘模板")):
             b = {"kind": "para", "text": text}
         # 规则段可能被排版成正文段落（不是标题）——按内容识别，避免整段规则丢失
-        if b["kind"] in ("h1", "h2", "para") and re.match(
-                r"^(SMC\s*)?执行规则|^交易规则|^规则库|^交易规则库|^SMC\s*规则", text):
-            rules_section = {"title": text, "lines": [], "index": bi}
-            cur_week = cur_trade = None
+        _is_rule_line = bool(re.match(r"^规则\s*[一二三四五六七八九十0-9]+\s*[｜|]", text))
+        if b["kind"] in ("h1", "h2", "para") and (
+                re.match(r"^(SMC\s*)?执行规则|^交易规则|^规则库|^交易规则库|^SMC\s*规则", text)
+                or "统一交易复盘逻辑" in text          # 2026-09 文档的规则段标题写法
+                or _is_rule_line):
+            if rules_section is None or not _is_rule_line:
+                # 规则段只在第一次遇到时建立；后续「规则X｜…」行按普通段落累积进 lines
+                rules_section = {"title": text,
+                                 "lines": ([{"text": text, "index": bi}] if _is_rule_line else []),
+                                 "index": bi}
+                cur_week = cur_trade = None
+                if _is_rule_line:
+                    continue
+        # ---- 周标题：按内容识别，不依赖段落样式 ----
+        # 用户排版会变：同一个「第 N 周」标题，有时是正文、有时是标题 1 / 标题 2。
+        # 只认「第 N 周」开头且紧跟「｜」或整行结束的行，正文里提到“第3周…”不会被误判。
+        if b["kind"] in ("title", "h1", "h2", "para") and re.match(
+                r"^第\s*[0-9一二三四五六七八九十]+\s*周\s*(?:[｜|]|$)", text):
+            m = re.match(r"第\s*(\d+)\s*周", text)
+            idx = int(m.group(1)) if m else None
+            dates = re.findall(r"(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日", text)
+            start = end = None
+            year = None
+            for y, mo, dd in dates:
+                if y:
+                    year = int(y)
+            if dates:
+                y0, m0, d0 = dates[0]
+                yy = int(y0) if y0 else (year or 2000)
+                start = f"{yy:04d}-{int(m0):02d}-{int(d0):02d}"
+            if len(dates) > 1:
+                y1, m1, d1 = dates[1]
+                yy = int(y1) if y1 else (year or 2000)
+                end = f"{yy:04d}-{int(m1):02d}-{int(d1):02d}"
+            iy, iw, monday, sunday = iso_week(start) if start else (None, None, None, None)
+            cur_week = {
+                "label": f"第{idx}周" if idx else text,
+                "index": idx,
+                "rawHeading": text,
+                "start": start or monday,
+                "end": end or sunday,
+                "year": iy,
+                "isoWeek": iw,
+                "summaryRaw": None,
+                "trades": [],
+                "headingKind": b["kind"],
+            }
+            weeks.append(cur_week)
+            cur_trade = None
             continue
+
         if b["kind"] == "h1":
             t = b["text"]
             if "规则" in t:
                 rules_section = {"title": t, "lines": [], "index": bi}
                 cur_week = cur_trade = None
                 continue
-            # 只有真正的「第 N 周｜日期区间」才算周标题；含“周”字的正文不算
-            if re.match(r"^第\s*[0-9一二三四五六七八九十]+\s*周", t.strip()):
-                m = re.match(r"第\s*(\d+)\s*周", t)
-                idx = int(m.group(1)) if m else None
-                dates = re.findall(r"(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日", t)
-                start = end = None
-                year = None
-                for y, mo, dd in dates:
-                    if y:
-                        year = int(y)
-                if dates:
-                    y0, m0, d0 = dates[0]
-                    yy = int(y0) if y0 else (year or 2000)
-                    start = f"{yy:04d}-{int(m0):02d}-{int(d0):02d}"
-                if len(dates) > 1:
-                    y1, m1, d1 = dates[1]
-                    yy = int(y1) if y1 else (year or 2000)
-                    end = f"{yy:04d}-{int(m1):02d}-{int(d1):02d}"
-                iy, iw, monday, sunday = iso_week(start) if start else (None, None, None, None)
-                cur_week = {
-                    "label": f"第{idx}周" if idx else t,
-                    "index": idx,
-                    "rawHeading": t,
-                    "start": start or monday,
-                    "end": end or sunday,
-                    "year": iy,
-                    "isoWeek": iw,
-                    "summaryRaw": None,
-                    "trades": [],
-                }
-                weeks.append(cur_week)
-                cur_trade = None
             continue
 
         if b["kind"] == "h2":
@@ -327,6 +567,22 @@ def parse(blocks, zf):
             continue
 
         if cur_trade is not None:
+            # ①–⑩ 紧凑分节 → legacy section key（价格 / R / 结构抽取逻辑全部复用）
+            cp = compact_sections(b["text"])
+            if cp:
+                for k, v in (cp.get("sections") or {}).items():
+                    cur = cur_trade["sections"].get(k)
+                    cur_trade["sections"][k] = ((cur + " " + v).strip() if isinstance(cur, str) and cur else v)
+                    cur_trade["rawSections"].setdefault(k, []).append(v)
+                for f, vals in (cp.get("struct") or {}).items():
+                    cur_trade.setdefault("structRaw", {})[f] = (cur_trade.get("structRaw", {}).get(f) or []) + list(vals)
+                continue
+            struct_field, struct_body = struct_label_of(b["text"])
+            if struct_field:
+                cur_trade.setdefault("structRaw", {}).setdefault(struct_field, []).append(struct_body)
+                cur_trade["sections"].setdefault("_struct", []).append(b["text"])
+                cur_trade["rawSections"].setdefault("_struct", []).append(b["text"])
+                continue
             key, body = label_key(b["text"])
             if key and key.startswith("other:"):
                 cur_trade["sections"].setdefault("_extra", []).append(b["text"])
@@ -511,6 +767,18 @@ def parse(blocks, zf):
         d["plannedRewardHigh"] = num(rew.group(2)) if rew else None
         d["plannedRRLow"] = num(prr.group(1)) if prr else None
         d["plannedRRHigh"] = num(prr.group(2)) if prr else None
+        # 新版文档写「Planned R：约 1.5R」这种单一数值 —— 也要认（范围写法照旧）
+        if d["plannedRRLow"] is None:
+            _prr_txt = " ".join(filter(None, [s.get("plannedRRText"), s.get("riskCheck")]))
+            _m1 = re.search(r"(?:计划|planned)\s*R{1,2}\s*[：:]?\s*约?\s*(\d+(?:\.\d+)?)", _prr_txt, re.I)
+            if _m1 is None and s.get("plannedRRText"):
+                # plannedRRText 这节本身就是「计划 R」，直接在里面找数值（约 1.5R / 1.5–2R）
+                _m1 = re.search(r"(\d+(?:\.\d+)?)\s*(?:[–\-—~]\s*(\d+(?:\.\d+)?))?\s*R?\b",
+                                s["plannedRRText"].strip(), re.I)
+            if _m1:
+                d["plannedRRLow"] = num(_m1.group(1))
+                d["plannedRRHigh"] = num(_m1.group(2)) if (_m1.lastindex or 0) >= 2 and _m1.group(2) else num(_m1.group(1))
+                d["plannedRRSingleValue"] = d["plannedRRLow"] == d["plannedRRHigh"]
         if d["plannedRRLow"] is not None and d["plannedRRHigh"] is not None:
             # 区间取中值用于统计；区间本身也保留，前端两个都显示
             d["plannedRR"] = round((d["plannedRRLow"] + d["plannedRRHigh"]) / 2, 3)
@@ -650,6 +918,8 @@ def parse(blocks, zf):
 
         d["tags"] = build_tags(d)
         d["rawSections"] = t["rawSections"]        # 原始文档原文，前端「查看原文」用
+        d["structured"] = extract_structured(t)    # 结构化字段层（枚举值 + evidence，需求 §37）
+        d["structRaw"] = t.get("structRaw") or {}
         d["dataCompleteness"] = completeness(d)
         d["analysis"] = None            # 由 build.py 合并 analysis/analysis.json
         out_trades.append(d)
@@ -702,7 +972,8 @@ def parse(blocks, zf):
             "sourceDocId": DOC_ID,
             "sourceUrl": DOC_URL,
             "parsedAt": datetime.now().astimezone().isoformat(timespec="seconds"),
-            "schemaVersion": "1.0",
+            "schemaVersion": SCHEMA_VERSION,
+            "vocab": vocab(RULE_BUCKETS),
         },
         "weeks": weeks,
         "trades": out_trades,
@@ -816,6 +1087,74 @@ def completeness(d):
             missing.append(f)
     return {"percent": round(filled / len(EXPECTED) * 100), "missing": missing,
             "total": len(EXPECTED), "filled": filled}
+
+
+# ---------------------------------------------------------------- 结构化标签（需求 §7–§26）
+# 文档里可以写 【HTF Bias】Bullish / 【Entry Mode】LTF Confirmation 这样的字段行。
+# 识别与解析逻辑在 struct_extract.py；本文件只负责把字段行从文档里摘出来。
+from struct_extract import extract_structured  # noqa: E402
+
+STRUCT_LABELS = [
+    ("htf bias 周期", "biasSourceTF"), ("htf bias周期", "biasSourceTF"),
+    ("bias 来源周期", "biasSourceTF"), ("bias 周期", "biasSourceTF"), ("bias周期", "biasSourceTF"),
+    ("htf bias", "htfBias"), ("大方向", "htfBias"),
+    ("market condition", "marketCondition"), ("市场环境", "marketCondition"),
+    ("htf structure", "htfStructure"), ("htf 结构", "htfStructure"),
+    ("流动性类型", "liquidityType"), ("liquidity type", "liquidityType"),
+    ("流动性周期", "liquidityTF"), ("liquidity tf", "liquidityTF"),
+    ("sweep 质量", "sweepQuality"), ("sweep质量", "sweepQuality"),
+    ("sweep 周期", "sweepTF"), ("sweep周期", "sweepTF"),
+    ("流动性被扫", "liquiditySweep"), ("liquidity sweep", "liquiditySweep"),
+    ("sweep", "liquiditySweep"),
+    ("htf poi 周期", "htfPOITF"), ("htf poi周期", "htfPOITF"),
+    ("htf poi", "htfPOI"),
+    ("ltf entry poi", "ltfPOI"), ("ltf poi", "ltfPOI"), ("entry poi", "ltfPOI"),
+    ("poi confluence", "poiConfluence"), ("confluence", "poiConfluence"),
+    ("reaction 类型", "reactionType"), ("reaction类型", "reactionType"),
+    ("reaction 周期", "reactionTF"), ("reaction周期", "reactionTF"),
+    ("reaction", "reaction"),
+    ("displacement 质量", "displacementQuality"), ("displacement质量", "displacementQuality"),
+    ("displacement 周期", "displacementTF"), ("displacement周期", "displacementTF"),
+    ("displacement", "displacement"),
+    ("结构变化周期", "structureShiftTF"), ("structure shift 周期", "structureShiftTF"),
+    ("structure shift 类型", "structureShiftType"),
+    ("结构变化", "structureShiftType"), ("structure shift", "structureShiftType"),
+    ("被破坏的结构", "brokenStructure"), ("broken structure", "brokenStructure"),
+    ("protected structure 周期", "protectedTF"), ("protected 周期", "protectedTF"),
+    ("protected structure", "protectedStructure"), ("保护结构", "protectedStructure"),
+    ("entry mode", "entryMode"), ("entrymode", "entryMode"), ("入场方式", "entryMode"),
+    ("entry mode 计划", "entryModePlanned"), ("计划入场方式", "entryModePlanned"),
+    ("limit 方式", "limitStyle"), ("挂单方式", "limitStyle"),
+    ("entry trigger 周期", "entryTriggerTF"), ("entry trigger", "entryTriggerType"),
+    ("invalidation 依据", "invalidationLogic"), ("invalidation logic", "invalidationLogic"),
+    ("invalidation 周期", "invalidationTF"), ("invalidation周期", "invalidationTF"),
+    ("invalidation logic 周期", "invalidationTF"),
+    ("target 层级", "targetLevel"), ("target level", "targetLevel"),
+    ("management style", "managementStyle"), ("管理方式", "managementStyle"),
+    ("移动过 sl", "movedSL"), ("提前止盈", "earlyExit"), ("减仓", "reducedPosition"),
+    ("加仓", "addedPosition"),
+    ("rule compliance", "ruleCompliance"), ("规则符合度", "ruleCompliance"),
+    ("should i take", "shouldTake"),
+    ("trade quality", "tradeQuality"), ("交易质量", "tradeQuality"),
+    ("confidence", "confidence"), ("交易前信心", "confidence"), ("信心", "confidence"),
+    ("mistake tags", "mistakes"), ("mistake 标签", "mistakes"), ("错误标签", "mistakes"),
+]
+
+
+def norm_head(text):
+    return re.sub(r"\s+", "", (text or "").lower())
+
+
+def struct_label_of(text):
+    """【HTF Bias】… → 字段 key；不是结构化字段行就返回 (None, "")。"""
+    m = re.match(r"^【([^】]+)】\s*(.*)$", text or "", re.S)
+    if not m:
+        return None, ""
+    head = norm_head(m.group(1))
+    for name, field in STRUCT_LABELS:
+        if norm_head(name) in head:
+            return field, m.group(2).strip()
+    return None, ""
 
 
 # ---------------------------------------------------------------- 图片导出

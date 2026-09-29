@@ -304,3 +304,95 @@ details.fold[open] > summary::before{content:'▾  '}
   .trow .td.go{display:none}
   .td-head{flex-direction:column}
 }
+
+
+/* ============================================================
+   v3 · Dark Mode（需求 §43）+ 结构化复盘链组件
+   ============================================================ */
+:root[data-theme="dark"], html[data-theme="dark"]:root{
+  --bg:#0e1116; --panel:#161b22; --panel-2:#1b2129; --line:#252c36; --line-2:#1f252d;
+  --ink:#e6edf3; --ink-2:#adbac7; --ink-3:#7d8590;
+  --green:#3fb950; --green-bg:#12261a;
+  --red:#f85149; --red-bg:#2a1416;
+  --amber:#d29922; --amber-bg:#2a2210;
+  --blue:#58a6ff; --blue-bg:#101f33;
+  --purple:#a371f7; --purple-bg:#1d1830;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+html[data-theme="dark"] body{background:var(--bg);color:var(--ink)}
+html[data-theme="dark"] .topbar{background:rgba(14,17,22,.92);border-bottom-color:var(--line)}
+html[data-theme="dark"] .meta-bar{background:var(--panel-2);border-bottom-color:var(--line);color:var(--ink-3)}
+html[data-theme="dark"] .panel,html[data-theme="dark"] .card,html[data-theme="dark"] .week,
+html[data-theme="dark"] .trow,html[data-theme="dark"] .callout,html[data-theme="dark"] .stat,
+html[data-theme="dark"] .frow,html[data-theme="dark"] details.fold,html[data-theme="dark"] .trows
+{background:var(--panel);border-color:var(--line)}
+html[data-theme="dark"] .trow:hover{background:var(--panel-2)}
+html[data-theme="dark"] .chip{background:var(--panel-2);border-color:var(--line);color:var(--ink-2)}
+html[data-theme="dark"] input,html[data-theme="dark"] .search,html[data-theme="dark"] .range button{
+  background:var(--panel-2);color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] .range button.active{background:var(--blue-bg);color:var(--blue);border-color:var(--blue)}
+html[data-theme="dark"] .chip.win,html[data-theme="dark"] .chip.long{background:var(--green-bg);color:var(--green);border-color:#1d4d2b}
+html[data-theme="dark"] .chip.loss,html[data-theme="dark"] .chip.short,html[data-theme="dark"] .chip.warn{background:var(--red-bg);color:var(--red);border-color:#5a2523}
+html[data-theme="dark"] .chip.be{background:var(--amber-bg);color:var(--amber);border-color:#4d3a12}
+html[data-theme="dark"] .chip.poi,html[data-theme="dark"] .chip.tag{background:var(--blue-bg);color:var(--blue);border-color:#1f4a7a}
+html[data-theme="dark"] .chip.tag.on{background:var(--blue);color:#0b0e13;border-color:var(--blue)}
+html[data-theme="dark"] .panel.good{border-left-color:var(--green)}
+html[data-theme="dark"] .panel.bad{border-left-color:var(--red)}
+html[data-theme="dark"] .panel.rule{border-left-color:var(--purple)}
+html[data-theme="dark"] .spark{background:var(--panel-2)}
+html[data-theme="dark"] .ev,html[data-theme="dark"] .small.muted,html[data-theme="dark"] .hint{color:var(--ink-3)}
+
+/* 主题切换按钮 */
+.themebtn{background:transparent;border:1px solid var(--line);border-radius:7px;color:var(--ink-3);
+  padding:5px 9px;font-size:12px}
+.themebtn:hover{color:var(--ink);border-color:var(--ink-3)}
+
+/* 结构化复盘链：HTF Context → … → Review（需求 §5 / §43） */
+.chain{display:grid;gap:10px}
+.chainstep{border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--panel);padding:10px 12px}
+.chainstep>h4{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.cfields{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:8px 14px}
+.cfield{font-size:12.5px;line-height:1.35}
+.cfield .k{color:var(--ink-3);font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.cfield .v{color:var(--ink);font-weight:550}
+.cfield .ev{color:var(--ink-3);font-size:11px;margin-top:1px;font-weight:400}
+.srcb{display:inline-block;font-size:10px;padding:0 5px;border-radius:8px;border:1px solid var(--line);
+  color:var(--ink-3);margin-left:5px;vertical-align:1px}
+.srcb.manual{color:var(--purple);border-color:var(--purple)}
+.srcb.doc{color:var(--green);border-color:var(--green)}
+.srcb.auto{color:var(--blue);border-color:var(--blue)}
+.chkline{display:grid;grid-template-columns:22px 1fr;gap:8px;padding:5px 0;border-bottom:1px dashed var(--line-2);font-size:13px}
+.chkline:last-child{border-bottom:0}
+.chkline .ic{font-weight:700}
+.chkline.pass .ic{color:var(--green)}.chkline.fail .ic{color:var(--red)}.chkline.unknown .ic{color:var(--ink-3)}
+.pv-table td.miss{color:var(--ink-3)}
+.qa{display:grid;gap:8px}
+.qa .q{border-left:3px solid var(--line);padding:4px 0 4px 10px}
+.qa .q.win{border-left-color:var(--green)}.qa .q.bad{border-left-color:var(--red)}
+.qa .ql{font-size:12px;color:var(--ink-3)}
+.qa .qv{font-weight:600}
+.warnbox{border:1px solid var(--amber);background:var(--amber-bg);color:var(--ink-2);border-radius:var(--radius-sm);
+  padding:8px 11px;font-size:12.5px}
+
+/* ---- v3 组件补丁：与 app.js 的 v3 渲染一一对应 ---- */
+.qa{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.qacard{border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:var(--radius-sm);
+  padding:9px 11px;background:var(--panel)}
+.qacard.thin{border-left-color:var(--ink-3);opacity:.92}
+.qacard .q{font-weight:650;font-size:12.5px;color:var(--ink);margin-bottom:3px}
+.qacard .a{font-size:13px;color:var(--ink-2);line-height:1.5}
+.qacard .b{margin-top:5px;font-size:11px;color:var(--ink-3)}
+.kv2{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.rline{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;
+  padding:7px 0;border-bottom:1px dashed var(--line-2)}
+.rline:last-child{border-bottom:0}
+.rline .cnt{white-space:nowrap;display:flex;gap:4px;align-items:center}
+.week-v2{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:6px 12px;
+  margin:8px 0 2px;padding:9px 11px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--panel-2)}
+.wkv .k{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.wkv .v{font-size:13px;font-weight:600;color:var(--ink)}
+.frowline{display:grid;grid-template-columns:112px 1fr;gap:8px;align-items:start;margin-bottom:4px}
+.frowline .fl{font-size:11.5px;color:var(--ink-3);padding-top:4px}
+tr.unrec td{color:var(--ink-3);font-style:italic}
+.dimgroup{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);
+  margin:14px 0 6px;font-weight:600}

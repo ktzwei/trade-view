@@ -47,7 +47,9 @@ def find_evidences(obj, path=""):
 
 
 def sentences(text):
-    if not text:
+    if isinstance(text, (list, tuple)):
+        text = "；".join([x for x in text if isinstance(x, str)])
+    if not text or not isinstance(text, str):
         return []
     parts = re.split(r"[。；;]\s*", text)
     return [p.strip() for p in parts if p.strip()]
@@ -70,6 +72,7 @@ def load():
     src = json.loads(SRC.read_text(encoding="utf-8"))
     ana = json.loads(ANA.read_text(encoding="utf-8"))
     errors = []
+    stale = []   # 引用原文已不存在（文档被重写过）→ 整块隔离，不当编造处理，也不静默删除
 
     haystacks = {t["id"]: trade_haystack(t) for t in src["trades"]}
     week_haystack = {}
@@ -79,25 +82,38 @@ def load():
             parts.append(haystacks.get(tid, ""))
         week_haystack[w["label"]] = "\n".join(parts)
 
-    # 1. analysis 里引用的交易必须真实存在
-    for tid in ana["trades"]:
+    # 1. analysis 里引用的交易必须真实存在（不存在 = 文档已重写/删笔 → 隔离该块）
+    for tid in list(ana["trades"]):
         if tid not in haystacks:
-            errors.append(f"[analysis] 交易 id 不存在：{tid}")
+            stale.append(f"{tid}（当前文档里没有这笔交易）")
+            ana["trades"].pop(tid, None)
 
     # 2. 每条 evidence / note 里的关键引用必须能在原文里逐字找到
-    for tid, blk in ana["trades"].items():
+    #    对不上 = 这份复盘是照旧版文档写的（文档后来被重写过，措辞已变）→ 整块隔离：
+    #      · 不进站点、不计入统计（否则就是把旧文档的结论当现在的原文用）
+    #      · 全部对不上的条目逐条打印 + 写进 meta，绝不静默删除
+    #    (analysis.json 没有绑定文档版本，所以只说「对不上」，不说「谁对谁错」。)
+    def check_block(owner, blk, hay):
+        evs = find_evidences(blk, owner)
+        bad = [(p_, ev) for p_, ev in evs if ev not in hay]
+        if bad:
+            stale.append((owner, len(evs), bad))
+            return False
+        return True
+
+    for tid in list(ana["trades"]):
         if tid not in haystacks:
             continue
-        for path, ev in find_evidences(blk, tid):
-            if ev not in haystacks[tid]:
-                errors.append(f"[evidence 对不上原文] {tid} {path}: {ev!r}")
-    for wid, blk in ana.get("weeks", {}).items():
+        if not check_block(tid, ana["trades"][tid], haystacks[tid]):
+            ana["trades"].pop(tid, None)
+    for wid in list(ana.get("weeks", {})):
+        blk = ana["weeks"][wid]
         if wid not in week_haystack:
-            errors.append(f"[analysis] 周不存在：{wid}")
+            stale.append((wid, 0, [("(周)", "当前文档里找不到这一周")]))
+            ana["weeks"].pop(wid, None)
             continue
-        for path, ev in find_evidences(blk, wid):
-            if ev not in week_haystack[wid]:
-                errors.append(f"[evidence 对不上原文] {wid} {path}: {ev!r}")
+        if not check_block(wid, blk, week_haystack[wid]):
+            ana["weeks"].pop(wid, None)
 
     # 3. status 取值合法
     for tid, blk in ana["trades"].items():
@@ -107,6 +123,19 @@ def load():
             if item["status"] != "unknown" and not item.get("evidence"):
                 errors.append(f"[riskCheck] {tid} {item['key']} 非 unknown 却没有 evidence")
 
+    if stale:
+        print(f"[WARN] 分析层有 {len(stale)} 块复盘引用的原文已不在当前文档 —— 已隔离（不上线、不计入统计），需重做 AI 复盘：")
+        items = []
+        for owner, total, bad in stale:
+            items.append({"block": owner, "evidenceTotal": total,
+                          "mismatch": [{"path": p_, "quote": ev} for p_, ev in bad[:12]],
+                          "mismatchCount": len(bad)})
+            print(f"   - {owner}：{len(bad)}/{total} 条引用对不上，例：{bad[0][1]!r}")
+        ana.setdefault("meta", {})["staleQuarantine"] = {
+            "count": len(stale),
+            "reason": "文档已重写（措辞/分节都变了），这些复盘的逐字引用在当前原文里找不到。按「不猜、不编造」，旧结论一律不上线，重做后再显示。",
+            "items": items,
+        }
     if errors:
         print("[FAIL] 数据校验未通过：")
         for e in errors:
@@ -489,12 +518,24 @@ def main():
         # 周链接（enrich 后统一用 id 关联，方便前端跳转）
         t["week"] = dict(t.get("week") or {}, id=t.get("weekLabel"))
     weeks = build_weeks(src, ana, trades)
+    # v2 统计层（需求 §7–§35）：字段合并 → 单笔派生（合规度 / Trade Quality / Planned vs Actual /
+    # MAE·MFE）→ 全维度聚合（含 Expectancy、Entry Mode、15m vs 5m、错误分析、策略 vs 执行）
+    import stats_v2
+    v2 = stats_v2.build_result(trades, src)
+    from schema import RULE_BUCKETS, SCHEMA_VERSION, FIELDS, MISTAKE_GROUPS, ALL_TF, HTF_TF, LTF_TF
     data = {
         "meta": dict(src["meta"], analysisGeneratedAt=ana["meta"]["generatedAt"],
                      analysisRole="ai-review",
-                     principle="交易事实来自 Google Docs；带「AI」标记的字段是分析层，且必须附原文引用。缺失数据一律显示「未记录」，不用 0 或猜测填充。"),
+                     schemaVersion=SCHEMA_VERSION,
+                     principle="交易事实来自 Google Docs；带「AI」标记的字段是分析层，且必须附原文引用。"
+                               "缺失数据一律显示「未记录」，不用 0 或猜测填充。自动识别字段标记为「待确认」。"),
         "stats": global_stats(trades),
         "weeks": weeks,
+        "v2": v2,
+        "ruleBuckets": RULE_BUCKETS,
+        # 前端用的字段元数据（标签 / 选项 / 分组 / 是否多选 / 必填层级）——唯一真源是 parser/schema.py
+        "schema": {"version": SCHEMA_VERSION, "allTF": ALL_TF, "htfTF": HTF_TF, "ltfTF": LTF_TF,
+                   "fields": FIELDS, "mistakeGroups": MISTAKE_GROUPS},
         "trades": trades,
         "rules": build_rules(src, trades),
         "analytics": analytics(trades, weeks),

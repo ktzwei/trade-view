@@ -256,3 +256,105 @@ analysis/analysis.json ──(evidence 逐条校验)──► build.py ──►
 7. **无网页编辑**：Manual Override（§93）机制未实现，避免和 Google Docs 同步打架。
 8. **Parser 是规则式的**：字段标签变化会掉字段；已做三层兜底：`_extra` 保留未识别原文、`rawSections` 全量留档、规则段按内容识别（"SMC 执行规则" 是正文段落也能抓到）。
 9. **Google 偶尔连不上**：`publish.sh` 拉取失败时自动回落到 `cache/doc.docx` 离线解析（数据为上次成功拉取的版本），不再整个发布会卡死。
+
+---
+
+## H. v3 · 结构化复盘层（2026-09-29 新增）
+
+需求文档《交易复盘系统优化需求文档》(45 节) 的落地版本。核心一句话：**字段带来源标记、缺项显示「未记录」、系统不猜。**
+
+### H.1 四层数据，来源可追溯
+
+| 层 | 存在哪 | 来源标记 | 是否会覆盖原始文档 |
+| --- | --- | --- | --- |
+| 文档原文段落 | `data/source.json` → `rawSections` | — | — |
+| 文档里的 `【标签】` 字段行 | `trades[].fields` | `doc:label` | 原文照抄 |
+| 逐句自动识别（§37 的「建议」） | `trades[].fields` | `doc:keyword` | **不改原文，只加建议** |
+| 手填确认 | `data/manual/<tradeId>.json` | `manual` | 优先级最高 |
+| 机器派生（合规度 / Planned vs Actual 偏离 / Quality） | `trades[]` | `derived` | 派生值单独放，不动原值 |
+
+页面上每种来源都有徽标：**文档记录** / **自动识别·待确认** / **手填·已确认** / **派生**。
+`tools/tagedit.py` 里每个自动识别值旁边有「确认这个值」——人工确认后来源变成 `manual`，可追溯。
+
+### H.2 新增文件
+
+| 文件 | 作用 |
+| --- | --- |
+| `parser/schema.py` | 枚举唯一真源：5 个周期、12 组字段、错误标签分组、规则三桶 |
+| `parser/rules.py` | 逐句识别规则（含否定处理、区块范围限定，避免「没等 Sweep」被读成 Sweep=Yes） |
+| `parser/struct_extract.py` | 抽取引擎：字段行 + 逐句识别 + 证据留痕 |
+| `parser/stats_v2.py` | 统计层：来源合并 → 单笔派生 → 28 个维度聚合 → 周报 → §41 十二问自动作答 |
+| `tools/tagedit.py` | 本地手填编辑器（默认 8791），写 `data/manual/`，含周复盘三问表单 |
+| `docs/record-template.md` | 可复制到 Google Docs 的记录模板（含「少一行少哪种统计」对照表） |
+
+### H.3 前端新增（`assets/app.js` / `app.css` / `index.html`）
+
+- **单笔详情**：11 步结构化复盘链（每个字段带来源徽标 + 原文证据）、Rule Checklist（✓/✕/未记录）、Planned vs Actual 偏离表、MAE / MFE 判读卡、Advanced 折叠（核心字段之外的其余字段）。
+- **Dashboard**：Expectancy / Good Trade Rate / Rule Compliance / Avg MAE·MFE 第二排指标；**「系统要回答的问题」14 张问答卡**（样本不足时明确写「暂不下结论」并给依据）。
+- **Analytics**：结构形态 / 入场方式 / LTF 周期 / HTF POI 周期 / 市场环境 / Sweep / Displacement / 被破坏结构 / 合规度 / Trade Quality / 错误标签（按类聚合 + 损失 R）/ 策略问题 vs 执行问题 / 周期使用 / 其余全部维度表 / **未记录维度清单**。
+- **Rules**：Must Have / Confirmation / Avoid 三桶，每桶列出每笔的 ✓ / ✕ / 未记录计数。
+- **Weeks**：Expectancy / Good Trade Rate / 合规率 / Avg MAE·MFE / 最佳 Setup / 最大错误 / 错误损失 R + 三问（做得好 / 主要问题 / 下周重点）。
+- **Trades**：13 组结构化组合筛选（入场方式、HTF/LTF POI 周期、市场环境、Sweep、Displacement、结构变化、被破坏结构、Protected、Target 层级、合规度、该不该做、Trade Quality、错误标签）。
+- **默认 Dark Mode**（§43）：`:root[data-theme]` 变量 + 顶栏切换按钮，选择记在 localStorage。
+
+### H.4 新增命令
+
+```bash
+python3 parser/parse_gdoc.py      # 拉文档 → data/source.json
+python3 parser/build.py           # 统计 + v2 层 → data/trades.json（含 v2.*）
+python3 parser/selfcheck.py       # 证据校验
+python3 tools/tagedit.py --port 8791   # 本机手填/确认（浏览器打开 127.0.0.1:8791）
+./publish.sh                      # 上面的流程 + push 到 GitHub Pages
+```
+
+### H.5 需求映射（45 节 → 实现位置）
+
+| 需求 | 落地位置 |
+| --- | --- |
+| §2 HTF 1D/4H/1H、LTF 15m/5m 统一 | `schema.py`（`HTF_TF`/`LTF_TF`/`ALL_TF`）→ 前后端全部按此校验与展示 |
+| §5 标准复盘链 | 详情页 11 步链，顺序按文档 |
+| §6 基础信息 + HTF/LTF 周期 | 详情页头部 + `timeframes` 统计 |
+| §7 HTF Context | 链①步 + `marketCondition` 维度 |
+| §8 Liquidity | 链②步 + Sweep Yes/No/Partial 对比 |
+| §9 POI（HTF POI 与 LTF Entry POI 分开） | 链③步 + `htfPOITF` / `ltfPOITF` 两个维度 |
+| §10–11 Reaction / Displacement | 链④⑤步 + 质量维度 |
+| §12 Structure（Internal vs Key） | 链⑥步 + `brokenStructure` 维度（Internal LH/HL vs Key LH/HL 分开统计） |
+| §13 Protected High/Low | `protectedStructure` / `protectedTF` 字段 + 维度 |
+| §14 Entry Mode（Limit / LTF Confirmation / Market） | 链⑦步 + Entry Mode 对比（Trades / Win Rate / Avg R / Expectancy） |
+| §15 Entry Trigger | `entryTriggerType` + `entryTriggerTF` |
+| §16 Planned vs Actual | 详情页偏离表（价格、时间、RR、R 四处比对） |
+| §17 Invalidation | 链⑥步 + `invalidationLogic` / TF |
+| §18 Target 层级 | `targetLevel` + 原文档 targets 列表 |
+| §19–20 MAE / MFE + 管理 | 判读卡（SL 太紧 / 提前止盈）+ `managementStyle` |
+| §21 Rule Compliance | 每笔派生值 + 全局合规率 + 合规组 vs 违规组 Expectancy |
+| §22 Mistake Tags | 31 个标签分 5 类（Setup / Entry / Risk / Exit / Psychology）+ 自动建议（标记「未确认」） |
+| §23 Trade Quality | Good Win / Good Loss / Bad Win / Bad Loss 四象限 + Good Trade Rate |
+| §24 截图 | 每笔 1–4 张原图（HTF/LTF/After/Review 归属待手工标注） |
+| §25 Trade Review 三问 | 详情页 + 周报三问 |
+| §26 Confidence | 字段（提示必须交易前记） |
+| §27 Dashboard 指标 | 首页 8 项：Trades / Win Rate / Net R / Avg R / Expectancy / Profit Factor / Rule Compliance Rate / Good Trade Rate |
+| §28 Analytics 全维度 | 28 个维度表 + 错误分析 + 策略 vs 执行 |
+| §29 MAE/MFE Analytics | Avg MAE / Avg MFE / 盈利单 MAE / 亏损单 MFE |
+| §30–31 R 优先 + Expectancy | 所有指标以 R 计；Expectancy 独立成卡 |
+| §32 Weekly Review | 周卡新增 7 项指标 + 三问 |
+| §33–34 Rules 三桶 + Checklist 联动 | Rules 页三桶 + 每笔 Checklist 派生合规度 |
+| §35 避免字段过多 | 默认 16 个核心字段 + 其余进 Advanced 折叠 |
+| §36 Tag/Select 化 | 全部枚举字段结构化（`schema.py` 是唯一真源） |
+| §37 不许 AI 脑补 | 双保险：解析层证据校验 + 前端「未记录 / 自动识别·待确认」徽标；建议永不覆盖原值 |
+| §38 数据结构拆分 | 一句话叙事 → 拆成 20+ 结构化字段 + 保留原始 Notes |
+| §39–40 Filter / 搜索 | 13 组组合筛选 + 全文搜索（含错误标签、POI、Tag） |
+| §41 系统必须回答的 12 问 | Dashboard「系统要回答的问题」卡 + `v2.answers` |
+| §42 开发优先级 | P0/P1/P2 全部完成（见 §H.3 / §H.5） |
+| §43 UI 原则 | 暗色默认、高密度、无动画、Trade 详情优先 |
+| §44 验收标准 | 每张答卡带样本量与「样本不足」提示（当前 7 笔，阈值 10 笔） |
+| §45 产品理念 | 每笔 -> 复盘 -> 统计 -> 找问题 -> 只改一件事 |
+
+### H.6 已知限制（诚实版）
+
+1. **样本极小**（7 笔，其中可计 R 的 5 笔）：所有对比维度都标了「样本不足」，系统**不给结论**。§44 的 20/50/100 笔验收要等数据。
+2. **`tradeQuality` 全部显示「派生」**：文档里没写这个字段——目前由合规度 + 结果推导，页面标了来源，等你手填覆盖。
+3. **`mistakes` 字段几乎空**，错误分析主要来自 `analysis/analysis.json` 的 AI 复盘（页面标「自动识别·待确认」）。
+4. **Market Condition / Bias 来源周期 / Protected 结构 / MAE / MFE 目前全空**：字段和统计都已就位，等文档补值或手填。
+5. **"Setup" 仍是自由文本**：`setup.flow` 拆步骤做了标签，但没有独立的 Setup 枚举字段——跨交易的 Setup 对比目前用「结构形态 × 入场方式」组合代替。
+6. **周复盘三问**写在 `data/manual/_weeks.json`（手填）或文档正文里；文档正文里的写法还没做解析。
+7. Markdown 里 `app.js` 的筛选是前端内存筛选，数据量大（>1000 笔）时需要改预计算索引。
