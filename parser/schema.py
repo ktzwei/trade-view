@@ -72,6 +72,7 @@ FIELDS = [
 
     # --- Displacement (§11)
     F("displacementTF", "Displacement 所在周期", LTF_TF, "LTF Entry", multi=True),
+    F("displacement", "Displacement（是否出现，§11）", ["Yes", "No"], "LTF Entry"),
     F("displacementQuality", "Displacement 质量", ["Strong", "Medium", "Weak"], "LTF Entry"),
 
     # --- Structure (§12)
@@ -269,6 +270,13 @@ EXTRACT = {
         (r"K线反转|Candle Reversal|吞没", "Candle Reversal", ["反应", "Reaction"]),
         (r"立刻位移|Immediate Displacement", "Immediate Displacement", ["反应", "Reaction"]),
         (r"盘整|Consolidation|横盘", "Consolidation", ["反应", "Reaction"]),
+    ],
+    "displacement": [
+        (r"(?:出现|有|确认)[^。；]{0,8}(?:Bullish|Bearish|强势)?\\s*(?:Displacement|位移)", "Yes",
+         ["Displacement", "位移", "确认"]),
+        (r"(?:Displacement|位移)\\s*[:：]\\s*(Yes|是|有)\\b", "Yes", ["Displacement", "位移"]),
+        (r"(?:没有|未出现|无)[^。；]{0,6}(?:Displacement|位移)", "No", ["Displacement", "位移"]),
+        (r"(?:Displacement|位移)\\s*[:：]\\s*(No|否|无)\\b", "No", ["Displacement", "位移"]),
     ],
     "displacementQuality": [
         (r"强势\s*(?:bullish|bearish)?\s*[Dd]isplacement|Strong\s*[Dd]isplacement|超级强位移",

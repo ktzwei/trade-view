@@ -312,6 +312,9 @@
         ${cell('Expectancy', D.expectancy === null || D.expectancy === undefined ? NR : rTxt(D.expectancy), '平均每笔期望值（§31）')}
         ${cell('Good Trade Rate', pct(D.goodTradeRate), `${D.goodWins || 0} 好 / ${D.trades || 0} 笔（§23）`)}
         ${cell('Rule Compliance', pct(D.ruleComplianceRate), D.ruleComplianceDecided ? `${D.ruleComplianceDecided} 笔有结论` : '还没有一笔有结论')}
+        ${cell('Avg R', D.avgR === null || D.avgR === undefined ? NR : rTxt(D.avgR), `${D.rCounted || 0} 笔可计 R`)}
+        ${cell('Profit Factor', D.profitFactor === null || D.profitFactor === undefined ? NR : Number(D.profitFactor).toFixed(2), '总盈利 R ÷ 总亏损 R（§27）')}
+        ${cell('Trades', `${D.closed || 0} / ${D.trades || 0}`, '已结束 / 全部（§27）')}
         ${cell('Avg MAE / MFE', `${M.mae && M.mae.avg != null ? M.mae.avg.toFixed(2) : '—'} / ${M.mfe && M.mfe.avg != null ? '+' + M.mfe.avg.toFixed(2) : '—'}`, `已记录 ${M.recorded || 0} 笔`)}
       </div>`; })()}`;
   }

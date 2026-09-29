@@ -3,7 +3,7 @@
   "sourceTitle": "交易复盘",
   "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
   "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
-  "parsedAt": "2026-09-29T20:24:11+08:00",
+  "parsedAt": "2026-09-29T20:31:57+08:00",
   "schemaVersion": "2.0",
   "vocab": {
    "version": "2.0",
@@ -311,6 +311,18 @@
      ],
      "group": "LTF Entry",
      "multi": true,
+     "tier": "core",
+     "note": null
+    },
+    {
+     "key": "displacement",
+     "label": "Displacement（是否出现，§11）",
+     "options": [
+      "Yes",
+      "No"
+     ],
+     "group": "LTF Entry",
+     "multi": false,
      "tier": "core",
      "note": null
     },
@@ -895,7 +907,7 @@
    }
   },
   "sourceVersion": "8bff9aa8a1916e2a",
-  "exportBytesHash": "44905ee60928c02b",
+  "exportBytesHash": "a85be73d6c324c30",
   "sourceBytes": 1366635,
   "blocks": 125,
   "unresolvedImageCount": 0,
@@ -2220,6 +2232,38 @@
      }
     ]
    },
+   "displacement": {
+    "label": "Displacement 是否出现（§11）",
+    "kind": "single",
+    "rows": [
+     {
+      "key": "(未记录)",
+      "label": "(未记录)",
+      "count": 7,
+      "trades": [
+       "2026-09-13-ethusdt-long-01",
+       "2026-09-18-ethusdt-long-02",
+       "2026-09-15-qqqusdt-long-03",
+       "2026-09-21-xauusdt-long-01",
+       "undated-xauusdt-short-02",
+       "2026-09-28-hypeusdt-long-01",
+       "2026-09-28-btcusdt-long-挂单"
+      ],
+      "closed": 6,
+      "wins": 4,
+      "winRate": 0.667,
+      "rCounted": 5,
+      "netR": 3.61,
+      "avgR": 0.72,
+      "expectancy": 0.72,
+      "totalR": 3.61,
+      "profitFactor": 2.8,
+      "goodTradeRate": 0.0,
+      "complianceRate": 0.76,
+      "sampleNote": null
+     }
+    ]
+   },
    "displacementQuality": {
     "label": "Displacement 质量",
     "kind": "single",
@@ -3084,6 +3128,7 @@
    "poiConfluence",
    "reaction",
    "reactionType",
+   "displacement",
    "displacementQuality",
    "displacementTF",
    "structureShiftType",
@@ -3597,6 +3642,7 @@
    "marketCondition",
    "htfStructureKind",
    "sweepQuality",
+   "displacement",
    "displacementTF",
    "protectedStructure",
    "limitStyle",
@@ -4104,6 +4150,18 @@
     ],
     "group": "LTF Entry",
     "multi": true,
+    "tier": "core",
+    "note": null
+   },
+   {
+    "key": "displacement",
+    "label": "Displacement（是否出现，§11）",
+    "options": [
+     "Yes",
+     "No"
+    ],
+    "group": "LTF Entry",
+    "multi": false,
     "tier": "core",
     "note": null
    },
@@ -4693,7 +4751,7 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image2.png",
+     "media": "image4.png",
      "order": 1,
      "file": "images/2026-09-13-ethusdt-long-01-1.png",
      "type": null,
@@ -5731,7 +5789,7 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image4.png",
+     "media": "image3.png",
      "order": 1,
      "file": "images/2026-09-18-ethusdt-long-02-1.png",
      "type": null,
@@ -6012,6 +6070,9 @@
     ],
     "structureShiftType": [
      "Bullish MSB → 后续 BOS"
+    ],
+    "displacement": [
+     "首次 MSB 对应位移偏弱"
     ],
     "displacementQuality": [
      "首次 MSB 对应位移偏弱"
@@ -6699,7 +6760,7 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image5.png",
+     "media": "image2.png",
      "order": 1,
      "file": "images/2026-09-15-qqqusdt-long-03-1.png",
      "type": null,
@@ -8674,7 +8735,7 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image3.png",
+     "media": "image8.png",
      "order": 1,
      "file": "images/undated-xauusdt-short-02-1.png",
      "type": null,
@@ -8688,7 +8749,7 @@
      "path": "images/undated-xauusdt-short-02-1.png"
     },
     {
-     "media": "image6.png",
+     "media": "image5.png",
      "order": 2,
      "file": "images/undated-xauusdt-short-02-2.png",
      "type": null,
@@ -10348,7 +10409,7 @@
    "protectedHigh": null,
    "images": [
     {
-     "media": "image7.png",
+     "media": "image6.png",
      "order": 1,
      "file": "images/2026-09-28-btcusdt-long-挂单-1.png",
      "type": null,
@@ -10362,7 +10423,7 @@
      "path": "images/2026-09-28-btcusdt-long-挂单-1.png"
     },
     {
-     "media": "image8.png",
+     "media": "image7.png",
      "order": 2,
      "file": "images/2026-09-28-btcusdt-long-挂单-2.png",
      "type": null,

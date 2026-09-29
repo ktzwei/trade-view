@@ -309,6 +309,7 @@ DIMENSIONS = [
     ("poiConfluence", "POI Confluence", "multi"),
     ("reaction", "POI 到达后反应", "single"),
     ("reactionType", "Reaction 类型", "multi"),
+    ("displacement", "Displacement 是否出现（§11）", "single"),
     ("displacementQuality", "Displacement 质量", "single"),
     ("displacementTF", "Displacement 周期", "multi"),
     ("structureShiftType", "结构变化类型", "multi"),

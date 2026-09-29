@@ -277,7 +277,8 @@ SUB_STRUCT = {
                "marketcondition": "marketCondition", "bias": "htfBias"},
     "ltfreact": {"reaction": "reaction", "reactionquality": "reaction",
                  "reactiontype": "reactionType"},
-    "ltfconfirm": {"structureshift": "structureShiftType", "displacement": "displacementQuality",
+    "ltfconfirm": {"structureshift": "structureShiftType",
+                   "displacement": ["displacement", "displacementQuality"],
                    "brokenstructure": "brokenStructure"},
     "entryb": {"entrytrigger": "entryTriggerType"},
     "invalid": {"invalidation": "invalidationLogic"},
@@ -354,8 +355,10 @@ def compact_sections(text: str):
             sections[k] = (sections.get(k, "") + " " + v).strip() if sections.get(k) else v
 
     def put_struct(field, v):
-        if field and not _is_unrecorded(v):
-            struct.setdefault(field, []).append(v.replace("BB", "Breaker"))
+        if not field or _is_unrecorded(v):
+            return
+        for f_ in (field if isinstance(field, (list, tuple)) else [field]):
+            struct.setdefault(f_, []).append(v.replace("BB", "Breaker"))
 
     pairs = _split_pairs(body)
 
@@ -441,6 +444,10 @@ def compact_sections(text: str):
                 add("worked", v)
             elif k in ("actualr", "实际r"):
                 add("actualRText", v)
+            elif k in ("mae",):
+                add("mae", v)
+            elif k in ("mfe",):
+                add("mfe", v)
         put_struct("tradeQuality", body)
     elif sec == "violation":
         add("improve", body, raw=True)

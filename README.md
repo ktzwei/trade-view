@@ -271,6 +271,7 @@ analysis/analysis.json ──(evidence 逐条校验)──► build.py ──►
 | 文档里的 `【标签】` 字段行 | `trades[].fields` | `doc:label` | 原文照抄 |
 | 逐句自动识别（§37 的「建议」） | `trades[].fields` | `doc:keyword` | **不改原文，只加建议** |
 | 手填确认 | `data/manual/<tradeId>.json` | `manual` | 优先级最高 |
+| AI 复盘层（判定 / 违规 / Checklist 十项） | `analysis/analysis.json` → `trades[].analysis` | `ai-review` | 只做判定，**每条必须逐字引用原文**，引用对不上就整块隔离 |
 | 机器派生（合规度 / Planned vs Actual 偏离 / Quality） | `trades[]` | `derived` | 派生值单独放，不动原值 |
 
 页面上每种来源都有徽标：**文档记录** / **自动识别·待确认** / **手填·已确认** / **派生**。
@@ -283,7 +284,7 @@ analysis/analysis.json ──(evidence 逐条校验)──► build.py ──►
 | `parser/schema.py` | 枚举唯一真源：5 个周期、12 组字段、错误标签分组、规则三桶 |
 | `parser/rules.py` | 逐句识别规则（含否定处理、区块范围限定，避免「没等 Sweep」被读成 Sweep=Yes） |
 | `parser/struct_extract.py` | 抽取引擎：字段行 + 逐句识别 + 证据留痕 |
-| `parser/stats_v2.py` | 统计层：来源合并 → 单笔派生 → 28 个维度聚合 → 周报 → §41 十二问自动作答 |
+| `parser/stats_v2.py` | 统计层：来源合并 → 单笔派生 → **30 个**维度聚合 → 周报 → §41 问答自动作答 |
 | `tools/tagedit.py` | 本地手填编辑器（默认 8791），写 `data/manual/`，含周复盘三问表单 |
 | `docs/record-template.md` | 可复制到 Google Docs 的记录模板（含「少一行少哪种统计」对照表） |
 
@@ -333,7 +334,7 @@ python3 tools/tagedit.py --port 8791   # 本机手填/确认（浏览器打开 1
 | §25 Trade Review 三问 | 详情页 + 周报三问 |
 | §26 Confidence | 字段（提示必须交易前记） |
 | §27 Dashboard 指标 | 首页 8 项：Trades / Win Rate / Net R / Avg R / Expectancy / Profit Factor / Rule Compliance Rate / Good Trade Rate |
-| §28 Analytics 全维度 | 28 个维度表 + 错误分析 + 策略 vs 执行 |
+| §28 Analytics 全维度 | 30 个维度表 + 错误分析 + 策略 vs 执行 |
 | §29 MAE/MFE Analytics | Avg MAE / Avg MFE / 盈利单 MAE / 亏损单 MFE |
 | §30–31 R 优先 + Expectancy | 所有指标以 R 计；Expectancy 独立成卡 |
 | §32 Weekly Review | 周卡新增 7 项指标 + 三问 |
@@ -353,8 +354,25 @@ python3 tools/tagedit.py --port 8791   # 本机手填/确认（浏览器打开 1
 
 1. **样本极小**（7 笔，其中可计 R 的 5 笔）：所有对比维度都标了「样本不足」，系统**不给结论**。§44 的 20/50/100 笔验收要等数据。
 2. **`tradeQuality` 全部显示「派生」**：文档里没写这个字段——目前由合规度 + 结果推导，页面标了来源，等你手填覆盖。
-3. **`mistakes` 字段几乎空**，错误分析主要来自 `analysis/analysis.json` 的 AI 复盘（页面标「自动识别·待确认」）。
-4. **Market Condition / Bias 来源周期 / Protected 结构 / MAE / MFE 目前全空**：字段和统计都已就位，等文档补值或手填。
-5. **"Setup" 仍是自由文本**：`setup.flow` 拆步骤做了标签，但没有独立的 Setup 枚举字段——跨交易的 Setup 对比目前用「结构形态 × 入场方式」组合代替。
-6. **周复盘三问**写在 `data/manual/_weeks.json`（手填）或文档正文里；文档正文里的写法还没做解析。
+3. **错误标签完全来自 AI 复盘层**（`analysis.json`：mistakes / ruleViolations / 十项 Checklist），每条带逐字原文引用；文档里的 `【Rule Violation / 改进】` 行同时被解析进 `ruleViolations` 文本。
+4. **仍全空的字段（实测 0/7 笔有值）**：MAE / MFE、Displacement Yes/No、Protected Structure、Market Condition、Sweep Quality、HTF Bias、Confidence——字段与统计都已就位，缺的是文档记录（新版文档这些项多写「未记录 / 未单独记录」）。对照：Liquidity Sweep 7/7、Bias 来源周期（由「HTF 使用周期」推）7/7。详见 `docs/spec-review.md` 缺口 3。
+5. **「Setup」仍是自由文本**：`setup.flow` 拆步骤做了标签，但没有独立的 Setup 枚举字段——跨交易的 Setup 对比目前用「结构形态 × 入场方式」组合代替。
+6. **周复盘三问**优先用手填（`data/manual/_weeks.json`）；没手填时显示 AI 复盘层的周判定（做得好 / 主要问题 / 新规则，每条带原文引用）。
+7. **`analysis.json` 没有绑定文档版本**：文档被重写后，引用对不上的复盘块会被**整块隔离**（CLI 打 `[warn] 隔离`，不进页面、不当成编造错误），需要重做 AI 复盘；隔离清单在 `trades.json` → `meta.staleQuarantine`。
 7. Markdown 里 `app.js` 的筛选是前端内存筛选，数据量大（>1000 笔）时需要改预计算索引。
+
+### H.7 文档改版适配（2026-09-29 晚）
+
+文档从「`【标签】值` 分行写法」改成「`【① Basic Info】…；Key：Value；…` 十段紧凑写法」后，解析层做了这几处修改：
+
+| 改动 | 原因 | 位置 |
+| --- | --- | --- |
+| ①–⑩ 十段紧凑格式解析（段内 `；` 拆子项、`Key：Value` 映射到字段） | 新版文档一段一行，旧解析器整段读不到 → 完整度 0% | `parse_gdoc.py` `compact_sections()` |
+| 周标题改为**按内容识别**（正文 / 标题1 / 标题2 都认） | 第 3 周标题被排成正文段落，整周丢失 | `parse_gdoc.py` parse 循环 |
+| 规则段改为**按内容识别**（「统一交易复盘逻辑」或 `规则X｜`） | 规则段标题不含「规则」二字，4 条规则全丢 | 同上 |
+| `Planned R：约 1.5R` 这种单值也认（原来只认区间） | 新版文档写单值，RR 维度全空 | `parse_gdoc.py` plannedRR 回退 |
+| TF 写成 `M15` / `5MIN` 也认（大小写无关） | 手写大小写不固定 | `struct_extract.parse_tf_tokens` |
+| 缺项词（未记录 / 未单独记录 / 未明确记录 / 无法判定）统一按未记录处理 | §37：不猜、不补 | `parse_gdoc.py` `_is_unrecorded()` |
+| AI 复盘引用对不上原文 → 整块隔离 + `meta.staleQuarantine` | 文档重写后旧复盘会变成「看起来有据其实无据」 | `parser/build.py` `check_block()` |
+
+**文档改版后的实际数据**（2026-09-29）：7 笔 / 3 周 / 平均完整度 50.6% / 已知净值 +3.61R / 30 个维度有值 / 文档规则 4 条 + 逐笔生成 7 条。

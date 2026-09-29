@@ -11,79 +11,55 @@
 
 ---
 
-## 0. 文档骨架（复制这段开始写）
+## 0. 文档骨架（复制这段开始写 · 现行 ①–⑩ 格式）
+
+> 这是文档现在的写法，解析器会把它拆成 30 个统计维度。**每行一个 `【①…】` 段，段内用「；」分隔子项，子项写成「Key：Value」。**
 
 ```
-第 3 周｜9月28日 – 10月4日
+第 3 周｜2026年9月27日–10月3日
 
-周总结：本周 X 笔，X 胜 X 负，净值 +X.XXR
+周总结：1 笔已结束交易，0 胜 1 负，合计 -1R；另有 1 笔挂单未成交，不计入结果统计。
 
-1｜HYPE/USDT Long｜2026年9月28日–9月29日｜+2.05R
+1｜HYPE/USDT Long｜2026年9月28日–9月29日｜-1.00R
+【① Basic Info】2026-09-28 09:10 → 2026-09-29 02:35（北京时间）；HYPE/USDT；Long；Exchange：OKX；Entry Mode：HTF Limit；HTF 使用周期：1H；LTF 使用周期：15min；Entry 88.30；SL 88.32；Exit 86.90；Actual R：-1.00R。
+【② HTF Context】1D Bias：Bullish；4H Bias：Bullish；1H：价格回撤至 1H IMB；Market Condition：Trending；Major Structure：Bullish Structure。
+【③ HTF Liquidity & POI】Liquidity：1H SSL；Timeframe：1H；Sweep：Yes；Sweep Quality：Normal；HTF POI：1H IMB + OB；POI Confluence：IMB + OB + Discount。
+【④ LTF Reaction】15min Reaction：Weak；Reaction Type：Rejection。
+【⑤ LTF Confirmation】Sweep：Yes；Displacement：Yes / Strong / 15min；Structure Shift：Bullish MSB → BOS；Broken Structure：Internal LH。
+【⑥ Entry】Setup Flow：HTF POI → 15min Sweep → Displacement → MSB → 回踩；Entry Reason：流动性事件 + 1H POI；Entry Trigger：回踩 OB/IMB。
+【⑦ Invalidation & SL】什么发生就证明我错了：跌破 Protected Low；SL 88.32。
+【⑧ Target & Risk Check】Target：上方 BSL；TP1 92.10；Planned RR：约 2.5R；Actual R：-1.00R；Risk Check：Entry 偏离计划 POI（No）；追价（No）。
+【⑨ Trade Management】分批止盈 50%；SL 上移至 87.9；原因为结构推动。
+【⑩ Result & Review】Loss，Actual R -1.00R；做得好的：等到了 Sweep；Trade Quality：Good Loss。
+【Rule Violation / 改进】Rule Violation：无（符合全部规则）；改进：SL 空间可再收窄一档。
+【Next Rule】首目标只出 1/3，剩余仓位跟到 HTF Target。
 
-【交易时间】2026-09-28 09:10 → 2026-09-29 02:35
-【市场背景 Context】4H 处于上升结构，1H 回踩至 4H OB，日线下方有 SSL 未取。
-【计划入场方式】HTF Limit
-【入场模型】原计划 HTF Limit；实际执行市价
-【执行】计划 POI 约 42.15；实际 Entry 42.38；初始 SL 41.10；Exit 45.60；Target 45.8；总止损风险 128 = 1R
-【Setup】HTF POI 到达 → 15m SSL Sweep → 5m Bullish Displacement → 结构变化 → First Retracement
-【入场原因】价格进入 4H OB 并扫掉下方 SSL，5m 出现强势 bullish displacement 并突破内部 LH。
-【结构理解】5m 突破的是 Internal LH，不代表主趋势反转。
-【Invalidation】止损放在被扫的 SSL 低点下方，若跌破该低点则结构失效。
-【Target logic】TP1 内部流动性；TP2 上方 BSL；Final 4H swing high。
-【Risk check】风险 1.28 点；目标空间约 3.6–4.2 点；计划 RR 约 2.8–3.3
-【结果】原计划约 1.5R，实际约 +2.05R
-【MAE】-0.35R
-【MFE】+3.8R
-【手续费】0.86
-【保护低点】41.10
-【交易管理】分批止盈 50%，SL 上移至 BE
-【做得好的】等到了 POI 和 Sweep 才动手，没有提前进。
-【需要改进】分批止盈太早，剩下半仓被 BE 扫掉。
-【主要问题】提前止盈。
-【下次规则】首目标只出 1/3，剩余仓位跟到 HTF 流动性。
+2｜BTC/USDT Long（挂单）｜未成交
+【① Basic Info】2026-09-28 08:00 计划；BTC/USDT；Long；Exchange：OKX；Entry Mode：HTF Limit；HTF 使用周期：4H；LTF 使用周期：15min；Planned Entry 约 82,953.7；SL 约 82,348.7；Planned RR 约 3.26R；Result：Pending。
+【② HTF Context】1D / 4H：未记录；1H：价格位于 Dealing Range Discount 区，存在 1H IMB，当前大周期倾向做多。
+【③ HTF Liquidity & POI】下方 Liquidity 已被 Sweep；HTF POI：1H IMB + Discount；HTF Target 类型：未明确标注。
+...
+（③ 之后同上面那一笔的 ④–⑩ 结构，缺什么就写「未记录」）
 
-【HTF Bias】Bullish
-【Bias 来源周期】4H
-【Market Condition】Trending
-【HTF Structure｜周期】Bullish Structure｜4H
-【流动性类型】SSL
-【流动性周期】1H
-【流动性被扫】Yes
-【Sweep 质量】Strong
-【Sweep 周期】15min
-【HTF POI｜周期】OB｜4H
-【LTF Entry POI｜周期】FVG｜5min
-【POI Confluence】4H OB + 1H FVG + Discount
-【Reaction】Strong
-【Reaction 类型】Sweep
-【Reaction 周期】15min
-【Displacement】Yes
-【Displacement 质量】Strong
-【Displacement 周期】5min
-【结构变化】MSS
-【结构变化周期】5min
-【被破坏的结构】Key LH
-【Protected 结构】Protected Low
-【Protected 结构周期】1H
-【Entry Mode】LTF Confirmation
-【Limit 方式】50% FVG Limit
-【Entry Trigger｜周期】Sweep + Displacement｜15min；MSB｜5min
-【Invalidation 依据】Sweep Low
-【Invalidation 周期】5min
-【Target 层级】TP1 LTF Internal Liquidity；TP2 1H Liquidity；Final 4H Swing High
-【Management Style】Partial TP
-【Trade Quality】Good Win
-【Rule Compliance】Fully Compliant
-【Should I Take This Trade】Yes
-【Trade Management】移动过 SL；提前止盈
-【Confidence】4
-【Mistake Tags】Move SL to BE Too Early
+统一交易复盘逻辑｜后续所有交易沿用
+
+规则一｜先做 HTF Context：固定按 1D → 4H → 1H 分析 Bias、Market Condition、Major Structure、Liquidity、POI、Premium/Discount 与 HTF Target。
+规则二｜再做 LTF Confirmation：固定按 15min → 5min 观察 Reaction、Sweep、Displacement、MSB/MSS/BOS、Broken Structure 与 Entry。
+规则三｜POI 必须分层记录：HTF POI 与 LTF Entry POI 分开，POI 必须带 Timeframe。
+规则四｜Entry、Invalidation、Target 必须成对：下单前记录 Planned Entry、SL、TP 与 Planned RR，RR 不符合标准就跳过。
+规则五｜复盘必须区分「策略问题」和「执行问题」：盈利也可能是 Bad Win，亏损也可能是 Good Loss。缺少可靠数据时标记未记录，不反推、不补写。
 ```
 
-> 图片直接插在这笔交易下面即可（顺序就是文档里的顺序，会自动绑到这笔交易）。
-> 交易标题必须用 `序号｜SYMBOL/方向｜日期区间｜结果R`，用全角竖线 `｜` 分隔。
+### 0.1 解析器认得哪些写法
 
----
+| 位置 | 写法 | 说明 |
+| --- | --- | --- |
+| 周标题 | `第 3 周｜2026年9月27日–10月3日` 单独一行 | 正文 / 标题1 / 标题2 都认，不靠样式 |
+| 周总结 | 以 `周总结：` 开头 | 数字会被总账核对 |
+| 交易标题 | `<序号>｜<SYMBOL> <Long/Short>｜<日期区间>｜<±R>` | 名称以 `-挂单` 结尾视为未成交 |
+| 交易字段 | `【① Basic Info】…；Key：Value；…` | ①–⑩ 十段全覆盖（旧写法 `【标签】值` 也仍然认） |
+| 规则段 | 标题含「统一交易复盘逻辑」或 `规则X｜…` | 逐条进 Rules 页三桶 |
+| 缺失 | 写 `未记录` / `未单独记录` / 无法判定 | 一律当未记录，不猜、不补 |
 
 ## 1. 周级（每周写一次）
 
