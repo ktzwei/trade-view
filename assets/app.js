@@ -2,7 +2,7 @@
    设计原则：一屏只回答三个问题 —— 这笔为什么做 / 结果怎样 / 下次怎么改。
    其余原始字段一律折叠进「原始记录」，不抢戏，但一个都不丢。 */
 (() => {
-  const state = { data: null, range: 'all', q: '', filters: {} };
+  const state = { range: 'week', q: '', filters: {}, data: null };
   const $ = (s, r = document) => r.querySelector(s);
   const esc = (s) => String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -197,6 +197,8 @@
     .then((d) => {
       state.data = d;
       renderMeta();
+      /* 测试缝：便于无头冒烟测试切换时间范围 */
+      window.__tr = { state, route, setRange: (r) => { state.range = r; route(); } };
       window.addEventListener('hashchange', route);
       $('#range').addEventListener('click', (e) => {
         const b = e.target.closest('button'); if (!b) return;
@@ -209,6 +211,7 @@
       });
       initLightbox();
       initTheme();
+      [...$('#range').children].forEach((x) => x.classList.toggle('active', x.dataset.range === state.range));
       route();
     })
     .catch((e) => { $('#view').innerHTML = `<div class="empty">数据加载失败：${esc(e.message)}<br>请确认 data/trades.json 存在（先跑 python3 parser/build.py）。</div>`; });
@@ -243,30 +246,519 @@
     const [path, qsStr] = h.split('?');
     state.filters = Object.fromEntries(new URLSearchParams(qsStr || ''));
     const parts = path.split('/').filter(Boolean);
-    [...$('#nav').children].forEach((a) => a.classList.toggle('on', a.dataset.nav === (parts[0] || 'dashboard')));
+    [...$('#nav').children].forEach((a) => a.classList.toggle('on', a.dataset.nav === (parts[0] || 'overview')));
     const view = $('#view');
     window.scrollTo(0, 0);
-    if (parts.length === 0) return dashboard(view);
+    if (parts.length === 0) return overviewView(view);
     switch (parts[0]) {
       case 'weeks': return parts[1] ? weekDetail(view, decodeURIComponent(parts[1])) : weeksView(view);
       case 'trades': return tradesView(view);
       case 'trade': return tradeDetail(view, decodeURIComponent(parts[1] || ''));
-      case 'analytics': return analyticsView(view);
+      case 'analytics': return analyticsView(view, parts[1]);
       case 'rules': return rulesView(view);
-      default: return dashboard(view);
+      default: return overviewView(view);
     }
   }
 
   /* ------------------------------------------------------------ 过滤 */
+  /* ================= v4 · UI 整改（信息架构 + 视觉减负） ================= */
+  /* ---- 旧版保留的 helper：设置标签 / POI 标签 / 短 ID / 查询串 / R 文本 ---- */
+  const setupTags = (t) => {
+    const rules = [[/sweep/i, 'Liquidity Sweep'], [/displacement/i, 'Displacement'], [/msb|mss/i, 'MSB / MSS'],
+      [/bos/i, 'BOS'], [/poi|imb|bb|discount|premium|fvg|\bob\b/i, 'POI'],
+      [/liquidity-to-liquidity/i, 'Liquidity-to-Liquidity'], [/pullback/i, 'Pullback']];
+    const out = [];
+    ((t.setup || {}).flow || []).forEach((s) => rules.forEach(([re, n]) => { if (re.test(s) && !out.includes(n)) out.push(n); }));
+    return out;
+  };
+  const poiLabel = (p) => {
+    const t = p.label || p.type;
+    if (!t) return '';
+    const tf = (p.timeframes || []).join('/').toUpperCase();
+    return tf ? `${t} ${tf}` : t;
+  };
+  const poiChips = (list) => (list || []).map((p) => {
+    const s = poiLabel(p);
+    return s ? `<span class="chip poi">${esc(s)}</span>` : '';
+  }).join('');
+  const shortId = (id) => {
+    const p = String(id).split('-');
+    const d = p.length > 2 ? p.slice(1, 3).join('-') : id;
+    const sym = (p[3] || '').replace('usdt', '').toUpperCase();
+    return `${d} ${sym}`.trim();
+  };
+  const qs = (o) => {
+    const s = new URLSearchParams(Object.entries(o).filter(([, v]) => v !== null && v !== undefined && v !== ''));
+    const str = s.toString();
+    return str ? '?' + str : '';
+  };
+  const cellR = (v) => (v === null || v === undefined ? '—' : (v > 0 ? '+' : '') + Number(v).toFixed(2) + 'R');
+  /* ============================================================
+     v4 · UI 整改（信息架构 + 视觉减负）
+     依据《交易复盘系统 UI 整改意见》§一–§二十
+     原则：不新增功能，只做 信息分组 / 页面减负 / 卡片合并 /
+          导航精简 / 图表精简 / 标签中性化 / 高级字段折叠
+     ============================================================ */
+
+  /* ---------------- 时间范围（本周 / 上周 / 本月 / 全部） ---------------- */
+  const DATE_RE = /\d{4}-\d{2}-\d{2}/;
+  const tradeDate = (t) => {
+    const m = `${t.entryTime || ''} ${t.entryDate || ''} ${t.exitTime || ''}`.match(DATE_RE);
+    return m ? m[0] : null;
+  };
+  const isoDay = (d) => new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+  const weekStartOf = (base) => { const day = base.getDay() || 7; return new Date(base.getTime() - (day - 1) * 864e5); };
+  const RANGE_WORD = { week: '本周', last: '上周', month: '本月', all: '全部' };
+  const byTimeDesc = (a, b) => String(b.entryTime || b.entryDate || '').localeCompare(String(a.entryTime || a.entryDate || ''));
+  const byTimeAsc = (a, b) => String(a.entryTime || a.entryDate || '').localeCompare(String(b.entryTime || b.entryDate || ''));
+
   function inRange(t) {
-    const d = (t.entryTime || '').slice(0, 10);
-    if (!d || state.range === 'all') return true;
+    if (state.range === 'all') return true;
+    const d = tradeDate(t);
+    if (!d) return true; /* 缺日期就不隐藏 —— 不猜、不乱归周 */
     const now = new Date();
     if (state.range === 'month') return d >= `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
-    const day = now.getDay() || 7;
-    const mon = new Date(now.getTime() - (day - 1) * 864e5);
-    return d >= mon.toISOString().slice(0, 10);
+    const mon = weekStartOf(now);
+    if (state.range === 'week') return d >= isoDay(mon);
+    if (state.range === 'last') { const prev = new Date(mon.getTime() - 7 * 864e5); return d >= isoDay(prev) && d < isoDay(mon); }
+    return true;
   }
+
+  /* ---------------- 指标（按当前时间范围现算；口径同 parser/stats_v2.py） ---------------- */
+  function metrics(ts) {
+    const closed = ts.filter((t) => ['win', 'loss', 'be'].includes(t.resultStatus));
+    const rk = ts.filter((t) => t.rIncluded && t.actualR !== null);
+    const wins = closed.filter((t) => t.resultStatus === 'win').length;
+    const losses = closed.filter((t) => t.resultStatus === 'loss').length;
+    const net = rk.reduce((a, t) => a + t.actualR, 0);
+    const pos = rk.filter((t) => t.actualR > 0).reduce((a, t) => a + t.actualR, 0);
+    const neg = rk.filter((t) => t.actualR < 0).reduce((a, t) => a + t.actualR, 0);
+    const good = closed.filter((t) => ['Good Win', 'Good Loss'].includes(qualityCol(t))).length;
+    const comp = ts.map((t) => (t.complianceV2 || {}).passRate).filter((v) => v !== null && v !== undefined);
+    const r2 = (v) => Math.round(v * 100) / 100;
+    return {
+      n: ts.length, closed: closed.length, wins, losses, rCounted: rk.length,
+      netR: rk.length ? r2(net) : null,
+      avgR: rk.length ? r2(net / rk.length) : null,
+      winRate: closed.length ? wins / closed.length : null,
+      goodWins: good, goodRate: closed.length ? good / closed.length : null,
+      compDecided: comp.length, compRate: comp.length ? comp.reduce((a, b) => a + b, 0) / comp.length : null,
+      pf: neg ? r2(pos / Math.abs(neg)) : (pos ? '∞' : null),
+    };
+  }
+  const pfTxt = (v) => (v === null || v === undefined ? NR : v === '∞' ? '∞' : Number(v).toFixed(2));
+
+  function curveOf(ts) {
+    let cum = 0;
+    return ts.filter((t) => t.rIncluded && t.actualR !== null).slice().sort(byTimeAsc)
+      .map((t) => { cum += t.actualR; return { cum: Math.round(cum * 100) / 100, r: t.actualR, date: dateOf(t), symbolLabel: t.symbolLabel }; });
+  }
+
+  /* ---------------- 列表列（§16 只保留 7 列） ---------------- */
+  const UNRATED = ['未定级', '未记录', '未分类', ''];
+  const setupCol = (t) => {
+    const poi = [valTxt(fv(t, 'htfPOIType')), valTxt(fv(t, 'htfPOITF'))].filter(Boolean).join(' ');
+    return poi || setupTags(t)[0] || null;
+  };
+  const entryModeCol = (t) => valTxt(fv(t, 'entryMode')) || (t.entryModel || {}).category || null;
+  const qualityCol = (t) => { const v = String((t.quality || {}).value || ''); return UNRATED.includes(v) ? null : v; };
+  const qualityChip = (t) => {
+    const q = qualityCol(t);
+    if (!q) return NR;
+    return `<span class="chip ${/Good/.test(q) ? 'goodq' : 'badq'}">${esc(q)}</span>`;
+  };
+  const ENTRY_MODES = ['Limit Entry', 'LTF Confirmation', 'Market Entry'];
+  const QUALITIES = ['Good Win', 'Good Loss', 'Bad Win', 'Bad Loss'];
+  const THEAD7 = '<div class="thead7"><span>Date</span><span>Symbol</span><span>Direction</span><span>Setup</span><span>Entry Mode</span><span>Result</span><span>Quality</span></div>';
+
+  function tradeRow(t) {
+    const r = t.review || {}, a = t.analysis || {};
+    const note = short(r.mainProblem || (r.improve || [])[0] || a.notes || '', 90);
+    const sc = setupCol(t), ec = entryModeCol(t);
+    return `<a class="trow cols7" href="#/trade/${encodeURIComponent(t.id)}" title="${esc(note || t.heading || '')}">
+      <span class="td d">${esc(dateOf(t))}</span>
+      <span class="td sym">${esc(t.symbolLabel || '')}</span>
+      <span class="td dir">${esc(dirWord(t.direction))}</span>
+      <span class="td setup">${sc ? esc(sc) : NR}</span>
+      <span class="td mode">${ec ? esc(ec) : NR}</span>
+      <span class="td r">${rTxt(t.rIncluded ? t.actualR : null)}</span>
+      <span class="td q">${qualityChip(t)}</span>
+    </a>`;
+  }
+
+  /* ---------------- 决策阶段组件（§17 一个决策阶段 = 一个区域） ---------------- */
+  function phase(no, title, hint, body) {
+    return `<section class="phase"><div class="phase-head"><span class="phase-no">${esc(no)}</span>
+      <h2>${esc(title)}</h2><span class="hint">${esc(hint)}</span></div>${body}</section>`;
+  }
+  function wval(t, k) {
+    const f = fv(t, k), v = valTxt(f);
+    if (!v) return '';
+    return `<span class="chip ghost">${esc(v)}</span>`;
+  }
+  function wcell(title, keys, t, opts) {
+    const o = opts || {};
+    const chips = keys.map((k) => wval(t, k)).filter(Boolean).join(' ');
+    const tf = keys.map((k) => fv(t, k)).filter(Boolean)
+      .reduce((acc, f) => acc.concat(f.tf || []), []).filter((v, i, arr) => arr.indexOf(v) === i);
+    return `<div class="wcell${chips ? '' : ' bare'}"><div class="wcell-t">${esc(title)}${tf.length ? ` <span class="srcb">${esc(tf.join('/'))}</span>` : ''}</div>
+      <div class="wcell-v">${chips || '<span class="muted">未记录</span>'}</div></div>`;
+  }
+  function wchain(cells) {
+    const parts = cells.filter(Boolean);
+    return `<div class="wchain">${parts.map((c, i) => `${i ? '<span class="warw">→</span>' : ''}${c}`).join('')}</div>`;
+  }
+  const isGood = (v) => /Good/.test(String(v || ''));
+
+  /* ---------------- 截图：Tab / Gallery（§10，默认只显示一张大图） ---------------- */
+  function imgGroupOf(im) {
+    const ty = im.type || '';
+    const tf = String(im.timeframe || '').toLowerCase();
+    if (ty === 'LTF Entry') return /5\s*m|5分钟/.test(tf) ? '5min' : '15min';
+    if (ty === 'HTF Context') return 'HTF';
+    if (ty === 'After Trade' || ty === 'Review Screen') return 'Result';
+    if (/1h|4h|1d|1小时|4小时|日线/.test(tf)) return 'HTF';
+    if (/5\s*m|5分钟/.test(tf)) return '5min';
+    if (/15|分钟|\bm\b/.test(tf)) return '15min';
+    return '其他';
+  }
+  const IMG_TABS = [['HTF', 'HTF 1D/4H/1H'], ['15min', '15min'], ['5min', '5min'], ['Result', 'Result / 事后'], ['其他', '其他']];
+
+  function imgTabsBlock(t) {
+    const imgs = t.images || [];
+    if (!imgs.length) return '';
+    const groups = {};
+    imgs.forEach((im, i) => { const g = imgGroupOf(im); (groups[g] = groups[g] || []).push({ im, i }); });
+    const tabs = IMG_TABS.filter(([k]) => (groups[k] || []).length);
+    const active = tabs[0][0];
+    const tabBtns = tabs.map(([k, lab]) => `<button class="itab${k === active ? ' on' : ''}" data-g="${esc(k)}">${esc(lab)} <span class="muted">${groups[k].length}</span></button>`).join('');
+    const panes = tabs.map(([k]) => `<div class="ipane${k === active ? ' on' : ''}" data-g="${esc(k)}">
+        <figure class="istage"><img src="${esc(groups[k][0].im.path)}" alt="" data-g="${esc(k)}" data-i="${groups[k][0].i}">
+          <figcaption>${esc(groups[k][0].im.caption || imgKind(groups[k][0].im))}</figcaption></figure>
+        <div class="ithumbs">${groups[k].map(({ im, i }) => `<button class="ithumb${i === groups[k][0].i ? ' on' : ''}" data-g="${esc(k)}" data-i="${i}" title="${esc(im.caption || imgKind(im))}">
+          <img src="${esc(im.path)}" alt="" loading="lazy"></button>`).join('')}</div>
+      </div>`).join('');
+    return `<div class="sec"><h2>图表 / 截图 <span class="hint">§10 按周期分 Tab，默认一张大图；点图放大</span></h2>
+      <div class="imtabs" data-imgtabs><div class="itab-btns">${tabBtns}</div>${panes}
+        <div class="small muted" style="margin-top:8px">${imgStrip(imgs, t)}</div></div></div>`;
+  }
+  function initImgTabs(root, t) {
+    const box = root.querySelector('[data-imgtabs]'); if (!box) return;
+    const show = (g, i) => {
+      box.querySelectorAll('.itab').forEach((b) => b.classList.toggle('on', b.dataset.g === g));
+      box.querySelectorAll('.ipane').forEach((p) => p.classList.toggle('on', p.dataset.g === g));
+      const pane = box.querySelector(`.ipane[data-g="${g}"]`); if (!pane) return;
+      const im = (t.images || [])[i];
+      if (im) { pane.querySelector('.istage img').src = im.path; pane.querySelector('.istage figcaption').textContent = im.caption || imgKind(im); pane.querySelector('.istage img').dataset.i = i; }
+      pane.querySelectorAll('.ithumb').forEach((b) => b.classList.toggle('on', Number(b.dataset.i) === i));
+    };
+    box.addEventListener('click', (e) => {
+      const tb = e.target.closest('.itab');
+      if (tb) { const first = box.querySelector(`.ipane[data-g="${tb.dataset.g}"] .ithumb`); return show(tb.dataset.g, first ? Number(first.dataset.i) : 0); }
+      const th = e.target.closest('.ithumb');
+      if (th) return show(th.dataset.g, Number(th.dataset.i));
+      const st = e.target.closest('.istage img');
+      if (st) return openLightbox(t, Number(st.dataset.i) || 0);
+    });
+  }
+
+  /* ---------------- 三段式：PLAN / EXECUTION / REVIEW（§4–§7） ---------------- */
+  function planSection(t) {
+    const p = ((t.plannedVsActual || {}).planned) || {};
+    const tpItems = arr(p.tp).filter(Boolean);
+    const tpIsPrice = tpItems.length && tpItems.every((x) => /^[\d.,\s\/+-]+$/.test(String(x)));
+    const tpTxt = tpItems.join('；');
+    const cell = (k, v) => `<span><i>${esc(k)}</i><b>${v === null || v === undefined || v === '' ? NR : esc(v)}</b></span>`;
+    const planBar = `<div class="pricebar">
+      ${cell('Direction', dirWord(t.direction))}
+      ${cell('Plan Entry', p.entry === null || p.entry === undefined ? null : num(p.entry))}
+      ${cell('Plan SL', p.sl === null || p.sl === undefined ? null : num(p.sl))}
+      ${cell(tpIsPrice ? 'Plan TP' : 'Plan Target', tpItems.length ? (tpIsPrice ? tpItems.join(' / ') : (tpTxt.length > 40 ? tpTxt.slice(0, 40) + '…' : tpTxt)) : null)}
+      ${cell('Planned RR', p.rr === null || p.rr === undefined ? null : `${p.rr}R`)}
+    </div>${tpItems.length && !tpIsPrice ? `<div class="small muted" style="margin-top:6px">目标原文：${esc(tpTxt)}</div>` : ''}`;
+    const body = `<div class="tf-strip">HTF — Why <span class="srcb">1D / 4H / 1H</span></div>
+      ${wchain([
+        wcell('HTF Context', ['htfBias', 'biasSourceTF', 'marketCondition', 'htfStructureKind', 'htfStructureTF'], t),
+        wcell('Liquidity', ['liquidityType', 'liquidityTF'], t),
+        wcell('POI', ['htfPOIType', 'htfPOITF', 'poiConfluence', 'ltfPOIType', 'ltfPOITF'], t),
+      ])}
+      <div class="small muted" style="margin:10px 0 0">回答「为什么关注这个方向和这个位置」。</div>
+      <h3 class="phase-sub">Trade Plan</h3>${planBar}`;
+    return phase('PLAN', '为什么准备做这笔交易', 'HTF Context · 交易前逻辑', body);
+  }
+
+  function execSection(t) {
+    const a = ((t.plannedVsActual || {}).actual) || {};
+    const pa = t.plannedVsActual || {};
+    const dev = arr(pa.deviations);
+    const mode = valTxt(fv(t, 'entryMode')) || ((t.entryModel || {}).category) || null;
+    const modeWord = { HTF_LIMIT: 'Limit Entry', LTF_CONFIRMATION: 'LTF Confirmation', MARKET_ENTRY: 'Market Entry' }[mode] || mode;
+    const seg = `<div class="seg">${ENTRY_MODES.map((m) => `<span class="${m === modeWord ? 'on' : ''}">${esc(m)}</span>`).join('')}</div>
+      <div class="small muted" style="margin-top:6px">Entry Mode 是统计口径：Limit Entry = 提前挂单；LTF Confirmation = 等低周期确认；Market Entry = 直接市价。文档没写就是未记录。</div>`;
+    const actCells = [
+      a.entry === null || a.entry === undefined ? null : ['Actual Entry', num(a.entry)],
+      a.exit === null || a.exit === undefined ? null : ['Actual Exit', num(a.exit)],
+      a.r === null || a.r === undefined ? null : ['Actual R', rTxt(a.r)],
+    ].filter(Boolean);
+    const body = `<div class="tf-strip">LTF — When <span class="srcb">15min / 5min</span></div>
+      ${wchain([
+        wcell('Sweep / Reaction', ['liquiditySweep', 'sweepQuality', 'sweepTF', 'reaction', 'reactionType', 'reactionTF'], t),
+        wcell('Displacement', ['displacementQuality', 'displacementTF'], t),
+        wcell('MSS / MSB', ['structureShiftType', 'structureShiftTF', 'brokenStructure'], t),
+        wcell('Entry Trigger', ['entryTriggerType', 'entryTriggerTF', 'limitStyle'], t),
+      ])}
+      <div class="small muted" style="margin:10px 0 0">回答「什么时候真正进入」。Internal / Key / Protected 要能分清，不知道为什么突破就不算确认。</div>
+      <h3 class="phase-sub">Entry Mode</h3>${seg}
+      ${actCells.length ? `<h3 class="phase-sub">Actual</h3><div class="pricebar">${actCells.map(([k, v]) => `<span><i>${esc(k)}</i><b>${v}</b></span>`).join('')}</div>` : ''}
+      ${dev.length ? `<div class="callout warn" style="margin-top:10px">计划与实际的偏离（执行问题）：${dev.map((d) => `<span class="chip warn">${esc(d)}</span>`).join(' ')}</div>` : ''}`;
+    return phase('EXECUTION', '实际市场发生了什么 / 最终怎么入场', 'LTF Confirmation · 实际执行', body);
+  }
+
+  function reviewSection(t) {
+    const a = t.analysis || {}, r = t.review || {};
+    const q = qualityCol(t);
+    const mis = (a.mistakes || []).map((m) => `<span class="chip warn">${esc(m.tag || m)}</span>`).join(' ');
+    const vio = (a.ruleViolations || []).map((m) => `<span class="chip warn">${esc(m.tag || m)}</span>`).join(' ');
+    const next = (r.improve || [])[0] || r.nextRules || null;
+    const body = `<div class="review-grid">
+        <div class="rbox"><div class="k">Result</div><div class="rv">${rTxt(t.rIncluded ? t.actualR : null)} ${resChip(t)}</div></div>
+        <div class="rbox"><div class="k">Trade Quality</div>
+          <div class="seg">${QUALITIES.map((x) => `<span class="${x === q ? 'on' : ''}">${esc(x)}</span>`).join('')}</div>
+          <div class="small muted" style="margin-top:6px">Good = 按规则做的（赢或亏都算好交易）；Bad = 违规或乱做的。</div></div>
+      </div>
+      <div class="review-grid" style="margin-top:12px">
+        <div class="rbox"><div class="k">Mistake</div><div class="rv">${mis || vio || NR}</div></div>
+        <div class="rbox"><div class="k">Lesson · 下次怎么改</div><div class="rv">${r.mainProblem ? esc(short(r.mainProblem, 180)) : next ? esc(short(next, 180)) : NR}</div>
+          ${next && r.mainProblem ? `<div class="small muted">改进动作：${esc(short(next, 140))}</div>` : ''}
+          ${(r.worked || []).length ? `<div class="small muted">做对了：${esc(short(r.worked[0], 120))}</div>` : ''}</div>
+      </div>
+      <div class="small muted" style="margin-top:10px">Review 不用写成长篇作文：结果 → 质量 → 错误 → 一句教训，够了。</div>`;
+    return phase('REVIEW', '这笔交易质量怎么样 / 哪里要改进', '结果 · 质量 · 错误 · 教训', body);
+  }
+
+  /* ---------------- 交易详情（PLAN → EXECUTION → REVIEW + 高级折叠） ---------------- */
+  function tradeDetail(view, id) {
+    const t = state.data.trades.find((x) => x.id === id);
+    if (!t) { view.innerHTML = `<div class="empty">找不到交易 ${esc(id)}。<a href="#/trades">返回列表</a></div>`; return; }
+    const adv = `<details class="fold"><summary>更多细节 / Advanced（§8：默认收起，不让复盘变成填表）</summary>
+      <div style="padding:6px 14px 14px">
+        ${numericBlock(t)}
+        ${chainBlock(t)}
+        ${checklistBlock(t)}
+        ${plannedActualBlock(t)}
+        ${maeMfeBlock(t)}
+        <details class="fold"><summary>原始记录（文档原文）</summary>
+          <div class="rawgrid">${Object.entries(t.rawSections || {}).map(([k, v]) => `<div class="panel"><h3>${esc(k)}</h3><div class="kvraw-lite"><div>${esc(short(v, 1800))}</div></div></div>`).join('')}</div>
+        </details>
+      </div></details>`;
+    view.innerHTML = `
+      <div class="td-head">
+        <div>
+          <h1>${esc(t.symbolLabel || '')} <span class="d-${esc(t.direction || 'x')}">${esc(dirWord(t.direction))}</span></h1>
+          <div class="sub">${esc(t.id)} · ${esc(t.weekLabel || '')} · ${esc(t.entryTime || t.entryDate || '')} · <a href="#/trades">← 返回列表</a></div>
+        </div>
+        <div class="rr"><div class="small muted">Actual R</div><div class="big">${rTxt(t.rIncluded ? t.actualR : null)}</div><div>${resChip(t)}</div></div>
+      </div>
+      ${imgTabsBlock(t)}
+      ${planSection(t)}
+      ${execSection(t)}
+      ${reviewSection(t)}
+      ${adv}`;
+    initImgTabs(view, t);
+  }
+
+  function numericBlock(t) {
+    const keys = ['protectedPrice', 'mae', 'mfe', 'confidence'];
+    const has = keys.filter((k) => FBYK()[k]);
+    if (!has.length) return '';
+    return `<div class="sec"><h2>关键数值 <span class="hint">§13 / §19 / §29（高级字段）</span></h2>
+      <div class="panel"><div class="cfields">${has.map((k) => cfield(t, k)).join('')}</div></div></div>`;
+  }
+
+  /* ---------------- Overview（§3：只回答三个问题） ---------------- */
+  function overviewView(view) {
+    const ts = filtered();
+    const m = metrics(ts);
+    const weeks = state.data.weeks.filter((w) => w.tradeIds.some((id) => ts.some((t) => t.id === id)));
+    const w0 = weeks.slice().sort((a, b) => String(a.start).localeCompare(String(b.start))).pop() || null;
+    const W = w0 ? V2W(w0.label) : null;
+    const recent = ts.slice().sort(byTimeDesc).slice(0, 6);
+    const cell = (k, v, s) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div>${s ? `<div class="s">${s}</div>` : ''}</div>`;
+    const focus = W ? `
+        ${W.mainProblem ? `<div class="focusline bad"><b>本周主要问题</b><span>${esc(W.mainProblem)}</span></div>` : ''}
+        ${W.nextFocus ? `<div class="focusline rule"><b>下周重点</b><span>${esc(W.nextFocus)}</span></div>` : ''}
+        ${W.didWell ? `<div class="focusline good"><b>做得好的</b><span>${esc(W.didWell)}</span></div>` : ''}`
+      : '<div class="small muted">这个范围里没有周复盘记录。</div>';
+    view.innerHTML = `
+      <div class="sec"><h2>${esc(RANGE_WORD[state.range] || '')}表现 <span class="hint">§3 首页只回答：最近怎么样 / 最大问题是什么 / 最近做了哪些交易</span></h2>
+        <div class="stats stats-6">
+          ${cell('Net R', rTxt(m.netR), `${m.rCounted} 笔可计 R`)}
+          ${cell('Trades', `${m.closed} / ${m.n}`, '已结束 / 全部')}
+          ${cell('Win Rate', pct(m.winRate), `${m.wins} 胜 / ${m.losses} 负`)}
+          ${cell('Expectancy', rTxt(m.avgR), '平均每笔期望值（§31）')}
+          ${cell('Good Trade Rate', pct(m.goodRate), `${m.goodWins} 好 / ${m.closed} 笔（§23）`)}
+          ${cell('Rule Compliance', pct(m.compRate), m.compDecided ? `${m.compDecided} 笔有结论` : '还没有一笔有结论')}
+        </div>
+        <div class="small muted" style="margin-top:8px">口径：只统计文档里真实写了的数据；缺项显示「未记录」，不当 0 算。Profit Factor ${pfTxt(m.pf)}（总盈利 R ÷ 总亏损 R，§27）。</div>
+      </div>
+      <div class="sec"><h2>R Curve <span class="hint">${esc(RANGE_WORD[state.range] || '')}逐笔累计 R</span></h2>
+        <div class="panel">${sparkline(curveOf(ts))}</div></div>
+      <div class="sec"><h2>Recent Trades <span class="hint">最近 ${recent.length} 笔 · <a href="#/trades">全部交易 →</a></span></h2>
+        <div class="trows">${recent.length ? THEAD7 + recent.map(tradeRow).join('') : '<div class="empty">这个范围里没有交易，切到「全部」看总账。</div>'}</div></div>
+      <div class="sec"><h2>This Week Focus <span class="hint">${w0 ? esc(w0.label) : ''}</span></h2>
+        <div class="focusbox">${focus}</div></div>
+      ${weeks.length ? `<details class="fold"><summary>周复盘（${weeks.length} 周：Expectancy / MAE·MFE / 最佳 Setup / 最大错误）· <a href="#/weeks">全部周 →</a></summary>
+        <div style="padding:4px 14px 14px">${weeks.map((w) => weekBlock(w, ts)).join('')}</div></details>` : ''}`;
+  }
+
+  /* ---------------- Trades（§16：列表只留 7 列） ---------------- */
+  function tradesView(view) {
+    const ts = filtered();
+    const uniq = (k) => [...new Set(state.data.trades.map(k).filter(Boolean))];
+    const qsx = (o) => {
+      const s = new URLSearchParams(Object.entries(o).filter(([, v]) => v !== null && v !== undefined && v !== ''));
+      const str = s.toString(); return str ? `?${str}` : '';
+    };
+    const chips = (key, opts, fmt = (x) => x) => `<div class="filt">${opts.map((o) => {
+      const on = state.filters[key] === o ? ' on' : '';
+      return `<a class="chip tag${on}" href="#/trades${qsx({ ...state.filters, [key]: state.filters[key] === o ? null : o })}">${esc(fmt(o))}</a>`;
+    }).join('')}</div>`;
+    const R = state.data.trades;
+    const setupVals = [...new Set(R.flatMap((t) => setupTags(t)).filter(Boolean))];
+    const modeVals = [...new Set(R.map((t) => valTxt(fv(t, 'entryMode'))).filter(Boolean))];
+    const qualVals = [...new Set(R.map((t) => ((t.quality || {}).value || '')).filter(Boolean))];
+    const filt = `<details class="fold"${ACTIVE() ? ' open' : ''}><summary>筛选 / 搜索（当前 ${ts.length} 笔）</summary>
+      <div style="padding:6px 14px 14px">
+        <div class="frowline"><span class="fl">结果</span>${chips('result', ['win', 'loss', 'be'], (x) => ({ win: 'Win', loss: 'Loss', be: 'BE' }[x]))}</div>
+        <div class="frowline"><span class="fl">方向</span>${chips('direction', ['long', 'short'], dirWord)}</div>
+        ${uniq((t) => t.symbolLabel).length ? `<div class="frowline"><span class="fl">标的</span>${chips('symbol', uniq((t) => t.symbolLabel))}</div>` : ''}
+        ${setupVals.length ? `<div class="frowline"><span class="fl">Setup</span>${chips('setup', setupVals)}</div>` : ''}
+        ${modeVals.length ? `<div class="frowline"><span class="fl">Entry Mode</span>${chips('entryMode', modeVals)}</div>` : ''}
+        ${qualVals.length ? `<div class="frowline"><span class="fl">交易质量</span>${chips('qv', qualVals)}</div>` : ''}
+        <div class="frowline"><span class="fl">时间范围</span><span class="small muted">用右上角 本周 / 上周 / 本月 / 全部 切</span></div>
+        ${ACTIVE() ? `<div style="margin-top:8px"><a class="chip tag on" href="#/trades">清空筛选</a></div>` : ''}
+      </div></details>`;
+    view.innerHTML = `<div class="sec"><h2>交易列表 <span class="hint">§16 只保留 7 列，点开看 PLAN → EXECUTION → REVIEW</span></h2>
+      ${filt}
+      <div class="trows" style="margin-top:12px">${ts.length ? THEAD7 + ts.slice().sort(byTimeDesc).map(tradeRow).join('') : '<div class="empty">没有符合条件的交易。</div>'}</div></div>`;
+  }
+
+  /* ---------------- Analytics（§12–§15：问题驱动，不再铺十几个图） ---------------- */
+  const ATABS = [['setup', 'Setup'], ['entry', 'Entry'], ['poi', 'POI'], ['structure', 'Structure'], ['mistakes', 'Mistakes'], ['risk', 'Risk']];
+
+  function entryTable() {
+    const src = V2().entryModePerformance || {};
+    const rows = (src.rows || []).slice().sort((a, b) => (b.count || 0) - (a.count || 0));
+    if (!rows.length) return '<div class="muted small">还没有数据。</div>';
+    return `<table class="plain"><thead><tr><th>入场方式（Entry Mode）</th><th class="num">Trades</th><th class="num">Win Rate</th><th class="num">Avg R</th><th class="num">Expectancy</th><th class="num">Profit Factor</th></tr></thead>
+      <tbody>${rows.map((r) => `<tr><td>${esc(r.key)}<div class="small muted">${(r.trades || []).map((id) => `<a href="#/trade/${encodeURIComponent(id)}" style="text-decoration:underline">${esc(shortId(id))}</a>`).join(' · ')}</div></td>
+        <td class="num">${r.closed || 0} / ${r.count || 0}</td><td class="num">${r.winRate === null || r.winRate === undefined ? '—' : pct(r.winRate)}</td>
+        <td class="num">${cellR(r.avgR)}</td><td class="num">${cellR(r.expectancy)}</td>
+        <td class="num">${r.profitFactor === null || r.profitFactor === undefined ? '—' : Number(r.profitFactor).toFixed(2)}</td></tr>`).join('')}</tbody></table>
+      <div class="small muted" style="margin-top:6px">${esc(src.label || '入场方式')} · 口径：只统计文档里真实写了 Entry Mode 的交易，未写 = 「(未记录)」（§37 不猜）。</div>`;
+  }
+
+  function mistakesTab() {
+    const M = V2().mistakes || {};
+    const rows = (M.rows || []).slice().sort((a, b) => (b.count || 0) - (a.count || 0));
+    const byLoss = (M.rows || []).slice().sort((a, b) => (a.lostR || 0) - (b.lostR || 0));
+    const top = byLoss[0];
+    const viol = (state.data.analytics || {}).violationFrequency || [];
+    return `<div class="sec"><h2>Mistakes <span class="hint">§15 最值得优先改的错误</span></h2>
+      ${top ? `<div class="callout warn">最该先改：<b>${esc(top.tag)}</b> —— 出现 ${top.count} 次，损失 ${cellR(top.lostR)}。<br>
+        <span class="small muted">口径：只统计文档里真实写了 / 已确认的错误标签；自动识别的只是建议（§37）。</span></div>` : ''}
+      <div class="panel" style="margin-top:12px"><h3>错误清单</h3>
+        <table class="plain"><thead><tr><th>Mistake</th><th>类别</th><th class="num">次数</th><th class="num">损失 R</th><th class="num">相关笔数</th><th>出现交易</th></tr></thead>
+        <tbody>${rows.length ? rows.map((r) => `<tr><td>${esc(r.tag)}${r.unconfirmed ? '<span class="srcb auto">建议·待确认</span>' : ''}</td>
+          <td>${esc(r.category || '其他')}</td><td class="num">${r.count}</td><td class="num">${cellR(r.lostR)}</td><td class="num">${r.rCounted || 0}</td>
+          <td>${(r.trades || []).map((id) => `<a href="#/trade/${encodeURIComponent(id)}" style="text-decoration:underline">${esc(shortId(id))}</a>`).join(' · ')}</td></tr>`).join('')
+          : '<tr><td colspan="6" class="muted">还没有记录任何错误标签。</td></tr>'}</tbody></table></div>
+      <div class="analytics-grid" style="margin-top:12px">
+        <div class="panel"><h3>规则违反频率</h3>${freqBars(viol.map((r) => ({ label: r.key, count: r.count, rCounted: r.rCounted, expectancy: r.avgR })), Math.max(1, ...viol.map((r) => r.count)))}</div>
+        <div class="panel"><h3>错误分布</h3>${freqBars(rows.map((r) => ({ label: r.tag, count: r.count, rCounted: r.rCounted, expectancy: r.rCounted ? r.lostR / r.rCounted : null })))}</div>
+      </div></div>`;
+  }
+
+  function riskTab() {
+    const SVE = V2().strategyVsExecution || {}, MM = V2().maeMfe || {}, NUM = V2().numeric || [];
+    const TF = V2().timeframes || {}, DQ = V2().dataQuality || {}, H = (state.data.analytics || {}).holding || {};
+    const S = state.data.stats || {};
+    const IM = V2().images || {};
+    const line = (k, v, s) => `<div class="frowline2"><span class="fl">${esc(k)}</span><span>${v}</span>${s ? `<span class="small muted">${esc(s)}</span>` : ''}</div>`;
+    return `<div class="sec"><h2>Risk <span class="hint">§12 亏损来自策略还是执行 / 风险与数据质量</span></h2>
+      <div class="analytics-grid">
+        <div class="panel"><h3>策略问题 vs 执行问题</h3>
+          ${line('Good Loss（按规则仍止损）', `${(SVE.goodLoss || {}).count || 0} 笔`, cellR((SVE.goodLoss || {}).r))}
+          ${line('Bad Loss（违规亏损）', `${(SVE.badLoss || {}).count || 0} 笔`, cellR((SVE.badLoss || {}).r))}
+          ${line('未定级亏损', `${(SVE.unknownQuality || {}).count || 0} 笔`)}
+          <div class="small muted" style="margin-top:6px">${esc(SVE.note || '')}</div></div>
+        <div class="panel"><h3>MAE / MFE（§19 / §29）</h3>
+          ${line('平均 MAE', MM.avgMAE === null || MM.avgMAE === undefined ? NR : `${Number(MM.avgMAE).toFixed(2)}R`, `已记录 ${MM.recorded || 0} / ${MM.total || 0} 笔`)}
+          ${line('平均 MFE', MM.avgMFE === null || MM.avgMFE === undefined ? NR : `+${Number(MM.avgMFE).toFixed(2)}R`)}
+          ${line('盈利单 MAE / 亏损单 MFE', `${MM.winMAE === null || MM.winMAE === undefined ? '—' : Number(MM.winMAE).toFixed(2)} / ${MM.lossMFE === null || MM.lossMFE === undefined ? '—' : Number(MM.lossMFE).toFixed(2)}`)}
+          <div class="small muted" style="margin-top:6px">${esc(MM.note || '')}</div></div>
+        <div class="panel"><h3>数值字段记录情况（§13）</h3>
+          <table class="plain"><thead><tr><th>字段</th><th class="num">已记录</th><th class="num">平均</th></tr></thead>
+          <tbody>${NUM.map((n) => `<tr><td>${esc(n.label || n.key)}<div class="small muted">单位 ${esc(n.unit || '—')}</div></td>
+            <td class="num">${n.recorded} / ${n.total}</td><td class="num">${n.avg === null || n.avg === undefined ? '—' : Number(n.avg).toFixed(2)}</td></tr>`).join('')}</tbody></table></div>
+        <div class="panel"><h3>截图分类（§24）</h3>
+          ${(IM.rows || []).map((r) => line(esc(r.kind), `${r.count} 张`, Object.keys(r.tf || {}).join('/') || '周期未标')).join('')}
+          ${line('合计', `${IM.total || 0} 张`, `已分类 ${IM.labeled || 0} / 未分类 ${IM.unlabeled || 0}`)}
+          <div class="small muted" style="margin-top:6px">分类在本地编辑器「截图分类」页勾选，原图不改动。</div></div>
+        <div class="panel"><h3>持仓时间 / 盈亏比</h3>
+          ${line('平均盈利持仓', H.avgWinnerHours === null || H.avgWinnerHours === undefined ? NR : `${Number(H.avgWinnerHours).toFixed(1)} 小时`)}
+          ${line('平均亏损持仓', H.avgLoserHours === null || H.avgLoserHours === undefined ? NR : `${Number(H.avgLoserHours).toFixed(1)} 小时`)}
+          ${line('平均盈利单 R', S.avgWinnerR === null || S.avgWinnerR === undefined ? NR : `+${Number(S.avgWinnerR).toFixed(2)}R`)}
+          ${line('平均亏损单 R', S.avgLoserR === null || S.avgLoserR === undefined ? NR : `${Number(S.avgLoserR).toFixed(2)}R`)}
+          <div class="small muted" style="margin-top:6px">${esc(H.note || '')}</div></div>
+        <div class="panel"><h3>时间周期使用（HTF / LTF）</h3>
+          ${line('HTF 固定', (TF.HTF || []).join(' / '))}
+          ${line('LTF 固定', (TF.LTF || []).join(' / '))}
+          ${(TF.HTFUsage || []).map((u) => line(`HTF ${u.label}`, `${u.count} 次`)).join('')}
+          ${(TF.LTFUsage || []).map((u) => line(`LTF ${u.label || u.key}`, `${u.count} 次`)).join('')}</div>
+        <div class="panel"><h3>数据质量（§4.1 不必填，缺就不算）</h3>
+          ${line('已确认字段 / 自动识别', `${DQ.fieldsConfirmed || 0} / ${DQ.fieldsAuto || 0}`)}
+          ${line('平均完整度', (state.data.analytics || {}).dataCompletenessAvg === null || (state.data.analytics || {}).dataCompletenessAvg === undefined ? NR : `${Number((state.data.analytics || {}).dataCompletenessAvg).toFixed(1)}%`)}
+          ${line('未记录维度数', String((V2().emptyDimensions || []).length))}
+          <div class="small muted" style="margin-top:6px">${esc(DQ.note || '')}</div></div>
+      </div>
+      <details class="fold"><summary>全部维度明细（点开看每个维度逐项统计）</summary>
+        <div style="padding:8px 14px 14px" class="analytics-grid">${(V2().dimensionOrder || []).map((k) => dimTable(k)).join('')}</div></details>
+      <details class="fold"><summary>系统要回答的问题（§41 · 基于全部交易，不受时间范围影响）</summary>
+        <div style="padding:4px 14px 14px">${answersPanel()}</div></details></div>`;
+  }
+
+  function analyticsView(view, tab) {
+    const T = ATABS.some(([k]) => k === tab) ? tab : 'setup';
+    const ts = filtered();
+    const A = state.data.analytics || {};
+    const V = V2();
+    const panels = {
+      setup: () => `<div class="sec"><h2>Setup 表现 <span class="hint">§12 哪个 Setup 真的赚钱</span></h2>
+          <div class="analytics-grid">
+            <div class="panel"><h3>按 Setup 标签</h3>${perfTable(A.setupTagPerformance || [], 'Setup 标签')}</div>
+            <div class="panel"><h3>按 Setup 名称</h3>${perfTable(A.setupPerformance || [], 'Setup')}</div>
+            ${dimTable('tradeQuality')}${dimTable('shouldTake')}
+          </div></div>`,
+      entry: () => `<div class="sec"><h2>Entry <span class="hint">§13 Limit Entry vs LTF Confirmation vs Market Entry</span></h2>
+          <div class="panel">${entryTable()}</div>
+          <div class="analytics-grid" style="margin-top:12px">${dimTable('entryTriggerType')}${dimTable('limitStyle')}${dimTable('entryTriggerTF')}</div></div>`,
+      poi: () => `<div class="sec"><h2>POI <span class="hint">§12 哪个 HTF POI 最有效</span></h2>
+          <div class="analytics-grid">${dimTable('htfPOIType')}${dimTable('htfPOITF')}${dimTable('poiConfluence')}${dimTable('ltfPOIType')}${dimTable('ltfPOITF')}</div></div>`,
+      structure: () => `<div class="sec"><h2>Structure <span class="hint">§14 Internal / Key / Protected 到底哪种有价值</span></h2>
+          <div class="callout small">只记「MSB = Yes」看不出价值 —— 要分清突破的是 Internal Structure（小级别）还是 Key / Protected Structure（大级别）。</div>
+          <div class="analytics-grid">${dimTable('structureShiftType')}${dimTable('structureShiftTF')}${dimTable('brokenStructure')}${dimTable('protectedStructure')}${dimTable('displacementQuality')}</div></div>`,
+      mistakes: mistakesTab,
+      risk: riskTab,
+    };
+    view.innerHTML = `
+      <div class="sec"><h2>你想分析什么？ <span class="hint">§12 问题驱动 —— 点一个问题，只看相关分析</span></h2>
+        <div class="atabs">${ATABS.map(([k, lab]) => `<a class="atab${k === T ? ' on' : ''}" href="#/analytics/${k}">${esc(lab)}</a>`).join('')}</div>
+        <div class="small muted" style="margin-top:8px">当前时间范围：${esc(RANGE_WORD[state.range] || '')} · ${ts.length} 笔（右上角可切）。</div>
+      </div>
+      ${panels[T]()}`;
+  }
+
   function blob(t) {
     return [t.symbolLabel, t.direction, t.heading,
       ...Object.values(t.rawSections || {}),
@@ -332,75 +824,6 @@
   }
 
   /* ------------------------------------------------------------ Dashboard */
-  function dashboard(view) {
-    const ts = filtered();
-    const weeks = state.data.weeks.filter((w) => w.tradeIds.some((id) => ts.some((t) => t.id === id)));
-    const top = state.data.analytics.mistakeFrequency.filter((m) => m.count > 1).slice(0, 1)[0];
-    const recentRules = state.data.rules.generated.slice(-2).reverse();
-    view.innerHTML = `
-      ${keyStats(ts)}
-      ${ACTIVE() || state.q ? `<div class="sec"><div class="callout">当前筛选：${[
-        state.q ? `搜索「${esc(state.q)}」` : '',
-        ...Object.entries(state.filters).filter(([, v]) => v).map(([k, v]) => `${esc(k)}=${esc(v)}`),
-      ].filter(Boolean).join(' · ')} —— 命中 ${ts.length} 笔。</div></div>` : ''}
-      ${answersPanel()}
-      ${top || recentRules.length ? `<div class="sec"><div class="analytics-grid">
-        ${top ? `<div class="panel"><h3>最该盯的重复错误</h3>
-          <div class="callout warn"><b>${esc(top.key)}</b> · 已出现 ${top.count} 次
-          <div class="small" style="margin-top:4px">${top.trades.map((id) => `<a href="#/trade/${encodeURIComponent(id)}" style="text-decoration:underline">${esc(shortId(id))}</a>`).join(' · ')}</div></div></div>` : ''}
-        ${recentRules.length ? `<div class="panel"><h3>最近长出来的规则</h3>
-          ${recentRules.map((r) => `<div class="callout">${esc(short(r.text, 120))}
-            <div class="small muted" style="margin-top:4px">来自 <a href="#/trade/${encodeURIComponent(r.createdFrom)}" style="text-decoration:underline">${esc(r.createdFromLabel)}</a></div></div>`).join('')}</div>` : ''}
-      </div></div>` : ''}
-      <div class="sec">
-        <h2>Weeks <span class="hint">点一行进单笔复盘</span></h2>
-        ${weeks.length ? weeks.map((w) => weekBlock(w, ts)).join('') : '<div class="empty">该筛选条件下没有交易。</div>'}
-      </div>`;
-  }
-
-  const setupTags = (t) => {
-    const rules = [[/sweep/i, 'Liquidity Sweep'], [/displacement/i, 'Displacement'], [/msb|mss/i, 'MSB / MSS'],
-      [/bos/i, 'BOS'], [/poi|imb|bb|discount|premium|fvg|\bob\b/i, 'POI'],
-      [/liquidity-to-liquidity/i, 'Liquidity-to-Liquidity'], [/pullback/i, 'Pullback']];
-    const out = [];
-    ((t.setup || {}).flow || []).forEach((s) => rules.forEach(([re, n]) => { if (re.test(s) && !out.includes(n)) out.push(n); }));
-    return out;
-  };
-  const poiLabel = (p) => {
-    const t = p.label || p.type;
-    if (!t) return '';
-    const tf = (p.timeframes || []).join('/').toUpperCase();
-    return tf ? `${t} ${tf}` : t;
-  };
-  const poiChips = (list) => (list || []).map((p) => {
-    const s = poiLabel(p);
-    return s ? `<span class="chip poi">${esc(s)}</span>` : '';
-  }).join('');
-  const shortId = (id) => {
-    const p = String(id).split('-');
-    const d = p.length > 2 ? p.slice(1, 3).join('-') : id;
-    const sym = (p[3] || '').replace('usdt', '').toUpperCase();
-    return `${d} ${sym}`.trim();
-  };
-
-  /* 一笔交易 = 一行 */
-  function tradeRow(t) {
-    const r = t.review || {};
-    const m0 = (((t.analysis || {}).mistakes) || [])[0];
-    const note = short(r.mainProblem || (r.improve || [])[0] || (r.worked || [])[0]
-      || (t.entryReasonItems || [])[0] || (m0 ? m0.tag + '（文档未写复盘要点）' : '文档未写复盘要点'), 78);
-    const viol = ((t.analysis || {}).ruleViolations || []).length;
-    const bad = t.resultStatus === 'loss' || viol;
-    return `<a class="trow" href="#/trade/${encodeURIComponent(t.id)}">
-      <span class="td d">${esc(dateOf(t))}</span>
-      <span class="td sym">${esc(t.symbolLabel)} <span class="muted">${dirWord(t.direction)}</span></span>
-      <span class="td r">${t.actualR !== null ? rTxt(t.actualR) : `<span class="small muted">${['win','loss','be'].includes(t.resultStatus) ? 'R 未计入' : '未结束'}</span>`}</span>
-      <span class="td res">${resChip(t)}${viol ? `<span class="chip warn">⚠ ${viol}</span>` : ''}</span>
-      <span class="td note ${bad ? 'bad' : ''}">${esc(note)}</span>
-      <span class="td go">›</span>
-    </a>`;
-  }
-
   function weekBlock(w, ts) {
     const wt = ts.filter((t) => w.tradeIds.includes(t.id));
     const rk = wt.filter((t) => t.rIncluded && t.actualR !== null);
@@ -443,9 +866,9 @@
   function weeksView(v) {
     const ts = filtered();
     const weeks = state.data.weeks.filter((w) => w.tradeIds.some((id) => ts.some((t) => t.id === id)));
-    v.innerHTML = `<div class="sec"><h2>Weeks</h2>
-      ${weeks.map((w) => weekBlock(w, ts)).join('')}</div>
-      ${allTradesFold(ts)}`;
+    v.innerHTML = `<div class="sec"><h2>周复盘 <span class="hint">§二 已并入 Overview；这里保留完整周明细</span></h2>
+      <div class="small muted" style="margin-bottom:8px"><a href="#/">← 回到 Overview</a></div>
+      ${weeks.map((w) => weekBlock(w, ts)).join('')}</div>`;
   }
   function weekDetail(v, label) {
     const w = state.data.weeks.find((x) => x.label === label);
@@ -453,156 +876,6 @@
     const ts = state.data.trades.filter((t) => w.tradeIds.includes(t.id));
     v.innerHTML = `<a class="small muted" href="#/weeks">← 全部周</a>${keyStats(ts)}${weekBlock(w, ts)}`;
   }
-  function tradesView(v) {
-    const ts = filtered();
-    const uniq = (k) => [...new Set(state.data.trades.map(k).filter(Boolean))];
-    const chips = (key, opts, fmt = (x) => x) => `<div class="filt">${opts.map((o) =>
-      `<a class="chip tag ${state.filters[key] === o ? 'on' : ''}" href="#/trades${qs({ ...state.filters, [key]: state.filters[key] === o ? null : o })}">${esc(fmt(o))}</a>`).join('')}</div>`;
-    v.innerHTML = `
-      <div class="sec"><h2>Trades <span class="hint">${ts.length} / ${state.data.trades.length} 笔</span></h2>
-        ${chips('result', ['win', 'loss', 'be'], (x) => ({ win: 'Win', loss: 'Loss', be: 'BE' }[x]))}
-        ${chips('symbol', uniq((t) => t.symbolLabel))}
-        ${chips('setup', [...new Set(state.data.trades.flatMap(setupTags))])}
-        ${chips('mistake', [...new Set(state.data.analytics.mistakeFrequency.map((m) => m.key))])}
-        ${chips('violation', [...new Set(state.data.analytics.violationFrequency.map((m) => m.key))])}
-        <details class="fold" open><summary>结构化筛选（§39 组合筛选）</summary>
-          <div style="margin-top:8px">
-            ${[['entryMode', '入场方式'], ['htfPOITF', 'HTF POI 周期'], ['ltfPOITF', 'LTF Entry POI 周期'],
-               ['marketCondition', '市场环境'], ['liquiditySweep', 'Sweep'], ['displacementQuality', 'Displacement'],
-               ['structureShiftType', '结构变化'], ['brokenStructure', '被破坏的结构'], ['protectedStructure', 'Protected 结构'],
-               ['targetLevel', 'Target 层级'], ['ruleCompliance', 'Rule Compliance'], ['shouldTake', '该不该做'], ['tradeQuality', 'Trade Quality']]
-              .map(([key, lab]) => { const vals = uniqF(key); return vals.length ? `<div class="frowline"><span class="fl">${esc(lab)}</span>${chips(key, vals)}</div>` : ''; }).join('')}
-            <div class="frowline"><span class="fl">错误标签（字段）</span>${chips('mistakes', uniqF('mistakes'))}</div>
-          </div>
-        </details>
-        <div style="margin-top:12px">${keyStats(ts)}</div>
-      </div>
-      <div class="sec trows">${ts.length ? ts.map(tradeRow).join('') : '<div class="empty">没有符合条件的交易。</div>'}</div>`;
-  }
-  const qs = (o) => {
-    const s = new URLSearchParams(Object.entries(o).filter(([, v]) => v !== null && v !== undefined && v !== ''));
-    const str = s.toString();
-    return str ? '?' + str : '';
-  };
-  function allTradesFold(ts) {
-    return `<div class="sec"><h2>所有交易</h2><div class="trows">${ts.map(tradeRow).join('')}</div></div>`;
-  }
-
-  /* ------------------------------------------------------------ 单笔复盘（核心页） */
-  function tradeDetail(v, id) {
-    const t = state.data.trades.find((x) => x.id === id);
-    if (!t) { v.innerHTML = '<div class="empty">找不到这笔交易。</div>'; return; }
-    const a = t.analysis || {}, imgs = t.images || [], r = t.review || {};
-    const lens = (t.context && t.context.timeframes) || [];
-    const viol = a.ruleViolations || [];
-    const fails = (a.riskCheck || []).filter((i) => i.status === 'fail');
-    const improve = [...(r.improve || [])];
-    v.innerHTML = `
-      <a class="small muted" href="#/week/${encodeURIComponent(t.week.label)}">← ${esc(t.week.label)}</a>
-
-      <div class="td-head">
-        <div class="td-title">
-          <h1>${esc(t.symbolLabel)} <span class="d-${esc(t.direction)}">${dirWord(t.direction).toUpperCase()}</span></h1>
-          <div class="sub">${esc(t.entryTimeLabel || '')}${t.exitTimeLabel ? ' → ' + esc(t.exitTimeLabel) : ''}
-            ${t.holdingLabel ? ` · 持仓 ${esc(t.holdingLabel)}` : ''}</div>
-        </div>
-        <div class="td-r">${t.actualR !== null ? rTxt(t.actualR) : NR}${resChip(t)}</div>
-      </div>
-
-      <div class="pricebar">
-        <span><i>Entry</i><b>${num(t.entry)}</b></span>
-        <span><i>SL</i><b>${num(t.stopLoss)}</b></span>
-        <span><i>TP / Exit</i><b>${t.exit !== null ? num(t.exit) : (t.stopLoss !== null && t.resultStatus === 'loss' ? '止损出场' : NR)}</b></span>
-        ${(t.targets || []).length ? `<span><i>计划 TP</i><b>${esc((t.targets || []).map((x) => x.priceText).filter(Boolean).join(' / '))}</b></span>` : ''}
-        <span><i>Planned RR</i><b>${t.plannedRRText ? esc(t.plannedRRText.replace(/^计划\s*RR\s*/, '')) : (t.plannedRR !== null ? esc(t.plannedRR) + 'R' : NR)}</b></span>
-        <span><i>Entry Model</i><b>${esc((t.entryModel || {}).label || '未记录')}</b></span>
-      </div>
-
-      ${(t.mae || t.mfe || t.fees !== null) ? `<div class="pricebar" style="margin-top:8px">
-        ${t.mae ? `<span><i>MAE 最大浮亏</i><b>${esc(t.mae.raw)}</b></span>` : ''}
-        ${t.mfe ? `<span><i>MFE 最大浮盈</i><b>${esc(t.mfe.raw)}</b></span>` : ''}
-        ${t.pnl !== null ? `<span><i>PnL</i><b>${esc(t.pnl)}</b></span>` : ''}
-        ${t.fees !== null ? `<span><i>Fees</i><b>${esc(t.fees)}</b></span>` : ''}
-      </div>` : ''}
-      ${imgs.length ? `<div class="card chart-wrap" style="margin-top:14px">
-        <img class="chart-main" id="main-chart" src="${esc(imgs[0].path)}" alt="${esc(t.symbolLabel)} 图表">
-        <div class="chart-bar"><span>${esc(imgs[0].caption || '文档内嵌交易图')}（点击放大）</span>
-          <span>${imgs[0].type ? `分类：${esc(imgs[0].type)}${imgs[0].timeframe ? ' · ' + esc(imgs[0].timeframe) : ''}` : '分类：未标注（§24 四类之一）'}${imgs[0].kindSource === 'manual' ? ' · 手填' : ''}</span>
-          <span>${lens.length ? '参考周期 ' + esc(lens.join('/').toUpperCase()) : ''}</span></div>
-        ${imgs.length > 1 ? `<div class="gallery">${imgs.map((i, n) => `<figure class="gal-item"><img src="${esc(i.path)}" data-lb="${n}" alt="图 ${n + 1}"><figcaption>${esc(imgKind(i))}</figcaption></figure>`).join('')}</div>` : ''}
-        <div class="imgstrip small">${imgStrip(imgs, t)}</div>
-      </div>` : '<div class="empty">这笔交易还没有绑定图表。</div>'}
-
-      ${chainBlock(t)}
-      ${checklistBlock(t)}
-      ${plannedActualBlock(t)}
-      ${maeMfeBlock(t)}
-
-      <div class="logic-line">
-        ${(t.setup.flow || []).length ? `<div class="flow">${t.setup.flow.map((x, i) => `${i ? '<span class="arw">→</span>' : ''}<span class="step">${esc(x)}</span>`).join('')}</div>` : ''}
-        <div class="badges-row">${poiChips(t.poi)}${(a.mistakes || []).map((m) => `<span class="chip warn">${esc(m.tag)}</span>`).join('')}${viol.map((x) => `<span class="chip warn">⚠ ${esc(x.tag)}</span>`).join('')}</div>
-      </div>
-
-      <div class="three">
-        <div class="panel good"><h3>① 做对了什么</h3>
-          ${(r.worked || []).length ? `<ul class="reasons">${r.worked.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
-            : `<div class="muted small">未记录。${t.resultStatus === 'loss' ? '亏损交易也一定有做对的地方。' : ''}</div>`}</div>
-
-        <div class="panel bad"><h3>② 问题在哪</h3>
-          ${improve.length ? `<ul class="reasons">${improve.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
-          ${r.mainProblem ? `<div class="callout warn"><b>主要问题：</b>${esc(r.mainProblem)}</div>` : ''}
-          ${!improve.length && !r.mainProblem ? '<div class="muted small">未记录。</div>' : ''}
-          ${fails.length ? `<div class="small" style="margin-top:8px">规则卡点未过：${fails.map((f) => `<span class="chip warn">${esc(f.label)}</span>`).join(' ')}</div>` : ''}
-          ${(a.mistakes || []).length ? `<div class="small muted" style="margin-top:8px">AI 归类：${a.mistakes.map((m) => `“${esc(m.evidence)}”`).join(' / ')}</div>` : ''}
-          ${a.classification ? `<div class="small muted" style="margin-top:6px">结果分类：<b>${esc(a.classification.value)}</b> —— ${esc(a.classification.reason)}</div>` : ''}</div>
-
-        <div class="panel rule"><h3>③ 下次怎么做</h3>
-          ${(r.nextRules || []).length ? `<ul class="reasons">${r.nextRules.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
-            : '<div class="muted small">未记录。这一格空着，下次大概率还会犯同一个错。</div>'}</div>
-      </div>
-
-      <details class="fold">
-        <summary>原始记录（为什么不这样写 / 当时看到什么 / 所有已记字段）</summary>
-        <div class="rawgrid">
-          ${(t.sectionsLabeled || []).length ? `<div class="panel span2"><h3>文档逐字段原文</h3>
-            ${t.sectionsLabeled.map((x) => `<div class="kvraw"><b>${esc(x.label)}</b>${esc(x.text || '')}</div>`).join('')}</div>` : ''}
-          ${(t.liquidity || t.displacement || (t.poi || []).length) ? `<div class="panel"><h3>Liquidity / Displacement / POI</h3>
-            <div class="badges-row">
-              ${t.liquidity ? `<span class="chip ${t.liquidity.sslSwept ? 'win' : 'ghost'}">SSL ${t.liquidity.sslSwept ? '已扫' : '未记录'}</span>` : ''}
-              ${t.liquidity && t.liquidity.bslTarget ? `<span class="chip">BSL ${esc(t.liquidity.bslTarget)}</span>` : ''}
-              ${t.displacement ? `<span class="chip ${t.displacement.strength === 'strong' ? 'win' : 'warn'}">${esc(t.displacement.type || 'Displacement')} · ${t.displacement.strength === 'strong' ? 'Strong' : t.displacement.strength === 'weak' ? 'Weak' : '未记录'}</span>` : ''}
-              ${poiChips(t.poi)}
-            </div></div>` : ''}
-          ${(t.entryReason || []).length ? `<div class="panel"><h3>Entry Reasons</h3><ul class="reasons">${t.entryReason.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
-          ${t.entryTrigger && (t.entryTrigger.text || t.entryTrigger.raw) ? `<div class="panel"><h3>Entry Trigger</h3><div class="raw">${esc(t.entryTrigger.text || t.entryTrigger.raw)}</div></div>` : ''}
-          ${(t.targets || []).length ? `<div class="panel"><h3>Targets</h3><table class="plain"><thead><tr><th>Level</th><th>Price</th><th>Type</th></tr></thead><tbody>
-            ${t.targets.map((x) => `<tr><td>${esc(x.label)}</td><td>${esc(x.priceText || (x.priceLow != null ? x.priceLow : '')) || NR}</td><td>${(x.types || []).map((y) => `<span class="chip">${esc(y)}</span>`).join(' ') || NR}</td></tr>`).join('')}</tbody></table></div>` : ''}
-          ${(a.riskCheck || []).length ? `<div class="panel"><h3>下单前风控自查</h3><div class="check">
-            ${(a.riskCheck || []).map((i) => `<div class="row ${i.status}"><span class="ic">${({ pass: '✔', fail: '✘', partial: '~', unknown: '?' })[i.status]}</span>
-              <div class="lab"><b>${esc(i.label)}</b> <span class="small muted">${({ pass: '通过', fail: '违反', partial: '部分', unknown: '未知' })[i.status]}</span>
-              ${i.evidence ? `<div class="ev">“${esc(i.evidence)}”</div>` : ''}${i.note ? `<div class="ev">${esc(i.note)}</div>` : ''}</div></div>`).join('')}</div></div>` : ''}
-          ${t.mae !== null || t.mfe !== null || t.fees !== null || t.pnl !== null ? `<div class="panel"><h3>结果明细</h3><div class="kv">
-            <div><div class="k">MAE</div><div class="v">${nr(t.mae)}</div></div>
-            <div><div class="k">MFE</div><div class="v">${nr(t.mfe)}</div></div>
-            <div><div class="k">PnL</div><div class="v">${nr(t.pnl)}</div></div>
-            <div><div class="k">Fees</div><div class="v">${nr(t.fees)}</div></div></div></div>` : ''}
-          ${Object.keys(t.rawSections || {}).length ? `<div class="panel"><h3>Google Docs 原文</h3>
-            ${Object.entries(t.rawSections).map(([k, vv]) => `<div class="kvraw"><b>${esc(k)}</b>${esc(Array.isArray(vv) ? vv.join(' / ') : vv)}</div>`).join('')}</div>` : ''}
-        </div>
-        <div class="small muted" style="margin-top:8px">数据完整度 ${t.dataCompleteness ? t.dataCompleteness.percent : '—'}%${t.dataCompleteness && t.dataCompleteness.missing.length ? ` · 缺：${esc(t.dataCompleteness.missing.join('、'))}` : ''}
-          ${!t.rIncluded ? ` · <b>本笔不计入 R 统计</b>：${esc(t.rExcludeReason || '缺少可计算的 SL / 实际 R')}` : ''}
-          · 版本 <span class="mono">${esc(t.id)}</span></div>
-      </details>`;
-
-    if (imgs.length) {
-      $('#main-chart').addEventListener('click', () => openLightbox(t, 0));
-      v.querySelectorAll('[data-lb]').forEach((el) => el.addEventListener('click', () => openLightbox(t, +el.dataset.lb)));
-    }
-  }
-
-
-  /* ---- Analytics v2：全维度表（§28 P2） ---- */
-  const cellR = (v) => (v === null || v === undefined ? '—' : (v > 0 ? '+' : '') + Number(v).toFixed(2) + 'R');
   function dimTable(key) {
     const D = (V2().dimensions || {})[key];
     if (!D || !(D.rows || []).length) return '';
@@ -616,68 +889,6 @@
         <td class="num">${r.complianceRate === null || r.complianceRate === undefined ? '—' : pct(r.complianceRate)}</td></tr>`).join('')}
       </tbody></table>
       ${allUnrec ? '<div class="small muted">这个维度目前一笔都没记录 —— 没有记录就没有统计。</div>' : ''}</div>`;
-  }
-  function analyticsV2() {
-    const D = V2(), dims = D.dimensions || {}, order = D.dimensionOrder || [];
-    const M = D.mistakes || {}, S = D.strategyVsExecution || {}, MM = D.maeMfe || {}, tf = D.timeframes || {};
-    const NUM = D.numeric || [], IMGS = D.images || {};
-    const FOCUS = ['structureShiftType', 'entryMode', 'htfPOITF', 'ltfPOITF', 'marketCondition', 'liquiditySweep',
-      'liquiditySweep', 'sweepQuality', 'displacementQuality', 'brokenStructure', 'protectedStructure', 'ruleCompliance', 'tradeQuality', 'shouldTake'];
-    const focus = [...new Set(FOCUS)].filter((k) => dims[k]);
-    const rest = order.filter((k) => !focus.includes(k));
-    const group = (k) => (FBYK()[k] || {}).group || '其他';
-    const groups = {};
-    rest.forEach((k) => { (groups[group(k)] = groups[group(k)] || []).push(k); });
-    const mk = (r) => `<tr><td>${esc(r.tag)}<span class="srcb">${esc(r.category || '其他')}</span>${r.unconfirmed ? '<span class="srcb auto">建议·待确认</span>' : ''}<div class="small muted">${(r.trades || []).map((id) => `<a href="#/trade/${encodeURIComponent(id)}" style="text-decoration:underline">${esc(shortId(id))}</a>`).join(' · ')}</div></td>
-      <td class="num">${r.count}</td><td class="num">${r.confirmedCount || 0}</td><td class="num">${r.rCounted}</td><td class="num">${cellR(r.lostR)}</td></tr>`;
-    return `
-    <div class="sec"><h2>结构化 Analytics <span class="hint">§28 全维度 · 缺记录的行一律单列，不参与平均</span></h2>
-      <div class="analytics-grid">
-        <div class="panel span2"><h3>策略问题 vs 执行问题 <span class="hint small">§4.3</span></h3>
-          <div class="badges-row">
-            <span class="chip loss">违规亏损 ${S.badLoss ? S.badLoss.count : 0} 笔 · ${S.badLoss ? S.badLoss.r.toFixed(2) : '0'}R</span>
-            <span class="chip">规则内亏损 ${S.goodLoss ? S.goodLoss.count : 0} 笔 · ${S.goodLoss ? S.goodLoss.r.toFixed(2) : '0'}R</span>
-            <span class="chip ghost">无判定 ${S.unknownQuality ? S.unknownQuality.count : 0} 笔</span></div>
-          <div class="small muted" style="margin-top:8px">${esc(S.note || '')}<br>违规造成的亏损才是系统要重点发现的问题，规则内的亏损是策略成本。</div></div>
-        <div class="panel"><h3>Expectancy / 结论口径</h3>
-          <div class="kv"><div><div class="k">Expectancy</div><div class="v">${cellR((D.dashboard || {}).expectancy)}</div></div>
-            <div><div class="k">Good Trade Rate</div><div class="v">${pct((D.dashboard || {}).goodTradeRate)}</div></div>
-            <div><div class="k">Rule Compliance</div><div class="v">${pct((D.dashboard || {}).ruleComplianceRate)}</div></div>
-            <div><div class="k">Profit Factor</div><div class="v">${(D.dashboard || {}).profitFactor === null || (D.dashboard || {}).profitFactor === undefined ? NR : Number(D.dashboard.profitFactor).toFixed(2)}</div></div></div></div>
-        <div class="panel"><h3>MAE / MFE 分析 <span class="hint small">§29</span></h3>
-          <div class="kv"><div><div class="k">平均 MAE</div><div class="v">${cellR(MM.avgMAE)}</div></div>
-            <div><div class="k">平均 MFE</div><div class="v">${cellR(MM.avgMFE)}</div></div>
-            <div><div class="k">盈利单 MAE</div><div class="v">${cellR(MM.winMAE)}</div></div>
-            <div><div class="k">亏损单 MFE</div><div class="v">${cellR(MM.lossMFE)}</div></div></div>
-          <div class="small muted" style="margin-top:8px">${esc(MM.note || '')}</div></div>
-        <div class="panel"><h3>数值字段 <span class="hint small">§13 Protected Price / §19 MAE·MFE</span></h3>
-          ${NUM.length ? `<table class="plain"><thead><tr><th>字段</th><th class="num">已记录</th><th class="num">平均</th><th class="num">范围</th></tr></thead><tbody>
-            ${NUM.map((n) => `<tr><td>${esc(n.label)}<span class="srcb">${esc(n.group || '其他')}</span></td>
-              <td class="num">${n.recorded}/${n.total}</td>
-              <td class="num">${n.avg === null ? NR : (n.avg > 0 ? '+' : '') + n.avg + (n.unit ? ' ' + esc(n.unit) : '')}</td>
-              <td class="num">${n.min === null ? NR : n.min + ' ~ ' + n.max}</td></tr>`).join('')}
-            </tbody></table><div class="small muted" style="margin-top:6px">没记录的行不计入平均，也不补 0（§4.1）。</div>`
-            : '<div class="muted small">没有数值字段定义。</div>'}</div>
-        <div class="panel"><h3>截图分类 <span class="hint small">§24</span></h3>
-          ${(IMGS.rows || []).length ? `<div class="kv">${IMGS.rows.map((r) => `<div><div class="k">${esc(IMG_KIND_WORD[r.kind] || r.kind)}</div>
-              <div class="v">${r.count} 张<span class="srcb">${esc(Object.keys(r.tf || {}).join('/') || '周期未标')}</span></div></div>`).join('')}</div>`
-            : '<div class="muted small">还没有分类记录。</div>'}
-          <div class="small muted" style="margin-top:8px">共 ${IMGS.total || 0} 张 · 已分类 ${IMGS.labeled || 0} · 未分类 ${IMGS.unlabeled || 0}。分类在本地编辑器「截图分类」页勾选。</div></div>
-        <div class="panel"><h3>错误标签统计 <span class="hint small">§22 / §28</span></h3>
-          ${(M.rows || []).length ? `<table class="plain"><thead><tr><th>错误</th><th class="num">出现</th><th class="num">已确认</th><th class="num">可计 R</th><th class="num">Lost R</th></tr></thead><tbody>${M.rows.map(mk).join('')}</tbody></table>
-            <div class="small muted" style="margin-top:6px">最常出现：<b>${esc(M.mostCommon || '未记录')}</b>${M.costliest ? ` · 损失最大：<b>${esc(M.costliest.tag)}</b>（${M.costliest.lostR === null ? 'R 未计' : M.costliest.lostR.toFixed(2) + 'R'}）` : ''}</div>`
-            : '<div class="muted small">文档里没有错误标签记录。</div>'}</div>
-        <div class="panel span2"><h3>周期使用 <span class="hint small">§2 HTF 固定 1D/4H/1H · LTF 固定 15min/5min</span></h3>
-          <div class="three"><div><div class="small muted">HTF 使用分布</div>${freqBars(tf.HTFUsage, (D.dashboard || {}).trades)}</div>
-          <div><div class="small muted">LTF 使用分布</div>${freqBars(tf.LTFUsage, (D.dashboard || {}).trades)}</div>
-          <div><div class="small muted">Entry 周期（§28 15min vs 5min）</div>${freqBars(dims.entryTriggerTF ? dims.entryTriggerTF.rows : (dims.ltfPOITF ? dims.ltfPOITF.rows : []), (D.dashboard || {}).trades)}</div></div></div>
-      </div>
-      <div class="analytics-grid" style="margin-top:12px">${focus.map(dimTable).join('')}</div>
-      <details class="fold"><summary>其余维度表（${rest.length} 个：HTF/LTF 逐项对比）</summary>
-        <div style="margin-top:10px">${Object.keys(groups).map((g) => `<h3 class="dimgroup">${esc(g)}</h3><div class="analytics-grid">${groups[g].map(dimTable).join('')}</div>`).join('')}
-        ${(D.emptyDimensions || []).length ? `<div class="callout small">以下 ${D.emptyDimensions.length} 个维度当前完全没记录，因此没有任何统计：${D.emptyDimensions.map((k) => esc((FBYK()[k] || {}).label || k)).join('、')}</div>` : ''}</div>
-      </details>
-    </div>`;
   }
   function freqBars(rows, total) {
     if (!rows || !rows.length) return '<div class="muted small">暂无</div>';
@@ -709,47 +920,6 @@
         <td class="num">${r.avgR === null ? '—' : (r.avgR > 0 ? '+' : '') + r.avgR + 'R'}</td>
         <td class="num">${r.netR === null ? '—' : (r.netR > 0 ? '+' : '') + r.netR + 'R'}</td></tr>`).join('')}</tbody></table>`;
   }
-  function analyticsView(v) {
-    const A = state.data.analytics, S = state.data.stats;
-    const freq = (rows, key) => rows.length ? `<div class="freq">${rows.map((m) => `<div class="frow">
-      <div><a class="chip tag" href="#/trades?${key}=${encodeURIComponent(m.key)}">${esc(m.key)}</a>
-      <span class="small muted">${m.count} 笔</span></div>
-      <div class="fbar"><i style="width:${Math.min(100, m.count * 25)}%"></i></div></div>`).join('')}</div>` : '<div class="muted small">暂无</div>';
-    v.innerHTML = `
-      ${keyStats(state.data.trades)}
-      <div class="sec"><h2>Analytics <span class="hint">样本小的时候，比率只能当趋势看</span></h2>
-        <div class="analytics-grid">
-          <div class="panel span2"><h3>累计 R</h3>${sparkline(A.cumulativeR)}
-            <div class="small muted">${A.cumulativeR.map((c) => `${esc(c.date.slice(5))} ${c.cum > 0 ? '+' : ''}${c.cum}R`).join(' · ') || '—'}</div></div>
-          <div class="panel"><h3>最常犯的错</h3>${freq(A.mistakeFrequency, 'mistake')}</div>
-          <div class="panel"><h3>规则违反</h3>${freq(A.violationFrequency, 'violation')}</div>
-          <div class="panel span2"><h3>Setup 表现</h3>${perfTable(A.setupTagPerformance, 'Setup 标签')}</div>
-          <div class="panel"><h3>Entry Model</h3>${perfTable(A.entryModelPerformance, 'Entry Model')}
-            <div class="small muted" style="margin-top:6px">HTF Limit ${S.htfLimitTrades} 笔 · LTF Confirmation ${S.ltfConfirmationTrades} 笔 · Market Entry ${S.marketEntryTrades} 笔</div></div>
-          <div class="panel"><h3>复盘最容易漏记的字段</h3>
-            ${state.data.unknownFields.map((u) => `<div class="frow"><div>${esc(u.field)} <span class="small muted">${u.count} 笔</span></div>
-              <div class="fbar"><i style="width:${Math.min(100, u.count * 25)}%"></i></div></div>`).join('')}
-            <div class="small muted" style="margin-top:6px">平均完整度 ${A.dataCompletenessAvg}%。越靠上越常忘。</div></div>
-        </div>
-        <details class="fold"><summary>旧版补充统计（持仓时间 / MAE·MFE 记录率 / Good-Bad 分类）</summary>
-          <div class="analytics-grid" style="margin-top:10px">
-            <div class="panel"><h3>Holding Time</h3>
-              <table class="plain"><thead><tr><th>交易</th><th class="num">持仓</th><th>结果</th></tr></thead><tbody>
-                ${A.holding.perTrade.map((h) => `<tr><td>${esc(h.symbolLabel)} <span class="small muted">${esc(h.id.slice(0, 10))}</span></td>
-                  <td class="num">${h.hours} h</td><td>${esc(h.status || '—')}</td></tr>`).join('')}</tbody></table>
-              <div class="small muted" style="margin-top:6px">平均：盈利 ${A.holding.avgWinnerHours === null ? '—' : A.holding.avgWinnerHours + ' h'} / 亏损 ${A.holding.avgLoserHours === null ? '—' : A.holding.avgLoserHours + ' h'}。${esc(A.holding.note)}</div></div>
-            <div class="panel"><h3>MAE / MFE</h3><div class="muted small">已记录 ${A.maeMfe.recorded} / ${A.maeMfe.total} 笔。${esc(A.maeMfe.note)}</div></div>
-            <div class="panel"><h3>Good / Bad 分类</h3>
-              <div class="badges-row"><span class="chip win">Good Win ${S.goodWins}</span><span class="chip warn">Bad Win ${S.badWins}</span>
-                <span class="chip">Good Loss ${S.goodLosses}</span><span class="chip loss">Bad Loss ${S.badLosses}</span></div>
-              <div class="small muted" style="margin-top:8px">看的是「有没有守自己的规则」，不是赚没赚钱。Bad Win 最危险。</div></div>
-          </div>
-        </details>
-      </div>
-      ${analyticsV2()}`;
-  }
-
-  /* ------------------------------------------------------------ Rules */
   function rulesView(v) {
     const R = state.data.rules;
     const cats = R.categories.filter((c) => R.generated.some((g) => g.category === c));

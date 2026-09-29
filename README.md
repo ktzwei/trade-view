@@ -390,3 +390,21 @@ python3 tools/tagedit.py --port 8791   # 本机手填/确认（浏览器打开 1
 
 一句话原则没变：**系统只按你写的算，缺了就说未记录。** 数值字段空着不影响完整度（§4.1：不是必填）。
 
+### H.9 v4 · UI 整改（2026-09-29 深夜，对应《交易复盘系统 UI 整改意见》§一–§二十）
+
+只动展示层：**不新增功能、不新增页面、不新增动画**，只做信息架构 + 视觉减负。逐节对照见 `docs/ui-review.md`。
+
+| 改动 | 说明 |
+| --- | --- |
+| 导航精简 | 一级导航 = Overview / Trades / Analytics / Rules；Weeks 退出导航（`#/weeks` 仍可用，Overview 内折叠入口） |
+| 时间范围 | 顶栏 本周（默认）/ 上周 / 本月 / 全部；按交易日期判断，**没写日期的交易不隐藏**（不猜） |
+| 首页只回答三问 | 6 个核心指标（Net R / Trades / Win Rate / Expectancy / Good Trade Rate / Rule Compliance）→ R Curve → Recent Trades → This Week Focus（本周主要问题 / 下周重点 / 做得好的） |
+| 详情三段式 | PLAN（HTF — Why：Context → Liquidity → POI + Trade Plan）→ EXECUTION（LTF — When：Sweep → Displacement → MSS/MSB → Entry + Entry Mode 三段条 + Actual）→ REVIEW（Result + 四档质量 + Mistake + Lesson） |
+| 高级字段折叠 | Protected Price / MAE / MFE / Confidence / 结构化复盘链 / 规则清单 / Planned vs Actual / 原始记录全部进「更多细节 / Advanced」 |
+| 截图 Tab | HTF / 15min / 5min / Result / 其他 分 Tab，默认一张大图 + 缩略图切换 + 灯箱放大（不再纵向堆叠） |
+| 标签中性化 | POI / 方向 / 周期 / 来源标签全部中性灰；颜色只留 盈亏 R / 违规 / Good Trade / 当前改进重点 |
+| Analytics 问题驱动 | 顶部 6 个问题（Setup / Entry / POI / Structure / Mistakes / Risk），一次只渲染一个面板；§41 答卡移到页面底部折叠 |
+| Trades 列表 7 列 | Date · Symbol · Direction · Setup · Entry Mode · Result · Quality；筛选收进折叠 |
+| Mistakes 结论化 | 顶部直接给「最该先改：X —— 出现 N 次，损失 X R」 |
+
+改动文件：`index.html`、`assets/app.js`、`assets/app.css`（新增 `docs/ui-review.md`）。数据/解析/统计层未改。

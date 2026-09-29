@@ -401,3 +401,121 @@ tr.unrec td{color:var(--ink-3);font-style:italic}
 .gal-item{margin:0;display:flex;flex-direction:column;align-items:center;gap:4px}
 .gal-item figcaption{font-size:11px;color:var(--ink-3);white-space:nowrap}
 .imgstrip{padding:8px 12px;border-top:1px solid var(--line-2);color:var(--ink-3);line-height:2}
+
+/* ============================================================
+   v4 · UI 整改（依据《交易复盘系统 UI 整改意见》§一–§二十）
+   信息分组 / 页面减负 / 标签中性化 / 高级字段折叠 —— 不新增功能
+   ============================================================ */
+
+/* §十一 颜色系统：普通标签一律中性灰。颜色只留给：
+   盈利绿 / 亏损红 / 违规橙红 / Good Trade 绿 / 当前改进重点强调色 */
+.chip.long,.chip.short,.chip.poi{color:var(--ink-2);background:var(--panel-2);border-color:var(--line)}
+html[data-theme="dark"] .chip.long,html[data-theme="dark"] .chip.short,
+html[data-theme="dark"] .chip.poi,html[data-theme="dark"] .chip.tag{
+  color:var(--ink-2);background:var(--panel-2);border-color:var(--line)}
+.srcb.doc,.srcb.auto{color:var(--ink-3);border-color:var(--line)}
+.srcb{font-size:10px}
+
+/* §三 Overview：只保留 6 个核心指标 */
+.stats.stats-6{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.range-note{font-size:12px;color:var(--ink-3);margin-top:-4px}
+
+/* §十七 一个决策阶段 = 一个区域 */
+.phase{margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--panel);box-shadow:var(--shadow);padding:2px 0 12px}
+.phase-head{display:flex;align-items:baseline;gap:9px;padding:11px 16px;border-bottom:1px solid var(--line-2);flex-wrap:wrap}
+.phase-head h2{font-size:15px}
+.phase-no{font-size:10.5px;letter-spacing:.14em;font-weight:700;color:var(--ink-3);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:1px 6px}
+.phase-head .hint{margin-left:auto}
+
+/* §九 HTF — Why / LTF — When 链 */
+.wchain{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;padding:12px 16px 2px}
+.warw{align-self:center;color:var(--ink-3);font-size:14px}
+.wcell{flex:1 1 210px;min-width:170px;border:1px solid var(--line-2);border-radius:var(--radius-sm);
+  padding:8px 10px;background:var(--panel-2)}
+.wcell.bare{background:transparent;border-style:dashed}
+.wcell-t{font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.wcell-v{display:flex;flex-wrap:wrap;gap:5px;font-size:12.5px}
+.subline{font-size:12px;color:var(--ink-3);padding:10px 16px 0}
+
+/* §六 入场方式：三选一，只高亮实际情况 */
+.seg{display:flex;gap:6px;flex-wrap:wrap;padding:12px 16px 2px}
+.seg span{border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:12.5px;color:var(--ink-3)}
+.seg span.on{color:var(--ink);border-color:var(--ink);font-weight:620}
+.seg span.on.good{color:var(--green);border-color:var(--green)}
+.seg span.on.bad{color:var(--red);border-color:var(--red)}
+
+/* §七 REVIEW：Result 大数字 */
+.rbig{font-size:30px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.rbig.pos{color:var(--green)}
+.rbig.neg{color:var(--red)}
+
+/* §三 This Week Focus */
+.focusbox{padding:2px 0}
+.focusline{display:grid;grid-template-columns:104px 1fr;gap:10px;align-items:start;
+  padding:9px 14px;border-bottom:1px solid var(--line-2);font-size:13.5px}
+.focusline:last-child{border-bottom:0}
+.focusline b{font-size:12px;color:var(--ink-3);font-weight:600}
+.focusline.bad-list span{color:#9c4a44}
+.focusline.good span{color:#255f3c}
+.frowline2{display:grid;grid-template-columns:1.3fr 84px 92px 74px;gap:8px;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--line-2);font-size:12.5px}
+.frowline2:last-child{border-bottom:0}
+.frowline2 .hd{font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+
+/* §十 截图：Tab 切换，默认一张大图（HTF / 15min / 5min / Result） */
+.imtabs{padding:12px 16px 6px}
+.itab-btns{display:flex;gap:6px;flex-wrap:wrap}
+.itab{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:12.5px;
+  color:var(--ink-2);background:var(--panel);cursor:pointer}
+.itab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ipane{display:none}
+.ipane.on{display:block}
+.istage{margin:10px 0 0;background:var(--panel-2);border:1px solid var(--line-2);
+  border-radius:var(--radius-sm);padding:8px;text-align:center;cursor:zoom-in}
+.istage img{max-width:100%;max-height:520px;border-radius:6px;display:block;margin:0 auto}
+.istage figcaption{font-size:12px;color:var(--ink-3);margin-top:7px;text-align:left}
+.ithumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.ithumb{padding:0;border:1px solid var(--line);background:var(--panel-2);border-radius:6px;
+  overflow:hidden;cursor:pointer;line-height:0}
+.ithumb img{width:74px;height:46px;object-fit:cover;display:block}
+.ithumb.on{border-color:var(--ink)}
+/* HTF / LTF 视觉分组（§九）：HTF — Why / LTF — When */
+.tf-strip{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);
+  margin:10px 0 2px;text-transform:uppercase;letter-spacing:.05em}
+.wchain{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:8px 0 2px}
+.wcell{flex:1 1 190px;min-width:170px;border:1px solid var(--line-2);border-radius:var(--radius-sm);
+  background:var(--panel);padding:8px 10px}
+.wcell.bare{background:transparent;border-style:dashed}
+.wcell-t{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:5px}
+.wcell-v{display:flex;flex-wrap:wrap;gap:5px;font-size:13px}
+.warw{align-self:center;color:var(--ink-3);padding:0 7px;font-size:13px}
+
+/* §十六 Trades 列表：只保留 7 列 */
+.thead7{display:grid;grid-template-columns:76px 104px 66px 1fr 128px 84px 96px;gap:12px;
+  padding:9px 14px;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);
+  border-bottom:1px solid var(--line);background:var(--panel-2)}
+.trow.cols7{grid-template-columns:76px 104px 66px 1fr 128px 84px 96px}
+.trow.cols7 .td.setup,.trow.cols7 .td.mode{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow.cols7 .td.mode,.trow.cols7 .td.q{font-size:12.5px;color:var(--ink-2)}
+.trow.cols7 .td.r{font-size:12.5px}
+
+/* §十二 Analytics：问题驱动 + 顶部选项 */
+.atabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.atab{border:1px solid var(--line);border-radius:999px;padding:4px 13px;font-size:13px;
+  color:var(--ink-2);background:var(--panel)}
+.atab:hover{border-color:#c9c8c4;color:var(--ink)}
+.atab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pickq{font-size:13.5px;color:var(--ink-2);padding:4px 0 6px}
+
+@media (max-width:900px){
+  .thead7{display:none}
+  .trow.cols7{grid-template-columns:54px 1fr 78px;row-gap:3px}
+  .trow.cols7 .td.setup{grid-column:1/3;grid-row:2;font-size:12px;color:var(--ink-3)}
+  .trow.cols7 .td.mode{grid-column:3;grid-row:2;font-size:12px}
+  .trow.cols7 .td.q{display:none}
+  .trow.cols7 .td.dir{display:none}
+  .focusline{grid-template-columns:1fr}
+  .frowline2{grid-template-columns:1.3fr 70px 78px}
+}

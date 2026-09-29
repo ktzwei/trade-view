@@ -19,17 +19,17 @@
     </span>
   </a>
   <nav class="nav" id="nav">
-    <a href="#/" data-nav="dashboard">Dashboard</a>
-    <a href="#/weeks" data-nav="weeks">Weeks</a>
+    <a href="#/" data-nav="overview">Overview</a>
     <a href="#/trades" data-nav="trades">Trades</a>
     <a href="#/analytics" data-nav="analytics">Analytics</a>
     <a href="#/rules" data-nav="rules">Rules</a>
   </nav>
   <div class="topbar-right">
     <div class="range" id="range">
-      <button data-range="week">This Week</button>
+      <button data-range="week" class="active">This Week</button>
+      <button data-range="last">Last Week</button>
       <button data-range="month">This Month</button>
-      <button data-range="all" class="active">All</button>
+      <button data-range="all">All</button>
     </div>
     <input id="search" class="search" type="search" placeholder="搜索 Protected Low / Front Run / ETH / MSB …">
     <button class="themebtn" id="theme-toggle" title="切换 Dark / Light（需求 §43）">◐ Dark</button>
