@@ -4,7 +4,7 @@
   "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
   "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
   "parsedAt": "2026-09-29T23:02:32+08:00",
-  "schemaVersion": "2.0",
+  "schemaVersion": "2.1",
   "vocab": {
    "version": "2.0",
    "htf": [
@@ -1445,10 +1445,17 @@
    "avgR": 0.72,
    "expectancy": 0.72,
    "profitFactor": 2.8,
-   "ruleComplianceRate": 0.76,
+   "ruleComplianceRate": null,
+   "ruleComplianceDecided": 0,
+   "ruleComplianceUnknown": 6,
+   "ruleComplianceCoverage": 0.0,
+   "goodWins": 0,
    "goodTradeRate": 0.0,
-   "goodTradeRateSample": 6,
-   "qrCounted": 6,
+   "qualityJudged": 3,
+   "qualityUnknown": 3,
+   "qualityCoverage": 0.5,
+   "goodTradeRateSample": 3,
+   "qrCounted": 3,
    "avgMAE": null,
    "avgMFE": null,
    "rExcluded": [
@@ -1504,7 +1511,12 @@
      "totalR": 7.21,
      "profitFactor": 3.4,
      "goodTradeRate": 0.0,
-     "complianceRate": 0.83,
+     "qualityJudged": 5,
+     "qualityUnknown": 5,
+     "qualityCoverage": 0.5,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": null
     },
     {
@@ -1530,7 +1542,12 @@
      "totalR": 3.61,
      "profitFactor": 2.8,
      "goodTradeRate": 0.0,
-     "complianceRate": 0.76,
+     "qualityJudged": 3,
+     "qualityUnknown": 3,
+     "qualityCoverage": 0.5,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": null
     },
     {
@@ -1557,7 +1574,12 @@
      "totalR": 3.61,
      "profitFactor": 2.8,
      "goodTradeRate": 0.0,
-     "complianceRate": 0.79,
+     "qualityJudged": 4,
+     "qualityUnknown": 3,
+     "qualityCoverage": 0.571,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": null
     }
    ],
@@ -1579,13 +1601,129 @@
      "totalR": null,
      "profitFactor": null,
      "goodTradeRate": null,
-     "complianceRate": 1.0,
+     "qualityJudged": 0,
+     "qualityUnknown": 0,
+     "qualityCoverage": null,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": null,
      "sampleNote": "样本不足"
     }
    ],
    "note": "HTF = 1D / 4H / 1H（Context / Bias / Liquidity / POI / 主要结构 / 目标）；LTF = 15min / 5min（Reaction / Sweep / Displacement / 结构变化 / Entry）。"
   },
   "dimensions": {
+   "reviewModel": {
+    "label": "复盘模型",
+    "kind": "single",
+    "rows": [
+     {
+      "key": "(未记录)",
+      "label": "(未记录)",
+      "count": 7,
+      "trades": [
+       "2026-09-13-ethusdt-long-01",
+       "2026-09-18-ethusdt-long-02",
+       "2026-09-15-qqqusdt-long-03",
+       "2026-09-21-xauusdt-long-01",
+       "undated-xauusdt-short-02",
+       "2026-09-28-hypeusdt-long-01",
+       "2026-09-28-btcusdt-long-挂单"
+      ],
+      "closed": 6,
+      "wins": 4,
+      "winRate": 0.667,
+      "rCounted": 5,
+      "netR": 3.61,
+      "avgR": 0.72,
+      "expectancy": 0.72,
+      "totalR": 3.61,
+      "profitFactor": 2.8,
+      "goodTradeRate": 0.0,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
+      "sampleNote": null
+     }
+    ]
+   },
+   "confirmationMode": {
+    "label": "计划确认方式",
+    "kind": "single",
+    "rows": [
+     {
+      "key": "(未记录)",
+      "label": "(未记录)",
+      "count": 7,
+      "trades": [
+       "2026-09-13-ethusdt-long-01",
+       "2026-09-18-ethusdt-long-02",
+       "2026-09-15-qqqusdt-long-03",
+       "2026-09-21-xauusdt-long-01",
+       "undated-xauusdt-short-02",
+       "2026-09-28-hypeusdt-long-01",
+       "2026-09-28-btcusdt-long-挂单"
+      ],
+      "closed": 6,
+      "wins": 4,
+      "winRate": 0.667,
+      "rCounted": 5,
+      "netR": 3.61,
+      "avgR": 0.72,
+      "expectancy": 0.72,
+      "totalR": 3.61,
+      "profitFactor": 2.8,
+      "goodTradeRate": 0.0,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
+      "sampleNote": null
+     }
+    ]
+   },
+   "orderType": {
+    "label": "实际下单方式",
+    "kind": "single",
+    "rows": [
+     {
+      "key": "(未记录)",
+      "label": "(未记录)",
+      "count": 7,
+      "trades": [
+       "2026-09-13-ethusdt-long-01",
+       "2026-09-18-ethusdt-long-02",
+       "2026-09-15-qqqusdt-long-03",
+       "2026-09-21-xauusdt-long-01",
+       "undated-xauusdt-short-02",
+       "2026-09-28-hypeusdt-long-01",
+       "2026-09-28-btcusdt-long-挂单"
+      ],
+      "closed": 6,
+      "wins": 4,
+      "winRate": 0.667,
+      "rCounted": 5,
+      "netR": 3.61,
+      "avgR": 0.72,
+      "expectancy": 0.72,
+      "totalR": 3.61,
+      "profitFactor": 2.8,
+      "goodTradeRate": 0.0,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
+      "sampleNote": null
+     }
+    ]
+   },
    "htfBias": {
     "label": "HTF Bias",
     "kind": "single",
@@ -1613,7 +1751,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -1645,7 +1788,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      },
      {
@@ -1671,7 +1819,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      },
      {
@@ -1697,7 +1850,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -1729,7 +1887,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -1761,7 +1924,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -1791,7 +1959,12 @@
       "totalR": 1.56,
       "profitFactor": 1.78,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.87,
+      "qualityJudged": 3,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.6,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -1811,8 +1984,13 @@
       "expectancy": 2.05,
       "totalR": 2.05,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 0.5,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -1832,7 +2010,12 @@
       "totalR": -1.0,
       "profitFactor": 0.0,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.67,
+      "qualityJudged": 1,
+      "qualityUnknown": 0,
+      "qualityCoverage": 1.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -1862,7 +2045,12 @@
       "totalR": 2.56,
       "profitFactor": 3.56,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.93,
+      "qualityJudged": 2,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -1883,7 +2071,12 @@
       "totalR": 1.05,
       "profitFactor": 2.05,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.33,
+      "qualityJudged": 1,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -1915,7 +2108,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -1945,7 +2143,12 @@
       "totalR": 2.56,
       "profitFactor": 3.56,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.93,
+      "qualityJudged": 2,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -1965,8 +2168,13 @@
       "expectancy": 1.78,
       "totalR": 3.56,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -1987,7 +2195,12 @@
       "totalR": 1.05,
       "profitFactor": 2.05,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.33,
+      "qualityJudged": 1,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2008,7 +2221,12 @@
       "totalR": 2.3,
       "profitFactor": "∞",
       "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "qualityJudged": 1,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2028,7 +2246,12 @@
       "totalR": null,
       "profitFactor": null,
       "goodTradeRate": null,
-      "complianceRate": 1.0,
+      "qualityJudged": 0,
+      "qualityUnknown": 0,
+      "qualityCoverage": null,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": null,
       "sampleNote": "样本不足"
      }
     ]
@@ -2056,7 +2279,12 @@
       "totalR": 2.31,
       "profitFactor": 3.31,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.56,
+      "qualityJudged": 1,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.333,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2079,7 +2307,12 @@
       "totalR": 1.3,
       "profitFactor": 2.3,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.92,
+      "qualityJudged": 2,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.667,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2110,7 +2343,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.72,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      },
      {
@@ -2130,7 +2368,12 @@
       "totalR": null,
       "profitFactor": null,
       "goodTradeRate": null,
-      "complianceRate": 1.0,
+      "qualityJudged": 0,
+      "qualityUnknown": 0,
+      "qualityCoverage": null,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": null,
       "sampleNote": "样本不足"
      }
     ]
@@ -2158,7 +2401,12 @@
       "totalR": 2.31,
       "profitFactor": 3.31,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.56,
+      "qualityJudged": 1,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.333,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2180,7 +2428,12 @@
       "totalR": 1.3,
       "profitFactor": 2.3,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.89,
+      "qualityJudged": 2,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.667,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2200,8 +2453,13 @@
       "expectancy": 2.3,
       "totalR": 2.3,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2222,7 +2480,12 @@
       "totalR": 2.3,
       "profitFactor": "∞",
       "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "qualityJudged": 1,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2241,8 +2504,13 @@
       "expectancy": 2.3,
       "totalR": 2.3,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2273,7 +2541,12 @@
       "totalR": 2.35,
       "profitFactor": 2.17,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.72,
+      "qualityJudged": 3,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.6,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2292,8 +2565,13 @@
       "expectancy": 1.26,
       "totalR": 1.26,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2324,7 +2602,12 @@
       "totalR": 4.61,
       "profitFactor": 5.61,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.78,
+      "qualityJudged": 2,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.4,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2344,7 +2627,12 @@
       "totalR": -1.0,
       "profitFactor": 0.0,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.67,
+      "qualityJudged": 1,
+      "qualityUnknown": 0,
+      "qualityCoverage": 1.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2376,7 +2664,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -2407,7 +2700,12 @@
       "totalR": 1.31,
       "profitFactor": 1.65,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.72,
+      "qualityJudged": 3,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.6,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2426,8 +2724,13 @@
       "expectancy": 2.3,
       "totalR": 2.3,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2459,7 +2762,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -2487,7 +2795,12 @@
       "totalR": 4.35,
       "profitFactor": "∞",
       "goodTradeRate": 0.0,
-      "complianceRate": 0.67,
+      "qualityJudged": 1,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.333,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2509,7 +2822,12 @@
       "totalR": 0.26,
       "profitFactor": 1.26,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.89,
+      "qualityJudged": 1,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2528,8 +2846,13 @@
       "expectancy": 1.26,
       "totalR": 1.26,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2549,7 +2872,12 @@
       "totalR": -1.0,
       "profitFactor": 0.0,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.67,
+      "qualityJudged": 1,
+      "qualityUnknown": 0,
+      "qualityCoverage": 1.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2580,7 +2908,12 @@
       "totalR": 4.61,
       "profitFactor": 5.61,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.78,
+      "qualityJudged": 2,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.4,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2600,7 +2933,12 @@
       "totalR": -1.0,
       "profitFactor": 0.0,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.67,
+      "qualityJudged": 1,
+      "qualityUnknown": 0,
+      "qualityCoverage": 1.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2632,7 +2970,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -2660,7 +3003,12 @@
       "totalR": 2.31,
       "profitFactor": 3.31,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.56,
+      "qualityJudged": 1,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.333,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2683,7 +3031,12 @@
       "totalR": 1.3,
       "profitFactor": 2.3,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.92,
+      "qualityJudged": 2,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.667,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2715,7 +3068,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -2746,7 +3104,12 @@
       "totalR": 1.56,
       "profitFactor": 1.78,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.89,
+      "qualityJudged": 3,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.6,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2765,8 +3128,13 @@
       "expectancy": 2.3,
       "totalR": 2.3,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2785,8 +3153,13 @@
       "expectancy": 2.05,
       "totalR": 2.05,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 0.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2805,8 +3178,13 @@
       "expectancy": 1.26,
       "totalR": 1.26,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2827,7 +3205,12 @@
       "totalR": -1.0,
       "profitFactor": 0.0,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.83,
+      "qualityJudged": 1,
+      "qualityUnknown": 0,
+      "qualityCoverage": 1.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2859,7 +3242,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -2888,7 +3276,12 @@
       "totalR": 2.35,
       "profitFactor": 2.17,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.58,
+      "qualityJudged": 2,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2908,8 +3301,13 @@
       "expectancy": 1.26,
       "totalR": 1.26,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2929,7 +3327,12 @@
       "totalR": null,
       "profitFactor": null,
       "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "qualityJudged": 1,
+      "qualityUnknown": 0,
+      "qualityCoverage": 1.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -2959,7 +3362,12 @@
       "totalR": 2.31,
       "profitFactor": 3.31,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.73,
+      "qualityJudged": 2,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2980,7 +3388,12 @@
       "totalR": 1.3,
       "profitFactor": 2.3,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.83,
+      "qualityJudged": 1,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -2999,8 +3412,13 @@
       "expectancy": 2.3,
       "totalR": 2.3,
       "profitFactor": "∞",
-      "goodTradeRate": 0.0,
-      "complianceRate": 1.0,
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -3020,7 +3438,12 @@
       "totalR": -1.0,
       "profitFactor": 0.0,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.67,
+      "qualityJudged": 1,
+      "qualityUnknown": 0,
+      "qualityCoverage": 1.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -3052,7 +3475,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -3084,7 +3512,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -3116,7 +3549,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -3148,7 +3586,12 @@
       "totalR": 3.61,
       "profitFactor": 2.8,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.76,
+      "qualityJudged": 3,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.5,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": null
      }
     ]
@@ -3176,7 +3619,12 @@
       "totalR": 2.31,
       "profitFactor": 3.31,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.56,
+      "qualityJudged": 1,
+      "qualityUnknown": 2,
+      "qualityCoverage": 0.333,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      },
      {
@@ -3199,7 +3647,12 @@
       "totalR": 1.3,
       "profitFactor": 2.3,
       "goodTradeRate": 0.0,
-      "complianceRate": 0.92,
+      "qualityJudged": 2,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.667,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
      }
     ]
@@ -3225,13 +3678,21 @@
       "totalR": null,
       "profitFactor": null,
       "goodTradeRate": null,
-      "complianceRate": 1.0,
+      "qualityJudged": 0,
+      "qualityUnknown": 0,
+      "qualityCoverage": null,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": null,
       "sampleNote": "样本不足"
      }
     ]
    }
   },
   "dimensionOrder": [
+   "reviewModel",
+   "confirmationMode",
+   "orderType",
    "htfBias",
    "biasSourceTF",
    "marketCondition",
@@ -3285,7 +3746,12 @@
      "totalR": 2.31,
      "profitFactor": 3.31,
      "goodTradeRate": 0.0,
-     "complianceRate": 0.56,
+     "qualityJudged": 1,
+     "qualityUnknown": 2,
+     "qualityCoverage": 0.333,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": "样本不足"
     },
     {
@@ -3308,7 +3774,12 @@
      "totalR": 1.3,
      "profitFactor": 2.3,
      "goodTradeRate": 0.0,
-     "complianceRate": 0.92,
+     "qualityJudged": 2,
+     "qualityUnknown": 1,
+     "qualityCoverage": 0.667,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": "样本不足"
     }
    ]
@@ -3334,7 +3805,12 @@
      "totalR": null,
      "profitFactor": null,
      "goodTradeRate": null,
-     "complianceRate": 1.0,
+     "qualityJudged": 0,
+     "qualityUnknown": 0,
+     "qualityCoverage": null,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": null,
      "sampleNote": "样本不足"
     }
    ]
@@ -3366,7 +3842,12 @@
      "totalR": 3.61,
      "profitFactor": 2.8,
      "goodTradeRate": 0.0,
-     "complianceRate": 0.76,
+     "qualityJudged": 3,
+     "qualityUnknown": 3,
+     "qualityCoverage": 0.5,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": null
     }
    ]
@@ -3394,7 +3875,12 @@
      "totalR": 4.35,
      "profitFactor": "∞",
      "goodTradeRate": 0.0,
-     "complianceRate": 0.67,
+     "qualityJudged": 1,
+     "qualityUnknown": 2,
+     "qualityCoverage": 0.333,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": "样本不足"
     },
     {
@@ -3416,7 +3902,12 @@
      "totalR": 0.26,
      "profitFactor": 1.26,
      "goodTradeRate": 0.0,
-     "complianceRate": 0.89,
+     "qualityJudged": 1,
+     "qualityUnknown": 1,
+     "qualityCoverage": 0.5,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": "样本不足"
     },
     {
@@ -3435,8 +3926,13 @@
      "expectancy": 1.26,
      "totalR": 1.26,
      "profitFactor": "∞",
-     "goodTradeRate": 0.0,
-     "complianceRate": 1.0,
+     "goodTradeRate": null,
+     "qualityJudged": 0,
+     "qualityUnknown": 1,
+     "qualityCoverage": 0.0,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": "样本不足"
     },
     {
@@ -3456,57 +3952,23 @@
      "totalR": -1.0,
      "profitFactor": 0.0,
      "goodTradeRate": 0.0,
-     "complianceRate": 0.67,
+     "qualityJudged": 1,
+     "qualityUnknown": 0,
+     "qualityCoverage": 1.0,
+     "complianceRate": null,
+     "complianceJudged": 0,
+     "complianceCoverage": 0.0,
      "sampleNote": "样本不足"
     }
    ]
   },
   "mistakes": {
-   "rows": [
-    {
-     "tag": "No Sweep",
-     "category": "Setup",
-     "count": 2,
-     "confirmedCount": 0,
-     "unconfirmed": true,
-     "trades": [
-      "undated-xauusdt-short-02",
-      "2026-09-28-hypeusdt-long-01"
-     ],
-     "netR": 1.05,
-     "lostR": -1.0,
-     "rCounted": 2
-    },
-    {
-     "tag": "Internal MSB Only",
-     "category": "Setup",
-     "count": 1,
-     "confirmedCount": 0,
-     "unconfirmed": true,
-     "trades": [
-      "2026-09-21-xauusdt-long-01"
-     ],
-     "netR": -1.0,
-     "lostR": -1.0,
-     "rCounted": 1
-    }
-   ],
-   "mostCommon": "No Sweep",
-   "costliest": {
-    "tag": "No Sweep",
-    "category": "Setup",
-    "count": 2,
-    "confirmedCount": 0,
-    "unconfirmed": true,
-    "trades": [
-     "undated-xauusdt-short-02",
-     "2026-09-28-hypeusdt-long-01"
-    ],
-    "netR": 1.05,
-    "lostR": -1.0,
-    "rCounted": 2
-   },
-   "totalLostR": -2.0
+   "rows": [],
+   "mostCommon": null,
+   "costliest": null,
+   "totalLostR": 0,
+   "lossTradeCount": 0,
+   "note": "各标签显示相关交易亏损，同笔交易可出现在多行；合计按交易去重，不代表因果归因。"
   },
   "maeMfe": {
    "recorded": 0,
@@ -3523,6 +3985,71 @@
    "sampleNote": "样本不足"
   },
   "numeric": [
+   {
+    "key": "plannedEntry",
+    "label": "计划 Entry",
+    "unit": "价格",
+    "group": "Trade Plan",
+    "note": null,
+    "recorded": 0,
+    "total": 7,
+    "avg": null,
+    "min": null,
+    "max": null,
+    "rows": []
+   },
+   {
+    "key": "plannedSL",
+    "label": "计划 SL",
+    "unit": "价格",
+    "group": "Trade Plan",
+    "note": null,
+    "recorded": 0,
+    "total": 7,
+    "avg": null,
+    "min": null,
+    "max": null,
+    "rows": []
+   },
+   {
+    "key": "plannedTP",
+    "label": "计划 TP",
+    "unit": "价格",
+    "group": "Trade Plan",
+    "note": null,
+    "recorded": 0,
+    "total": 7,
+    "avg": null,
+    "min": null,
+    "max": null,
+    "rows": []
+   },
+   {
+    "key": "plannedRR",
+    "label": "计划 RR",
+    "unit": "R",
+    "group": "Trade Plan",
+    "note": null,
+    "recorded": 0,
+    "total": 7,
+    "avg": null,
+    "min": null,
+    "max": null,
+    "rows": []
+   },
+   {
+    "key": "minRRThreshold",
+    "label": "交易前最低 RR",
+    "unit": "R",
+    "group": "Trade Plan",
+    "note": "由你的模型约定，不预设阈值。未记录时 RR 是否合格保持未知。",
+    "recorded": 0,
+    "total": 7,
+    "avg": null,
+    "min": null,
+    "max": null,
+    "rows": []
+   },
    {
     "key": "protectedPrice",
     "label": "Protected Price（受保护结构价格）",
@@ -3640,16 +4167,22 @@
     },
     {
      "value": "(无法判定)",
-     "count": 0,
-     "netR": null,
-     "rCounted": 0,
-     "trades": []
+     "count": 3,
+     "netR": 5.61,
+     "rCounted": 3,
+     "trades": [
+      "2026-09-13-ethusdt-long-01",
+      "2026-09-18-ethusdt-long-02",
+      "undated-xauusdt-short-02"
+     ]
     }
    ],
    "closed": 6,
-   "judged": 6,
+   "judged": 3,
+   "unknown": 3,
+   "coverage": 0.5,
    "goodTradeRate": 0.0,
-   "note": "Good = 符合规则（哪怕亏钱）；Bad = 违规（哪怕赚钱）。目标是提高 Good Trade Rate，而不是只看胜率。"
+   "note": "质量率只使用已判定交易；未判定单列，并显示覆盖率。保本保留为未定级，不归为亏损。"
   },
   "strategyVsExecution": {
    "goodLoss": {
@@ -3669,7 +4202,7 @@
     "count": 0,
     "trades": []
    },
-   "note": "Good Loss = 按规则做但仍然止损（策略成本）；Bad Loss = 违规造成的亏损（执行问题，才是要改的）。"
+   "note": "按执行质量分组观察亏损；标签与亏损同时出现，不证明违规造成了全部损失，也不能用单笔亏损判定策略无效。"
   },
   "confidence": [],
   "weekly": [
@@ -3682,18 +4215,20 @@
     "closed": 3,
     "wins": 3,
     "losses": 0,
+    "be": 0,
     "winRate": 1.0,
     "netR": 3.56,
     "rCounted": 2,
     "avgR": 1.78,
     "expectancy": 1.78,
     "goodTradeRate": 0.0,
-    "ruleComplianceRate": 1.0,
-    "bestSetup": {
-     "setup": "Setup Flow：1H SSL Sweep → Strong Bullish Displacement → Structure Break → Deep Discount 1H POI → HTF Limit Long。Entry Reason：流动性事件 + 强位移 + 1H POI 共振。Entry Trigger：价格回撤进入预设 HTF POI；未等待额外 LTF Trigger。 1H SSL Sweep → Strong Bullish Displacement → Structure Break → Deep Discount 1H POI → HTF Limit Long",
-     "netR": 2.3,
-     "count": 1
-    },
+    "qualityJudged": 1,
+    "qualityUnknown": 2,
+    "qualityCoverage": 0.333,
+    "ruleComplianceRate": null,
+    "ruleComplianceDecided": 0,
+    "ruleComplianceUnknown": 3,
+    "bestSetup": null,
     "biggestMistake": null,
     "costliestMistake": null,
     "mistakeLostR": null,
@@ -3702,6 +4237,15 @@
     "didWell": null,
     "mainProblem": null,
     "nextFocus": null,
+    "behaviorGoal": null,
+    "behaviorReview": {
+     "goal": null,
+     "eligible": null,
+     "completed": null,
+     "completionRate": null,
+     "reflection": null,
+     "status": "没有上周改进行为"
+    },
     "notesSource": null,
     "summaryRaw": "周总结：3 笔已结束交易，3 胜 0 负；其中 2 笔可计算 R，合计 +3.56R；QQQ 因未记录准确 SL，不纳入 R 统计。",
     "tradeIds": [
@@ -3720,50 +4264,37 @@
     "closed": 2,
     "wins": 1,
     "losses": 1,
+    "be": 0,
     "winRate": 0.5,
     "netR": 1.05,
     "rCounted": 2,
     "avgR": 0.52,
     "expectancy": 0.52,
     "goodTradeRate": 0.0,
-    "ruleComplianceRate": 0.33,
-    "bestSetup": {
-     "setup": "Actual Entry 4334.9；Entry Reason、Entry Trigger、Entry Mode：未记录。已确认该持仓跨周并于 2026-09-28 完成",
-     "netR": 2.05,
-     "count": 1
-    },
-    "biggestMistake": {
-     "tag": "Internal MSB Only",
-     "category": "Setup",
-     "count": 1,
-     "confirmedCount": 0,
-     "unconfirmed": true,
-     "trades": [
-      "2026-09-21-xauusdt-long-01"
-     ],
-     "netR": -1.0,
-     "lostR": -1.0,
-     "rCounted": 1
-    },
-    "costliestMistake": {
-     "tag": "Internal MSB Only",
-     "category": "Setup",
-     "count": 1,
-     "confirmedCount": 0,
-     "unconfirmed": true,
-     "trades": [
-      "2026-09-21-xauusdt-long-01"
-     ],
-     "netR": -1.0,
-     "lostR": -1.0,
-     "rCounted": 1
-    },
-    "mistakeLostR": -1.0,
+    "qualityJudged": 1,
+    "qualityUnknown": 1,
+    "qualityCoverage": 0.5,
+    "ruleComplianceRate": null,
+    "ruleComplianceDecided": 0,
+    "ruleComplianceUnknown": 2,
+    "bestSetup": null,
+    "biggestMistake": null,
+    "costliestMistake": null,
+    "mistakeLostR": null,
     "avgMAE": null,
     "avgMFE": null,
     "didWell": null,
     "mainProblem": null,
     "nextFocus": null,
+    "behaviorGoal": null,
+    "behaviorReview": {
+     "goal": null,
+     "eligible": null,
+     "completed": null,
+     "completionRate": null,
+     "reflection": null,
+     "status": "没有上周改进行为"
+    },
     "notesSource": null,
     "summaryRaw": "周总结：2 笔已结束交易，1 胜 1 负；XAU Long 约 -1R，XAU Short 约 +2.05R；已知合计约 +1.05R。XAU Short 为本周未完成持仓，于 2026年9月28日完成。",
     "tradeIds": [
@@ -3780,51 +4311,38 @@
     "trades": 2,
     "closed": 1,
     "wins": 0,
-    "losses": 2,
+    "losses": 1,
+    "be": 0,
     "winRate": 0.0,
     "netR": -1.0,
     "rCounted": 1,
     "avgR": -1.0,
     "expectancy": -1.0,
     "goodTradeRate": 0.0,
-    "ruleComplianceRate": 0.83,
-    "bestSetup": {
-     "setup": "Setup Flow：EQL 附近 + 1H IMB → HTF Limit Long。Entry Reason：位置共振。Entry Trigger：价格触及预挂 Limit；为什么允许不等待 LTF Confirmation 的更强 HTF 条件未完整记录。 EQL 附近 + 1H IMB → HTF Limit Long",
-     "netR": -1.0,
-     "count": 1
-    },
-    "biggestMistake": {
-     "tag": "No Sweep",
-     "category": "Setup",
-     "count": 1,
-     "confirmedCount": 0,
-     "unconfirmed": true,
-     "trades": [
-      "2026-09-28-hypeusdt-long-01"
-     ],
-     "netR": -1.0,
-     "lostR": -1.0,
-     "rCounted": 1
-    },
-    "costliestMistake": {
-     "tag": "No Sweep",
-     "category": "Setup",
-     "count": 1,
-     "confirmedCount": 0,
-     "unconfirmed": true,
-     "trades": [
-      "2026-09-28-hypeusdt-long-01"
-     ],
-     "netR": -1.0,
-     "lostR": -1.0,
-     "rCounted": 1
-    },
-    "mistakeLostR": -1.0,
+    "qualityJudged": 1,
+    "qualityUnknown": 0,
+    "qualityCoverage": 1.0,
+    "ruleComplianceRate": null,
+    "ruleComplianceDecided": 0,
+    "ruleComplianceUnknown": 1,
+    "bestSetup": null,
+    "biggestMistake": null,
+    "costliestMistake": null,
+    "mistakeLostR": null,
     "avgMAE": null,
     "avgMFE": null,
     "didWell": null,
     "mainProblem": null,
     "nextFocus": null,
+    "behaviorGoal": null,
+    "behaviorReview": {
+     "goal": null,
+     "eligible": null,
+     "completed": null,
+     "completionRate": null,
+     "reflection": null,
+     "status": "没有上周改进行为"
+    },
     "notesSource": null,
     "summaryRaw": "周总结：1 笔已结束交易，0 胜 1 负，合计 -1R；另有 1 笔 BTC/USDT Long 挂单未成交，不计入结果统计。",
     "tradeIds": [
@@ -3836,6 +4354,9 @@
   ],
   "manualTrades": [],
   "emptyDimensions": [
+   "reviewModel",
+   "confirmationMode",
+   "orderType",
    "htfBias",
    "marketCondition",
    "htfStructureKind",
@@ -3853,15 +4374,15 @@
   "answers": [
    {
     "q": "我什么 Setup / 结构形态最赚钱？",
-    "a": "表现最好：MSB · Expectancy +0.13R（2 笔）；最常出现：No Sweep",
+    "a": "有效样本不足，暂不选择最佳结构形态；保留记录继续检查执行",
     "basis": "按 Structure Shift Type 分组，指标 = Expectancy（平均每笔 R）",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
    },
    {
-    "q": "Limit 与 LTF Confirmation 哪个更适合我？",
-    "a": "暂不下结论（两组里至少一组没有可计 R 的交易）；已有 Limit 4 笔",
-    "basis": "按 Entry Mode 分组比较 Expectancy / Win Rate",
+    "q": "按确认方式分组，执行与结果有什么区别？",
+    "a": "暂不比较（两组里至少一组没有可计 R 的交易）",
+    "basis": "按计划确认方式分组；实际 Limit / Market / Stop 单独记录",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
    },
@@ -3874,7 +4395,7 @@
    },
    {
     "q": "1D / 4H / 1H 哪种 HTF POI 对我最有效？",
-    "a": "记录到的 HTF POI 周期： 1H（4 笔，Expectancy +0.65R）；样本内最好 1H",
+    "a": "记录到的 HTF POI 周期： 1H（4 笔，Expectancy +0.65R）；样本不足，暂不排名",
     "basis": "按 HTF POI 周期分组；注意 1D POI 目前可能完全没有出现",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
@@ -3888,7 +4409,7 @@
    },
    {
     "q": "Sweep 是否真的提高交易结果？",
-    "a": "有 Sweep 更好：Expectancy +0.85R（3 笔） vs 无 Sweep +0.52R（2 笔）",
+    "a": "暂不下结论（一方样本只有 2 笔，样本不足）",
     "basis": "Sweep = Yes / Partial 与 No 两组比较；需求 §8 不强制每笔都有 Sweep",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
@@ -3908,29 +4429,29 @@
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
    },
    {
-    "q": "我的止损通常放得太紧还是太宽？",
-    "a": "MAE 没记录，暂时算不出来（需求 §19 要求按 R 记 MAE）",
-    "basis": "MAE = Maximum Adverse Excursion，最大不利波动",
+    "q": "止损设置有什么需要检查？",
+    "a": "MAE 未记录，暂时无法比较",
+    "basis": "单靠 MAE 不能判定止损过紧或过宽",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
    },
    {
-    "q": "我的止盈通常太早还是太晚？",
-    "a": "MFE 没记录，暂时算不出来",
-    "basis": "MFE = Maximum Favorable Excursion",
+    "q": "退出执行有什么需要检查？",
+    "a": "缺少同时记录 MFE 与实际 R 的盈利交易",
+    "basis": "只比较同一批交易；存在差距不等于应该拿到全部 MFE，样本 0",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
    },
    {
-    "q": "我的亏损主要来自策略本身还是执行错误？",
-    "a": "违规亏损（Bad Loss）2 笔 / -2.0R，合规亏损（Good Loss）0 笔 / 0R → 目前亏损里 100.0% 来自违规执行",
-    "basis": "Bad Loss = 违规+亏损（执行问题）；Good Loss = 按规则做但止损（策略成本）",
+    "q": "亏损交易的执行质量分别怎样？",
+    "a": "违规亏损（Bad Loss）2 笔 / -2.0R，合规亏损（Good Loss）0 笔 / 0R；已分类亏损中 100.0% 出现在有违规的交易里",
+    "basis": "这里只描述执行质量与亏损的分布，不能证明因果；未定级亏损单独列出",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
    },
    {
-    "q": "什么错误让我损失最多？",
-    "a": "最贵错误：No Sweep（Setup）· 2 笔 / -1.0R",
+    "q": "哪些已确认问题的相关交易亏损较多？",
+    "a": "还没有带 R 的错误标签记录",
     "basis": "Mistake Tags 统计（含「自动建议·待确认」标记）",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
@@ -3944,7 +4465,7 @@
    },
    {
     "q": "下一阶段应该重点改进哪 1–2 个问题？",
-    "a": "样本只有 5 笔可计 R（需求 §44 要求 20/50/100 笔），先稳定记录再下结论；最贵的错误是「No Sweep」，先盯它",
+    "a": "样本只有 5 笔可计 R（需求 §44 要求 20/50/100 笔），先稳定记录再下结论；Market Condition / Broken Structure 补记录，否则无法比较行情与结构",
     "basis": "综合上面各项的样本量与最贵错误",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
@@ -3959,28 +4480,52 @@
  "ruleBuckets": {
   "Must Have": [
    {
+    "id": "model",
+    "text": "交易前复盘模型",
+    "field": "reviewModel",
+    "mode": "model"
+   },
+   {
+    "id": "planTiming",
+    "text": "计划在入场前记录",
+    "field": "planTiming",
+    "mode": "plan_timing"
+   },
+   {
     "id": "htfBias",
-    "text": "明确 HTF Bias（方向判断）",
+    "text": "明确 HTF Bias 与交易方向",
     "field": "htfBias",
-    "mode": "set"
+    "mode": "bias"
    },
    {
     "id": "htfPOI",
     "text": "明确 HTF POI 与周期",
     "field": "htfPOIType",
-    "mode": "set"
+    "mode": "poi"
    },
    {
     "id": "invalidation",
     "text": "明确 Invalidation（失效依据）",
     "field": "invalidationLogic",
-    "mode": "set"
+    "mode": "invalidation"
    },
    {
     "id": "rr",
     "text": "RR 符合要求",
     "field": "plannedRR",
     "mode": "rr_gate"
+   },
+   {
+    "id": "confirmationPlan",
+    "text": "明确本模型的确认要求",
+    "field": "requiredConfirmations",
+    "mode": "confirmation_plan"
+   },
+   {
+    "id": "execution",
+    "text": "按交易前计划执行",
+    "field": "executionAdherence",
+    "mode": "adherence"
    }
   ],
   "Confirmation": [
@@ -3993,8 +4538,8 @@
    {
     "id": "displacement",
     "text": "Displacement",
-    "field": "displacementQuality",
-    "mode": "set"
+    "field": "displacement",
+    "mode": "in:Yes"
    },
    {
     "id": "structure",
@@ -4017,12 +4562,6 @@
     "mode": "not_in:FOMO"
    },
    {
-    "id": "midrange",
-    "text": "Mid Range Entry",
-    "field": "midRange",
-    "mode": "none"
-   },
-   {
     "id": "weakmsb",
     "text": "Weak MSB",
     "field": "mistakes",
@@ -4043,7 +4582,7 @@
   ]
  },
  "schema": {
-  "version": "2.0",
+  "version": "2.1",
   "allTF": [
    "1D",
    "4H",
@@ -4503,6 +5042,149 @@
     "unit": null
    },
    {
+    "key": "reviewModel",
+    "label": "复盘模型",
+    "options": [
+     "HTF POI",
+     "LTF Confirmation"
+    ],
+    "group": "Trade Plan",
+    "multi": false,
+    "tier": "core",
+    "note": "按交易前计划选择；未记录时不套用模型规则。",
+    "kind": "enum",
+    "unit": null
+   },
+   {
+    "key": "confirmationMode",
+    "label": "计划确认方式",
+    "options": [
+     "POI Touch",
+     "LTF Confirmation"
+    ],
+    "group": "Trade Plan",
+    "multi": false,
+    "tier": "core",
+    "note": null,
+    "kind": "enum",
+    "unit": null
+   },
+   {
+    "key": "requiredConfirmations",
+    "label": "计划必需确认条件",
+    "options": [
+     "None",
+     "Sweep",
+     "Displacement",
+     "Key Structure",
+     "Entry Trigger"
+    ],
+    "group": "Trade Plan",
+    "multi": true,
+    "tier": "core",
+    "note": "只检查交易前约定的条件。None 表示无需 LTF 确认，不能与其他选项并选。",
+    "kind": "enum",
+    "unit": null
+   },
+   {
+    "key": "orderType",
+    "label": "实际下单方式",
+    "options": [
+     "Limit",
+     "Market",
+     "Stop"
+    ],
+    "group": "Entry",
+    "multi": false,
+    "tier": "core",
+    "note": "与确认方式分别记录；等 LTF 确认后仍可用 Limit 或 Market 下单。",
+    "kind": "enum",
+    "unit": null
+   },
+   {
+    "key": "executionAdherence",
+    "label": "是否按计划执行",
+    "options": [
+     "Followed Plan",
+     "Deviation"
+    ],
+    "group": "Review",
+    "multi": false,
+    "tier": "core",
+    "note": "依据交易前计划与实际执行确认；没有证据时留空。",
+    "kind": "enum",
+    "unit": null
+   },
+   {
+    "key": "planTiming",
+    "label": "计划记录时点",
+    "options": [
+     "Before Entry",
+     "Retrospective"
+    ],
+    "group": "Trade Plan",
+    "multi": false,
+    "tier": "core",
+    "note": "旧交易补录请选择 Retrospective；补录计划不能证明交易前已制定。",
+    "kind": "enum",
+    "unit": null
+   },
+   {
+    "key": "plannedEntry",
+    "label": "计划 Entry",
+    "options": [],
+    "group": "Trade Plan",
+    "multi": false,
+    "tier": "core",
+    "note": null,
+    "kind": "number",
+    "unit": "价格"
+   },
+   {
+    "key": "plannedSL",
+    "label": "计划 SL",
+    "options": [],
+    "group": "Trade Plan",
+    "multi": false,
+    "tier": "core",
+    "note": null,
+    "kind": "number",
+    "unit": "价格"
+   },
+   {
+    "key": "plannedTP",
+    "label": "计划 TP",
+    "options": [],
+    "group": "Trade Plan",
+    "multi": false,
+    "tier": "core",
+    "note": null,
+    "kind": "number",
+    "unit": "价格"
+   },
+   {
+    "key": "plannedRR",
+    "label": "计划 RR",
+    "options": [],
+    "group": "Trade Plan",
+    "multi": false,
+    "tier": "core",
+    "note": null,
+    "kind": "number",
+    "unit": "R"
+   },
+   {
+    "key": "minRRThreshold",
+    "label": "交易前最低 RR",
+    "options": [],
+    "group": "Trade Plan",
+    "multi": false,
+    "tier": "core",
+    "note": "由你的模型约定，不预设阈值。未记录时 RR 是否合格保持未知。",
+    "kind": "number",
+    "unit": "R"
+   },
+   {
     "key": "entryMode",
     "label": "Entry Mode（入场方式）",
     "options": [
@@ -4831,6 +5513,60 @@
      "Hesitation"
     ],
     "note": "可多选（需求 §22）；用于统计「最常出现的错误」「损失最大的错误」。"
+   },
+   {
+    "key": "primaryMistake",
+    "label": "主要问题（人工确认）",
+    "options": [
+     "Wrong HTF Bias",
+     "Wrong POI",
+     "Weak POI",
+     "No Sweep",
+     "Bad Liquidity Read",
+     "No Displacement",
+     "Weak Displacement",
+     "Weak MSB",
+     "Internal MSB Only",
+     "Against Structure",
+     "Poor RR",
+     "Front Run",
+     "Early Entry",
+     "Late Entry",
+     "FOMO",
+     "Chase Price",
+     "Missed Confirmation",
+     "SL Too Tight",
+     "SL Too Wide",
+     "Oversized Position",
+     "Poor Risk Management",
+     "Early Exit",
+     "Late Exit",
+     "Move SL Too Early",
+     "Move SL to BE Too Early",
+     "Hold Too Long",
+     "Revenge Trade",
+     "Overconfidence",
+     "Fear",
+     "Impatience",
+     "Hesitation"
+    ],
+    "group": "Review",
+    "multi": false,
+    "tier": "core",
+    "note": "多个观察中选一个主要问题，不自动认定它造成了全部亏损。",
+    "kind": "enum",
+    "unit": null
+   },
+   {
+    "key": "causeChain",
+    "label": "问题经过",
+    "options": [],
+    "group": "Review",
+    "multi": false,
+    "tier": "core",
+    "note": "例如：未到计划 POI → 提前入场 → Entry / SL 结构层级不匹配。",
+    "kind": "text",
+    "unit": null
    }
   ],
   "mistakeGroups": {
@@ -5728,6 +6464,9 @@
      "multi": true
     }
    },
+   "planRecordedAt": null,
+   "planHistory": [],
+   "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 7,
     "auto": 4,
@@ -5737,40 +6476,88 @@
     "groups": {
      "Must Have": [
       {
-       "id": "htfBias",
-       "text": "明确 HTF Bias（方向判断）",
-       "field": "htfBias",
+       "id": "model",
+       "text": "交易前复盘模型",
+       "field": "reviewModel",
+       "mode": "model",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "planTiming",
+       "text": "计划在入场前记录",
+       "field": "planTiming",
+       "mode": "plan_timing",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "htfBias",
+       "text": "明确 HTF Bias 与交易方向",
+       "field": "htfBias",
+       "mode": "bias",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "htfPOI",
        "text": "明确 HTF POI 与周期",
        "field": "htfPOIType",
+       "mode": "poi",
        "status": "✓",
        "value": [
         "Breaker",
         "IMB",
         "OB"
        ],
-       "source": "doc:label"
+       "source": "doc:label",
+       "note": "缺少已确认记录"
       },
       {
        "id": "invalidation",
        "text": "明确 Invalidation（失效依据）",
        "field": "invalidationLogic",
+       "mode": "invalidation",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "rr",
        "text": "RR 符合要求",
        "field": "plannedRR",
+       "mode": "rr_gate",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "计划 RR 或交易前阈值未记录，不预设标准"
+      },
+      {
+       "id": "confirmationPlan",
+       "text": "明确本模型的确认要求",
+       "field": "requiredConfirmations",
+       "mode": "confirmation_plan",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "execution",
+       "text": "按交易前计划执行",
+       "field": "executionAdherence",
+       "mode": "adherence",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ],
      "Confirmation": [
@@ -5778,38 +6565,41 @@
        "id": "sweep",
        "text": "Liquidity Sweep",
        "field": "liquiditySweep",
-       "status": "✓",
-       "value": [
-        "Yes"
-       ],
-       "source": "doc:label"
+       "mode": "in:Yes,Partial",
+       "status": "未记录",
+       "value": "Yes",
+       "source": "doc:label",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "displacement",
        "text": "Displacement",
-       "field": "displacementQuality",
-       "status": "✓",
-       "value": "Strong",
-       "source": "doc:keyword"
+       "field": "displacement",
+       "mode": "in:Yes",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "structure",
        "text": "Key Structure Shift",
        "field": "brokenStructure",
+       "mode": "not_in:Internal LH,Internal HL",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "retrace",
        "text": "First Retracement / Entry Trigger",
        "field": "entryTriggerType",
-       "status": "✓",
-       "value": [
-        "Sweep",
-        "Displacement"
-       ],
-       "source": "doc:keyword"
+       "mode": "set",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       }
      ],
      "Avoid": [
@@ -5817,77 +6607,85 @@
        "id": "fomo",
        "text": "FOMO",
        "field": "mistakes",
-       "status": "未记录",
-       "value": [],
-       "source": null
-      },
-      {
-       "id": "midrange",
-       "text": "Mid Range Entry",
-       "field": "midRange",
+       "mode": "not_in:FOMO",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "weakmsb",
        "text": "Weak MSB",
        "field": "mistakes",
+       "mode": "not_in:Weak MSB,Internal MSB Only",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "poorrr",
        "text": "Poor RR",
        "field": "mistakes",
+       "mode": "not_in:Poor RR",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "chase",
        "text": "Chase Price",
        "field": "mistakes",
+       "mode": "not_in:Chase Price,Late Entry",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ]
     },
-    "yes": 4,
+    "model": null,
+    "yes": 1,
     "no": 0,
-    "unknown": 9,
-    "known": 4,
-    "total": 13,
+    "unknown": 15,
+    "notApplicable": 0,
+    "known": 1,
+    "total": 16,
     "passRate": 1.0,
+    "coverage": 0.062,
     "mustHaveMissing": [
-     "明确 HTF Bias（方向判断）",
+     "交易前复盘模型",
+     "计划在入场前记录",
+     "明确 HTF Bias 与交易方向",
      "明确 Invalidation（失效依据）",
-     "RR 符合要求"
+     "RR 符合要求",
+     "明确本模型的确认要求",
+     "按交易前计划执行"
     ],
     "confirmationMissing": [
-     "Key Structure Shift"
+     "Liquidity Sweep",
+     "Displacement",
+     "Key Structure Shift",
+     "First Retracement / Entry Trigger"
     ],
     "derivedCompliance": {
      "value": null,
-     "basis": "派生（清单）：核心项未记录（明确 HTF Bias（方向判断）、明确 Invalidation（失效依据）、RR 符合要求），不下结论",
+     "basis": "尚未判定：交易前复盘模型；计划在入场前记录；明确 HTF Bias 与交易方向；明确 Invalidation（失效依据）；RR 符合要求；明确本模型的确认要求；按交易前计划执行；Liquidity Sweep；Displacement；Key Structure Shift；First Retracement / Entry Trigger；FOMO；Weak MSB；Poor RR；Chase Price",
      "caveat": null
-    }
+    },
+    "compliance": null
    },
    "quality": {
-    "value": "未定级",
-    "source": "ai-review",
-    "basis": "分析层分类（旧字段）"
+    "value": null,
+    "source": "derived",
+    "basis": "证据不足，保留未判定"
    },
    "plannedVsActual": {
     "planned": {
-     "entry": 2483.71,
-     "sl": 2434.0,
-     "tp": [
-      "HTF Liquidity",
-      "LTF Internal Liquidity"
-     ],
+     "entry": null,
+     "sl": null,
+     "tp": null,
      "rr": null
     },
     "actual": {
@@ -5897,10 +6695,13 @@
      "exitReason": null
     },
     "deviations": [],
+    "timing": null,
+    "timingNote": "计划记录时点未知",
     "recorded": {
-     "plannedEntry": true,
-     "plannedSL": true,
+     "plannedEntry": false,
+     "plannedSL": false,
      "plannedRR": false,
+     "actualEntry": true,
      "actualR": true
     }
    },
@@ -6705,6 +7506,9 @@
      "multi": true
     }
    },
+   "planRecordedAt": null,
+   "planHistory": [],
+   "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 6,
     "auto": 2,
@@ -6714,41 +7518,87 @@
     "groups": {
      "Must Have": [
       {
-       "id": "htfBias",
-       "text": "明确 HTF Bias（方向判断）",
-       "field": "htfBias",
+       "id": "model",
+       "text": "交易前复盘模型",
+       "field": "reviewModel",
+       "mode": "model",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "planTiming",
+       "text": "计划在入场前记录",
+       "field": "planTiming",
+       "mode": "plan_timing",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "htfBias",
+       "text": "明确 HTF Bias 与交易方向",
+       "field": "htfBias",
+       "mode": "bias",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "htfPOI",
        "text": "明确 HTF POI 与周期",
        "field": "htfPOIType",
-       "status": "✓",
+       "mode": "poi",
+       "status": "未记录",
        "value": [
         "IMB",
         "OB"
        ],
-       "source": "doc:label"
+       "source": "doc:label",
+       "note": "缺少已确认记录"
       },
       {
        "id": "invalidation",
        "text": "明确 Invalidation（失效依据）",
        "field": "invalidationLogic",
-       "status": "✓",
-       "value": [
-        "Structure Invalidated"
-       ],
-       "source": "doc:keyword"
+       "mode": "invalidation",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "缺少已确认记录"
       },
       {
        "id": "rr",
        "text": "RR 符合要求",
        "field": "plannedRR",
-       "status": "—",
+       "mode": "rr_gate",
+       "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "计划 RR 或交易前阈值未记录，不预设标准"
+      },
+      {
+       "id": "confirmationPlan",
+       "text": "明确本模型的确认要求",
+       "field": "requiredConfirmations",
+       "mode": "confirmation_plan",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "execution",
+       "text": "按交易前计划执行",
+       "field": "executionAdherence",
+       "mode": "adherence",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ],
      "Confirmation": [
@@ -6756,38 +7606,41 @@
        "id": "sweep",
        "text": "Liquidity Sweep",
        "field": "liquiditySweep",
-       "status": "✓",
-       "value": [
-        "Yes"
-       ],
-       "source": "doc:label"
+       "mode": "in:Yes,Partial",
+       "status": "未记录",
+       "value": "Yes",
+       "source": "doc:label",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "displacement",
        "text": "Displacement",
-       "field": "displacementQuality",
+       "field": "displacement",
+       "mode": "in:Yes",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "structure",
        "text": "Key Structure Shift",
        "field": "brokenStructure",
+       "mode": "not_in:Internal LH,Internal HL",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "retrace",
        "text": "First Retracement / Entry Trigger",
        "field": "entryTriggerType",
-       "status": "✓",
-       "value": [
-        "Sweep",
-        "BOS"
-       ],
-       "source": "doc:keyword"
+       "mode": "set",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       }
      ],
      "Avoid": [
@@ -6795,73 +7648,86 @@
        "id": "fomo",
        "text": "FOMO",
        "field": "mistakes",
-       "status": "未记录",
-       "value": [],
-       "source": null
-      },
-      {
-       "id": "midrange",
-       "text": "Mid Range Entry",
-       "field": "midRange",
+       "mode": "not_in:FOMO",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "weakmsb",
        "text": "Weak MSB",
        "field": "mistakes",
+       "mode": "not_in:Weak MSB,Internal MSB Only",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "poorrr",
        "text": "Poor RR",
        "field": "mistakes",
+       "mode": "not_in:Poor RR",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "chase",
        "text": "Chase Price",
        "field": "mistakes",
+       "mode": "not_in:Chase Price,Late Entry",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ]
     },
-    "yes": 4,
+    "model": null,
+    "yes": 0,
     "no": 0,
-    "unknown": 9,
-    "known": 4,
-    "total": 13,
-    "passRate": 1.0,
+    "unknown": 16,
+    "notApplicable": 0,
+    "known": 0,
+    "total": 16,
+    "passRate": null,
+    "coverage": 0.0,
     "mustHaveMissing": [
-     "明确 HTF Bias（方向判断）"
+     "交易前复盘模型",
+     "计划在入场前记录",
+     "明确 HTF Bias 与交易方向",
+     "明确 HTF POI 与周期",
+     "明确 Invalidation（失效依据）",
+     "RR 符合要求",
+     "明确本模型的确认要求",
+     "按交易前计划执行"
     ],
     "confirmationMissing": [
+     "Liquidity Sweep",
      "Displacement",
-     "Key Structure Shift"
+     "Key Structure Shift",
+     "First Retracement / Entry Trigger"
     ],
     "derivedCompliance": {
      "value": null,
-     "basis": "派生（清单）：核心项未记录（明确 HTF Bias（方向判断）），不下结论",
+     "basis": "尚未判定：交易前复盘模型；计划在入场前记录；明确 HTF Bias 与交易方向；明确 HTF POI 与周期；明确 Invalidation（失效依据）；RR 符合要求；明确本模型的确认要求；按交易前计划执行；Liquidity Sweep；Displacement；Key Structure Shift；First Retracement / Entry Trigger；FOMO；Weak MSB；Poor RR；Chase Price",
      "caveat": null
-    }
+    },
+    "compliance": null
    },
    "quality": {
-    "value": "未定级",
-    "source": "ai-review",
-    "basis": "分析层分类（旧字段）"
+    "value": null,
+    "source": "derived",
+    "basis": "证据不足，保留未判定"
    },
    "plannedVsActual": {
     "planned": {
-     "entry": 2441.57,
-     "sl": 2414.0,
-     "tp": "Target Logic：上方 1H IMB + Dealing Range 50% EQ；Planned R 约 1.5R；Actual R +1.26R。50% EQ 仅作为潜在 Magnet，不作为“必到”条件。",
+     "entry": null,
+     "sl": null,
+     "tp": null,
      "rr": 1.5
     },
     "actual": {
@@ -6871,10 +7737,13 @@
      "exitReason": null
     },
     "deviations": [],
+    "timing": null,
+    "timingNote": "计划记录时点未知",
     "recorded": {
-     "plannedEntry": true,
-     "plannedSL": true,
+     "plannedEntry": false,
+     "plannedSL": false,
      "plannedRR": true,
+     "actualEntry": true,
      "actualR": true
     }
    },
@@ -7751,6 +8620,9 @@
      "multi": false
     }
    },
+   "planRecordedAt": null,
+   "planHistory": [],
+   "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 8,
     "auto": 4,
@@ -7760,41 +8632,87 @@
     "groups": {
      "Must Have": [
       {
-       "id": "htfBias",
-       "text": "明确 HTF Bias（方向判断）",
-       "field": "htfBias",
+       "id": "model",
+       "text": "交易前复盘模型",
+       "field": "reviewModel",
+       "mode": "model",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "planTiming",
+       "text": "计划在入场前记录",
+       "field": "planTiming",
+       "mode": "plan_timing",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "htfBias",
+       "text": "明确 HTF Bias 与交易方向",
+       "field": "htfBias",
+       "mode": "bias",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "htfPOI",
        "text": "明确 HTF POI 与周期",
        "field": "htfPOIType",
+       "mode": "poi",
        "status": "✓",
        "value": [
         "Breaker",
         "IMB"
        ],
-       "source": "doc:label"
+       "source": "doc:label",
+       "note": "缺少已确认记录"
       },
       {
        "id": "invalidation",
        "text": "明确 Invalidation（失效依据）",
        "field": "invalidationLogic",
-       "status": "✓",
-       "value": [
-        "Sweep Low"
-       ],
-       "source": "doc:keyword"
+       "mode": "invalidation",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "缺少已确认记录"
       },
       {
        "id": "rr",
        "text": "RR 符合要求",
        "field": "plannedRR",
+       "mode": "rr_gate",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "计划 RR 或交易前阈值未记录，不预设标准"
+      },
+      {
+       "id": "confirmationPlan",
+       "text": "明确本模型的确认要求",
+       "field": "requiredConfirmations",
+       "mode": "confirmation_plan",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "execution",
+       "text": "按交易前计划执行",
+       "field": "executionAdherence",
+       "mode": "adherence",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ],
      "Confirmation": [
@@ -7802,37 +8720,41 @@
        "id": "sweep",
        "text": "Liquidity Sweep",
        "field": "liquiditySweep",
-       "status": "✓",
-       "value": [
-        "Yes"
-       ],
-       "source": "doc:label"
+       "mode": "in:Yes,Partial",
+       "status": "未记录",
+       "value": "Yes",
+       "source": "doc:label",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "displacement",
        "text": "Displacement",
-       "field": "displacementQuality",
+       "field": "displacement",
+       "mode": "in:Yes",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "structure",
        "text": "Key Structure Shift",
        "field": "brokenStructure",
+       "mode": "not_in:Internal LH,Internal HL",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "retrace",
        "text": "First Retracement / Entry Trigger",
        "field": "entryTriggerType",
-       "status": "✓",
-       "value": [
-        "Sweep"
-       ],
-       "source": "doc:keyword"
+       "mode": "set",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       }
      ],
      "Avoid": [
@@ -7840,72 +8762,83 @@
        "id": "fomo",
        "text": "FOMO",
        "field": "mistakes",
-       "status": "未记录",
-       "value": [],
-       "source": null
-      },
-      {
-       "id": "midrange",
-       "text": "Mid Range Entry",
-       "field": "midRange",
+       "mode": "not_in:FOMO",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "weakmsb",
        "text": "Weak MSB",
        "field": "mistakes",
+       "mode": "not_in:Weak MSB,Internal MSB Only",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "poorrr",
        "text": "Poor RR",
        "field": "mistakes",
+       "mode": "not_in:Poor RR",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "chase",
        "text": "Chase Price",
        "field": "mistakes",
+       "mode": "not_in:Chase Price,Late Entry",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ]
     },
-    "yes": 4,
+    "model": null,
+    "yes": 1,
     "no": 0,
-    "unknown": 9,
-    "known": 4,
-    "total": 13,
+    "unknown": 15,
+    "notApplicable": 0,
+    "known": 1,
+    "total": 16,
     "passRate": 1.0,
+    "coverage": 0.062,
     "mustHaveMissing": [
-     "明确 HTF Bias（方向判断）",
-     "RR 符合要求"
+     "交易前复盘模型",
+     "计划在入场前记录",
+     "明确 HTF Bias 与交易方向",
+     "明确 Invalidation（失效依据）",
+     "RR 符合要求",
+     "明确本模型的确认要求",
+     "按交易前计划执行"
     ],
     "confirmationMissing": [
+     "Liquidity Sweep",
      "Displacement",
-     "Key Structure Shift"
+     "Key Structure Shift",
+     "First Retracement / Entry Trigger"
     ],
     "derivedCompliance": {
      "value": null,
-     "basis": "派生（清单）：核心项未记录（明确 HTF Bias（方向判断）、RR 符合要求），不下结论",
+     "basis": "尚未判定：交易前复盘模型；计划在入场前记录；明确 HTF Bias 与交易方向；明确 Invalidation（失效依据）；RR 符合要求；明确本模型的确认要求；按交易前计划执行；Liquidity Sweep；Displacement；Key Structure Shift；First Retracement / Entry Trigger；FOMO；Weak MSB；Poor RR；Chase Price",
      "caveat": null
-    }
+    },
+    "compliance": null
    },
    "quality": {
     "value": "Bad Win",
-    "source": "manual",
-    "basis": "手填"
+    "source": "doc:label",
+    "basis": "已确认的质量判定"
    },
    "plannedVsActual": {
     "planned": {
-     "entry": 707.02,
+     "entry": null,
      "sl": null,
      "tp": null,
      "rr": null
@@ -7921,17 +8854,16 @@
       "field": "entryMode",
       "planned": "HTF_LIMIT",
       "actual": "MARKET_ENTRY",
-      "note": "计划与实际入场方式不一致"
-     },
-     {
-      "field": "sl",
-      "note": "未记录准确 SL，无法比较计划与实际风险"
+      "note": "计划与实际入场方式不同"
      }
     ],
+    "timing": null,
+    "timingNote": "计划记录时点未知",
     "recorded": {
-     "plannedEntry": true,
+     "plannedEntry": false,
      "plannedSL": false,
      "plannedRR": false,
+     "actualEntry": true,
      "actualR": false
     }
    },
@@ -8705,16 +9637,11 @@
      "evidence": "[context] 已记录的是 15min 下方 SSL 被 Sweep，以及上方 4388–4390 BSL / Liquidity Pool 作为目标。 ⏐ [setup] Setup Flow：15min SSL Sweep → Bullish Reaction → Internal LH Break / Internal Bullish MSB → Liquidity-to-Liquidity Long → Target 4388–4390 BSL。 ⏐ [setup] 15min SSL Sweep → Bullish Reaction → Internal LH Break / Internal Bullish MSB → Liquidity-to-Liquidity Long → Target 4388–4390 BSL",
      "confirmed": false,
      "multi": false
-    },
-    "mistakes": {
-     "value": [
-      "Internal MSB Only"
-     ],
-     "source": "derived:checklist",
-     "confirmed": false,
-     "evidence": "清单：结构破坏只到 ['Internal LH']"
     }
    },
+   "planRecordedAt": null,
+   "planHistory": [],
+   "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 6,
     "auto": 3,
@@ -8724,36 +9651,84 @@
     "groups": {
      "Must Have": [
       {
-       "id": "htfBias",
-       "text": "明确 HTF Bias（方向判断）",
-       "field": "htfBias",
+       "id": "model",
+       "text": "交易前复盘模型",
+       "field": "reviewModel",
+       "mode": "model",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "planTiming",
+       "text": "计划在入场前记录",
+       "field": "planTiming",
+       "mode": "plan_timing",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "htfBias",
+       "text": "明确 HTF Bias 与交易方向",
+       "field": "htfBias",
+       "mode": "bias",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "htfPOI",
        "text": "明确 HTF POI 与周期",
        "field": "htfPOIType",
+       "mode": "poi",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "invalidation",
        "text": "明确 Invalidation（失效依据）",
        "field": "invalidationLogic",
+       "mode": "invalidation",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "rr",
        "text": "RR 符合要求",
        "field": "plannedRR",
+       "mode": "rr_gate",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "计划 RR 或交易前阈值未记录，不预设标准"
+      },
+      {
+       "id": "confirmationPlan",
+       "text": "明确本模型的确认要求",
+       "field": "requiredConfirmations",
+       "mode": "confirmation_plan",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "execution",
+       "text": "按交易前计划执行",
+       "field": "executionAdherence",
+       "mode": "adherence",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ],
      "Confirmation": [
@@ -8761,40 +9736,46 @@
        "id": "sweep",
        "text": "Liquidity Sweep",
        "field": "liquiditySweep",
-       "status": "✓",
-       "value": [
-        "Yes"
-       ],
-       "source": "doc:keyword"
+       "mode": "in:Yes,Partial",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "displacement",
        "text": "Displacement",
-       "field": "displacementQuality",
+       "field": "displacement",
+       "mode": "in:Yes",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "structure",
        "text": "Key Structure Shift",
        "field": "brokenStructure",
-       "status": "✕",
+       "mode": "not_in:Internal LH,Internal HL",
+       "status": "未记录",
        "value": [
         "Internal LH"
        ],
-       "source": "doc:label"
+       "source": "doc:label",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "retrace",
        "text": "First Retracement / Entry Trigger",
        "field": "entryTriggerType",
-       "status": "✓",
+       "mode": "set",
+       "status": "未记录",
        "value": [
         "MSB",
         "Sweep"
        ],
-       "source": "doc:label"
+       "source": "doc:label",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       }
      ],
      "Avoid": [
@@ -8802,78 +9783,86 @@
        "id": "fomo",
        "text": "FOMO",
        "field": "mistakes",
-       "status": "未记录",
-       "value": [],
-       "source": null
-      },
-      {
-       "id": "midrange",
-       "text": "Mid Range Entry",
-       "field": "midRange",
+       "mode": "not_in:FOMO",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "weakmsb",
        "text": "Weak MSB",
        "field": "mistakes",
+       "mode": "not_in:Weak MSB,Internal MSB Only",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "poorrr",
        "text": "Poor RR",
        "field": "mistakes",
+       "mode": "not_in:Poor RR",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "chase",
        "text": "Chase Price",
        "field": "mistakes",
+       "mode": "not_in:Chase Price,Late Entry",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ]
     },
-    "yes": 2,
-    "no": 1,
-    "unknown": 10,
-    "known": 3,
-    "total": 13,
-    "passRate": 0.667,
+    "model": null,
+    "yes": 0,
+    "no": 0,
+    "unknown": 16,
+    "notApplicable": 0,
+    "known": 0,
+    "total": 16,
+    "passRate": null,
+    "coverage": 0.0,
     "mustHaveMissing": [
-     "明确 HTF Bias（方向判断）",
+     "交易前复盘模型",
+     "计划在入场前记录",
+     "明确 HTF Bias 与交易方向",
      "明确 HTF POI 与周期",
      "明确 Invalidation（失效依据）",
-     "RR 符合要求"
+     "RR 符合要求",
+     "明确本模型的确认要求",
+     "按交易前计划执行"
     ],
     "confirmationMissing": [
-     "Displacement"
+     "Liquidity Sweep",
+     "Displacement",
+     "Key Structure Shift",
+     "First Retracement / Entry Trigger"
     ],
     "derivedCompliance": {
      "value": null,
-     "basis": "派生（清单）：核心项未记录（明确 HTF Bias（方向判断）、明确 HTF POI 与周期、明确 Invalidation（失效依据）、RR 符合要求），不下结论",
+     "basis": "尚未判定：交易前复盘模型；计划在入场前记录；明确 HTF Bias 与交易方向；明确 HTF POI 与周期；明确 Invalidation（失效依据）；RR 符合要求；明确本模型的确认要求；按交易前计划执行；Liquidity Sweep；Displacement；Key Structure Shift；First Retracement / Entry Trigger；FOMO；Weak MSB；Poor RR；Chase Price",
      "caveat": null
-    }
+    },
+    "compliance": null
    },
    "quality": {
     "value": "Bad Loss",
-    "source": "manual",
-    "basis": "手填"
+    "source": "doc:label",
+    "basis": "已确认的质量判定"
    },
    "plannedVsActual": {
     "planned": {
-     "entry": 4352.77,
-     "sl": 4305.2,
-     "tp": [
-      "External Liquidity",
-      "HTF Liquidity"
-     ],
+     "entry": null,
+     "sl": null,
+     "tp": null,
      "rr": null
     },
     "actual": {
@@ -8883,10 +9872,13 @@
      "exitReason": null
     },
     "deviations": [],
+    "timing": null,
+    "timingNote": "计划记录时点未知",
     "recorded": {
-     "plannedEntry": true,
-     "plannedSL": true,
+     "plannedEntry": false,
+     "plannedSL": false,
      "plannedRR": false,
+     "actualEntry": true,
      "actualR": true
     }
    },
@@ -8899,22 +9891,14 @@
     "LTF": []
    },
    "mistakeSuggestions": {
-    "suggestions": [
-     {
-      "tag": "Internal MSB Only",
-      "source": "derived:checklist",
-      "evidence": "清单：结构破坏只到 ['Internal LH']"
-     }
-    ],
+    "suggestions": [],
     "unmapped": [
      "Entry/SL 结构级别不匹配",
      "HTF Bias 未记录，无法判断是否逆势",
      "MAE/MFE 未记录"
     ]
    },
-   "mistakeTags": [
-    "Internal MSB Only"
-   ],
+   "mistakeTags": [],
    "maeMfe": {
     "mae": null,
     "mfe": null
@@ -9408,16 +10392,11 @@
      "evidence": "[_extra] 后续若找到原始分析图或计划，补齐 HTF Context、Liquidity/POI、LTF Confirmation、Entry Trigger、Invalidation 与 Planned Target 后，再判定 Good Win / Bad Win。",
      "confirmed": false,
      "multi": false
-    },
-    "mistakes": {
-     "value": [
-      "No Sweep"
-     ],
-     "source": "derived:checklist",
-     "confirmed": false,
-     "evidence": "清单：Liquidity Sweep = ['No']"
     }
    },
+   "planRecordedAt": null,
+   "planHistory": [],
+   "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 1,
     "auto": 2,
@@ -9427,36 +10406,84 @@
     "groups": {
      "Must Have": [
       {
-       "id": "htfBias",
-       "text": "明确 HTF Bias（方向判断）",
-       "field": "htfBias",
+       "id": "model",
+       "text": "交易前复盘模型",
+       "field": "reviewModel",
+       "mode": "model",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "planTiming",
+       "text": "计划在入场前记录",
+       "field": "planTiming",
+       "mode": "plan_timing",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "htfBias",
+       "text": "明确 HTF Bias 与交易方向",
+       "field": "htfBias",
+       "mode": "bias",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "htfPOI",
        "text": "明确 HTF POI 与周期",
        "field": "htfPOIType",
+       "mode": "poi",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "invalidation",
        "text": "明确 Invalidation（失效依据）",
        "field": "invalidationLogic",
+       "mode": "invalidation",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "rr",
        "text": "RR 符合要求",
        "field": "plannedRR",
+       "mode": "rr_gate",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "计划 RR 或交易前阈值未记录，不预设标准"
+      },
+      {
+       "id": "confirmationPlan",
+       "text": "明确本模型的确认要求",
+       "field": "requiredConfirmations",
+       "mode": "confirmation_plan",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "execution",
+       "text": "按交易前计划执行",
+       "field": "executionAdherence",
+       "mode": "adherence",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ],
      "Confirmation": [
@@ -9464,35 +10491,41 @@
        "id": "sweep",
        "text": "Liquidity Sweep",
        "field": "liquiditySweep",
-       "status": "✕",
-       "value": [
-        "No"
-       ],
-       "source": "doc:keyword"
+       "mode": "in:Yes,Partial",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "displacement",
        "text": "Displacement",
-       "field": "displacementQuality",
+       "field": "displacement",
+       "mode": "in:Yes",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "structure",
        "text": "Key Structure Shift",
        "field": "brokenStructure",
+       "mode": "not_in:Internal LH,Internal HL",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "retrace",
        "text": "First Retracement / Entry Trigger",
        "field": "entryTriggerType",
+       "mode": "set",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       }
      ],
      "Avoid": [
@@ -9500,77 +10533,86 @@
        "id": "fomo",
        "text": "FOMO",
        "field": "mistakes",
-       "status": "未记录",
-       "value": [],
-       "source": null
-      },
-      {
-       "id": "midrange",
-       "text": "Mid Range Entry",
-       "field": "midRange",
+       "mode": "not_in:FOMO",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "weakmsb",
        "text": "Weak MSB",
        "field": "mistakes",
+       "mode": "not_in:Weak MSB,Internal MSB Only",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "poorrr",
        "text": "Poor RR",
        "field": "mistakes",
+       "mode": "not_in:Poor RR",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "chase",
        "text": "Chase Price",
        "field": "mistakes",
+       "mode": "not_in:Chase Price,Late Entry",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ]
     },
+    "model": null,
     "yes": 0,
-    "no": 1,
-    "unknown": 12,
-    "known": 1,
-    "total": 13,
-    "passRate": 0.0,
+    "no": 0,
+    "unknown": 16,
+    "notApplicable": 0,
+    "known": 0,
+    "total": 16,
+    "passRate": null,
+    "coverage": 0.0,
     "mustHaveMissing": [
-     "明确 HTF Bias（方向判断）",
+     "交易前复盘模型",
+     "计划在入场前记录",
+     "明确 HTF Bias 与交易方向",
      "明确 HTF POI 与周期",
      "明确 Invalidation（失效依据）",
-     "RR 符合要求"
+     "RR 符合要求",
+     "明确本模型的确认要求",
+     "按交易前计划执行"
     ],
     "confirmationMissing": [
+     "Liquidity Sweep",
      "Displacement",
      "Key Structure Shift",
      "First Retracement / Entry Trigger"
     ],
     "derivedCompliance": {
      "value": null,
-     "basis": "派生（清单）：核心项未记录（明确 HTF Bias（方向判断）、明确 HTF POI 与周期、明确 Invalidation（失效依据）、RR 符合要求），不下结论",
+     "basis": "尚未判定：交易前复盘模型；计划在入场前记录；明确 HTF Bias 与交易方向；明确 HTF POI 与周期；明确 Invalidation（失效依据）；RR 符合要求；明确本模型的确认要求；按交易前计划执行；Liquidity Sweep；Displacement；Key Structure Shift；First Retracement / Entry Trigger；FOMO；Weak MSB；Poor RR；Chase Price",
      "caveat": null
-    }
+    },
+    "compliance": null
    },
    "quality": {
-    "value": "未定级",
-    "source": "ai-review",
-    "basis": "分析层分类（旧字段）"
+    "value": null,
+    "source": "derived",
+    "basis": "证据不足，保留未判定"
    },
    "plannedVsActual": {
     "planned": {
-     "entry": 4334.9,
+     "entry": null,
      "sl": null,
-     "tp": "Target Logic、Planned TP、具体 Planned RR：未记录；只确认初始总风险金额 0.4 = 1R。当前无法判断是否追价、是否偏离 POI 或是否逆 HTF Bias。",
+     "tp": null,
      "rr": null
     },
     "actual": {
@@ -9579,16 +10621,14 @@
      "r": 2.05,
      "exitReason": null
     },
-    "deviations": [
-     {
-      "field": "sl",
-      "note": "未记录准确 SL，无法比较计划与实际风险"
-     }
-    ],
+    "deviations": [],
+    "timing": null,
+    "timingNote": "计划记录时点未知",
     "recorded": {
-     "plannedEntry": true,
+     "plannedEntry": false,
      "plannedSL": false,
      "plannedRR": false,
+     "actualEntry": true,
      "actualR": true
     }
    },
@@ -9601,13 +10641,7 @@
     "LTF": []
    },
    "mistakeSuggestions": {
-    "suggestions": [
-     {
-      "tag": "No Sweep",
-      "source": "derived:checklist",
-      "evidence": "清单：Liquidity Sweep = ['No']"
-     }
-    ],
+    "suggestions": [],
     "unmapped": [
      "Planned Target / Planned RR 未记录",
      "Invalidation 未记录（只有总风险金额）",
@@ -9615,9 +10649,7 @@
      "MAE/MFE 未记录"
     ]
    },
-   "mistakeTags": [
-    "No Sweep"
-   ],
+   "mistakeTags": [],
    "maeMfe": {
     "mae": null,
     "mfe": null
@@ -10366,16 +11398,11 @@
      "evidence": "[_extra] 优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。",
      "confirmed": false,
      "multi": true
-    },
-    "mistakes": {
-     "value": [
-      "No Sweep"
-     ],
-     "source": "derived:checklist",
-     "confirmed": false,
-     "evidence": "清单：Liquidity Sweep = ['No']"
     }
    },
+   "planRecordedAt": null,
+   "planHistory": [],
+   "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 6,
     "auto": 4,
@@ -10385,38 +11412,86 @@
     "groups": {
      "Must Have": [
       {
-       "id": "htfBias",
-       "text": "明确 HTF Bias（方向判断）",
-       "field": "htfBias",
+       "id": "model",
+       "text": "交易前复盘模型",
+       "field": "reviewModel",
+       "mode": "model",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "planTiming",
+       "text": "计划在入场前记录",
+       "field": "planTiming",
+       "mode": "plan_timing",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "htfBias",
+       "text": "明确 HTF Bias 与交易方向",
+       "field": "htfBias",
+       "mode": "bias",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "htfPOI",
        "text": "明确 HTF POI 与周期",
        "field": "htfPOIType",
+       "mode": "poi",
        "status": "✓",
        "value": [
         "IMB"
        ],
-       "source": "doc:label"
+       "source": "doc:label",
+       "note": "缺少已确认记录"
       },
       {
        "id": "invalidation",
        "text": "明确 Invalidation（失效依据）",
        "field": "invalidationLogic",
+       "mode": "invalidation",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "rr",
        "text": "RR 符合要求",
        "field": "plannedRR",
+       "mode": "rr_gate",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "计划 RR 或交易前阈值未记录，不预设标准"
+      },
+      {
+       "id": "confirmationPlan",
+       "text": "明确本模型的确认要求",
+       "field": "requiredConfirmations",
+       "mode": "confirmation_plan",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "execution",
+       "text": "按交易前计划执行",
+       "field": "executionAdherence",
+       "mode": "adherence",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ],
      "Confirmation": [
@@ -10424,37 +11499,41 @@
        "id": "sweep",
        "text": "Liquidity Sweep",
        "field": "liquiditySweep",
-       "status": "✕",
-       "value": [
-        "No"
-       ],
-       "source": "doc:keyword"
+       "mode": "in:Yes,Partial",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "displacement",
        "text": "Displacement",
-       "field": "displacementQuality",
+       "field": "displacement",
+       "mode": "in:Yes",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "structure",
        "text": "Key Structure Shift",
        "field": "brokenStructure",
+       "mode": "not_in:Internal LH,Internal HL",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "retrace",
        "text": "First Retracement / Entry Trigger",
        "field": "entryTriggerType",
-       "status": "✓",
-       "value": [
-        "Sweep"
-       ],
-       "source": "doc:keyword"
+       "mode": "set",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       }
      ],
      "Avoid": [
@@ -10462,74 +11541,84 @@
        "id": "fomo",
        "text": "FOMO",
        "field": "mistakes",
-       "status": "未记录",
-       "value": [],
-       "source": null
-      },
-      {
-       "id": "midrange",
-       "text": "Mid Range Entry",
-       "field": "midRange",
+       "mode": "not_in:FOMO",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "weakmsb",
        "text": "Weak MSB",
        "field": "mistakes",
+       "mode": "not_in:Weak MSB,Internal MSB Only",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "poorrr",
        "text": "Poor RR",
        "field": "mistakes",
+       "mode": "not_in:Poor RR",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "chase",
        "text": "Chase Price",
        "field": "mistakes",
+       "mode": "not_in:Chase Price,Late Entry",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ]
     },
-    "yes": 2,
-    "no": 1,
-    "unknown": 10,
-    "known": 3,
-    "total": 13,
-    "passRate": 0.667,
+    "model": null,
+    "yes": 1,
+    "no": 0,
+    "unknown": 15,
+    "notApplicable": 0,
+    "known": 1,
+    "total": 16,
+    "passRate": 1.0,
+    "coverage": 0.062,
     "mustHaveMissing": [
-     "明确 HTF Bias（方向判断）",
+     "交易前复盘模型",
+     "计划在入场前记录",
+     "明确 HTF Bias 与交易方向",
      "明确 Invalidation（失效依据）",
-     "RR 符合要求"
+     "RR 符合要求",
+     "明确本模型的确认要求",
+     "按交易前计划执行"
     ],
     "confirmationMissing": [
+     "Liquidity Sweep",
      "Displacement",
-     "Key Structure Shift"
+     "Key Structure Shift",
+     "First Retracement / Entry Trigger"
     ],
     "derivedCompliance": {
      "value": null,
-     "basis": "派生（清单）：核心项未记录（明确 HTF Bias（方向判断）、明确 Invalidation（失效依据）、RR 符合要求），不下结论",
+     "basis": "尚未判定：交易前复盘模型；计划在入场前记录；明确 HTF Bias 与交易方向；明确 Invalidation（失效依据）；RR 符合要求；明确本模型的确认要求；按交易前计划执行；Liquidity Sweep；Displacement；Key Structure Shift；First Retracement / Entry Trigger；FOMO；Weak MSB；Poor RR；Chase Price",
      "caveat": null
-    }
+    },
+    "compliance": null
    },
    "quality": {
     "value": "Bad Loss",
-    "source": "manual",
-    "basis": "手填"
+    "source": "doc:label",
+    "basis": "已确认的质量判定"
    },
    "plannedVsActual": {
     "planned": {
-     "entry": 89.582,
-     "sl": 88.322,
+     "entry": null,
+     "sl": null,
      "tp": null,
      "rr": null
     },
@@ -10540,10 +11629,13 @@
      "exitReason": null
     },
     "deviations": [],
+    "timing": null,
+    "timingNote": "计划记录时点未知",
     "recorded": {
-     "plannedEntry": true,
-     "plannedSL": true,
+     "plannedEntry": false,
+     "plannedSL": false,
      "plannedRR": false,
+     "actualEntry": true,
      "actualR": true
     }
    },
@@ -10556,13 +11648,7 @@
     "LTF": []
    },
    "mistakeSuggestions": {
-    "suggestions": [
-     {
-      "tag": "No Sweep",
-      "source": "derived:checklist",
-      "evidence": "清单：Liquidity Sweep = ['No']"
-     }
-    ],
+    "suggestions": [],
     "unmapped": [
      "把 EQL 当偏支撑的入场依据",
      "HTF Limit 缺少免 LTF 确认的条件记录",
@@ -10570,9 +11656,7 @@
      "MAE/MFE 未记录"
     ]
    },
-   "mistakeTags": [
-    "No Sweep"
-   ],
+   "mistakeTags": [],
    "maeMfe": {
     "mae": null,
     "mfe": null
@@ -11323,6 +12407,9 @@
      "multi": true
     }
    },
+   "planRecordedAt": null,
+   "planHistory": [],
+   "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 3,
     "auto": 7,
@@ -11332,41 +12419,87 @@
     "groups": {
      "Must Have": [
       {
-       "id": "htfBias",
-       "text": "明确 HTF Bias（方向判断）",
-       "field": "htfBias",
+       "id": "model",
+       "text": "交易前复盘模型",
+       "field": "reviewModel",
+       "mode": "model",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "planTiming",
+       "text": "计划在入场前记录",
+       "field": "planTiming",
+       "mode": "plan_timing",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "htfBias",
+       "text": "明确 HTF Bias 与交易方向",
+       "field": "htfBias",
+       "mode": "bias",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "htfPOI",
        "text": "明确 HTF POI 与周期",
        "field": "htfPOIType",
+       "mode": "poi",
        "status": "✓",
        "value": [
         "Discount",
         "IMB"
        ],
-       "source": "doc:label"
+       "source": "doc:label",
+       "note": "缺少已确认记录"
       },
       {
        "id": "invalidation",
        "text": "明确 Invalidation（失效依据）",
        "field": "invalidationLogic",
-       "status": "✓",
-       "value": [
-        "Structure Invalidated"
-       ],
-       "source": "doc:keyword"
+       "mode": "invalidation",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "缺少已确认记录"
       },
       {
        "id": "rr",
        "text": "RR 符合要求",
        "field": "plannedRR",
+       "mode": "rr_gate",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "计划 RR 或交易前阈值未记录，不预设标准"
+      },
+      {
+       "id": "confirmationPlan",
+       "text": "明确本模型的确认要求",
+       "field": "requiredConfirmations",
+       "mode": "confirmation_plan",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
+      },
+      {
+       "id": "execution",
+       "text": "按交易前计划执行",
+       "field": "executionAdherence",
+       "mode": "adherence",
+       "status": "未记录",
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ],
      "Confirmation": [
@@ -11374,38 +12507,41 @@
        "id": "sweep",
        "text": "Liquidity Sweep",
        "field": "liquiditySweep",
-       "status": "✓",
-       "value": [
-        "Yes"
-       ],
-       "source": "doc:keyword"
+       "mode": "in:Yes,Partial",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "displacement",
        "text": "Displacement",
-       "field": "displacementQuality",
+       "field": "displacement",
+       "mode": "in:Yes",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "structure",
        "text": "Key Structure Shift",
        "field": "brokenStructure",
+       "mode": "not_in:Internal LH,Internal HL",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       },
       {
        "id": "retrace",
        "text": "First Retracement / Entry Trigger",
        "field": "entryTriggerType",
-       "status": "✓",
-       "value": [
-        "Sweep",
-        "MSB"
-       ],
-       "source": "doc:keyword"
+       "mode": "set",
+       "status": "未记录",
+       "value": null,
+       "source": "doc:keyword",
+       "note": "未确认交易前模型，不能判定该条件是否适用"
       }
      ],
      "Avoid": [
@@ -11413,87 +12549,101 @@
        "id": "fomo",
        "text": "FOMO",
        "field": "mistakes",
-       "status": "未记录",
-       "value": [],
-       "source": null
-      },
-      {
-       "id": "midrange",
-       "text": "Mid Range Entry",
-       "field": "midRange",
+       "mode": "not_in:FOMO",
        "status": "未记录",
        "value": null,
-       "source": null
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "weakmsb",
        "text": "Weak MSB",
        "field": "mistakes",
+       "mode": "not_in:Weak MSB,Internal MSB Only",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "poorrr",
        "text": "Poor RR",
        "field": "mistakes",
+       "mode": "not_in:Poor RR",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       },
       {
        "id": "chase",
        "text": "Chase Price",
        "field": "mistakes",
+       "mode": "not_in:Chase Price,Late Entry",
        "status": "未记录",
-       "value": [],
-       "source": null
+       "value": null,
+       "source": null,
+       "note": "缺少已确认记录"
       }
      ]
     },
-    "yes": 4,
+    "model": null,
+    "yes": 1,
     "no": 0,
-    "unknown": 9,
-    "known": 4,
-    "total": 13,
+    "unknown": 15,
+    "notApplicable": 0,
+    "known": 1,
+    "total": 16,
     "passRate": 1.0,
+    "coverage": 0.062,
     "mustHaveMissing": [
-     "明确 HTF Bias（方向判断）",
-     "RR 符合要求"
+     "交易前复盘模型",
+     "计划在入场前记录",
+     "明确 HTF Bias 与交易方向",
+     "明确 Invalidation（失效依据）",
+     "RR 符合要求",
+     "明确本模型的确认要求",
+     "按交易前计划执行"
     ],
     "confirmationMissing": [
+     "Liquidity Sweep",
      "Displacement",
-     "Key Structure Shift"
+     "Key Structure Shift",
+     "First Retracement / Entry Trigger"
     ],
     "derivedCompliance": {
      "value": null,
-     "basis": "派生（清单）：核心项未记录（明确 HTF Bias（方向判断）、RR 符合要求），不下结论",
+     "basis": "尚未判定：交易前复盘模型；计划在入场前记录；明确 HTF Bias 与交易方向；明确 Invalidation（失效依据）；RR 符合要求；明确本模型的确认要求；按交易前计划执行；Liquidity Sweep；Displacement；Key Structure Shift；First Retracement / Entry Trigger；FOMO；Weak MSB；Poor RR；Chase Price",
      "caveat": null
-    }
+    },
+    "compliance": null
    },
    "quality": {
-    "value": "未判定",
-    "source": "ai-review",
-    "basis": "分析层分类（旧字段）"
+    "value": null,
+    "source": "derived",
+    "basis": "未结束或保本，不套用胜负四象限"
    },
    "plannedVsActual": {
     "planned": {
-     "entry": 82953.7,
-     "sl": 82348.7,
-     "tp": "目标写在文字描述里，原文照抄：Planned Entry 约 82,953.7；SL 约 82,348.7；Risk 约 605.0 点；TP 约 84,924.1；Reward 约 1,970.4 点；Planned RR 约 3.26R。是否追价：No；是否偏离计划 POI：当前 No（尚未成交）。",
+     "entry": null,
+     "sl": null,
+     "tp": null,
      "rr": null
     },
     "actual": {
-     "entry": 82953.7,
+     "entry": null,
      "exit": null,
      "r": null,
      "exitReason": null
     },
     "deviations": [],
+    "timing": null,
+    "timingNote": "计划记录时点未知",
     "recorded": {
-     "plannedEntry": true,
-     "plannedSL": true,
+     "plannedEntry": false,
+     "plannedSL": false,
      "plannedRR": false,
+     "actualEntry": false,
      "actualR": false
     }
    },

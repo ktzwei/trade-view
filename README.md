@@ -1,5 +1,9 @@
 # 交易复盘系统 · Trading Review System
 
+当前复盘逻辑更新：按交易前模型与确认条件判定；未知、不适用单列；质量率使用已判定交易作分母。
+确认方式与下单方式分开记录，计划修改保留历史，周复盘可追踪一个改进行为。
+录入与判定口径见 [docs/review-logic.md](docs/review-logic.md)。
+
 > SMC Trading Review System —— 不是「把 Google Docs 转成网页」，而是以《交易复盘》为 Source of Truth 的
 > **Personal Trading Operating System**：`Context → Liquidity → Structure → POI → Entry Reason → Entry Trigger → Invalidation → Target → Risk → Execution → Result → Review → Rule`
 

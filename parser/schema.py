@@ -16,7 +16,7 @@
        来源标 doc:keyword；用户手动选的标 manual；文档直接写标签的标 doc:label。
 """
 
-SCHEMA_VERSION = "2.0"
+SCHEMA_VERSION = "2.1"
 
 HTF_TF = ["1D", "4H", "1H"]
 LTF_TF = ["15m", "5m"]
@@ -92,6 +92,24 @@ FIELDS = [
     F("protectedTF", "Protected Structure 周期", ALL_TF, "Structure", multi=True),
 
     # --- Entry (§14 / §15)
+    F("reviewModel", "复盘模型", ["HTF POI", "LTF Confirmation"], "Trade Plan",
+      note="按交易前计划选择；未记录时不套用模型规则。"),
+    F("confirmationMode", "计划确认方式", ["POI Touch", "LTF Confirmation"], "Trade Plan"),
+    F("requiredConfirmations", "计划必需确认条件",
+      ["None", "Sweep", "Displacement", "Key Structure", "Entry Trigger"], "Trade Plan", multi=True,
+      note="只检查交易前约定的条件。None 表示无需 LTF 确认，不能与其他选项并选。"),
+    F("orderType", "实际下单方式", ["Limit", "Market", "Stop"], "Entry",
+      note="与确认方式分别记录；等 LTF 确认后仍可用 Limit 或 Market 下单。"),
+    F("executionAdherence", "是否按计划执行", ["Followed Plan", "Deviation"], "Review",
+      note="依据交易前计划与实际执行确认；没有证据时留空。"),
+    F("planTiming", "计划记录时点", ["Before Entry", "Retrospective"], "Trade Plan",
+      note="旧交易补录请选择 Retrospective；补录计划不能证明交易前已制定。"),
+    F("plannedEntry", "计划 Entry", [], "Trade Plan", kind="number", unit="价格"),
+    F("plannedSL", "计划 SL", [], "Trade Plan", kind="number", unit="价格"),
+    F("plannedTP", "计划 TP", [], "Trade Plan", kind="number", unit="价格"),
+    F("plannedRR", "计划 RR", [], "Trade Plan", kind="number", unit="R"),
+    F("minRRThreshold", "交易前最低 RR", [], "Trade Plan", kind="number", unit="R",
+      note="由你的模型约定，不预设阈值。未记录时 RR 是否合格保持未知。"),
     F("entryMode", "Entry Mode（入场方式）", ["Limit", "LTF Confirmation", "Market"], "Entry"),
     F("limitStyle", "Limit 挂单方式",
       ["HTF POI Limit", "OB Limit", "FVG Limit", "50% FVG Limit"], "Entry"),
@@ -144,6 +162,23 @@ NUMERIC_FIELDS = [f["key"] for f in FIELDS if f["kind"] == "number"]
 
 FIELD_BY_KEY = {f["key"]: f for f in FIELDS}
 
+# 新版复盘计划的显式标签；只按标签提取，不从成交结果补出计划。
+REVIEW_LABELS = {
+    "review model": "reviewModel", "复盘模型": "reviewModel",
+    "confirmation mode": "confirmationMode", "确认方式": "confirmationMode",
+    "required confirmations": "requiredConfirmations", "必需确认条件": "requiredConfirmations",
+    "order type": "orderType", "下单方式": "orderType",
+    "plan timing": "planTiming", "计划记录时点": "planTiming",
+    "planned entry": "plannedEntry", "计划 entry": "plannedEntry",
+    "planned sl": "plannedSL", "计划 sl": "plannedSL",
+    "planned tp": "plannedTP", "计划 tp": "plannedTP",
+    "planned rr": "plannedRR", "计划 rr": "plannedRR",
+    "min rr": "minRRThreshold", "最低 rr": "minRRThreshold",
+    "execution adherence": "executionAdherence", "是否按计划执行": "executionAdherence",
+    "primary mistake": "primaryMistake", "主要问题标签": "primaryMistake",
+    "cause chain": "causeChain", "问题经过": "causeChain",
+}
+
 
 # ---------------------------------------------------------------- Mistake Tags (§22)
 MISTAKE_GROUPS = {
@@ -166,6 +201,12 @@ MISTAKE_CATEGORY = {tag: cat for cat, tags in MISTAKE_GROUPS.items() for tag in 
 FIELDS.append({"key": "mistakes", "label": "错误标签（Mistake Tags）", "group": "Review",
                "multi": True, "tier": "core", "options": MISTAKE_TAGS,
                "note": "可多选（需求 §22）；用于统计「最常出现的错误」「损失最大的错误」。"})
+FIELDS += [
+    F("primaryMistake", "主要问题（人工确认）", MISTAKE_TAGS, "Review",
+      note="多个观察中选一个主要问题，不自动认定它造成了全部亏损。"),
+    F("causeChain", "问题经过", [], "Review", kind="text",
+      note="例如：未到计划 POI → 提前入场 → Entry / SL 结构层级不匹配。"),
+]
 FIELD_BY_KEY = {f["key"]: f for f in FIELDS}
 
 
@@ -410,6 +451,15 @@ def validate_override(obj, path=""):
         if values is None:
             continue
         values = values if isinstance(values, list) else [values]
+        if spec and spec.get("kind") == "number":
+            import math
+            for v in values:
+                try:
+                    valid = not isinstance(v, bool) and math.isfinite(float(v))
+                except (ValueError, TypeError):
+                    valid = False
+                if not valid:
+                    errs.append(f"{path}.{key}: 必须是有限数值")
         allowed = None
         if spec:
             allowed = spec["options"]
@@ -420,6 +470,8 @@ def validate_override(obj, path=""):
                 errs.append(f"{path}.{key}: 非法取值 {v!r}，允许：{allowed}")
         if spec and not spec["multi"] and len(values) > 1:
             errs.append(f"{path}.{key}: 该字段只能有一个取值，收到 {len(values)} 个")
+        if key == "requiredConfirmations" and "None" in values and len(values) > 1:
+            errs.append(f"{path}.{key}: None 不能与其他确认条件并选")
     return errs
 
 
@@ -439,16 +491,21 @@ def vocab(buckets):
 # Must Have / Confirmation / Avoid —— 每一项都绑定一个「可判定的字段」，避免主观打分。
 RULE_BUCKETS = {
     "Must Have": [
-        {"id": "htfBias", "text": "明确 HTF Bias（方向判断）", "field": "htfBias", "mode": "set"},
-        {"id": "htfPOI", "text": "明确 HTF POI 与周期", "field": "htfPOIType", "mode": "set"},
+        {"id": "model", "text": "交易前复盘模型", "field": "reviewModel", "mode": "model"},
+        {"id": "planTiming", "text": "计划在入场前记录", "field": "planTiming", "mode": "plan_timing"},
+        {"id": "htfBias", "text": "明确 HTF Bias 与交易方向", "field": "htfBias", "mode": "bias"},
+        {"id": "htfPOI", "text": "明确 HTF POI 与周期", "field": "htfPOIType", "mode": "poi"},
         {"id": "invalidation", "text": "明确 Invalidation（失效依据）", "field": "invalidationLogic",
-         "mode": "set"},
+         "mode": "invalidation"},
         {"id": "rr", "text": "RR 符合要求", "field": "plannedRR", "mode": "rr_gate"},
+        {"id": "confirmationPlan", "text": "明确本模型的确认要求", "field": "requiredConfirmations",
+         "mode": "confirmation_plan"},
+        {"id": "execution", "text": "按交易前计划执行", "field": "executionAdherence", "mode": "adherence"},
     ],
     "Confirmation": [
         {"id": "sweep", "text": "Liquidity Sweep", "field": "liquiditySweep",
          "mode": "in:Yes,Partial"},
-        {"id": "displacement", "text": "Displacement", "field": "displacementQuality", "mode": "set"},
+        {"id": "displacement", "text": "Displacement", "field": "displacement", "mode": "in:Yes"},
         {"id": "structure", "text": "Key Structure Shift", "field": "brokenStructure",
          "mode": "not_in:Internal LH,Internal HL"},
         {"id": "retrace", "text": "First Retracement / Entry Trigger",
@@ -456,7 +513,6 @@ RULE_BUCKETS = {
     ],
     "Avoid": [
         {"id": "fomo", "text": "FOMO", "field": "mistakes", "mode": "not_in:FOMO"},
-        {"id": "midrange", "text": "Mid Range Entry", "field": "midRange", "mode": "none"},
         {"id": "weakmsb", "text": "Weak MSB", "field": "mistakes", "mode": "not_in:Weak MSB,Internal MSB Only"},
         {"id": "poorrr", "text": "Poor RR", "field": "mistakes", "mode": "not_in:Poor RR"},
         {"id": "chase", "text": "Chase Price", "field": "mistakes", "mode": "not_in:Chase Price,Late Entry"},

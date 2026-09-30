@@ -20,7 +20,7 @@ import sys
 import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from schema import FIELD_BY_KEY, MISTAKE_TAGS  # noqa: E402
+from schema import FIELD_BY_KEY, MISTAKE_TAGS, REVIEW_LABELS  # noqa: E402
 from rules import (RULES, META_SECTIONS, NEG_TOKENS, NO_RECORD_TOKENS, PLACEHOLDER_MARKERS,  # noqa: E402
                    ENTRY_MODE_RULES, PLAN_MARKERS, ACTUAL_MARKERS, FUTURE_MARKERS)
 
@@ -72,6 +72,23 @@ def parse_struct_value(field, body):
     """解析【字段】行正文 → (values, leftover, extra)。extra 带周期 / 价格 / 每周期结构。"""
     body = body or ""
     extra = {}
+    spec = FIELD_BY_KEY.get(field) or {}
+    if spec.get("kind") == "text":
+        if any(token in body for token in NO_RECORD_TOKENS):
+            return [], body, extra
+        return ([body.strip()] if body.strip() else []), "", extra
+    if spec.get("kind") == "number":
+        if any(token in body for token in NO_RECORD_TOKENS):
+            return [], body, extra
+        m = re.fullmatch(r"\s*([+-]?\d[\d,]*(?:\.\d+)?)\s*(?:R|r)?\s*", body)
+        value = num(m.group(1)) if m else None
+        return ([value] if value is not None else []), ("" if m else body), extra
+    if field in REVIEW_LABELS.values():
+        parts = re.split(r"\s*[/+、,，|]\s*", body.strip()) if spec.get("multi") else [body.strip()]
+        options = {v.lower(): v for v in spec.get("options", [])}
+        if any(p.lower() not in options for p in parts):
+            return [], body, extra
+        return list(dict.fromkeys(options[p.lower()] for p in parts)), "", extra
     if field.endswith("TF"):
         vals = parse_tf_tokens(body)
         return vals, ("" if vals else body), extra

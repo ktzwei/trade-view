@@ -20,25 +20,35 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import math
 import subprocess
 import sys
 import time
+from datetime import datetime, timedelta, timezone
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "parser"))
-from schema import ALL_TF, FIELDS, MISTAKE_GROUPS, SCHEMA_VERSION  # noqa: E402
+from schema import ALL_TF, FIELDS, MISTAKE_GROUPS, SCHEMA_VERSION, validate_override  # noqa: E402
 
 MANUAL = ROOT / "data" / "manual"
 TRADES = ROOT / "data" / "trades.json"
 WEEK_KEYS = [("didWell", "This Week I Did Well（哪里做得对）"),
              ("mainProblem", "Main Problem（本周主要问题）"),
-             ("nextFocus", "Next Week Focus（下周重点改进）")]
+             ("nextFocus", "Next Week Focus（下周重点改进）"),
+             ("focusTrigger", "下周行为 · 什么情况下触发"),
+             ("focusAction", "下周行为 · 具体做什么"),
+             ("focusMetric", "下周行为 · 用什么检查"),
+             ("focusEligible", "检查上周行为 · 本周适用机会数"),
+             ("focusCompleted", "检查上周行为 · 本周完成次数"),
+             ("focusResult", "检查上周行为 · 执行记录与发现")]
+WEEK_COUNTS = {"focusEligible", "focusCompleted"}
+PLAN_KEYS = {f["key"] for f in FIELDS if f["group"] == "Trade Plan"}
 # 数值字段（需求 §13 Protected Price、§19 MAE/MFE）+ 旧的手填数值项；从 schema 派生，避免两处维护
 NUMERIC = {f["key"] for f in FIELDS if f.get("kind") == "number"} | {
-    "plannedRR", "confidence", "plannedEntry", "plannedSL"}
+    "plannedRR", "plannedEntry", "plannedSL"}
 # 需求 §24：截图四类分类（写进 data/manual/_images.json，原图不动）
 IMG_KINDS = ["HTF Context", "LTF Entry", "After Trade", "Review Screen"]
 IMAGES = MANUAL / "_images.json"
@@ -58,14 +68,22 @@ def load_json(p, default):
 
 
 def save_manual(tid, fields, notes=""):
+    errors = validate_override(fields, tid)
+    if errors:
+        raise ValueError("；".join(errors))
     MANUAL.mkdir(parents=True, exist_ok=True)
     path = MANUAL / f"{tid}.json"
     cur = load_json(path, {})
+    old_plan = {k: v for k, v in (cur.get("fields") or {}).items() if k in PLAN_KEYS}
+    new_plan = {k: v for k, v in fields.items() if k in PLAN_KEYS}
+    if old_plan != new_plan:
+        if old_plan:
+            cur.setdefault("planHistory", []).append({"recordedAt": cur.get("planRecordedAt"), "fields": old_plan})
+        cur["planRecordedAt"] = datetime.now(timezone(timedelta(hours=8))).isoformat()
     cur["tradeId"] = tid
     cur["updatedAt"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
     cur["fields"] = fields
-    if notes:
-        cur["notes"] = notes
+    cur["notes"] = notes
     path.write_text(json.dumps(cur, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return path
 
@@ -76,8 +94,8 @@ def effective(t, key):
 
 
 def source_badge(src, confirmed):
-    if src == "manual" or confirmed:
-        return "手填/已确认"
+    if src == "manual":
+        return "手填·已确认"
     if src == "doc:label":
         return "文档记录"
     if src == "doc:keyword":
@@ -87,15 +105,17 @@ def source_badge(src, confirmed):
     return src or "文档没写"
 
 
-def rebuild():
+def rebuild(refresh_source=False):
     out = []
-    for script in ("parser/parse_gdoc.py", "parser/build.py"):
+    scripts = (["parser/parse_gdoc.py"] if refresh_source else []) + ["parser/build.py", "parser/selfcheck.py"]
+    for script in scripts:
         r = subprocess.run([sys.executable, script], cwd=str(ROOT), capture_output=True, text=True)
         out.append(f"$ python3 {script}\n{r.stdout.strip()}\n{r.stderr.strip()}")
         if r.returncode != 0:
             out.append(f"[失败] {script} 退出码 {r.returncode}")
-            break
-    return "\n".join(out)
+            return {"ok": False, "output": "\n".join(out)}
+    load_state()
+    return {"ok": True, "output": "\n".join(out)}
 
 
 # ---------------------------------------------------------------- HTML
@@ -165,7 +185,7 @@ def control(t, f):
         typ = "number" if key in NUMERIC else "text"
         step = " step='0.01'" if typ == "number" else ""
         ctl = f"<input type={typ}{step} name='{name}' value='{html.escape('' if val is None else str(val))}'>"
-    return (f"<div class=fld><div class=lbl><b>{html.escape(str(f['label']))}</b><br>"
+    return (f"<input type=hidden name='{name}' value=''>" if multi else "") + (f"<div class=fld><div class=lbl><b>{html.escape(str(f['label']))}</b><br>"
             f"{badge_for(src, conf)}<div class=ev>{html.escape(str(f.get('note') or ''))}</div></div>"
             f"<div>{ctl}<div class=ev>当前值：{html.escape(json.dumps(val, ensure_ascii=False))}"
             f"{(' ｜ 原标题：' + html.escape(str((t.get('fields', {}).get(key) or {}).get('evidence'))[:160])) if (t.get('fields', {}).get(key) or {}).get('evidence') else ''}"
@@ -197,6 +217,7 @@ def index_page(trades):
             "<a class=p href='/weeks' style='text-decoration:none'>周复盘（§32）</a> "
             "<form method=post action='/build' style='margin:0'>"
             "<button class=p>保存后重建站点数据</button></form>"
+            "<form method=post action='/refresh' style='margin:0'><button>同步源文档</button></form>"
             f"<span class=sub style='margin:0'>手动确认 {sum(1 for t in trades if (t.get('fieldStats') or {}).get('confirmed'))}"
             f" / {len(trades)} 笔</span></div></div>"
             "<table><tr><th>交易</th><th>日期</th><th>方向</th><th>实际 R</th><th>Trade Quality</th>"
@@ -232,8 +253,12 @@ def trade_page(t):
                          + str(len(adv)) + " 项，需求 §35）</summary>"
                          + "".join(control(t, f) for f in adv) + "</details>")
         parts.append("</div>")
+    manual = load_json(MANUAL / f"{t['id']}.json", {})
+    if manual.get("planRecordedAt"):
+        parts.append(f"<div class=card>最近计划记录：{html.escape(manual['planRecordedAt'])}"
+                     "<div class=ev>历史计划修改会保留；交易结束后的补录不作为交易前证据。</div></div>")
     parts.append("<div class=card><div class=lbl><b>备注（Notes）</b></div>"
-                 "<textarea name='notes' rows=3></textarea></div>")
+                 f"<textarea name='notes' rows=3>{html.escape(manual.get('notes') or '')}</textarea></div>")
     parts.append("<div class=card><button class=p type=submit>保存这一笔</button> "
                  "<span class=sub style='margin:0'>保存只写 data/manual/，不回写 Google Docs</span></div></form>")
     return page(t["id"], "".join(parts))
@@ -249,9 +274,18 @@ def weeks_page(weeks, manual_weeks):
                      f"{w.get('trades')} 笔 ｜ 净 R {html.escape(str(w.get('netR')))} ｜ "
                      f"Expectancy {html.escape(str(w.get('expectancy')))}</span></h2><div class=card>")
         for k, label in WEEK_KEYS:
+            if k in WEEK_COUNTS:
+                parts.append(f"<div class=fld><div class=lbl><b>{html.escape(label)}</b></div>"
+                             f"<input type=number min=0 step=1 name='w__{html.escape(w['label'])}__{k}' "
+                             f"value='{html.escape(str('' if m.get(k) is None else m[k]))}'></div>")
+                continue
             parts.append(f"<div class=fld><div class=lbl><b>{html.escape(label)}</b></div>"
                          f"<div><textarea name='w__{html.escape(w['label'])}__{k}' rows=2>"
                          f"{html.escape(str(m.get(k) or ''))}</textarea></div></div>")
+        previous = (w.get("behaviorReview") or {}).get("goal")
+        if previous:
+            parts.append(f"<div class=ev>上周约定：{html.escape(str(previous.get('action') or '未记录动作'))}"
+                         f" ｜ 检查：{html.escape(str(previous.get('metric') or '未记录'))}</div>")
         parts.append("</div>")
     parts.append("<div class=card><button class=p type=submit>保存周复盘</button></div></form>")
     return page("周复盘", "".join(parts))
@@ -309,6 +343,13 @@ class H(BaseHTTPRequestHandler):
     trades = []
     weeks = []
 
+    def rebuild_response(self, title, back="/", refresh_source=False):
+        result = rebuild(refresh_source)
+        heading = title + (" · 已更新" if result["ok"] else " · 数据更新失败")
+        body = (f"<div class=nav><a href='{back}'>← 返回</a></div><h1>{html.escape(heading)}</h1>"
+                f"<pre>{html.escape(result['output'])}</pre>")
+        return self.send_html(page(heading, body), 200 if result["ok"] else 500)
+
     def log_message(self, *a):        # 本地工具，别刷屏
         pass
 
@@ -356,11 +397,8 @@ class H(BaseHTTPRequestHandler):
         u = urllib.parse.urlparse(self.path)
         n = int(self.headers.get("Content-Length") or 0)
         qs = urllib.parse.parse_qs(self.rfile.read(n).decode("utf-8"), keep_blank_values=True)
-        if u.path == "/build":
-            out = rebuild()
-            self.send_html(page("重建", f"<div class=nav><a href='/'>← 返回</a></div><h1>重建结果</h1>"
-                                      f"<pre>{html.escape(out)}</pre>"))
-            return
+        if u.path in ("/build", "/refresh"):
+            return self.rebuild_response("更新结果", refresh_source=u.path == "/refresh")
         if u.path == "/images":
             data = load_json(IMAGES, {})
             for k, v in qs.items():
@@ -381,23 +419,34 @@ class H(BaseHTTPRequestHandler):
                                                  "caption": cap or None}
             MANUAL.mkdir(parents=True, exist_ok=True)
             IMAGES.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            out = rebuild()
-            return self.send_html(page("图片分类已保存",
-                                      f"<div class=nav><a href='/images'>← 返回截图分类</a></div>"
-                                      f"<h1>已保存</h1><pre>{html.escape(out)}</pre>"))
+            return self.rebuild_response("图片分类已保存", "/images")
         if u.path == "/weeks":
             data = load_json(MANUAL / "_weeks.json", {})
             for k, v in qs.items():
                 if not k.startswith("w__"):
                     continue
                 _, label, field = k.split("__", 2)
+                if field not in {k for k, _ in WEEK_KEYS}:
+                    continue
                 data.setdefault(label, {})[field] = (v[0] or "").strip() or None
+            for label, note in data.items():
+                counts = [note.get(k) for k in ("focusEligible", "focusCompleted")]
+                parsed = []
+                for value in counts:
+                    if value is None:
+                        parsed.append(None)
+                    elif not str(value).isdigit():
+                        return self.send_html(page("未保存", "<h1>次数必须是非负整数</h1>"), 400)
+                    else:
+                        parsed.append(int(value))
+                if all(v is not None for v in parsed) and parsed[1] > parsed[0]:
+                    return self.send_html(page("未保存", "<h1>完成次数不能超过适用机会数</h1>"), 400)
+                for key, value in zip(("focusEligible", "focusCompleted"), parsed):
+                    note[key] = value
             MANUAL.mkdir(parents=True, exist_ok=True)
             (MANUAL / "_weeks.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
                                                encoding="utf-8")
-            out = rebuild()
-            return self.send_html(page("周复盘已保存", f"<div class=nav><a href='/'>← 返回</a></div>"
-                                                       f"<h1>已保存并重建</h1><pre>{html.escape(out)}</pre>"))
+            return self.rebuild_response("周复盘已保存", "/weeks")
         if u.path.startswith("/t/"):
             tid = urllib.parse.unquote(u.path[3:])
             t = next((x for x in self.trades if x["id"] == tid), None)
@@ -407,6 +456,8 @@ class H(BaseHTTPRequestHandler):
             bad = []
             for f in FIELDS:
                 key, opts = f["key"], f.get("options") or []
+                if f"f__{key}" not in qs:
+                    continue
                 multi, conf = bool(f.get("multi")), bool(qs.get(f"c__{key}"))
                 cur, src, _ = effective(t, key)
                 if multi:
@@ -419,6 +470,8 @@ class H(BaseHTTPRequestHandler):
                     elif key in NUMERIC:
                         try:
                             newval = float(raw)
+                            if not math.isfinite(newval):
+                                raise ValueError("必须是有限数值")
                         except ValueError:
                             bad.append(f"{key}='{raw}' 不是数字，已忽略")
                             continue
@@ -429,19 +482,16 @@ class H(BaseHTTPRequestHandler):
                             continue
                 changed = newval != (cur if isinstance(cur, list) or newval is not None or cur is not None else None)
                 if newval in (None, [], ""):
-                    if key in fields:
+                    if key in fields or cur not in (None, [], ""):
                         fields[key] = None            # 显式清空 → 手填空值 = 删掉自动识别结果
                     continue
                 if changed or conf:
                     fields[key] = newval
-            fields = {k: v for k, v in fields.items() if v is not None or k in fields}
+            bad += validate_override(fields, tid)
+            if bad:
+                return self.send_html(page("未保存", f"<h1>请修正输入</h1><p>{html.escape('；'.join(bad))}</p>"), 400)
             save_manual(tid, fields, (qs.get("notes") or [""])[0].strip())
-            out = rebuild()
-            msg = ("<div class=card style='border-color:#d29922'>以下输入被忽略：" +
-                   html.escape("；".join(bad)) + "</div>") if bad else ""
-            return self.send_html(page("已保存", f"<div class=nav><a href='/'>← 返回</a></div>"
-                                                 f"<h1>已保存 {html.escape(tid)}</h1>{msg}"
-                                                 f"<pre>{html.escape(out)}</pre>"))
+            return self.rebuild_response(f"已保存 {tid}", f"/t/{urllib.parse.quote(tid)}")
         return self.send_html(page("404", "<h1>404</h1>"), 404)
 
 
@@ -459,21 +509,29 @@ def main():
     ap.add_argument("cmd", nargs="?", default="serve", choices=["serve", "build", "set"])
     ap.add_argument("args", nargs="*")
     ap.add_argument("--port", type=int, default=8787)
+    ap.add_argument("--refresh-source", action="store_true", help="重建前同步 Google Docs；默认只更新本地数据")
     a = ap.parse_args()
     if a.cmd == "build":
-        print(rebuild())
-        return
+        result = rebuild(a.refresh_source)
+        print(result["output"])
+        raise SystemExit(0 if result["ok"] else 1)
     if a.cmd == "set":
         if len(a.args) < 2:
             sys.exit("用法: tagedit.py set <tradeId> key=value [key=value ...]")
         tid, fields = a.args[0], dict((load_json(MANUAL / f"{a.args[0]}.json", {}) or {}).get("fields") or {})
         for kv in a.args[1:]:
             k, _, v = kv.partition("=")
-            fields[k] = None if v.strip() == "" else v.strip()
-        fields = {k: v for k, v in fields.items() if v is not None}
+            spec = next((f for f in FIELDS if f["key"] == k), {})
+            value = None if v.strip() == "" else v.strip()
+            if value is not None and spec.get("kind") == "number":
+                value = float(value)
+            elif value is not None and spec.get("multi"):
+                value = [x.strip() for x in value.split(",") if x.strip()]
+            fields[k] = value
         print("写入", save_manual(tid, fields))
-        print(rebuild())
-        return
+        result = rebuild(a.refresh_source)
+        print(result["output"])
+        raise SystemExit(0 if result["ok"] else 1)
     load_state()
     print(f"[tag] 手填层编辑器 → http://127.0.0.1:{a.port}  （{len(H.trades)} 笔交易）")
     HTTPServer(("127.0.0.1", a.port), H).serve_forever()

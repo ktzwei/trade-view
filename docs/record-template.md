@@ -13,6 +13,27 @@
 
 ## 0. 文档骨架（复制这段开始写 · 现行 ①–⑩ 格式）
 
+复盘逻辑更新后的最小计划附页（只填交易前实际已确定的内容；旧交易补录用 `Retrospective`）：
+
+```text
+【Review Model】HTF POI 或 LTF Confirmation
+【Confirmation Mode】POI Touch 或 LTF Confirmation
+【Required Confirmations】None 或 Sweep / Displacement / Key Structure / Entry Trigger
+【Plan Timing】Before Entry 或 Retrospective
+【Planned Entry】未记录
+【Planned SL】未记录
+【Planned TP】未记录
+【Planned RR】未记录
+【Min RR】未记录
+【Order Type】Limit / Market / Stop（实际成交后填写）
+【Execution Adherence】Followed Plan 或 Deviation（复盘时确认）
+【Primary Mistake】未记录
+【Cause Chain】未记录
+```
+
+枚举行请选择一个适用值；确认条件可多选，`None` 不能与其他条件并选。
+规则判定、质量分母和每周行为检查见 [复盘逻辑说明](review-logic.md)。
+
 > 这是文档现在的写法，解析器会把它拆成 30 个统计维度。**每行一个 `【①…】` 段，段内用「；」分隔子项，子项写成「Key：Value」。**
 
 ```
@@ -235,4 +256,3 @@ python3 tools/tagedit.py --port 8791
 ```
 
 写进 `data/manual/_images.json`，**原图与 Google Doc 一律不动**（§37）；页面上会自动按类别统计与打角标。三个字段全留空 = 撤销这张图的分类。
-

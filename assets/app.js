@@ -53,8 +53,9 @@
     const src = (f || {}).source || '';
     if (!src) return '';
     if (src === 'manual') return '<span class="srcb manual">手填·已确认</span>';
-    if (src.indexOf('doc') === 0) return '<span class="srcb doc">文档记录</span>';
-    if (src === 'derived') return '<span class="srcb">派生</span>';
+    if (src === 'doc:label') return '<span class="srcb doc">文档记录</span>';
+    if (src === 'ai-review') return '<span class="srcb auto">分析·带原文证据</span>';
+    if (src.indexOf('derived') === 0) return '<span class="srcb">派生·待确认</span>';
     return '<span class="srcb auto">自动识别·待确认</span>';
   };
   const cfield = (t, k) => {
@@ -75,7 +76,7 @@
     ['④ LTF Reaction 反应', ['reaction', 'reactionType', 'reactionTF'], '到达 POI 后市场有没有反应。'],
     ['⑤ Displacement 位移', ['displacementQuality', 'displacementTF'], '有没有位移、强不强、在哪一级周期。'],
     ['⑥ Structure Shift 结构改变', ['structureShiftType', 'structureShiftTF', 'brokenStructure', 'protectedStructure', 'protectedTF', 'protectedPrice', 'invalidationLogic', 'invalidationTF'], '要能区分 Internal Structure 与 Key / Protected Structure。'],
-    ['⑦ Entry 入场', ['entryMode', 'limitStyle', 'entryTriggerType', 'entryTriggerTF'], 'Limit 挂单 / LTF Confirmation / Market 三选一，统计口径靠它。'],
+    ['⑦ Entry 入场', ['reviewModel', 'confirmationMode', 'requiredConfirmations', 'orderType', 'entryMode', 'limitStyle', 'entryTriggerType', 'entryTriggerTF'], '确认方式与下单方式分别记录；Entry Mode 保留历史标签。'],
     ['⑧ Target 目标', ['targetLevel'], '目标按结构层级记录。'],
     ['⑨ Trade Management 持仓管理', ['managementStyle', 'movedSL', 'earlyExit', 'reducedPosition', 'addedPosition']],
     ['⑩ Result 结果', ['mae', 'mfe', 'confidence'], 'MAE / MFE 一律记成 R。'],
@@ -108,28 +109,20 @@
       <div class="chain">${steps}</div>${advHtml}</div>`;
   }
   function checklistBlock(t) {
-    const c = t.complianceV2 || {};
-    const g = c.groups || {};
-    const ic = { '✓': 'pass', '✕': 'fail', '未记录': 'unknown' };
-    const panel = (name, items, note) => `<div class="panel"><h3>${esc(name)} <span class="hint small">${items.filter((i) => i.status === '✓').length}/${items.length}</span></h3>
-      ${note ? `<div class="small muted" style="margin-bottom:6px">${esc(note)}</div>` : ''}
-      <div class="check">${items.map((i) => `<div class="row ${ic[i.status] || 'unknown'}"><span class="ic">${i.status === '✓' ? '✔' : i.status === '✕' ? '✘' : '?'}</span>
-        <div class="lab"><b>${esc(i.text)}</b> <span class="small muted">${esc(i.status === '✓' ? '已记录' : i.status === '✕' ? '违反' : '未记录')}</span>
-        <div class="ev">${i.value ? esc(Array.isArray(i.value) ? i.value.join(' / ') : i.value) : '文档里没有这条记录'}${i.source ? ` · ${esc(i.source)}` : ''}</div></div></div>`).join('')}</div></div>`;
-    const dev = c.compliance || null;
-    const decided = dev && dev !== '未记录';
-    const sug = t.mistakeSuggestions || { suggestions: [], unmapped: [] };
-    return `<div class="sec"><h2>Rule Checklist <span class="hint">§21 / §34 规则联动</span></h2>
-      <div class="callout ${dev === 'Major Violation' ? 'warn' : ''}">Rule Compliance：<b>${esc(dev || '未记录')}</b>
-        ${decided ? `<span class="small muted">（由下方 Must Have 未过的项派生，不是 AI 猜的）</span>`
-          : '<span class="small muted">（三桶清单里有「未记录」项，因此不下结论 —— 要么补记录，要么在编辑器里直接标 Rule Compliance）</span>'}</div>
-      <div class="three">
-        ${panel('Must Have 必须有', g['Must Have'] || [], '缺一项就不该进场。')}
-        ${panel('Confirmation 确认条件', g['Confirmation'] || [], '不是每笔都要全有，但要有记录才能统计。')}
-        ${panel('Avoid 避免', g['Avoid'] || [], '命中即执行问题。')}
-      </div>
-      ${(sug.suggestions || []).length || (sug.unmapped || []).length ? `<div class="callout small">错误标签<b>建议</b>（未确认，不会写进统计）：${(sug.suggestions || []).map((x) => `<span class="chip warn">${esc(x.tag || x)}</span>`).join(' ')}${(sug.unmapped || []).map((x) => `<span class="chip ghost">${esc(x)}</span>`).join(' ')}
-        <div class="muted" style="margin-top:4px">在本地编辑器确认后才计入 Mistake 统计（§37：AI 不改原始数据）。</div></div>` : ''}</div>`;
+    const c = t.complianceV2 || {}, groups = c.groups || {};
+    const statusClass = { '✓': 'pass', '✕': 'fail', '未记录': 'unknown', '不适用': 'na' };
+    const panel = (name, items) => `<div class="panel"><h3>${esc(name)}</h3><div class="check">
+      ${items.map((i) => `<div class="row ${statusClass[i.status] || 'unknown'}"><span class="ic">${i.status === "✓" ? "✓" : i.status === "✕" ? "✕" : i.status === "不适用" ? "—" : "?"}</span>
+        <div class="lab"><b>${esc(i.text)}</b> <span class="small muted">${esc(i.status === "✓" ? "符合" : i.status === "✕" ? "违反" : i.status)}</span><div class="ev">${esc(i.note || '')}</div>
+        <div class="ev">${i.value === null || i.value === undefined ? '未记录' : esc(Array.isArray(i.value) ? i.value.join(' / ') : i.value)}${i.source ? ` · ${esc(i.source)}` : ''}</div></div></div>`).join('')}
+      </div></div>`;
+    const dc = c.derivedCompliance || {}, sug = t.mistakeSuggestions || {};
+    return `<div class="sec"><h2>按模型检查执行</h2>
+      <div class="callout ${dc.value === 'Major Violation' ? 'warn' : ''}"><b>${esc(dc.value || '尚未判定')}</b>
+        <div class="small muted">模型：${esc(c.model || '未记录')} · 已判 ${c.known || 0} / 未知 ${c.unknown || 0} / 不适用 ${c.notApplicable || 0} · 判定覆盖 ${pct(c.coverage)}</div>
+        <div class="small muted">${esc(dc.basis || '')}</div></div>
+      <div class="three">${Object.entries(groups).map(([name, items]) => panel(name, items)).join('')}</div>
+      ${(sug.suggestions || []).length ? `<div class="callout small">待确认观察：${sug.suggestions.map((x) => `<span class="chip">${esc(x.tag)}</span>`).join(' ')}<div class="muted">人工确认后才进入错误统计。</div></div>` : ''}</div>`;
   }
   function plannedActualBlock(t) {
     const pa = t.plannedVsActual;
@@ -138,35 +131,28 @@
     const cell = (k, ok, v, cls) => `<div><div class="k">${k}${ok ? '' : ' <span class="srcb">未记录</span>'}</div><div class="v ${cls || ''}">${v}</div></div>`;
     const planTp = arr(pa.planned.tp).join(' / ') || null;
     const dev = arr(pa.deviations);
-    return `<div class="sec"><h2>Planned vs Actual <span class="hint">§16 策略问题 vs 执行问题</span></h2>
+    return `<div class="sec"><h2>Planned vs Actual <span class="hint">${esc(pa.timingNote || "计划时点未知")}</span></h2>
       <div class="panel"><div class="kv kv2">
         ${cell('计划 Entry', rec.plannedEntry, pa.planned.entry === null ? NR : num(pa.planned.entry))}
         ${cell('计划 SL', rec.plannedSL, pa.planned.sl === null ? NR : num(pa.planned.sl))}
         ${cell('计划 TP', !!planTp, planTp ? esc(planTp) : NR)}
         ${cell('计划 RR', rec.plannedRR, pa.planned.rr === null ? NR : esc(pa.planned.rr) + 'R')}
         ${cell('实际 Entry', rec.actualEntry !== false, pa.actual.entry === null ? NR : num(pa.actual.entry))}
-        ${cell('实际 Exit', pa.actual.exit === null, pa.actual.exit === null ? NR : num(pa.actual.exit))}
+        ${cell('实际 Exit', pa.actual.exit !== null, pa.actual.exit === null ? NR : num(pa.actual.exit))}
         ${cell('实际 R', rec.actualR, rTxt(pa.actual.r))}
       </div>
-      <div class="small muted" style="margin-top:8px">${dev.length ? `偏离：${dev.map((d) => `<span class="chip warn">${esc(d)}</span>`).join(' ')}` : '未检测到计划与实际的偏离（或计划值未记录）。'}</div></div></div>`;
+      <div class="small muted" style="margin-top:8px">${dev.length ? `偏离：${dev.map((d) => `<span class="chip warn">${esc(d.note || "")}${d.difference !== undefined ? ` · ${esc(d.difference)}` : ""}</span>`).join(' ')}` : '没有可比较的差异；缺失计划不代表执行一致。'}</div></div></div>`;
   }
   function maeMfeBlock(t) {
     const m = t.maeMfe || {};
     const MM2 = V2().maeMfe || {};
     const row = (k, v, note) => `<div><div class="k">${k}</div><div class="v">${v === null || v === undefined ? NR : (v > 0 ? '+' : '') + Number(v).toFixed(2) + 'R'}</div><div class="small muted">${note}</div></div>`;
     const r = t.actualR;
-    const read = (() => {
-      if (m.mae === null || m.mae === undefined) return '未记录 MAE，无法判断 SL 是否过紧。';
-      if (m.mae <= -0.8) return 'MAE 接近 −1R：SL 可能偏紧，容易被插针洗掉。';
-      if (m.mae >= -0.45) return 'MAE 离 SL 还有距离：SL 相对宽松。';
-      return 'MAE 在中间区间。';
-    })();
-    const read2 = (() => {
-      if (m.mfe === null || m.mfe === undefined) return '未记录 MFE，无法判断是否提前止盈。';
-      if (r !== null && m.mfe - r >= 0.8) return `MFE ${Number(m.mfe).toFixed(2)}R 明显高于实际 ${Number(r).toFixed(2)}R：止盈偏早。`;
-      if (r !== null && r > 0) return '实际 R 与 MFE 差距不大：出场时机基本合理。';
-      return '结果非盈利，MFE 只用于看是否浮盈回吐。';
-    })();
+    const read = m.mae === null || m.mae === undefined ? '未记录 MAE，无法比较浮亏与计划风险。'
+      : 'MAE 描述最大浮亏；需要结合交易前止损与失效依据检查。';
+    const read2 = m.mfe === null || m.mfe === undefined ? '未记录 MFE，无法比较最大浮盈与实际结果。'
+      : r === null || r === undefined ? '已记录 MFE，实际 R 未记录，暂不能比较。'
+      : `MFE 与实际 R 相差 ${Number(m.mfe - r).toFixed(2)}R；需要结合交易前退出规则回看。`;
     return `<div class="sec"><h2>MAE / MFE <span class="hint">§19 / §29 研究 SL 与止盈</span></h2>
       <div class="analytics-grid"><div class="panel"><div class="kv">
         ${row('MAE 最大浮亏', m.mae, 'Maximum Adverse Excursion —— 止损前最深浮亏')}
@@ -327,22 +313,26 @@
   /* ---------------- 指标（按当前时间范围现算；口径同 parser/stats_v2.py） ---------------- */
   function metrics(ts) {
     const closed = ts.filter((t) => ['win', 'loss', 'be'].includes(t.resultStatus));
-    const rk = ts.filter((t) => t.rIncluded && t.actualR !== null);
+    const rk = closed.filter((t) => t.rIncluded && t.actualR !== null && t.actualR !== undefined);
     const wins = closed.filter((t) => t.resultStatus === 'win').length;
     const losses = closed.filter((t) => t.resultStatus === 'loss').length;
     const net = rk.reduce((a, t) => a + t.actualR, 0);
     const pos = rk.filter((t) => t.actualR > 0).reduce((a, t) => a + t.actualR, 0);
     const neg = rk.filter((t) => t.actualR < 0).reduce((a, t) => a + t.actualR, 0);
-    const good = closed.filter((t) => ['Good Win', 'Good Loss'].includes(qualityCol(t))).length;
-    const comp = ts.map((t) => (t.complianceV2 || {}).passRate).filter((v) => v !== null && v !== undefined);
+    const judged = closed.filter((t) => qualityCol(t));
+    const good = judged.filter((t) => ['Good Win', 'Good Loss'].includes(qualityCol(t))).length;
+    const comp = closed.map((t) => (t.complianceV2 || {}).compliance).filter(Boolean);
     const r2 = (v) => Math.round(v * 100) / 100;
     return {
       n: ts.length, closed: closed.length, wins, losses, rCounted: rk.length,
       netR: rk.length ? r2(net) : null,
       avgR: rk.length ? r2(net / rk.length) : null,
       winRate: closed.length ? wins / closed.length : null,
-      goodWins: good, goodRate: closed.length ? good / closed.length : null,
-      compDecided: comp.length, compRate: comp.length ? comp.reduce((a, b) => a + b, 0) / comp.length : null,
+      goodWins: good, goodRate: judged.length ? good / judged.length : null,
+      qualityJudged: judged.length, qualityUnknown: closed.length - judged.length,
+      qualityCoverage: closed.length ? judged.length / closed.length : null,
+      compDecided: comp.length, compUnknown: closed.length - comp.length,
+      compRate: comp.length ? comp.filter((v) => v === 'Fully Compliant').length / comp.length : null,
       pf: neg ? r2(pos / Math.abs(neg)) : (pos ? '∞' : null),
     };
   }
@@ -350,24 +340,23 @@
 
   function curveOf(ts) {
     let cum = 0;
-    return ts.filter((t) => t.rIncluded && t.actualR !== null).slice().sort(byTimeAsc)
+    return ts.filter((t) => ['win', 'loss', 'be'].includes(t.resultStatus) && t.rIncluded && t.actualR !== null).slice().sort(byTimeAsc)
       .map((t) => { cum += t.actualR; return { cum: Math.round(cum * 100) / 100, r: t.actualR, date: dateOf(t), symbolLabel: t.symbolLabel }; });
   }
 
   /* ---------------- 列表列（§16 只保留 7 列） ---------------- */
-  const UNRATED = ['未定级', '未记录', '未分类', ''];
   const setupCol = (t) => {
     const poi = [valTxt(fv(t, 'htfPOIType')), valTxt(fv(t, 'htfPOITF'))].filter(Boolean).join(' ');
     return poi || setupTags(t)[0] || null;
   };
-  const entryModeCol = (t) => valTxt(fv(t, 'entryMode')) || (t.entryModel || {}).category || null;
-  const qualityCol = (t) => { const v = String((t.quality || {}).value || ''); return UNRATED.includes(v) ? null : v; };
+  const entryModeCol = (t) => [valTxt(fv(t, 'confirmationMode')), valTxt(fv(t, 'orderType'))].filter(Boolean).join(' · ')
+    || (valTxt(fv(t, 'entryMode')) ? '历史 · ' + valTxt(fv(t, 'entryMode')) : null);
+  const qualityCol = (t) => { const v = String((t.quality || {}).value || ''); return ['Good Win', 'Good Loss', 'Bad Win', 'Bad Loss'].includes(v) ? v : null; };
   const qualityChip = (t) => {
     const q = qualityCol(t);
     if (!q) return NR;
     return `<span class="chip ${/Good/.test(q) ? 'goodq' : 'badq'}">${esc(q)}</span>`;
   };
-  const ENTRY_MODES = ['Limit Entry', 'LTF Confirmation', 'Market Entry'];
   const QUALITIES = ['Good Win', 'Good Loss', 'Bad Win', 'Bad Loss'];
   const THEAD7 = '<div class="thead7"><span>Date</span><span>Symbol</span><span>Direction</span><span>Setup</span><span>Entry Mode</span><span>Result</span><span>Quality</span></div>';
 
@@ -490,12 +479,13 @@
     </div>${tpItems.length && !tpIsPrice ? `<div class="small muted" style="margin-top:6px">目标原文：${esc(tpTxt)}</div>` : ''}`;
     const body = `<div class="tf-strip">HTF — Why <span class="srcb">1D / 4H / 1H</span></div>
       ${wchain([
+        wcell('模型与确认约定', ['reviewModel', 'confirmationMode', 'requiredConfirmations'], t),
         wcell('HTF Context', ['htfBias', 'biasSourceTF', 'marketCondition', 'htfStructureKind', 'htfStructureTF'], t),
         wcell('Liquidity', ['liquidityType', 'liquidityTF'], t),
         wcell('POI', ['htfPOIType', 'htfPOITF', 'poiConfluence', 'ltfPOIType', 'ltfPOITF'], t),
       ])}
       <div class="small muted" style="margin:10px 0 0">回答「为什么关注这个方向和这个位置」。</div>
-      <h3 class="phase-sub">Trade Plan</h3>${planBar}`;
+      <h3 class="phase-sub">Trade Plan</h3><div class="small muted">${esc((t.plannedVsActual || {}).timingNote || "计划记录时点未知")}</div>${planBar}`;
     return phase('PLAN', '为什么准备做这笔交易', 'HTF Context · 交易前逻辑', body);
   }
 
@@ -503,10 +493,10 @@
     const a = ((t.plannedVsActual || {}).actual) || {};
     const pa = t.plannedVsActual || {};
     const dev = arr(pa.deviations);
-    const mode = valTxt(fv(t, 'entryMode')) || ((t.entryModel || {}).category) || null;
-    const modeWord = { HTF_LIMIT: 'Limit Entry', LTF_CONFIRMATION: 'LTF Confirmation', MARKET_ENTRY: 'Market Entry' }[mode] || mode;
-    const seg = `<div class="seg">${ENTRY_MODES.map((m) => `<span class="${m === modeWord ? 'on' : ''}">${esc(m)}</span>`).join('')}</div>
-      <div class="small muted" style="margin-top:6px">Entry Mode 是统计口径：Limit Entry = 提前挂单；LTF Confirmation = 等低周期确认；Market Entry = 直接市价。文档没写就是未记录。</div>`;
+    const mode = valTxt(fv(t, 'entryMode')) || null;
+    const seg = `<div class="review-grid"><div class="rbox"><div class="k">计划确认方式</div><div>${cfield(t, 'confirmationMode')}</div></div>
+      <div class="rbox"><div class="k">实际下单方式</div><div>${cfield(t, 'orderType')}</div></div></div>
+      ${mode ? `<div class="small muted">历史 Entry Mode：${esc(mode)}${srcBadge(fv(t, 'entryMode'))} · 未自动拆分为新维度。</div>` : ''}`;
     const actCells = [
       a.entry === null || a.entry === undefined ? null : ['Actual Entry', num(a.entry)],
       a.exit === null || a.exit === undefined ? null : ['Actual Exit', num(a.exit)],
@@ -520,9 +510,9 @@
         wcell('Entry Trigger', ['entryTriggerType', 'entryTriggerTF', 'limitStyle'], t),
       ])}
       <div class="small muted" style="margin:10px 0 0">回答「什么时候真正进入」。Internal / Key / Protected 要能分清，不知道为什么突破就不算确认。</div>
-      <h3 class="phase-sub">Entry Mode</h3>${seg}
+      <h3 class="phase-sub">确认与下单</h3>${seg}
       ${actCells.length ? `<h3 class="phase-sub">Actual</h3><div class="pricebar">${actCells.map(([k, v]) => `<span><i>${esc(k)}</i><b>${v}</b></span>`).join('')}</div>` : ''}
-      ${dev.length ? `<div class="callout warn" style="margin-top:10px">计划与实际的偏离（执行问题）：${dev.map((d) => `<span class="chip warn">${esc(d)}</span>`).join(' ')}</div>` : ''}`;
+      ${dev.length ? `<div class="callout" style="margin-top:10px">计划与成交的差异（需回看原因）：${dev.map((d) => `<span class="chip">${esc(d.note || "")}${d.difference !== undefined ? ` · ${esc(d.difference)}` : ""}</span>`).join(' ')}</div>` : ''}`;
     return phase('EXECUTION', '实际市场发生了什么 / 最终怎么入场', 'LTF Confirmation · 实际执行', body);
   }
 
@@ -531,15 +521,15 @@
     const q = qualityCol(t);
     const mis = (a.mistakes || []).map((m) => `<span class="chip warn">${esc(m.tag || m)}</span>`).join(' ');
     const vio = (a.ruleViolations || []).map((m) => `<span class="chip warn">${esc(m.tag || m)}</span>`).join(' ');
-    const next = (r.improve || [])[0] || r.nextRules || null;
+    const next = (r.nextRules || [])[0] || (r.improve || [])[0] || null;
     const body = `<div class="review-grid">
         <div class="rbox"><div class="k">Result</div><div class="rv">${rTxt(t.rIncluded ? t.actualR : null)} ${resChip(t)}</div></div>
         <div class="rbox"><div class="k">Trade Quality</div>
           <div class="seg">${QUALITIES.map((x) => `<span class="${x === q ? 'on' : ''}">${esc(x)}</span>`).join('')}</div>
-          <div class="small muted" style="margin-top:6px">Good = 按规则做的（赢或亏都算好交易）；Bad = 违规或乱做的。</div></div>
+          <div class="small muted" style="margin-top:6px">${q ? esc((t.quality || {}).basis || "") + srcBadge(t.quality) : "尚未判定：" + esc((t.quality || {}).basis || "证据不足")} · Good = 按规则执行；Bad = 存在已确认违规。</div></div>
       </div>
       <div class="review-grid" style="margin-top:12px">
-        <div class="rbox"><div class="k">Mistake</div><div class="rv">${mis || vio || NR}</div></div>
+        <div class="rbox"><div class="k">主要问题与经过</div>${cfield(t, "primaryMistake")}${cfield(t, "causeChain")}<details><summary>其他观察与原文依据</summary><div class="rv">${mis || vio || NR}</div><div class="small muted">分析标签用于回看，人工确认后才进入错误统计。</div></details></div>
         <div class="rbox"><div class="k">Lesson · 下次怎么改</div><div class="rv">${r.mainProblem ? esc(short(r.mainProblem, 180)) : next ? esc(short(next, 180)) : NR}</div>
           ${next && r.mainProblem ? `<div class="small muted">改进动作：${esc(short(next, 140))}</div>` : ''}
           ${(r.worked || []).length ? `<div class="small muted">做对了：${esc(short(r.worked[0], 120))}</div>` : ''}</div>
@@ -608,8 +598,8 @@
           ${cell('Trades', `${m.closed} / ${m.n}`, '已结束 / 全部')}
           ${cell('Win Rate', pct(m.winRate), `${m.wins} 胜 / ${m.losses} 负`)}
           ${cell('Expectancy', rTxt(m.avgR), '平均每笔期望值（§31）')}
-          ${cell('Good Trade Rate', pct(m.goodRate), `${m.goodWins} 好 / ${m.closed} 笔（§23）`)}
-          ${cell('Rule Compliance', pct(m.compRate), m.compDecided ? `${m.compDecided} 笔有结论` : '还没有一笔有结论')}
+          ${cell('Good Trade Rate', pct(m.goodRate), `${m.goodWins} 好 / ${m.qualityJudged} 已判 · ${m.qualityUnknown} 未判 · 覆盖 ${pct(m.qualityCoverage)}`)}
+          ${cell('Rule Compliance', pct(m.compRate), `${m.compDecided} 已判 / ${m.compUnknown} 未判`)}
         </div>
         <div class="small muted" style="margin-top:8px">口径：只统计文档里真实写了的数据；缺项显示「未记录」，不当 0 算。Profit Factor ${pfTxt(m.pf)}（总盈利 R ÷ 总亏损 R，§27）。</div>
       </div>
@@ -618,7 +608,7 @@
       <div class="sec"><h2>Recent Trades <span class="hint">最近 ${recent.length} 笔 · <a href="#/trades">全部交易 →</a></span></h2>
         <div class="trows">${recent.length ? THEAD7 + recent.map(tradeRow).join('') : '<div class="empty">这个范围里没有交易，切到「全部」看总账。</div>'}</div></div>
       <div class="sec"><h2>This Week Focus <span class="hint">${w0 ? esc(w0.label) : ''}</span></h2>
-        <div class="focusbox">${focus}</div></div>
+        <div class="focusbox">${focus}</div>${W ? behaviorBlock(W) : ""}</div>
       ${weeks.length ? `<details class="fold"><summary>周复盘（${weeks.length} 周：Expectancy / MAE·MFE / 最佳 Setup / 最大错误）· <a href="#/weeks">全部周 →</a></summary>
         <div style="padding:4px 14px 14px">${weeks.map((w) => weekBlock(w, ts)).join('')}</div></details>` : ''}`;
   }
@@ -666,7 +656,7 @@
       <tbody>${rows.map((r) => `<tr><td>${esc(r.key)}<div class="small muted">${(r.trades || []).map((id) => `<a href="#/trade/${encodeURIComponent(id)}" style="text-decoration:underline">${esc(shortId(id))}</a>`).join(' · ')}</div></td>
         <td class="num">${r.closed || 0} / ${r.count || 0}</td><td class="num">${r.winRate === null || r.winRate === undefined ? '—' : pct(r.winRate)}</td>
         <td class="num">${cellR(r.avgR)}</td><td class="num">${cellR(r.expectancy)}</td>
-        <td class="num">${r.profitFactor === null || r.profitFactor === undefined ? '—' : Number(r.profitFactor).toFixed(2)}</td></tr>`).join('')}</tbody></table>
+        <td class="num">${pfTxt(r.profitFactor)}</td></tr>`).join('')}</tbody></table>
       <div class="small muted" style="margin-top:6px">${esc(src.label || '入场方式')} · 口径：只统计文档里真实写了 Entry Mode 的交易，未写 = 「(未记录)」（§37 不猜）。</div>`;
   }
 
@@ -677,10 +667,10 @@
     const top = byLoss[0];
     const viol = (state.data.analytics || {}).violationFrequency || [];
     return `<div class="sec"><h2>Mistakes <span class="hint">§15 最值得优先改的错误</span></h2>
-      ${top ? `<div class="callout warn">最该先改：<b>${esc(top.tag)}</b> —— 出现 ${top.count} 次，损失 ${cellR(top.lostR)}。<br>
+      ${top ? `<div class="callout warn">值得检查：<b>${esc(top.tag)}</b> —— 出现 ${top.count} 次，相关交易亏损 ${cellR(top.lostR)}。<br>
         <span class="small muted">口径：只统计文档里真实写了 / 已确认的错误标签；自动识别的只是建议（§37）。</span></div>` : ''}
-      <div class="panel" style="margin-top:12px"><h3>错误清单</h3>
-        <table class="plain"><thead><tr><th>Mistake</th><th>类别</th><th class="num">次数</th><th class="num">损失 R</th><th class="num">相关笔数</th><th>出现交易</th></tr></thead>
+      <div class="panel" style="margin-top:12px"><h3>已确认的错误观察</h3><div class="small muted">${esc(M.note || "")} · 去重相关亏损 ${cellR(M.totalLostR)}</div>
+        <table class="plain"><thead><tr><th>Mistake</th><th>类别</th><th class="num">次数</th><th class="num">相关亏损 R</th><th class="num">相关笔数</th><th>出现交易</th></tr></thead>
         <tbody>${rows.length ? rows.map((r) => `<tr><td>${esc(r.tag)}${r.unconfirmed ? '<span class="srcb auto">建议·待确认</span>' : ''}</td>
           <td>${esc(r.category || '其他')}</td><td class="num">${r.count}</td><td class="num">${cellR(r.lostR)}</td><td class="num">${r.rCounted || 0}</td>
           <td>${(r.trades || []).map((id) => `<a href="#/trade/${encodeURIComponent(id)}" style="text-decoration:underline">${esc(shortId(id))}</a>`).join(' · ')}</td></tr>`).join('')
@@ -699,9 +689,9 @@
     const line = (k, v, s) => `<div class="frowline2"><span class="fl">${esc(k)}</span><span>${v}</span>${s ? `<span class="small muted">${esc(s)}</span>` : ''}</div>`;
     return `<div class="sec"><h2>Risk <span class="hint">§12 亏损来自策略还是执行 / 风险与数据质量</span></h2>
       <div class="analytics-grid">
-        <div class="panel"><h3>策略问题 vs 执行问题</h3>
-          ${line('Good Loss（按规则仍止损）', `${(SVE.goodLoss || {}).count || 0} 笔`, cellR((SVE.goodLoss || {}).r))}
-          ${line('Bad Loss（违规亏损）', `${(SVE.badLoss || {}).count || 0} 笔`, cellR((SVE.badLoss || {}).r))}
+        <div class="panel"><h3>按执行质量观察亏损</h3>
+          ${line('Good Loss（合规交易的亏损）', `${(SVE.goodLoss || {}).count || 0} 笔`, cellR((SVE.goodLoss || {}).r))}
+          ${line('Bad Loss（存在违规的亏损）', `${(SVE.badLoss || {}).count || 0} 笔`, cellR((SVE.badLoss || {}).r))}
           ${line('未定级亏损', `${(SVE.unknownQuality || {}).count || 0} 笔`)}
           <div class="small muted" style="margin-top:6px">${esc(SVE.note || '')}</div></div>
         <div class="panel"><h3>MAE / MFE（§19 / §29）</h3>
@@ -746,14 +736,15 @@
     const A = state.data.analytics || {};
     const V = V2();
     const panels = {
-      setup: () => `<div class="sec"><h2>Setup 表现 <span class="hint">§12 哪个 Setup 真的赚钱</span></h2>
+      setup: () => `<div class="sec"><h2>Setup 表现 <span class="hint">按记录分组观察，样本不足时不排名</span></h2>
           <div class="analytics-grid">
             <div class="panel"><h3>按 Setup 标签</h3>${perfTable(A.setupTagPerformance || [], 'Setup 标签')}</div>
             <div class="panel"><h3>按 Setup 名称</h3>${perfTable(A.setupPerformance || [], 'Setup')}</div>
             ${dimTable('tradeQuality')}${dimTable('shouldTake')}
           </div></div>`,
-      entry: () => `<div class="sec"><h2>Entry <span class="hint">§13 Limit Entry vs LTF Confirmation vs Market Entry</span></h2>
-          <div class="panel">${entryTable()}</div>
+      entry: () => `<div class="sec"><h2>Entry <span class="hint">确认方式与实际下单方式分别比较</span></h2>
+          <div class="analytics-grid">${dimTable('reviewModel')}${dimTable('confirmationMode')}${dimTable('orderType')}</div>
+          <details class="fold"><summary>历史 Entry Mode 对比</summary>${entryTable()}</details>
           <div class="analytics-grid" style="margin-top:12px">${dimTable('entryTriggerType')}${dimTable('limitStyle')}${dimTable('entryTriggerTF')}</div></div>`,
       poi: () => `<div class="sec"><h2>POI <span class="hint">§12 哪个 HTF POI 最有效</span></h2>
           <div class="analytics-grid">${dimTable('htfPOIType')}${dimTable('htfPOITF')}${dimTable('poiConfluence')}${dimTable('ltfPOIType')}${dimTable('ltfPOITF')}</div></div>`,
@@ -766,7 +757,7 @@
     view.innerHTML = `
       <div class="sec"><h2>你想分析什么？ <span class="hint">§12 问题驱动 —— 点一个问题，只看相关分析</span></h2>
         <div class="atabs">${ATABS.map(([k, lab]) => `<a class="atab${k === T ? ' on' : ''}" href="#/analytics/${k}">${esc(lab)}</a>`).join('')}</div>
-        <div class="small muted" style="margin-top:8px">当前时间范围：${esc(RANGE_WORD[state.range] || '')} · ${ts.length} 笔（右上角可切）。</div>
+        <div class="small muted" style="margin-top:8px">以下分析基于全部 ${state.data.trades.length} 笔记录；顶栏时间范围用于 Overview 和 Trades。</div>
       </div>
       ${panels[T]()}`;
   }
@@ -807,7 +798,7 @@
   /* ------------------------------------------------------------ 统计小条 */
   function keyStats(ts) {
     const closed = ts.filter((t) => ['win', 'loss', 'be'].includes(t.resultStatus));
-    const rk = ts.filter((t) => t.rIncluded && t.actualR !== null);
+    const rk = closed.filter((t) => t.rIncluded && t.actualR !== null && t.actualR !== undefined);
     const wins = ts.filter((t) => t.resultStatus === 'win').length;
     const losses = ts.filter((t) => t.resultStatus === 'loss').length;
     const net = rk.reduce((a, t) => a + t.actualR, 0);
@@ -826,10 +817,10 @@
       const M = V2().maeMfe || {};
       return `<div class="stats stats-4">
         ${cell('Expectancy', D.expectancy === null || D.expectancy === undefined ? NR : rTxt(D.expectancy), '平均每笔期望值（§31）')}
-        ${cell('Good Trade Rate', pct(D.goodTradeRate), `${D.goodWins || 0} 好 / ${D.trades || 0} 笔（§23）`)}
+        ${cell('Good Trade Rate', pct(D.goodTradeRate), `${D.goodWins || 0} 好 / ${D.qualityJudged || 0} 已判 · ${D.qualityUnknown || 0} 未判`)}
         ${cell('Rule Compliance', pct(D.ruleComplianceRate), D.ruleComplianceDecided ? `${D.ruleComplianceDecided} 笔有结论` : '还没有一笔有结论')}
         ${cell('Avg R', D.avgR === null || D.avgR === undefined ? NR : rTxt(D.avgR), `${D.rCounted || 0} 笔可计 R`)}
-        ${cell('Profit Factor', D.profitFactor === null || D.profitFactor === undefined ? NR : Number(D.profitFactor).toFixed(2), '总盈利 R ÷ 总亏损 R（§27）')}
+        ${cell('Profit Factor', pfTxt(D.profitFactor), '总盈利 R ÷ 总亏损 R（§27）')}
         ${cell('Trades', `${D.closed || 0} / ${D.trades || 0}`, '已结束 / 全部（§27）')}
         ${cell('Avg MAE / MFE', `${M.mae && M.mae.avg != null ? M.mae.avg.toFixed(2) : '—'} / ${M.mfe && M.mfe.avg != null ? '+' + M.mfe.avg.toFixed(2) : '—'}`, `已记录 ${M.recorded || 0} 笔`)}
       </div>`; })()}`;
@@ -958,26 +949,36 @@
     const B = state.data.ruleBuckets || {};
     const groups = state.data.trades.map((t) => (t.complianceV2 || {}).groups).filter(Boolean);
     const stat = (bucket, id) => {
-      const s = { pass: 0, fail: 0, unknown: 0 };
+      const s = { pass: 0, fail: 0, unknown: 0, na: 0 };
       groups.forEach((g) => (g[bucket] || []).forEach((i) => {
         if (i.id !== id) return;
-        if (i.status === '✓') s.pass++; else if (i.status === '✕') s.fail++; else s.unknown++;
+        if (i.status === '✓') s.pass++; else if (i.status === '✕') s.fail++; else if (i.status === '不适用') s.na++; else s.unknown++;
       }));
       return s;
     };
     const panel = (name, items, note) => `<div class="panel"><h3>${esc(name)} <span class="hint small">${items.length} 条</span></h3>
       <div class="small muted" style="margin-bottom:8px">${esc(note)}</div>
       ${items.map((it) => { const s = stat(name, it.id); return `<div class="rline"><div class="txt">${esc(it.text)}<div class="small muted">判定字段：${esc((FBYK()[it.field] || {}).label || it.field)}</div></div>
-        <div class="cnt">${s.pass ? `<span class="chip win">✓ ${s.pass}</span>` : ''}${s.fail ? `<span class="chip loss">✕ ${s.fail}</span>` : ''}<span class="chip ghost">未记录 ${s.unknown}</span></div></div>`; }).join('')}</div>`;
+        <div class="cnt">${s.pass ? `<span class="chip win">✓ ${s.pass}</span>` : ''}${s.fail ? `<span class="chip loss">✕ ${s.fail}</span>` : ''}<span class="chip ghost">未记录 ${s.unknown}</span>${s.na ? `<span class="chip">不适用 ${s.na}</span>` : ''}</div></div>`; }).join('')}</div>`;
     return `<div class="sec"><h2>规则清单 <span class="hint">§33 / §34 · 每笔交易按这三桶自动打勾</span></h2>
-      <div class="callout small">这三桶就是 Rule Checklist 的判定来源：命中 Avoid 或缺少 Must Have 里的记录，合规度会相应降级；三桶里有「未记录」项时系统不下结论。</div>
+      <div class="callout small">按交易前模型与适用条件检查。已确认违反才判违规；缺少记录保留未知；不适用单列。全部适用项确认通过才判完全合规。</div>
       <div class="three">
-        ${panel('Must Have', B['Must Have'] || [], '缺一项就不该进场。')}
+        ${panel('Must Have', B['Must Have'] || [], '检查核心计划与执行条件；未记录保留未知。')}
         ${panel('Confirmation', B['Confirmation'] || [], '不是每笔都要全有，但要有记录才能统计它是否有效。')}
         ${panel('Avoid', B['Avoid'] || [], '命中即执行问题。')}
       </div></div>`;
   }
   /* ---- 周报 v2（§32） ---- */
+  function behaviorBlock(w) {
+    const goal = w.behaviorGoal, review = w.behaviorReview || {}, previous = review.goal;
+    return `<div class="panel" style="margin-top:10px"><h3>每周只验证一个行为</h3>
+      ${previous ? `<div class="small">检查 ${esc(previous.week)} 的约定：${esc(previous.action || '未记录动作')}</div>
+        <div class="small muted">触发：${esc(previous.trigger || '未记录')} · 检查：${esc(previous.metric || '未记录')}</div>
+        <div style="margin-top:6px">${review.eligible === null || review.eligible === undefined ? '本周尚未记录执行情况' : `完成 ${review.completed} / ${review.eligible} 次 · 完成率 ${pct(review.completionRate)}`}</div>
+        ${review.reflection ? `<div class="small muted">发现：${esc(review.reflection)}</div>` : ''}` : '<div class="small muted">上周尚未约定可验证的行为。</div>'}
+      <div style="margin-top:10px"><b>下周动作</b>：${goal ? esc(goal.action || '未记录动作') : '未记录'}</div>
+      ${goal ? `<div class="small muted">触发：${esc(goal.trigger || '未记录')} · 检查：${esc(goal.metric || '未记录')}</div>` : '<div class="small muted">在本地周复盘里填写触发条件、具体动作和检查方式。</div>'}</div>`;
+  }
   function weekV2(w) {
     const W = V2W(w.label);
     if (!W) return '';
@@ -985,18 +986,19 @@
     const cell = (k, v) => `<div class="wkv"><div class="k">${esc(k)}</div><div class="v">${v}</div></div>`;
     return `<div class="week-v2">
       ${cell('Expectancy', cellR(W.expectancy))}
-      ${cell('Good Trade Rate', pct(W.goodTradeRate))}
+      ${cell('Good Trade Rate', pct(W.goodTradeRate) + `<div class="small muted">${W.qualityJudged || 0} 已判 / ${W.qualityUnknown || 0} 未判 · 覆盖 ${pct(W.qualityCoverage)}</div>`)}
       ${cell('Rule Compliance', pct(W.ruleComplianceRate))}
       ${cell('Avg MAE / MFE', `${num2(W.avgMAE)} / ${num2(W.avgMFE)}`)}
-      ${cell('最佳 Setup', W.bestSetup ? `${esc(short(W.bestSetup.setup, 42))}（${cellR(W.bestSetup.netR)}）` : '<span class="muted">未记录</span>')}
+      ${cell('Setup 观察', W.bestSetup ? `${esc(short(W.bestSetup.setup, 42))}（${cellR(W.bestSetup.netR)}）` : '<span class="muted">样本不足，暂不排名</span>')}
       ${cell('最大错误', W.biggestMistake ? esc(W.biggestMistake.tag || W.biggestMistake) : '<span class="muted">未记录</span>')}
-      ${cell('错误损失 R', W.mistakeLostR === null || W.mistakeLostR === undefined ? '<span class="muted">未记录</span>' : cellR(W.mistakeLostR))}
+      ${cell('相关交易亏损 R', W.mistakeLostR === null || W.mistakeLostR === undefined ? '<span class="muted">未记录</span>' : cellR(W.mistakeLostR))}
       </div>
       ${(W.didWell || W.mainProblem || W.nextFocus) ? `<div class="week-core">
         ${W.didWell ? `<div class="wr good"><div class="k">This Week I Did Well</div><div class="v">${esc(W.didWell)}</div></div>` : ''}
         ${W.mainProblem ? `<div class="wr bad"><div class="k">Main Problem</div><div class="v">${esc(W.mainProblem)}</div></div>` : ''}
         ${W.nextFocus ? `<div class="wr rule"><div class="k">Next Week Focus</div><div class="v">${esc(W.nextFocus)}</div></div>` : ''}
       </div>` : `<div class="small muted" style="margin:6px 0 0">本周的「做得好 / 主要问题 / 下周重点」还没记录 —— 在本地编辑器（tag）里补，或按 docs/record-template.md 写进下周文档。</div>`}
+      ${behaviorBlock(W)}
       ${W.sampleNote ? `<div class="small muted" style="margin-top:4px">${esc(W.sampleNote)}</div>` : ''}`;
   }
   const uniqF = (key) => {

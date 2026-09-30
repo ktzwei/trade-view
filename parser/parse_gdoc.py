@@ -35,7 +35,7 @@ TZ = "+08:00"  # 北京时间
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from schema import (FIELD_BY_KEY, MISTAKE_TAGS, ALL_TF, HTF_TF, LTF_TF, EXTRACT,  # noqa: E402
-                    RULE_BUCKETS, SCHEMA_VERSION, vocab)
+                    RULE_BUCKETS, SCHEMA_VERSION, REVIEW_LABELS, vocab)
 
 # 文档中可识别的字段标签 → 内部 key
 SECTION_KEYS = {
@@ -311,7 +311,7 @@ def _split_pairs(body: str):
         c = chunk.strip()
         if not c:
             continue
-        m = re.match(r"^([^：:]{1,16})[：:]\s*(.+)$", c)
+        m = re.match(r"^([^：:]{1,64})[：:]\s*(.+)$", c)
         if m:
             out.append((re.sub(r"\s+", "", m.group(1)).lower(), m.group(2).strip(), c))
         else:
@@ -361,6 +361,10 @@ def compact_sections(text: str):
             struct.setdefault(f_, []).append(v.replace("BB", "Breaker"))
 
     pairs = _split_pairs(body)
+    plan_labels = {norm_head(k): v for k, v in REVIEW_LABELS.items()}
+    for k, v, _raw in pairs:
+        if k in plan_labels:
+            put_struct(plan_labels[k], v)
 
     if sec == "basic":
         # 整行都给 execution：Entry / SL / Exit / TP1 / TP2 / 计划 POI 的价格正则直接命中
@@ -1158,6 +1162,9 @@ def struct_label_of(text):
     if not m:
         return None, ""
     head = norm_head(m.group(1))
+    for name, field in REVIEW_LABELS.items():
+        if norm_head(name) == head:
+            return field, m.group(2).strip()
     for name, field in STRUCT_LABELS:
         if norm_head(name) in head:
             return field, m.group(2).strip()

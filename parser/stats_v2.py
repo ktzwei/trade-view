@@ -12,6 +12,8 @@
 import json
 import re
 from pathlib import Path
+from review_logic import (QUALITY_VALUES, confirmed_value, derive_checklist, derive_compliance,
+                          derive_planned_actual, derive_quality, quality_value)
 
 MANUAL_DIR = Path(__file__).resolve().parent.parent / "data" / "manual"
 
@@ -75,6 +77,10 @@ def merge_fields(t, manual_entry):
                      "evidence": (manual_entry or {}).get("notes") or "手填结构化字段",
                      "previousAuto": prev.get("value") if prev.get("source") == "doc:keyword" else None}
     t["fields"] = fields
+    t["planRecordedAt"] = (manual_entry or {}).get("planRecordedAt")
+    t["planHistory"] = (manual_entry or {}).get("planHistory") or []
+    t["manualClearedFields"] = [k for k, v in ((manual_entry or {}).get("fields") or {}).items()
+                               if v in (None, "", [])]
     t["fieldStats"] = {
         "confirmed": len([f for f in fields.values() if f.get("confirmed")]),
         "auto": len([f for f in fields.values() if not f.get("confirmed")]),
@@ -131,133 +137,6 @@ def field_values(t, field):
 
 
 # ---------------------------------------------------------------- 单笔派生
-COMPLIANCE_ORDER = ["Fully Compliant", "Minor Violation", "Major Violation"]
-QUALITY_MAP = {("win", "Fully Compliant"): "Good Win", ("win", "Minor Violation"): "Bad Win",
-               ("win", "Major Violation"): "Bad Win", ("loss", "Fully Compliant"): "Good Loss",
-               ("loss", "Minor Violation"): "Bad Loss", ("loss", "Major Violation"): "Bad Loss",
-               ("be", "Fully Compliant"): "Good Loss", ("be", "Minor Violation"): "Bad Loss",
-               ("be", "Major Violation"): "Bad Loss"}
-
-
-def derive_planned_actual(t):
-    """需求 §16 Planned vs Actual：计划值来自文档计划字段，实际值来自成交字段，只做对比不做推测。"""
-    p_sl, a_exit = fnum(t.get("stopLoss")), fnum(t.get("exit"))
-    p_entry = fnum(t.get("entry"))
-    planned = {
-        "entry": p_entry, "sl": p_sl,
-        "tp": fval(t, "targetLevel") or (t.get("targets") or [{}])[0].get("note"),
-        "rr": t.get("plannedRR"),
-    }
-    actual = {
-        "entry": p_entry, "exit": a_exit, "r": t.get("actualR"),
-        "exitReason": fval(t, "managementStyle"),
-    }
-    dev = []
-    if t.get("entryModel", {}).get("planned") and t.get("entryModel", {}).get("actual") \
-            and t["entryModel"]["planned"] != t["entryModel"]["actual"]:
-        dev.append({"field": "entryMode", "planned": t["entryModel"]["planned"],
-                    "actual": t["entryModel"]["actual"], "note": "计划与实际入场方式不一致"})
-    if p_sl is None:
-        dev.append({"field": "sl", "note": "未记录准确 SL，无法比较计划与实际风险"})
-    return {"planned": planned, "actual": actual, "deviations": dev,
-            "recorded": {"plannedEntry": p_entry is not None, "plannedSL": p_sl is not None,
-                         "plannedRR": t.get("plannedRR") is not None,
-                         "actualR": t.get("actualR") is not None}}
-
-
-def derive_quality(t):
-    """需求 §23 Trade Quality：结果 × 合规度，两边都必须有记录才给结论。"""
-    manual = fval(t, "tradeQuality")
-    if manual:
-        return {"value": manual, "source": "manual",
-                "basis": "手填"}
-    comp = fval(t, "ruleCompliance")
-    src = "标注" if comp in COMPLIANCE_ORDER else None
-    if src is None:      # 文档没写合规度 → 用清单派生值（仍标记为派生，不冒充文档记录）
-        dc = (t.get("complianceV2") or {}).get("derivedCompliance") or {}
-        if dc.get("value"):
-            comp, src = dc["value"], "派生"
-    st = t.get("resultStatus")
-    if comp in COMPLIANCE_ORDER and st in ("win", "loss", "be"):
-        return {"value": QUALITY_MAP.get((st, comp)), "source": "derived",
-                "basis": f"结果={st} × 合规度={comp}（{src}）"}
-    cls = ((t.get("analysis") or {}).get("classification") or {}).get("value")
-    if cls:
-        return {"value": cls, "source": "ai-review", "basis": "分析层分类（旧字段）"}
-    miss = []
-    if comp not in COMPLIANCE_ORDER:
-        miss.append("规则合规度")
-    if st not in ("win", "loss", "be"):
-        miss.append("已结束的结果")
-    return {"value": None, "source": "derived", "basis": "缺：" + "、".join(miss) + "——不猜"}
-
-
-def derive_checklist(t):
-    """需求 §33 / §34：Must Have / Confirmation / Avoid 三组清单逐项判定（✓ / ✕ / 未记录）。"""
-    from schema import RULE_BUCKETS
-    out = {"Must Have": [], "Confirmation": [], "Avoid": []}
-    for bucket, items in RULE_BUCKETS.items():
-        for it in items:
-            mode, field = it["mode"], it["field"]
-            val = flist(t, field) if mode.startswith(("in:", "not_in:")) else fval(t, field)
-            status, shown = "未记录", val
-            if mode == "set":
-                status = "✓" if val else "未记录"
-            elif mode.startswith("in:"):
-                want = mode[3:].split(",")
-                status = ("✓" if any(v in want for v in (val or [])) else "✕") if val else "未记录"
-            elif mode.startswith("not_in:"):
-                bad = mode[7:].split(",")
-                status = ("✕" if any(v in bad for v in (val or [])) else "✓") if val else "未记录"
-            elif mode == "rr_gate":
-                thr = t.get("minRRThreshold")
-                rr = t.get("plannedRR")
-                if rr is None:
-                    status = "未记录"
-                elif thr is None:
-                    status = "—"          # 需求 §5：没定义最低 RR 标准就不下结论
-                else:
-                    status = "✓" if rr >= thr else "✕"
-            out[bucket].append({"id": it["id"], "text": it["text"], "field": field,
-                                "status": status, "value": shown,
-                                "source": ((t.get("fields") or {}).get(field) or {}).get("source")})
-    allit = out["Must Have"] + out["Confirmation"] + out["Avoid"]
-    yes = [i for i in allit if i["status"] == "✓"]
-    no = [i for i in allit if i["status"] == "✕"]
-    known = len(yes) + len(no)
-    mh_missing = [i["text"] for i in out["Must Have"] if i["status"] == "未记录"]
-    cf_missing = [i["text"] for i in out["Confirmation"] if i["status"] == "未记录"]
-    return {"groups": out, "yes": len(yes), "no": len(no), "unknown": len(allit) - known,
-            "known": known, "total": len(allit),
-            "passRate": rate(len(yes), known),
-            "mustHaveMissing": mh_missing, "confirmationMissing": cf_missing,
-            "derivedCompliance": derive_compliance(out)}
-
-
-def derive_compliance(out):
-    """需求 §21 / §34：按清单派生合规度（文档没写时才用，且标记成「派生」）。
-
-    Must Have 违反 / Avoid 命中 → Major（FOMO、追价、低 RR、弱 MSB 都算严重违规）；
-    Confirmation 缺失 → Minor；Must Have 本身没记录 → 不下结论（不猜，需求 §37）。
-    """
-    mh_no = [i["text"] for i in out["Must Have"] if i["status"] == "✕"]
-    av_no = [i["text"] for i in out["Avoid"] if i["status"] == "✕"]
-    cf_no = [i["text"] for i in out["Confirmation"] if i["status"] == "✕"]
-    mh_missing = [i["text"] for i in out["Must Have"] if i["status"] == "未记录"]
-    if mh_no or av_no:
-        return {"value": "Major Violation", "basis": "派生（清单）= " + "；".join(mh_no + av_no),
-                "caveat": None}
-    if mh_missing:
-        return {"value": None, "basis": "派生（清单）：核心项未记录（" + "、".join(mh_missing) + "），不下结论",
-                "caveat": None}
-    if cf_no:
-        return {"value": "Minor Violation", "basis": "派生（清单）= 确认项未通过：" + "；".join(cf_no),
-                "caveat": None}
-    cf_missing = [i["text"] for i in out["Confirmation"] if i["status"] == "未记录"]
-    return {"value": "Fully Compliant", "basis": "派生（清单）：核心项全部通过",
-            "caveat": ("确认项未记录 " + str(len(cf_missing)) + " 项，合规判定偏乐观") if cf_missing else None}
-
-
 def suggest_mistakes(t):
     """需求 §22 / §37：从清单结果「建议」错误标签 —— 只建议，不改原始数据，等人工确认。"""
     from schema import MISTAKE_TAGS
@@ -296,6 +175,9 @@ def suggest_mistakes(t):
 
 # ---------------------------------------------------------------- 聚合
 DIMENSIONS = [
+    ("reviewModel", "复盘模型", "single"),
+    ("confirmationMode", "计划确认方式", "single"),
+    ("orderType", "实际下单方式", "single"),
     ("htfBias", "HTF Bias", "single"),
     ("biasSourceTF", "Bias 来源周期", "multi"),
     ("marketCondition", "市场环境", "single"),
@@ -331,13 +213,14 @@ DIM_LABEL = {k: lab for k, lab, _ in DIMENSIONS}
 
 
 def bucket_stats(ts, key, label):
-    rs = [t["actualR"] for t in ts if r_included(t)]
+    rs = [t["actualR"] for t in ts if is_closed(t) and r_included(t)]
     pos = [r for r in rs if r > 0]
     neg = [r for r in rs if r < 0]
     closed = [t for t in ts if is_closed(t)]
     wins = [t for t in ts if t.get("resultStatus") == "win"]
-    good = [t for t in ts if t.get("quality", {}).get("value") in ("Good Win", "Good Loss")]
-    comp = [t for t in ts if t.get("complianceV2", {}).get("passRate") is not None]
+    judged = [t for t in closed if quality_value(t)]
+    good = [t for t in judged if quality_value(t) in ("Good Win", "Good Loss")]
+    comp = [t for t in closed if t.get("complianceV2", {}).get("compliance") is not None]
     return {
         "key": key, "label": label, "count": len(ts), "trades": [t["id"] for t in ts],
         "closed": len(closed), "wins": len(wins),
@@ -348,8 +231,11 @@ def bucket_stats(ts, key, label):
         "expectancy": r2(sum(rs) / len(rs)) if rs else None,
         "totalR": r2(sum(rs)) if rs else None,
         "profitFactor": r2(sum(pos) / abs(sum(neg))) if neg else (None if not pos else "∞"),
-        "goodTradeRate": rate(len(good), len(closed)),
-        "complianceRate": mean([t["complianceV2"]["passRate"] for t in comp]),
+        "goodTradeRate": rate(len(good), len(judged)),
+        "qualityJudged": len(judged), "qualityUnknown": len(closed) - len(judged),
+        "qualityCoverage": rate(len(judged), len(closed)),
+        "complianceRate": rate(sum(t["complianceV2"]["compliance"] == "Fully Compliant" for t in comp), len(comp)),
+        "complianceJudged": len(comp), "complianceCoverage": rate(len(comp), len(closed)),
         "sampleNote": sample_flag(len(rs)),
     }
 
@@ -396,16 +282,19 @@ def dimension_tables(trades):
 def mistake_analysis(trades):
     by = {}
     for t in trades:
-        tags = flist(t, "mistakes")
-        for tag in tags:
+        tags = confirmed_value(t, "mistakes") or []
+        tags = tags if isinstance(tags, list) else [tags]
+        primary = confirmed_value(t, "primaryMistake")
+        if primary:
+            tags = tags + [primary]
+        for tag in dict.fromkeys(tags):
             by.setdefault(tag, []).append(t)
     rows = []
     from schema import MISTAKE_CATEGORY
     for tag, ts in by.items():
-        rs = [t["actualR"] for t in ts if r_included(t)]
+        rs = [t["actualR"] for t in ts if is_closed(t) and r_included(t)]
         neg = sum(r for r in rs if r < 0)
-        conf = [t for t in ts if str(((t.get("fields") or {}).get("mistakes") or {}).get("source", ""))
-                .startswith(("manual", "doc"))]
+        conf = ts
         rows.append({"tag": tag, "category": MISTAKE_CATEGORY.get(tag, "其他"),
                      "count": len(ts), "confirmedCount": len(conf),
                      "unconfirmed": not conf,
@@ -414,10 +303,14 @@ def mistake_analysis(trades):
                      "lostR": r2(neg) if rs else None,
                      "rCounted": len(rs)})
     rows.sort(key=lambda x: (-(x["count"]), (x["lostR"] or 0)))
+    tagged_losses = {t["id"]: t for ts in by.values() for t in ts
+                     if is_closed(t) and r_included(t) and t["actualR"] < 0}
     return {"rows": rows,
             "mostCommon": rows[0]["tag"] if rows else None,
             "costliest": (min(rows, key=lambda x: (x["lostR"] or 0)) if rows else None),
-            "totalLostR": r2(sum(x["lostR"] or 0 for x in rows))}
+            "totalLostR": r2(sum(t["actualR"] for t in tagged_losses.values())),
+            "lossTradeCount": len(tagged_losses),
+            "note": "各标签显示相关交易亏损，同笔交易可出现在多行；合计按交易去重，不代表因果归因。"}
 
 
 IMAGE_KINDS = ["HTF Context", "LTF Entry", "After Trade", "Review Screen"]
@@ -533,28 +426,29 @@ def mae_mfe_analysis(trades):
 
 
 def strategy_vs_execution(trades):
-    """需求 §4.3 / §41：亏损里有多少来自违规（执行问题）而不是策略本身。"""
+    """按已判执行质量观察亏损分布，保留未定级，不作因果归因。"""
     closed = [t for t in trades if is_closed(t)]
     good_loss = [t for t in closed if t.get("quality", {}).get("value") == "Good Loss"]
     bad_loss = [t for t in closed if t.get("quality", {}).get("value") == "Bad Loss"]
-    unknown = [t for t in closed if t.get("quality", {}).get("value") is None]
+    unknown = [t for t in closed if t.get("resultStatus") == "loss" and not quality_value(t)]
     s = lambda ts: r2(sum(t["actualR"] for t in ts if r_included(t)))
     return {
         "goodLoss": {"count": len(good_loss), "r": s(good_loss), "trades": [t["id"] for t in good_loss]},
         "badLoss": {"count": len(bad_loss), "r": s(bad_loss), "trades": [t["id"] for t in bad_loss]},
         "unknownQuality": {"count": len(unknown), "trades": [t["id"] for t in unknown]},
-        "note": "Good Loss = 按规则做但仍然止损（策略成本）；Bad Loss = 违规造成的亏损（执行问题，才是要改的）。",
+        "note": "按执行质量分组观察亏损；标签与亏损同时出现，不证明违规造成了全部损失，也不能用单笔亏损判定策略无效。",
     }
 
 
 def dashboard(trades):
     closed = [t for t in trades if is_closed(t)]
-    rk = [t for t in trades if r_included(t)]
+    rk = [t for t in trades if is_closed(t) and r_included(t)]
     rs = [t["actualR"] for t in rk]
     pos = [r for r in rs if r > 0]
     neg = [r for r in rs if r < 0]
-    good = [t for t in closed if t.get("quality", {}).get("value") in ("Good Win", "Good Loss")]
-    comp = [t for t in trades if t.get("complianceV2", {}).get("passRate") is not None]
+    judged = [t for t in closed if quality_value(t)]
+    good = [t for t in judged if quality_value(t) in ("Good Win", "Good Loss")]
+    comp = [t for t in closed if t.get("complianceV2", {}).get("compliance") is not None]
     wins = [t for t in closed if t.get("resultStatus") == "win"]
     mae = mae_mfe_analysis(trades)
     return {
@@ -564,10 +458,14 @@ def dashboard(trades):
         "netR": r2(sum(rs)) if rs else None, "rCounted": len(rs),
         "avgR": mean(rs), "expectancy": mean(rs),
         "profitFactor": r2(sum(pos) / abs(sum(neg))) if neg else (None if not pos else "∞"),
-        "ruleComplianceRate": mean([t["complianceV2"]["passRate"] for t in comp]),
-        "goodTradeRate": rate(len(good), len(closed)),
-        "goodTradeRateSample": len(closed),
-        "qrCounted": len([t for t in closed if t.get("quality", {}).get("value")]),
+        "ruleComplianceRate": rate(sum(t["complianceV2"]["compliance"] == "Fully Compliant" for t in comp), len(comp)),
+        "ruleComplianceDecided": len(comp), "ruleComplianceUnknown": len(closed) - len(comp),
+        "ruleComplianceCoverage": rate(len(comp), len(closed)), "goodWins": len(good),
+        "goodTradeRate": rate(len(good), len(judged)),
+        "qualityJudged": len(judged), "qualityUnknown": len(closed) - len(judged),
+        "qualityCoverage": rate(len(judged), len(closed)),
+        "goodTradeRateSample": len(judged),
+        "qrCounted": len(judged),
         "avgMAE": mae["avgMAE"], "avgMFE": mae["avgMFE"],
         "rExcluded": [{"id": t["id"], "symbolLabel": t["symbolLabel"],
                        "reason": t.get("rExcludeReason")} for t in trades if not r_included(t)],
@@ -584,47 +482,67 @@ def weekly_v2(src, trades, manual):
     by_id = {t["id"]: t for t in trades}
     notes = week_notes(manual)
     out = []
-    for w in src["weeks"]:
+    previous_goal = None
+    for w in sorted(src["weeks"], key=lambda x: x.get("start") or ""):
         wt = [by_id[i] for i in w["tradeIds"] if i in by_id]
-        rk = [t for t in wt if r_included(t)]
+        rk = [t for t in wt if is_closed(t) and r_included(t)]
         closed = [t for t in wt if is_closed(t)]
         wins = [t for t in closed if t.get("resultStatus") == "win"]
         rs = [t["actualR"] for t in rk]
-        # 本周最佳 Setup / 最大错误：都要求至少 2 笔，避免单笔巧合被当成结论
+        # Setup 只有达到展示样本阈值才排名；错误标签只描述已确认的观察。
         setups = {}
         for t in rk:
             sig = " → ".join((t.get("setup") or {}).get("flow") or []) or "(未记录)"
             setups.setdefault(sig, []).append(t)
-        cand = {k: v for k, v in setups.items() if len(v) >= 2} or setups
-        best = max(cand.items(), key=lambda kv: sum(x["actualR"] for x in kv[1])) if cand else (None, None)
+        cand = {k: v for k, v in setups.items() if len(v) >= MIN_Q_SAMPLE and k != "(未记录)"}
+        best = max(cand.items(), key=lambda kv: mean([x["actualR"] for x in kv[1]])) if cand else (None, None)
         mrows = mistake_analysis(rk)["rows"]
         big = mrows[0] if mrows else None
         costliest = min(mrows, key=lambda x: (x["lostR"] or 0)) if mrows else None
-        good = [t for t in closed if t.get("quality", {}).get("value") in ("Good Win", "Good Loss")]
-        comp = mean([t["complianceV2"]["passRate"] for t in wt
-                     if t.get("complianceV2", {}).get("passRate") is not None])
+        judged = [t for t in closed if quality_value(t)]
+        good = [t for t in judged if quality_value(t) in ("Good Win", "Good Loss")]
+        comp_trades = [t for t in closed if t.get("complianceV2", {}).get("compliance") is not None]
+        comp = rate(sum(t["complianceV2"]["compliance"] == "Fully Compliant" for t in comp_trades), len(comp_trades))
         mae = mae_mfe_analysis(wt)
         n = notes.get(w["label"]) or {}
+        goal = {k: n.get("focus" + k.title()) for k in ("trigger", "action", "metric")}
+        goal = dict(goal, week=w["label"]) if any(goal.values()) else None
+        eligible, completed = fnum(n.get("focusEligible")), fnum(n.get("focusCompleted"))
+        valid_counts = (eligible is not None and completed is not None and
+                        eligible.is_integer() and completed.is_integer() and 0 <= completed <= eligible)
+        behavior = {"goal": previous_goal,
+                    "eligible": int(eligible) if valid_counts else None,
+                    "completed": int(completed) if valid_counts else None,
+                    "completionRate": rate(completed, eligible) if valid_counts and previous_goal else None,
+                    "reflection": n.get("focusResult"),
+                    "status": "已记录" if valid_counts and previous_goal else "待检查" if previous_goal else "没有上周改进行为"}
         out.append({
             "label": w["label"], "start": w["start"], "end": w["end"], "isoWeek": w.get("isoWeek"),
-            "trades": len(wt), "closed": len(closed), "wins": len(wins), "losses": len(wt) - len(wins),
+            "trades": len(wt), "closed": len(closed), "wins": len(wins),
+            "losses": sum(t.get("resultStatus") == "loss" for t in closed),
+            "be": sum(t.get("resultStatus") == "be" for t in closed),
             "winRate": rate(len(wins), len(closed)),
             "netR": r2(sum(rs)) if rs else None, "rCounted": len(rk),
             "avgR": mean(rs), "expectancy": mean(rs),
-            "goodTradeRate": rate(len(good), len(closed)),
+            "goodTradeRate": rate(len(good), len(judged)),
+            "qualityJudged": len(judged), "qualityUnknown": len(closed) - len(judged),
+            "qualityCoverage": rate(len(judged), len(closed)),
             "ruleComplianceRate": comp,
+            "ruleComplianceDecided": len(comp_trades), "ruleComplianceUnknown": len(closed) - len(comp_trades),
             "bestSetup": ({"setup": best[0], "netR": r2(sum(x["actualR"] for x in best[1])),
                            "count": len(best[1])} if best[0] else None),
             "biggestMistake": big, "costliestMistake": costliest,
-            "mistakeLostR": r2(sum(x["lostR"] or 0 for x in mrows)) if mrows else None,
+            "mistakeLostR": mistake_analysis(rk)["totalLostR"] if mrows else None,
             "avgMAE": mae["avgMAE"], "avgMFE": mae["avgMFE"],
             "didWell": n.get("didWell"), "mainProblem": n.get("mainProblem"),
             "nextFocus": n.get("nextFocus"),
+            "behaviorGoal": goal, "behaviorReview": behavior,
             "notesSource": "manual/_weeks.json" if n else None,
             "summaryRaw": w.get("summaryRaw"),
             "tradeIds": w["tradeIds"],
             "sampleNote": sample_flag(len(rk)),
         })
+        previous_goal = goal
     return out
 
 
@@ -652,10 +570,10 @@ def timeframe_usage(trades):
 
 def quality_summary(trades):
     closed = [t for t in trades if is_closed(t)]
-    known = [t for t in closed if t.get("quality", {}).get("value")]
+    known = [t for t in closed if quality_value(t)]
     buckets = {}
     for t in closed:
-        buckets.setdefault(t.get("quality", {}).get("value") or "(无法判定)", []).append(t)
+        buckets.setdefault(quality_value(t) or "(无法判定)", []).append(t)
     rows = []
     for q in ("Good Win", "Good Loss", "Bad Win", "Bad Loss", "(无法判定)"):
         ts = buckets.get(q, [])
@@ -663,9 +581,9 @@ def quality_summary(trades):
         rows.append({"value": q, "count": len(ts), "netR": r2(sum(rs)) if rs else None,
                      "rCounted": len(rs), "trades": [x["id"] for x in ts]})
     return {"rows": rows, "closed": len(closed), "judged": len(known),
-            "goodTradeRate": rate(len([t for t in closed if (t.get("quality") or {}).get("value")
-                                       in ("Good Win", "Good Loss")]), len(closed)),
-            "note": "Good = 符合规则（哪怕亏钱）；Bad = 违规（哪怕赚钱）。目标是提高 Good Trade Rate，而不是只看胜率。"}
+            "unknown": len(closed) - len(known), "coverage": rate(len(known), len(closed)),
+            "goodTradeRate": rate(sum(quality_value(t) in ("Good Win", "Good Loss") for t in known), len(known)),
+            "note": "质量率只使用已判定交易；未判定单列，并显示覆盖率。保本保留为未定级，不归为亏损。"}
 
 
 def confidence_vs_result(trades):
@@ -681,7 +599,7 @@ def confidence_vs_result(trades):
 
 
 # ---------------------------------------------------------------- §41 系统必须回答的问题
-MIN_Q_SAMPLE = 10       # 需求 §44：20 笔起才谈结论，这里更保守
+MIN_Q_SAMPLE = 10       # 展示样本内比较的最小组样本，不代表策略有效性已得到证明
 TIE_EPS = 0.05
 
 
@@ -694,7 +612,7 @@ def _cmp(r_a, r_b, name_a, name_b):
     if not r_a or not r_b or r_a.get("expectancy") is None or r_b.get("expectancy") is None:
         return None, "两组里至少一组没有可计 R 的交易"
     na, nb = r_a["rCounted"], r_b["rCounted"]
-    if min(na, nb) < 2:
+    if min(na, nb) < MIN_Q_SAMPLE:
         return None, "一方样本只有 " + str(min(na, nb)) + " 笔，样本不足"
     a, b = r_a["expectancy"], r_b["expectancy"]
     if abs(a - b) < TIE_EPS:
@@ -702,7 +620,7 @@ def _cmp(r_a, r_b, name_a, name_b):
     w, l = (name_a, a, na), (name_b, b, nb)
     if b > a:
         w, l = (name_b, b, nb), (name_a, a, na)
-    return (w[0] + " 更好：Expectancy " + _rr(w[1]) + "（" + str(w[2]) + " 笔） vs " +
+    return (w[0] + " 样本内平均 R 较高：" + _rr(w[1]) + "（" + str(w[2]) + " 笔） vs " +
             l[0] + " " + _rr(l[1]) + "（" + str(l[2]) + " 笔）"), None
 
 
@@ -714,7 +632,7 @@ def _row(rows, key):
 
 
 def _best(rows):
-    cand = [r for r in (rows or []) if r["key"] != "(未记录)" and r["expectancy"] is not None and r["rCounted"] >= 2]
+    cand = [r for r in (rows or []) if r["key"] != "(未记录)" and r["expectancy"] is not None and r["rCounted"] >= MIN_Q_SAMPLE]
     if not cand:
         return None
     return max(cand, key=lambda r: r["expectancy"])
@@ -734,21 +652,14 @@ def answers(trades, dims, mis, mae, sve, dash):
     b = _best(dims["structureShiftType"]["rows"])
     add("我什么 Setup / 结构形态最赚钱？",
         ("表现最好：" + b["key"] + " · Expectancy " + _rr(b["expectancy"]) + "（" + str(b["rCounted"]) + " 笔）"
-         + "；最常出现：" + (mis.get("mostCommon") or "无") ) if b else "结构形态基本都没记录，先补 Broken Structure / Structure Shift",
+         + "；最常出现：" + (mis.get("mostCommon") or "无") ) if b else "有效样本不足，暂不选择最佳结构形态；保留记录继续检查执行",
         "按 Structure Shift Type 分组，指标 = Expectancy（平均每笔 R）")
 
-    # 2 Entry Mode
-    rows = dims["entryMode"]["rows"]
-    txt, why = _cmp(_row(rows, "LTF Confirmation"), _row(rows, "Limit"), "LTF Confirmation", "Limit")
-    if not txt:
-        mrow = _row(rows, "Market")
-        hint = []
-        if _row(rows, "Limit"):
-            hint.append("Limit " + str(_row(rows, "Limit")["count"]) + " 笔")
-        if _row(rows, "LTF Confirmation"):
-            hint.append("LTF Confirmation " + str(_row(rows, "LTF Confirmation")["count"]) + " 笔")
-        txt = "暂不下结论（" + (why or "缺数据") + "）" + ("；已有 " + "、".join(hint) if hint else "")
-    add("Limit 与 LTF Confirmation 哪个更适合我？", txt, "按 Entry Mode 分组比较 Expectancy / Win Rate")
+    # 确认逻辑与下单方式分别统计；旧 Entry Mode 不能当作两者的替代。
+    rows = dims["confirmationMode"]["rows"]
+    txt, why = _cmp(_row(rows, "LTF Confirmation"), _row(rows, "POI Touch"), "LTF Confirmation", "POI Touch")
+    add("按确认方式分组，执行与结果有什么区别？", txt or "暂不比较（" + (why or "缺少已确认记录") + "）",
+        "按计划确认方式分组；实际 Limit / Market / Stop 单独记录")
 
     # 3 Timeframe 15m vs 5m
     rows = dims["ltfEntryTF"]["rows"]
@@ -763,7 +674,7 @@ def answers(trades, dims, mis, mae, sve, dash):
         best = max(rows, key=lambda r: (r["rCounted"] > 0, r["expectancy"] or -9))
         add("1D / 4H / 1H 哪种 HTF POI 对我最有效？",
             "记录到的 HTF POI 周期： " + "，".join(r["key"] + "（" + str(r["count"]) + " 笔，Expectancy " + _rr(r["expectancy"]) + "）" for r in rows)
-            + ("；样本内最好 " + best["key"] if best["rCounted"] else ""),
+            + ("；样本内均值较高 " + best["key"] if best["rCounted"] >= MIN_Q_SAMPLE else "；样本不足，暂不排名"),
             "按 HTF POI 周期分组；注意 1D POI 目前可能完全没有出现")
     else:
         add("1D / 4H / 1H 哪种 HTF POI 对我最有效？", "HTF POI 周期没记录", "按 HTF POI 周期分组")
@@ -801,27 +712,18 @@ def answers(trades, dims, mis, mae, sve, dash):
         txt or ("暂不下结论（" + (why or "被破坏结构（Internal vs Key / Protected）记录不足") + "）"),
         "按 Broken Structure 分组：Internal LH/HL vs Key LH/HL / Protected / External")
 
-    # 9 Risk: SL 太紧 or 太宽
-    if mae.get("lossMAE") is not None and mae.get("recorded"):
-        v = mae["lossMAE"]
-        verdict = "偏紧（止损常在浮亏很小甚至没到 -0.8R 前就被打掉）" if v > -0.8 else (
-            "偏宽（亏损交易打到的浮亏明显超过 1R 才止损）" if v < -1.15 else "大致合理（亏损交易的 MAE 集中在 -0.8R ~ -1.15R）")
-        add("我的止损通常放得太紧还是太宽？", "亏损交易平均 MAE " + _rr(v) + " → " + verdict,
-            "MAE（最大不利波动）按 R 记录；只有 " + str(mae["recorded"]) + " / " + str(mae["total"]) + " 笔有记录")
-    else:
-        add("我的止损通常放得太紧还是太宽？", "MAE 没记录，暂时算不出来（需求 §19 要求按 R 记 MAE）",
-            "MAE = Maximum Adverse Excursion，最大不利波动")
-
-    # 10 Exit: 提前止盈
-    if mae.get("winMFE") is not None and mae.get("winMFE") is not None and _win_r(trades) is not None:
-        wmfe, wr = mae["winMFE"], _win_r(trades)
-        gap = wmfe - wr
-        verdict = ("偏早（盈利单平均还能多走 " + _rr(gap) + " 才回头）" if gap > 0.5 else
-                   ("偏晚/正好（盈利单基本吃到了大部分有利波动）" if gap > -0.05 else "有过头回吐（盈利单回吐了部分利润）"))
-        add("我的止盈通常太早还是太晚？", "盈利单平均 MFE " + _rr(wmfe) + " vs 实际拿到 " + _rr(wr) + " → " + verdict,
-            "MFE（最大有利波动）对比实际 R")
-    else:
-        add("我的止盈通常太早还是太晚？", "MFE 没记录，暂时算不出来", "MFE = Maximum Favorable Excursion")
+    # MAE / MFE 只描述已记录波动，不用固定阈值判定止损或退出好坏。
+    add("止损设置有什么需要检查？",
+        "亏损单平均 MAE " + _rr(mae.get("lossMAE")) + "；需结合计划 SL、实际止损与调整记录检查" if mae.get("lossMAE") is not None
+        else "MAE 未记录，暂时无法比较",
+        "单靠 MAE 不能判定止损过紧或过宽")
+    paired = [t for t in trades if t.get("resultStatus") == "win" and r_included(t) and fnum(t.get("mfe")) is not None]
+    gap = mean([fnum(t["mfe"]) - t["actualR"] for t in paired])
+    add("退出执行有什么需要检查？",
+        "同组盈利交易的 MFE 与实际 R 平均相差 " + _rr(gap) + "；回看是否执行了交易前退出规则" if paired
+        else "缺少同时记录 MFE 与实际 R 的盈利交易",
+        "只比较同一批交易；存在差距不等于应该拿到全部 MFE，样本 " + str(len(paired)),
+        len(paired) < MIN_Q_SAMPLE)
 
     # 11 Execution vs Strategy
     bl = sve.get("badLoss") or {}
@@ -829,19 +731,19 @@ def answers(trades, dims, mis, mae, sve, dash):
     tot_loss_r = (bl.get("r") or 0) + (gl.get("r") or 0)
     if bl.get("count") or gl.get("count"):
         share = rate(abs(bl.get("r") or 0), abs(tot_loss_r)) if tot_loss_r else 0
-        add("我的亏损主要来自策略本身还是执行错误？",
+        add("亏损交易的执行质量分别怎样？",
             "违规亏损（Bad Loss）" + str(bl.get("count", 0)) + " 笔 / " + _rr(bl.get("r")) +
             "，合规亏损（Good Loss）" + str(gl.get("count", 0)) + " 笔 / " + _rr(gl.get("r")) +
-            " → 目前亏损里 " + pct_str(share) + " 来自违规执行",
-            "Bad Loss = 违规+亏损（执行问题）；Good Loss = 按规则做但止损（策略成本）")
+            "；已分类亏损中 " + pct_str(share) + " 出现在有违规的交易里",
+            "这里只描述执行质量与亏损的分布，不能证明因果；未定级亏损单独列出")
     else:
-        add("我的亏损主要来自策略本身还是执行错误？", "还没有可分类的亏损交易（需要先记 Rule Compliance）",
+        add("亏损交易的执行质量分别怎样？", "还没有可分类的亏损交易（需要先记 Rule Compliance）",
             "依赖 Rule Compliance 字段")
 
     # 12 Mistake
     c = mis.get("costliest")
-    add("什么错误让我损失最多？",
-        ("最贵错误：" + c["tag"] + "（" + c["category"] + "）· " + str(c["count"]) + " 笔 / " + _rr(c["lostR"])) if c
+    add("哪些已确认问题的相关交易亏损较多？",
+        ("相关亏损较多的标签：" + c["tag"] + "（" + c["category"] + "）· " + str(c["count"]) + " 笔 / " + _rr(c["lostR"])) if c
         else "还没有带 R 的错误标签记录",
         "Mistake Tags 统计（含「自动建议·待确认」标记）")
 
@@ -897,12 +799,6 @@ def build_result(trades, src):
         sug = suggest_mistakes(t)
         t["mistakeSuggestions"] = sug
         t["mistakeTags"] = flist(t, "mistakes")
-        if not t["mistakeTags"] and sug["suggestions"]:
-            f = (t.setdefault("fields", {})).setdefault("mistakes", {})
-            f["value"] = [x["tag"] for x in sug["suggestions"]]
-            f["source"], f["confirmed"] = "derived:checklist", False
-            f["evidence"] = "；".join(x["evidence"] for x in sug["suggestions"])[:300]
-            t["mistakeTags"] = list(f["value"])
         # 数值字段（§13 Protected Price、§19 MAE/MFE）：文档/手填层取到的数值同步成交易级属性，
         # 供 MAE·MFE 统计与详情页使用；取不到就保持未记录（不填 0）。
         for nk in ("mae", "mfe", "protectedPrice"):
