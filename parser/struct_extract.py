@@ -74,7 +74,7 @@ def parse_struct_value(field, body):
     extra = {}
     spec = FIELD_BY_KEY.get(field) or {}
     if spec.get("kind") == "text":
-        if any(token in body for token in NO_RECORD_TOKENS):
+        if body.strip().strip("。.!！ ") in NO_RECORD_TOKENS:
             return [], body, extra
         return ([body.strip()] if body.strip() else []), "", extra
     if spec.get("kind") == "number":

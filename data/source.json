@@ -3,10 +3,10 @@
     "sourceTitle": "交易复盘",
     "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
     "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
-    "parsedAt": "2026-09-29T23:02:32+08:00",
-    "schemaVersion": "2.0",
+    "parsedAt": "2026-10-01T20:54:51+08:00",
+    "schemaVersion": "2.1",
     "vocab": {
-      "version": "2.0",
+      "version": "2.1",
       "htf": [
         "1D",
         "4H",
@@ -466,6 +466,149 @@
           "unit": null
         },
         {
+          "key": "reviewModel",
+          "label": "复盘模型",
+          "options": [
+            "HTF POI",
+            "LTF Confirmation"
+          ],
+          "group": "Trade Plan",
+          "multi": false,
+          "tier": "core",
+          "note": "按交易前计划选择；未记录时不套用模型规则。",
+          "kind": "enum",
+          "unit": null
+        },
+        {
+          "key": "confirmationMode",
+          "label": "计划确认方式",
+          "options": [
+            "POI Touch",
+            "LTF Confirmation"
+          ],
+          "group": "Trade Plan",
+          "multi": false,
+          "tier": "core",
+          "note": null,
+          "kind": "enum",
+          "unit": null
+        },
+        {
+          "key": "requiredConfirmations",
+          "label": "计划必需确认条件",
+          "options": [
+            "None",
+            "Sweep",
+            "Displacement",
+            "Key Structure",
+            "Entry Trigger"
+          ],
+          "group": "Trade Plan",
+          "multi": true,
+          "tier": "core",
+          "note": "只检查交易前约定的条件。None 表示无需 LTF 确认，不能与其他选项并选。",
+          "kind": "enum",
+          "unit": null
+        },
+        {
+          "key": "orderType",
+          "label": "实际下单方式",
+          "options": [
+            "Limit",
+            "Market",
+            "Stop"
+          ],
+          "group": "Entry",
+          "multi": false,
+          "tier": "core",
+          "note": "与确认方式分别记录；等 LTF 确认后仍可用 Limit 或 Market 下单。",
+          "kind": "enum",
+          "unit": null
+        },
+        {
+          "key": "executionAdherence",
+          "label": "是否按计划执行",
+          "options": [
+            "Followed Plan",
+            "Deviation"
+          ],
+          "group": "Review",
+          "multi": false,
+          "tier": "core",
+          "note": "执行汇总，不单独决定违规等级；Deviation 需记录具体违反项，没有证据时留空。",
+          "kind": "enum",
+          "unit": null
+        },
+        {
+          "key": "planTiming",
+          "label": "计划记录时点",
+          "options": [
+            "Before Entry",
+            "Retrospective"
+          ],
+          "group": "Trade Plan",
+          "multi": false,
+          "tier": "core",
+          "note": "旧交易补录请选择 Retrospective；补录计划不能证明交易前已制定。",
+          "kind": "enum",
+          "unit": null
+        },
+        {
+          "key": "plannedEntry",
+          "label": "计划 Entry",
+          "options": [],
+          "group": "Trade Plan",
+          "multi": false,
+          "tier": "core",
+          "note": null,
+          "kind": "number",
+          "unit": "价格"
+        },
+        {
+          "key": "plannedSL",
+          "label": "计划 SL",
+          "options": [],
+          "group": "Trade Plan",
+          "multi": false,
+          "tier": "core",
+          "note": null,
+          "kind": "number",
+          "unit": "价格"
+        },
+        {
+          "key": "plannedTP",
+          "label": "计划 TP",
+          "options": [],
+          "group": "Trade Plan",
+          "multi": false,
+          "tier": "core",
+          "note": null,
+          "kind": "number",
+          "unit": "价格"
+        },
+        {
+          "key": "plannedRR",
+          "label": "计划 RR",
+          "options": [],
+          "group": "Trade Plan",
+          "multi": false,
+          "tier": "core",
+          "note": null,
+          "kind": "number",
+          "unit": "R"
+        },
+        {
+          "key": "minRRThreshold",
+          "label": "交易前最低 RR",
+          "options": [],
+          "group": "Trade Plan",
+          "multi": false,
+          "tier": "core",
+          "note": "由你的模型约定，不预设阈值。未记录时 RR 是否合格保持未知。",
+          "kind": "number",
+          "unit": "R"
+        },
+        {
           "key": "entryMode",
           "label": "Entry Mode（入场方式）",
           "options": [
@@ -794,6 +937,60 @@
             "Hesitation"
           ],
           "note": "可多选（需求 §22）；用于统计「最常出现的错误」「损失最大的错误」。"
+        },
+        {
+          "key": "primaryMistake",
+          "label": "主要问题（人工确认）",
+          "options": [
+            "Wrong HTF Bias",
+            "Wrong POI",
+            "Weak POI",
+            "No Sweep",
+            "Bad Liquidity Read",
+            "No Displacement",
+            "Weak Displacement",
+            "Weak MSB",
+            "Internal MSB Only",
+            "Against Structure",
+            "Poor RR",
+            "Front Run",
+            "Early Entry",
+            "Late Entry",
+            "FOMO",
+            "Chase Price",
+            "Missed Confirmation",
+            "SL Too Tight",
+            "SL Too Wide",
+            "Oversized Position",
+            "Poor Risk Management",
+            "Early Exit",
+            "Late Exit",
+            "Move SL Too Early",
+            "Move SL to BE Too Early",
+            "Hold Too Long",
+            "Revenge Trade",
+            "Overconfidence",
+            "Fear",
+            "Impatience",
+            "Hesitation"
+          ],
+          "group": "Review",
+          "multi": false,
+          "tier": "core",
+          "note": "多个观察中选一个主要问题，不自动认定它造成了全部亏损。",
+          "kind": "enum",
+          "unit": null
+        },
+        {
+          "key": "causeChain",
+          "label": "问题经过",
+          "options": [],
+          "group": "Review",
+          "multi": false,
+          "tier": "core",
+          "note": "例如：未到计划 POI → 提前入场 → Entry / SL 结构层级不匹配。",
+          "kind": "text",
+          "unit": null
         }
       ],
       "zh": {
@@ -939,28 +1136,52 @@
       "buckets": {
         "Must Have": [
           {
+            "id": "model",
+            "text": "交易前复盘模型",
+            "field": "reviewModel",
+            "mode": "model"
+          },
+          {
+            "id": "planTiming",
+            "text": "计划在入场前记录",
+            "field": "planTiming",
+            "mode": "plan_timing"
+          },
+          {
             "id": "htfBias",
-            "text": "明确 HTF Bias（方向判断）",
+            "text": "明确 HTF Bias 与交易方向",
             "field": "htfBias",
-            "mode": "set"
+            "mode": "bias"
           },
           {
             "id": "htfPOI",
             "text": "明确 HTF POI 与周期",
             "field": "htfPOIType",
-            "mode": "set"
+            "mode": "poi"
           },
           {
             "id": "invalidation",
             "text": "明确 Invalidation（失效依据）",
             "field": "invalidationLogic",
-            "mode": "set"
+            "mode": "invalidation"
           },
           {
             "id": "rr",
             "text": "RR 符合要求",
             "field": "plannedRR",
             "mode": "rr_gate"
+          },
+          {
+            "id": "confirmationPlan",
+            "text": "明确本模型的确认要求",
+            "field": "requiredConfirmations",
+            "mode": "confirmation_plan"
+          },
+          {
+            "id": "execution",
+            "text": "按交易前计划执行",
+            "field": "executionAdherence",
+            "mode": "adherence"
           }
         ],
         "Confirmation": [
@@ -973,8 +1194,8 @@
           {
             "id": "displacement",
             "text": "Displacement",
-            "field": "displacementQuality",
-            "mode": "set"
+            "field": "displacement",
+            "mode": "in:Yes"
           },
           {
             "id": "structure",
@@ -997,12 +1218,6 @@
             "mode": "not_in:FOMO"
           },
           {
-            "id": "midrange",
-            "text": "Mid Range Entry",
-            "field": "midRange",
-            "mode": "none"
-          },
-          {
             "id": "weakmsb",
             "text": "Weak MSB",
             "field": "mistakes",
@@ -1023,10 +1238,10 @@
         ]
       }
     },
-    "sourceVersion": "8bff9aa8a1916e2a",
-    "exportBytesHash": "48bc2fae474cb1f1",
-    "sourceBytes": 1366635,
-    "blocks": 125,
+    "sourceVersion": "cf026c69bb25170c",
+    "exportBytesHash": "912987406a423055",
+    "sourceBytes": 1375884,
+    "blocks": 234,
     "unresolvedImageCount": 0,
     "exportedImages": [
       "images/2026-09-13-ethusdt-long-01-1.png",
@@ -1119,7 +1334,7 @@
       "direction": "long",
       "headingResult": "+2.30R",
       "heading": "1｜ETH/USDT Long｜2026年9月13日–9月15日｜+2.30R",
-      "sourceBlockIndex": 5,
+      "sourceBlockIndex": 114,
       "entryDate": "2026-09-13",
       "exitDate": null,
       "entryTime": null,
@@ -1298,12 +1513,12 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image6.png",
+          "media": "image7.png",
           "order": 1,
           "file": "images/2026-09-13-ethusdt-long-01-1.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 18,
+          "sourceBlockIndex": 127,
           "width": 2048,
           "height": 935,
           "sha256": "46ec3b95e628c30b",
@@ -1641,7 +1856,7 @@
       "direction": "long",
       "headingResult": "+1.26R",
       "heading": "2｜ETH/USDT Long｜2026年9月18日｜+1.26R",
-      "sourceBlockIndex": 19,
+      "sourceBlockIndex": 128,
       "entryDate": "2026-09-18",
       "exitDate": null,
       "entryTime": null,
@@ -1818,7 +2033,7 @@
           "file": "images/2026-09-18-ethusdt-long-02-1.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 32,
+          "sourceBlockIndex": 141,
           "width": 2048,
           "height": 988,
           "sha256": "b4f9e35f258b7391",
@@ -2046,6 +2261,11 @@
             "leftover": "Bullish→后续"
           },
           {
+            "field": "displacement",
+            "raw": "首次 MSB 对应位移偏弱",
+            "leftover": "首次 MSB 对应位移偏弱"
+          },
+          {
             "field": "displacementQuality",
             "raw": "首次 MSB 对应位移偏弱",
             "leftover": "首次MSB对应位移偏弱"
@@ -2129,7 +2349,7 @@
       "direction": "long",
       "headingResult": "盈利",
       "heading": "3｜QQQ/USDT Long｜2026年9月15日–9月19日｜盈利",
-      "sourceBlockIndex": 33,
+      "sourceBlockIndex": 142,
       "entryDate": "2026-09-15",
       "exitDate": null,
       "entryTime": null,
@@ -2298,12 +2518,12 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image7.png",
+          "media": "image2.png",
           "order": 1,
           "file": "images/2026-09-15-qqqusdt-long-03-1.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 46,
+          "sourceBlockIndex": 155,
           "width": 2048,
           "height": 988,
           "sha256": "57f1bb153ff906fa",
@@ -2634,7 +2854,7 @@
       "direction": "long",
       "headingResult": "-1R",
       "heading": "1｜XAU/USDT Long｜2026年9月21日–9月22日｜-1R",
-      "sourceBlockIndex": 49,
+      "sourceBlockIndex": 158,
       "entryDate": "2026-09-21",
       "exitDate": null,
       "entryTime": null,
@@ -3068,7 +3288,7 @@
       "direction": "short",
       "headingResult": "+2.05R",
       "heading": "2｜XAU/USDT Short｜上一周未完成；2026年9月28日完成｜+2.05R",
-      "sourceBlockIndex": 63,
+      "sourceBlockIndex": 172,
       "entryDate": null,
       "exitDate": "2026-09-28",
       "entryTime": null,
@@ -3198,7 +3418,7 @@
           "file": "images/undated-xauusdt-short-02-1.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 75,
+          "sourceBlockIndex": 184,
           "width": 1255,
           "height": 132,
           "sha256": "3711a3939ad8a049",
@@ -3206,12 +3426,12 @@
           "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
         },
         {
-          "media": "image3.png",
+          "media": "image1.png",
           "order": 2,
           "file": "images/undated-xauusdt-short-02-2.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 76,
+          "sourceBlockIndex": 185,
           "width": 2048,
           "height": 937,
           "sha256": "92573e7776b1de2c",
@@ -3346,7 +3566,7 @@
       "direction": "long",
       "headingResult": "-1R（-0.07）",
       "heading": "1｜HYPE/USDT Long｜2026年9月28日｜-1R（-0.07）",
-      "sourceBlockIndex": 79,
+      "sourceBlockIndex": 188,
       "entryDate": "2026-09-28",
       "exitDate": null,
       "entryTime": null,
@@ -3489,12 +3709,12 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image8.png",
+          "media": "image6.png",
           "order": 1,
           "file": "images/2026-09-28-hypeusdt-long-01-1.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 91,
+          "sourceBlockIndex": 200,
           "width": 2048,
           "height": 988,
           "sha256": "9e2aac209e12d0fe",
@@ -3778,7 +3998,7 @@
       "direction": "long",
       "headingResult": "未成交",
       "heading": "挂单｜BTC/USDT Long｜2026年9月28日｜未成交",
-      "sourceBlockIndex": 92,
+      "sourceBlockIndex": 201,
       "entryDate": "2026-09-28",
       "exitDate": null,
       "entryTime": null,
@@ -3922,12 +4142,12 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image1.png",
+          "media": "image8.png",
           "order": 1,
           "file": "images/2026-09-28-btcusdt-long-挂单-1.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 106,
+          "sourceBlockIndex": 215,
           "width": 2048,
           "height": 988,
           "sha256": "b8c0635f3d670465",
@@ -3935,12 +4155,12 @@
           "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
         },
         {
-          "media": "image2.png",
+          "media": "image3.png",
           "order": 2,
           "file": "images/2026-09-28-btcusdt-long-挂单-2.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 107,
+          "sourceBlockIndex": 216,
           "width": 2048,
           "height": 988,
           "sha256": "689d87277438ee01",
@@ -4230,67 +4450,73 @@
         "id": "规则一",
         "title": "先做 HTF Context",
         "body": "固定按 1D → 4H → 1H 分析 Bias、Market Condition、Major Structure、Liquidity、POI、Premium/Discount 与 HTF Target。HTF 负责回答“市场在哪里、方向是什么、主要流动性/POI/目标在哪里”。",
-        "sourceBlockIndex": 109
+        "sourceBlockIndex": 218
       },
       {
         "id": "规则二",
         "title": "再做 LTF Confirmation",
         "body": "固定按 15min → 5min 观察 POI 到达后的 Reaction、Liquidity Sweep、Displacement、MSB/MSS/BOS、Broken Structure、First Retracement 与 Entry。Internal MSB 只说明内部结构变化，不能自动等同主要趋势反转。",
-        "sourceBlockIndex": 110
+        "sourceBlockIndex": 219
       },
       {
         "id": "规则三",
         "title": "POI 必须分层记录",
         "body": "HTF POI 与 LTF Entry POI 分开。POI 必须带 Timeframe；允许 OB、FVG、IMB、Breaker、Mitigation Block、Support/Resistance、Premium/Discount、OTE、Supply/Demand 等。多重 POI 记录为 Confluence，但不为了记录而记录。",
-        "sourceBlockIndex": 111
+        "sourceBlockIndex": 220
       },
       {
         "id": "规则四",
         "title": "Entry、Invalidation、Target 必须成对",
         "body": "Entry Reason 与 Entry Trigger 分开；SL 对应明确的结构失效；TP 对应 Liquidity / Swing / IMB / HTF Target。下单前记录 Planned Entry、SL、TP 与 Planned RR，RR 不符合预设标准则跳过。",
-        "sourceBlockIndex": 112
+        "sourceBlockIndex": 221
+      },
+      {
+        "id": "规则五",
+        "title": "复盘区分执行质量与交易结果",
+        "body": "完全符合交易前适用规则的亏损记为 Good Loss，只表示执行合规，不能据单笔止损认定策略失效。提前进场、未到 POI、未等 Sweep/Displacement、弱结构突破、FOMO、RR 不合格、SL 放错、逆 HTF Bias 等，须结合本笔交易前约定与明确证据判定；HTF POI 不默认要求全部 LTF 条件，逆势是否允许也以原计划为准。Execution Adherence 只作汇总，具体确认项失败记 Minor，具体核心/Avoid 失败记 Major；只有 Deviation 而没有具体证据时保持未判。盈利不证明执行正确，亏损不证明执行违规。缺少可靠记录保持未记录，不反推、不补造；原文标注与清单冲突时保留双方依据，订正前质量暂不计入已判统计。",
+        "sourceBlockIndex": 222
       }
     ],
     "template": [
       {
         "text": "① Basic Info：日期/时间、Symbol、Long/Short、Exchange、Setup、Entry Mode；HTF 使用周期（1D/4H/1H）与 LTF 使用周期（15min/5min）；Planned/Actual Entry、SL、TP、Planned R、Actual R、Result。",
-        "sourceBlockIndex": 115
+        "sourceBlockIndex": 224
       },
       {
         "text": "② HTF Context：分别记录 1D / 4H / 1H 的 Bias（Bullish/Bearish/Neutral）、Market Condition（Trending/Range/Expansion/Compression/Reversal/Unclear）、Structure（Bullish/Bearish/Range/Transition）、Premium/Discount、主要 Liquidity、HTF POI 与 HTF Target。",
-        "sourceBlockIndex": 116
+        "sourceBlockIndex": 225
       },
       {
         "text": "③ HTF Liquidity & POI：Liquidity Type、Timeframe、是否 Sweep、Sweep Quality；HTF POI Type + Timeframe；若存在多个因素，记录 POI Confluence。HTF POI 与 LTF Entry POI 必须分开。",
-        "sourceBlockIndex": 117
+        "sourceBlockIndex": 226
       },
       {
         "text": "④ LTF Reaction：在 15min / 5min 记录 Reaction（Strong/Weak/No Reaction）及 Reaction Type（Rejection/Sweep/Momentum Shift/Candle Reversal/Consolidation/Immediate Displacement）。",
-        "sourceBlockIndex": 118
+        "sourceBlockIndex": 227
       },
       {
         "text": "⑤ LTF Confirmation：记录 Sweep（Yes/No/Partial）、Displacement（Yes/No + Strong/Medium/Weak + Timeframe）、Structure Shift（MSB/MSS/BOS/CHOCH/None）以及 Broken Structure（Internal LH/HL、Key LH/HL、Protected High/Low、External Structure）。",
-        "sourceBlockIndex": 119
+        "sourceBlockIndex": 228
       },
       {
         "text": "⑥ Entry：先写完整 Setup Flow，再区分 Entry Reasons 与 Entry Trigger；明确属于 HTF Limit、HTF + LTF Confirmation、Market Entry 或其他。若为 Limit Entry，说明为什么允许不等额外 LTF Confirmation。",
-        "sourceBlockIndex": 120
+        "sourceBlockIndex": 229
       },
       {
         "text": "⑦ Invalidation & SL：说明“什么发生就证明我错了”，并对应具体 SL。优先记录 Protected High/Low、Swing、POI 失效或接受到失效区之外等结构原因，而不只记录一个价格。",
-        "sourceBlockIndex": 121
+        "sourceBlockIndex": 230
       },
       {
         "text": "⑧ Target & Risk Check：Target 说明对应的 BSL/SSL、Internal/External Liquidity、Swing、IMB/FVG 或 HTF Target；同时检查 Planned RR、是否追价、是否偏离 POI、是否逆 HTF Bias。",
-        "sourceBlockIndex": 122
+        "sourceBlockIndex": 231
       },
       {
         "text": "⑨ Trade Management：记录减仓、分批止盈、移动 SL、Break Even、提前退出、加仓/减仓以及每次操作的结构原因；避免只记录“移动了止损”而没有原因。",
-        "sourceBlockIndex": 123
+        "sourceBlockIndex": 232
       },
       {
         "text": "⑩ Result & Review：记录 Win/Loss/BE、PnL、Actual R、Holding Time、Fees、MAE/MFE；判断本笔属于策略亏损还是执行亏损，并区分 Good Win / Bad Win / Good Loss / Bad Loss；记录 Rule Violation、做得好的、需要改进、下一次可执行规则。",
-        "sourceBlockIndex": 124
+        "sourceBlockIndex": 233
       }
     ]
   },
@@ -4357,6 +4583,12 @@
     },
     {
       "rule": "规则四｜Entry、Invalidation、Target 必须成对：Entry Reason 与 Entry Trigger 分开；SL 对应明确的结构失效；TP 对应 Liquidity / Swing / IMB / HTF Target。下单前记录 Planned Entry、SL、TP 与 Planned RR，RR 不符合预设标准则跳过。",
+      "createdFrom": "doc:rules",
+      "symbol": null,
+      "date": null
+    },
+    {
+      "rule": "规则五｜复盘区分执行质量与交易结果：完全符合交易前适用规则的亏损记为 Good Loss，只表示执行合规，不能据单笔止损认定策略失效。提前进场、未到 POI、未等 Sweep/Displacement、弱结构突破、FOMO、RR 不合格、SL 放错、逆 HTF Bias 等，须结合本笔交易前约定与明确证据判定；HTF POI 不默认要求全部 LTF 条件，逆势是否允许也以原计划为准。Execution Adherence 只作汇总，具体确认项失败记 Minor，具体核心/Avoid 失败记 Major；只有 Deviation 而没有具体证据时保持未判。盈利不证明执行正确，亏损不证明执行违规。缺少可靠记录保持未记录，不反推、不补造；原文标注与清单冲突时保留双方依据，订正前质量暂不计入已判统计。",
       "createdFrom": "doc:rules",
       "symbol": null,
       "date": null

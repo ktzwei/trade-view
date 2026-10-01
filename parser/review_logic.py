@@ -71,6 +71,22 @@ def derive_quality(t):
     if result not in ("win", "loss"):
         return {"value": None, "source": "derived", "basis": "未结束或保本，不套用胜负四象限"}
     explicit = confirmed_value(t, "tradeQuality")
+    declared = confirmed_value(t, "ruleCompliance")
+    derived = ((t.get("complianceV2") or {}).get("derivedCompliance") or {}).get("value")
+    grades = {"Fully Compliant", "Minor Violation", "Major Violation"}
+    compliance = derived if derived in grades else declared
+    expected = (("Good " if compliance == "Fully Compliant" else "Bad ") +
+                ("Win" if result == "win" else "Loss")) if compliance in grades else None
+    conflicts = []
+    if declared in grades and derived in grades and declared != derived:
+        conflicts.append(f"标注合规度 {declared} 与清单 {derived} 不一致")
+    if explicit in QUALITY_VALUES and (not explicit.endswith("Win" if result == "win" else "Loss")
+                                       or (expected and explicit != expected)):
+        conflicts.append(f"标注质量 {explicit} 与清单/结果 {expected or result} 不一致")
+    if conflicts:
+        return {"value": None, "source": "conflict", "basis": "判定冲突，待订正：" + "；".join(conflicts),
+                "conflicts": conflicts, "reportedQuality": explicit, "reportedCompliance": declared,
+                "checklistCompliance": derived}
     if explicit in QUALITY_VALUES and explicit.endswith("Win" if result == "win" else "Loss"):
         return {"value": explicit, "source": field(t, "tradeQuality")["source"],
                 "basis": "已确认的质量判定"}
@@ -122,7 +138,7 @@ def derive_checklist(t):
                     note = "未确认交易前模型，不能判定该条件是否适用"
                 elif required and not valid_required:
                     note = "确认要求存在冲突，需修正计划"
-                elif not required and model == "LTF Confirmation":
+                elif not required:
                     note = "未记录本模型的必需确认条件"
                 elif CONFIRMATIONS[spec["id"]] not in required:
                     status, note = "不适用", "该模型的交易前计划未要求此项"
@@ -147,7 +163,7 @@ def derive_checklist(t):
                 if model in MODELS and confirmation_mode is not None:
                     if confirmation_mode != expected_mode or (required and not valid_required):
                         status, note = "✕", "模型与确认方式 / 必需条件冲突"
-                    elif model == "HTF POI" or valid_required:
+                    elif valid_required:
                         status, note = "✓", "按记录的模型与条件检查"
             elif mode == "bias":
                 if val in ("Bullish", "Bearish", "Neutral") and t.get("direction") in ("long", "short"):
@@ -171,8 +187,10 @@ def derive_checklist(t):
                 else:
                     note = "计划 RR 或交易前阈值未记录，不预设标准"
             elif mode == "adherence":
-                if val in ("Followed Plan", "Deviation"):
-                    status = "✓" if val == "Followed Plan" else "✕"
+                if val == "Followed Plan":
+                    status = "✓"
+                elif val == "Deviation":
+                    note = "已记录执行偏离；等级按具体违反项判定，未说明的偏离保持待判"
             elif mode.startswith("not_in:"):
                 if val is not None:
                     bad = mode[7:].split(",")

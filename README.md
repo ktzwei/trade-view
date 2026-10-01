@@ -4,7 +4,7 @@
 确认方式与下单方式分开记录，计划修改保留历史，周复盘可追踪一个改进行为。
 录入与判定口径见 [docs/review-logic.md](docs/review-logic.md)。
 主要流程：交易截图 → ChatGPT 针对缺失记录提问 → 回答或明确跳过 → Google Docs → 夜一解析生成页面。
-上游完整提示词见 [docs/chatgpt-recording.md](docs/chatgpt-recording.md)，包含复盘规则、缺项提问与文档格式；周三问及行为检查也可直接写入文档的 `【周复盘】` 段。
+上游完整提示词见 [docs/chatgpt-recording.md](docs/chatgpt-recording.md)，同步到 Google《交易复盘》的独立约定区，录入对话读取文档即可使用。核心问题回答或明确跳过后可保存，进阶记录按需补充；周三问及行为检查也可直接写入文档的 `【周复盘】` 段。
 
 > SMC Trading Review System —— 不是「把 Google Docs 转成网页」，而是以《交易复盘》为 Source of Truth 的
 > **Personal Trading Operating System**：`Context → Liquidity → Structure → POI → Entry Reason → Entry Trigger → Invalidation → Target → Risk → Execution → Result → Review → Rule`

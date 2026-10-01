@@ -498,13 +498,33 @@ def weekly_review_fields(text):
     return fields
 
 
+ASSISTANT_PROMPT_START = "【ChatGPT 复盘助手约定开始】"
+ASSISTANT_PROMPT_END = "【ChatGPT 复盘助手约定结束】"
+
+
 def parse(blocks, zf):
+    # 规则区含交易/周复盘示例，必须在任何内容识别之前排除，并验证边界完整。
+    filtered, in_prompt = [], False
+    for bi, block in enumerate(blocks):
+        text = (block.get("text") or "").strip()
+        if text == ASSISTANT_PROMPT_START:
+            if in_prompt:
+                raise ValueError("ChatGPT 约定开始标记重复，停止解析")
+            in_prompt = True
+        elif text == ASSISTANT_PROMPT_END:
+            if not in_prompt:
+                raise ValueError("ChatGPT 约定结束标记缺少开始标记，停止解析")
+            in_prompt = False
+        elif not in_prompt:
+            filtered.append((bi, block))
+    if in_prompt:
+        raise ValueError("ChatGPT 约定缺少结束标记，停止解析")
     weeks, trades, images_index = [], [], {}
     rules_section = None
     cur_week = cur_trade = None
     unresolved_images = []
 
-    for bi, b in enumerate(blocks):
+    for bi, b in filtered:
         text = (b.get("text") or "").strip()
         # 文档里部分字段行/周总结被排版成了「标题 1」（第3周那笔），它们不是结构标题。
         if b["kind"] == "h1" and (text.startswith("【") or text.startswith("周总结")
@@ -524,6 +544,9 @@ def parse(blocks, zf):
                 cur_week = cur_trade = None
                 if _is_rule_line:
                     continue
+            elif _is_rule_line:
+                rules_section["lines"].append({"text": text, "index": bi})
+                continue
         # ---- 周标题：按内容识别，不依赖段落样式 ----
         # 用户排版会变：同一个「第 N 周」标题，有时是正文、有时是标题 1 / 标题 2。
         # 只认「第 N 周」开头且紧跟「｜」或整行结束的行，正文里提到“第3周…”不会被误判。

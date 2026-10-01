@@ -31,20 +31,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "parser"))
-from schema import ALL_TF, FIELDS, MISTAKE_GROUPS, SCHEMA_VERSION, validate_override  # noqa: E402
+from schema import (ALL_TF, FIELDS, MISTAKE_GROUPS, SCHEMA_VERSION, validate_override,
+                    WEEK_REVIEW_FIELDS, WEEK_COUNT_FIELDS, FIELD_BY_KEY)  # noqa: E402
 
 MANUAL = ROOT / "data" / "manual"
 TRADES = ROOT / "data" / "trades.json"
-WEEK_KEYS = [("didWell", "This Week I Did Well（哪里做得对）"),
-             ("mainProblem", "Main Problem（本周主要问题）"),
-             ("nextFocus", "Next Week Focus（下周重点改进）"),
-             ("focusTrigger", "下周行为 · 什么情况下触发"),
-             ("focusAction", "下周行为 · 具体做什么"),
-             ("focusMetric", "下周行为 · 用什么检查"),
-             ("focusEligible", "检查上周行为 · 本周适用机会数"),
-             ("focusCompleted", "检查上周行为 · 本周完成次数"),
-             ("focusResult", "检查上周行为 · 执行记录与发现")]
-WEEK_COUNTS = {"focusEligible", "focusCompleted"}
+WEEK_KEYS = [(key, label) for key, label, en, kind in WEEK_REVIEW_FIELDS]
+WEEK_COUNTS = WEEK_COUNT_FIELDS
 PLAN_KEYS = {f["key"] for f in FIELDS if f["group"] == "Trade Plan"}
 # 数值字段（需求 §13 Protected Price、§19 MAE/MFE）+ 旧的手填数值项；从 schema 派生，避免两处维护
 NUMERIC = {f["key"] for f in FIELDS if f.get("kind") == "number"} | {
@@ -67,6 +60,12 @@ def load_json(p, default):
         return default
 
 
+def same_field_value(key, left, right):
+    if FIELD_BY_KEY.get(key, {}).get("multi"):
+        return set(left or []) == set(right or [])
+    return left == right
+
+
 def save_manual(tid, fields, notes=""):
     errors = validate_override(fields, tid)
     if errors:
@@ -76,7 +75,8 @@ def save_manual(tid, fields, notes=""):
     cur = load_json(path, {})
     old_plan = {k: v for k, v in (cur.get("fields") or {}).items() if k in PLAN_KEYS}
     new_plan = {k: v for k, v in fields.items() if k in PLAN_KEYS}
-    if old_plan != new_plan:
+    if any(not same_field_value(key, old_plan.get(key), new_plan.get(key))
+           for key in old_plan.keys() | new_plan.keys()):
         if old_plan:
             cur.setdefault("planHistory", []).append({"recordedAt": cur.get("planRecordedAt"), "fields": old_plan})
         cur["planRecordedAt"] = datetime.now(timezone(timedelta(hours=8))).isoformat()
@@ -499,7 +499,7 @@ class H(BaseHTTPRequestHandler):
                         if opts and raw not in opts:
                             bad.append(f"{key}='{raw}' 不在词表里，已忽略（词表见 schema.py）")
                             continue
-                changed = newval != (cur if isinstance(cur, list) or newval is not None or cur is not None else None)
+                changed = not same_field_value(key, newval, cur)
                 if newval in (None, [], ""):
                     if key in fields or cur not in (None, [], ""):
                         fields[key] = None            # 显式清空 → 手填空值 = 删掉自动识别结果

@@ -9,7 +9,7 @@ const context = { fetch: () => new Promise(() => {}), URLSearchParams, Date };
 vm.createContext(context);
 vm.runInContext(source.replace(/\}\)\(\);\s*$/, `globalThis.reviewTest = {
   state, metrics, srcBadge, entryModeCol, planSection, execSection, reviewSection,
-  behaviorBlock, overviewView, analyticsView, rulesBuckets, weekV2, maeMfeBlock, chainBlock
+  behaviorBlock, overviewView, analyticsView, rulesBuckets, weekV2, maeMfeBlock, chainBlock, filtered
 };})();`), context);
 const api = context.reviewTest;
 api.state.data = JSON.parse(fs.readFileSync(path.join(root, 'data/trades.json'), 'utf8'));
@@ -25,6 +25,21 @@ assert.equal(metrics.qualityJudged, 2);
 assert.equal(metrics.qualityUnknown, 1);
 assert.equal(metrics.qualityCoverage, 2 / 3);
 assert.equal(metrics.compRate, .5);
+const conflict = { ...bad, id: 'conflict', fields: { tradeQuality: f('Good Loss') },
+  quality: { value: null, source: 'conflict', reportedQuality: 'Good Loss',
+    checklistCompliance: 'Major Violation', basis: '判定冲突：Good Loss 与 Major Violation 不一致' } };
+assert.equal(api.metrics([conflict]).qualityJudged, 0);
+assert.match(api.reviewSection(conflict), /判定冲突：Good Loss 与 Major Violation/);
+assert.doesNotMatch(api.reviewSection(conflict), /class="on">Good Loss/);
+const originalData = api.state.data;
+api.state.data = { ...originalData, trades: [conflict] };
+api.state.range = 'all';
+api.state.filters = { tradeQuality: 'Good Loss' };
+assert.equal(api.filtered().length, 0);
+api.state.filters = { ruleCompliance: 'Major Violation' };
+assert.equal(api.filtered().length, 1);
+api.state.data = originalData;
+api.state.filters = {};
 assert.match(api.srcBadge({ source: 'doc:keyword', confirmed: false }), /自动识别·待确认/);
 
 const t = { ...good, fields: { confirmationMode: f('LTF Confirmation'), orderType: f('Limit'),

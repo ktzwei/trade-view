@@ -42,6 +42,27 @@ def assessed(t):
 
 
 class RuleTests(unittest.TestCase):
+    def test_htf_missing_or_unconfirmed_requirements_are_unknown(self):
+        for value in (None, field(["None"], "doc:keyword", False)):
+            with self.subTest(value=value):
+                t = trade()
+                t["fields"]["requiredConfirmations"] = value
+                c = review.derive_checklist(t)
+                self.assertIsNone(c["compliance"])
+                self.assertEqual(c["notApplicable"], 0)
+                self.assertGreater(c["unknown"], 0)
+
+    def test_deviation_grade_uses_specific_evidence(self):
+        t = trade()
+        t["fields"]["executionAdherence"] = field("Deviation")
+        self.assertIsNone(review.derive_checklist(t)["compliance"])
+        t["fields"].update(requiredConfirmations=field(["Sweep"]), liquiditySweep=field("No"))
+        self.assertEqual(review.derive_checklist(t)["compliance"], "Minor Violation")
+        t["fields"]["plannedRR"] = field(.5)
+        self.assertEqual(review.derive_checklist(t)["compliance"], "Major Violation")
+        t["fields"]["executionAdherence"] = field("Followed Plan")
+        self.assertEqual(review.derive_checklist(t)["compliance"], "Major Violation")
+
     def test_htf_does_not_require_ltf_sweep(self):
         t = trade()
         t["fields"]["liquiditySweep"] = field("No")
@@ -165,6 +186,7 @@ class QualityTests(unittest.TestCase):
         good = assessed(trade("good"))
         bad = trade("bad", "loss", -1)
         bad["fields"]["executionAdherence"] = field("Deviation")
+        bad["fields"]["plannedRR"] = field(.5)
         bad = assessed(bad)
         unknown = trade("unknown")
         unknown["fields"] = {}
@@ -183,6 +205,43 @@ class QualityTests(unittest.TestCase):
         t = trade()
         t["fields"] = {"tradeQuality": field("Good Win", "doc:label")}
         self.assertEqual(review.derive_quality(t)["source"], "doc:label")
+
+    def test_conflicting_quality_preserves_evidence_and_leaves_statistics(self):
+        t = trade(result="loss", r=-1)
+        t["fields"].update(plannedRR=field(.5), tradeQuality=field("Good Loss", "doc:label"))
+        t["analysis"] = {"classification": {"value": "Good Loss"}}
+        assessed(t)
+        self.assertIsNone(t["quality"]["value"])
+        self.assertEqual(t["quality"]["reportedQuality"], "Good Loss")
+        self.assertEqual(t["quality"]["checklistCompliance"], "Major Violation")
+        self.assertIn("判定冲突", t["quality"]["basis"])
+        self.assertEqual(t["fields"]["tradeQuality"]["value"], "Good Loss")
+        for result in (stats.dashboard([t]), stats.bucket_stats([t], "all", "all"), stats.quality_summary([t])):
+            self.assertIsNone(result["goodTradeRate"])
+        self.assertEqual(stats.dashboard([t])["qualityJudged"], 0)
+        dims = stats.dimension_tables([t])
+        self.assertEqual(dims["tradeQuality"]["rows"][0]["key"], "(未记录)")
+        self.assertEqual(dims["ruleCompliance"]["rows"][0]["key"], "Major Violation")
+        sve = stats.strategy_vs_execution([t])
+        self.assertEqual(sve["goodLoss"]["count"], 0)
+        self.assertEqual(sve["badLoss"]["count"], 0)
+        src = {"weeks": [{"label": "周", "start": "2026-09-13", "end": "2026-09-19", "tradeIds": [t["id"]]}]}
+        self.assertIsNone(stats.weekly_v2(src, [t], {})[0]["goodTradeRate"])
+
+    def test_compliance_annotation_conflict_does_not_fall_back_to_analysis(self):
+        t = trade()
+        t["fields"]["ruleCompliance"] = field("Major Violation", "doc:label")
+        t["analysis"] = {"classification": {"value": "Good Win"}}
+        assessed(t)
+        self.assertIsNone(t["quality"]["value"])
+        self.assertEqual(t["quality"]["source"], "conflict")
+
+    def test_quality_annotation_must_match_actual_result(self):
+        t = trade(result="loss", r=-1)
+        t["fields"] = {"tradeQuality": field("Good Win", "doc:label")}
+        assessed(t)
+        self.assertIsNone(t["quality"]["value"])
+        self.assertEqual(t["quality"]["reportedQuality"], "Good Win")
 
     def test_be_is_not_a_bad_loss(self):
         t = assessed(trade(result="be", r=0))
@@ -309,6 +368,52 @@ class StatsAnswerTests(unittest.TestCase):
 
 
 class DocsIntegrationTests(unittest.TestCase):
+    def test_rule_lines_preserve_all_rules_regardless_of_heading_style(self):
+        for kind in ("para", "h1", "h2"):
+            with self.subTest(kind=kind):
+                blocks = self.doc_trade() + [{"kind": "h1", "text": "统一交易复盘逻辑｜后续所有交易沿用"}]
+                blocks += [{"kind": "para", "text": f"规则{x}｜规则标题：规则内容"} for x in "一二三四"]
+                blocks += [{"kind": kind, "text": "规则五｜执行质量：按交易前适用条件判定"}]
+                parsed = parse_gdoc.parse(blocks, None)
+                self.assertEqual(len(parsed["rules"]["items"]), 5)
+                self.assertEqual(parsed["rules"]["items"][-1]["body"], "按交易前适用条件判定")
+                self.assertEqual(len(parsed["trades"]), 1)
+
+    def test_cause_chain_keeps_narrative_about_missing_records(self):
+        narrative = "没有记录初始止损，价格跌破 POI 后仍继续持仓"
+        blocks = self.doc_trade() + [{"kind": "para", "text": "【Cause Chain】" + narrative}]
+        src = parse_gdoc.parse(blocks, None)
+        with patch.object(stats, "load_manual", return_value={}):
+            stats.build_result(src["trades"], src)
+        self.assertEqual(src["trades"][0]["fields"]["causeChain"]["value"], narrative)
+        for placeholder in ("未记录", "没有记录。", " 未记录 "):
+            self.assertEqual(struct_extract.parse_struct_value("causeChain", placeholder)[0], [])
+
+    def test_prompt_examples_do_not_become_trades_or_week_notes(self):
+        prompt = (ROOT / "docs/chatgpt-recording.md").read_text().split("```text\n", 1)[1].split("```", 1)[0]
+        examples = [{"kind": "para", "text": line} for line in prompt.splitlines()]
+        examples += [{"kind": "h1", "text": "第99周｜2026年9月13日–9月19日"},
+                     {"kind": "h2", "text": "99｜TEST/USDT Long｜2026年9月13日｜+99R"},
+                     {"kind": "image", "rid": "example-only"},
+                     {"kind": "para", "text": "【周复盘】下周动作：示例，不应计入"}]
+        for insert_at in (0, 4, len(self.doc_trade())):
+            with self.subTest(insert_at=insert_at):
+                blocks = self.doc_trade()
+                blocks[insert_at:insert_at] = ([{"kind": "h1", "text": parse_gdoc.ASSISTANT_PROMPT_START}]
+                    + examples + [{"kind": "para", "text": parse_gdoc.ASSISTANT_PROMPT_END}])
+                src = parse_gdoc.parse(blocks, None)
+                self.assertEqual(len(src["trades"]), 1)
+                self.assertEqual(len(src["weeks"]), 1)
+                self.assertFalse(src["weeks"][0].get("weekReview"))
+                self.assertEqual(src["trades"][0]["actualR"], 1)
+                self.assertNotIn("示例，不应计入", str(src["trades"][0]))
+
+    def test_unbalanced_prompt_markers_fail_explicitly(self):
+        start, end = parse_gdoc.ASSISTANT_PROMPT_START, parse_gdoc.ASSISTANT_PROMPT_END
+        for markers in ([start], [end], [end, start], [start, start, end]):
+            with self.subTest(markers=markers), self.assertRaisesRegex(ValueError, "ChatGPT 约定"):
+                parse_gdoc.parse([{"kind": "para", "text": m} for m in markers] + self.doc_trade(), None)
+
     def doc_trade(self, displacement="Yes / Strong / 15min"):
         blocks = [
             {"kind": "h1", "text": "第1周｜2026年9月13日–9月19日"},
@@ -420,6 +525,41 @@ class DocsIntegrationTests(unittest.TestCase):
 
 
 class EditorTests(unittest.TestCase):
+    def test_note_only_post_preserves_document_plan_despite_selection_order(self):
+        t = trade()
+        t["fields"] = {k: field(v["value"], "doc:label") for k, v in t["fields"].items()}
+        t["fields"]["requiredConfirmations"] = field(["Entry Trigger", "Sweep"], "doc:label")
+        t["entryDate"] = "2026-09-13"
+        handler = object.__new__(tagedit.H)
+        handler.path, handler.trades = "/t/t1", [t]
+        body = urllib.parse.urlencode({"f__requiredConfirmations": ["", "Sweep", "Entry Trigger"],
+                                      "notes": "只补备注"}, doseq=True).encode()
+        handler.headers, handler.rfile = {"Content-Length": str(len(body))}, io.BytesIO(body)
+        handler.rebuild_response = lambda *a, **kw: None
+        with tempfile.TemporaryDirectory() as directory, patch.object(tagedit, "MANUAL", Path(directory)):
+            handler.do_POST()
+            saved = json.loads((Path(directory) / "t1.json").read_text())
+        self.assertEqual(saved["fields"], {})
+        self.assertNotIn("planRecordedAt", saved)
+        t["structured"] = {"fields": copy.deepcopy(t["fields"])}
+        stats.merge_fields(t, saved)
+        self.assertEqual(review.plan_timing(t), "Before Entry")
+
+    def test_plan_selection_reorder_preserves_timestamp_but_changes_keep_history(self):
+        with tempfile.TemporaryDirectory() as directory, patch.object(tagedit, "MANUAL", Path(directory)):
+            first = {"requiredConfirmations": ["Entry Trigger", "Sweep"]}
+            tagedit.save_manual("t", first)
+            path = Path(directory) / "t.json"
+            before = json.loads(path.read_text())
+            tagedit.save_manual("t", {"requiredConfirmations": ["Sweep", "Entry Trigger"]}, "备注")
+            reordered = json.loads(path.read_text())
+            self.assertEqual(reordered["planRecordedAt"], before["planRecordedAt"])
+            self.assertFalse(reordered.get("planHistory"))
+            tagedit.save_manual("t", {"requiredConfirmations": ["Sweep"]})
+            self.assertEqual(len(json.loads(path.read_text())["planHistory"]), 1)
+            tagedit.save_manual("t", {"requiredConfirmations": None})
+            self.assertEqual(len(json.loads(path.read_text())["planHistory"]), 2)
+
     def doc_weeks(self):
         src = DocsIntegrationTests().doc_weeks()
         return src, stats.weekly_v2(src, src["trades"], {})

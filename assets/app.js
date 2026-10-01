@@ -779,7 +779,11 @@
     if (f.violation) ts = ts.filter((t) => ((t.analysis || {}).ruleViolations || []).some((m) => m.tag === f.violation));
     if (f.setup) ts = ts.filter((t) => setupTags(t).includes(f.setup));
     /* v3：§39 结构化维度组合筛选（值来自 fields，缺记录 = 不匹配，不补默认值） */
-    const eqv = (t, key, want) => valTxt(fv(t, key)) === want;
+    const eqv = (t, key, want) => {
+      if (key === 'tradeQuality') return (t.quality || {}).value === want;
+      if (key === 'ruleCompliance') return (t.complianceV2 || {}).compliance === want;
+      return valTxt(fv(t, key)) === want;
+    };
     const hasv = (t, key, want) => {
       const f = fv(t, key); if (!f) return false;
       const vals = Array.isArray(f.value) ? f.value : [f.value];

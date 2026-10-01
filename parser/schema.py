@@ -101,7 +101,7 @@ FIELDS = [
     F("orderType", "实际下单方式", ["Limit", "Market", "Stop"], "Entry",
       note="与确认方式分别记录；等 LTF 确认后仍可用 Limit 或 Market 下单。"),
     F("executionAdherence", "是否按计划执行", ["Followed Plan", "Deviation"], "Review",
-      note="依据交易前计划与实际执行确认；没有证据时留空。"),
+      note="执行汇总，不单独决定违规等级；Deviation 需记录具体违反项，没有证据时留空。"),
     F("planTiming", "计划记录时点", ["Before Entry", "Retrospective"], "Trade Plan",
       note="旧交易补录请选择 Retrospective；补录计划不能证明交易前已制定。"),
     F("plannedEntry", "计划 Entry", [], "Trade Plan", kind="number", unit="价格"),
@@ -180,18 +180,20 @@ REVIEW_LABELS = {
 }
 
 # 只在专用【周复盘】段内识别，避免与单笔的 Main Problem / Next Rule 混淆。
-WEEK_REVIEW_LABELS = {
-    "this week i did well": "didWell", "本周做得好的": "didWell",
-    "main problem": "mainProblem", "本周主要问题": "mainProblem",
-    "next week focus": "nextFocus", "下周重点": "nextFocus",
-    "focus trigger": "focusTrigger", "下周触发条件": "focusTrigger",
-    "focus action": "focusAction", "下周动作": "focusAction",
-    "focus metric": "focusMetric", "下周检查方式": "focusMetric",
-    "focus eligible": "focusEligible", "上周行为适用次数": "focusEligible",
-    "focus completed": "focusCompleted", "上周行为完成次数": "focusCompleted",
-    "focus result": "focusResult", "上周行为执行记录": "focusResult",
-}
-WEEK_COUNT_FIELDS = {"focusEligible", "focusCompleted"}
+WEEK_REVIEW_FIELDS = [
+    ("didWell", "本周做得好的", "this week i did well", "text"),
+    ("mainProblem", "本周主要问题", "main problem", "text"),
+    ("nextFocus", "下周重点", "next week focus", "text"),
+    ("focusTrigger", "下周触发条件", "focus trigger", "text"),
+    ("focusAction", "下周动作", "focus action", "text"),
+    ("focusMetric", "下周检查方式", "focus metric", "text"),
+    ("focusEligible", "上周行为适用次数", "focus eligible", "count"),
+    ("focusCompleted", "上周行为完成次数", "focus completed", "count"),
+    ("focusResult", "上周行为执行记录", "focus result", "text"),
+]
+WEEK_REVIEW_LABELS = {label: key for key, zh, en, kind in WEEK_REVIEW_FIELDS for label in (zh, en)}
+WEEK_COUNT_FIELDS = {key for key, zh, en, kind in WEEK_REVIEW_FIELDS if kind == "count"}
+WEEK_GOAL_FIELDS = {"trigger": "focusTrigger", "action": "focusAction", "metric": "focusMetric"}
 
 
 # ---------------------------------------------------------------- Mistake Tags (§22)

@@ -12,6 +12,7 @@
 import json
 import re
 from pathlib import Path
+from schema import WEEK_GOAL_FIELDS
 from review_logic import (QUALITY_VALUES, confirmed_value, derive_checklist, derive_compliance,
                           derive_planned_actual, derive_quality, quality_value)
 
@@ -119,6 +120,12 @@ def field_values(t, field):
 
     需求 §2：HTF（1D/4H/1H）与 LTF（15min/5min）职责不同，所以周期单独存、单独统计。
     """
+    if field == "tradeQuality":
+        quality = quality_value(t)
+        return [quality] if quality else []
+    if field == "ruleCompliance":
+        compliance = (t.get("complianceV2") or {}).get("compliance")
+        return [compliance] if compliance else []
     vals = flist(t, field)
     if vals:
         return vals
@@ -205,6 +212,7 @@ DIMENSIONS = [
     ("targetLevel", "目标层级", "multi"),
     ("managementStyle", "管理方式", "multi"),
     ("ruleCompliance", "规则合规度", "single"),
+    ("tradeQuality", "交易质量（已判定）", "single"),
     ("shouldTake", "这笔该不该做", "single"),
     ("confidence", "交易前信心", "single"),
 ]
@@ -509,7 +517,7 @@ def weekly_v2(src, trades, manual):
         manual_notes = notes.get(w["label"]) or {}
         n.update(manual_notes)
         note_sources.update({k: "manual/_weeks.json" for k in manual_notes})
-        goal = {k: n.get("focus" + k.title()) for k in ("trigger", "action", "metric")}
+        goal = {role: n.get(key) for role, key in WEEK_GOAL_FIELDS.items()}
         goal = dict(goal, week=w["label"]) if any(goal.values()) else None
         eligible, completed = fnum(n.get("focusEligible")), fnum(n.get("focusCompleted"))
         valid_counts = (eligible is not None and completed is not None and
