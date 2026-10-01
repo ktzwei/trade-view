@@ -179,6 +179,20 @@ REVIEW_LABELS = {
     "cause chain": "causeChain", "问题经过": "causeChain",
 }
 
+# 只在专用【周复盘】段内识别，避免与单笔的 Main Problem / Next Rule 混淆。
+WEEK_REVIEW_LABELS = {
+    "this week i did well": "didWell", "本周做得好的": "didWell",
+    "main problem": "mainProblem", "本周主要问题": "mainProblem",
+    "next week focus": "nextFocus", "下周重点": "nextFocus",
+    "focus trigger": "focusTrigger", "下周触发条件": "focusTrigger",
+    "focus action": "focusAction", "下周动作": "focusAction",
+    "focus metric": "focusMetric", "下周检查方式": "focusMetric",
+    "focus eligible": "focusEligible", "上周行为适用次数": "focusEligible",
+    "focus completed": "focusCompleted", "上周行为完成次数": "focusCompleted",
+    "focus result": "focusResult", "上周行为执行记录": "focusResult",
+}
+WEEK_COUNT_FIELDS = {"focusEligible", "focusCompleted"}
+
 
 # ---------------------------------------------------------------- Mistake Tags (§22)
 MISTAKE_GROUPS = {

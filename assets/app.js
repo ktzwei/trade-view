@@ -977,7 +977,7 @@
         <div style="margin-top:6px">${review.eligible === null || review.eligible === undefined ? '本周尚未记录执行情况' : `完成 ${review.completed} / ${review.eligible} 次 · 完成率 ${pct(review.completionRate)}`}</div>
         ${review.reflection ? `<div class="small muted">发现：${esc(review.reflection)}</div>` : ''}` : '<div class="small muted">上周尚未约定可验证的行为。</div>'}
       <div style="margin-top:10px"><b>下周动作</b>：${goal ? esc(goal.action || '未记录动作') : '未记录'}</div>
-      ${goal ? `<div class="small muted">触发：${esc(goal.trigger || '未记录')} · 检查：${esc(goal.metric || '未记录')}</div>` : '<div class="small muted">在本地周复盘里填写触发条件、具体动作和检查方式。</div>'}</div>`;
+      ${goal ? `<div class="small muted">触发：${esc(goal.trigger || '未记录')} · 检查：${esc(goal.metric || '未记录')}</div>` : '<div class="small muted">在 Google 文档的【周复盘】里记录触发条件、具体动作和检查方式。</div>'}</div>`;
   }
   function weekV2(w) {
     const W = V2W(w.label);
@@ -997,7 +997,7 @@
         ${W.didWell ? `<div class="wr good"><div class="k">This Week I Did Well</div><div class="v">${esc(W.didWell)}</div></div>` : ''}
         ${W.mainProblem ? `<div class="wr bad"><div class="k">Main Problem</div><div class="v">${esc(W.mainProblem)}</div></div>` : ''}
         ${W.nextFocus ? `<div class="wr rule"><div class="k">Next Week Focus</div><div class="v">${esc(W.nextFocus)}</div></div>` : ''}
-      </div>` : `<div class="small muted" style="margin:6px 0 0">本周的「做得好 / 主要问题 / 下周重点」还没记录 —— 在本地编辑器（tag）里补，或按 docs/record-template.md 写进下周文档。</div>`}
+      </div>` : `<div class="small muted" style="margin:6px 0 0">本周的「做得好 / 主要问题 / 下周重点」还没记录；按记录模板写入 Google 文档的【周复盘】段。</div>`}
       ${behaviorBlock(W)}
       ${W.sampleNote ? `<div class="small muted" style="margin-top:4px">${esc(W.sampleNote)}</div>` : ''}`;
   }

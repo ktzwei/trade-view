@@ -35,7 +35,8 @@ TZ = "+08:00"  # 北京时间
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from schema import (FIELD_BY_KEY, MISTAKE_TAGS, ALL_TF, HTF_TF, LTF_TF, EXTRACT,  # noqa: E402
-                    RULE_BUCKETS, SCHEMA_VERSION, REVIEW_LABELS, vocab)
+                    RULE_BUCKETS, SCHEMA_VERSION, REVIEW_LABELS, WEEK_REVIEW_LABELS,
+                    WEEK_COUNT_FIELDS, vocab)
 
 # 文档中可识别的字段标签 → 内部 key
 SECTION_KEYS = {
@@ -473,6 +474,30 @@ def compact_sections(text: str):
 
 
 
+def weekly_review_fields(text):
+    """专用周段的显式字段；不从周盈亏或单笔问题反推行为次数。"""
+    match = re.match(r"^【\s*(?:周复盘|Weekly\s+Review)\s*】\s*(.*)$", text, re.I | re.S)
+    if not match:
+        return None
+    labels = {norm_head(k): v for k, v in WEEK_REVIEW_LABELS.items()}
+    fields = {}
+    for chunk in re.split(r"[；;\n]+", match.group(1)):
+        pair = re.match(r"^\s*([^：:]+)[：:]\s*(.*?)\s*$", chunk)
+        if not pair:
+            continue
+        key = labels.get(norm_head(pair.group(1)))
+        if not key:
+            continue
+        value = pair.group(2).strip()
+        if not value or value.rstrip("。.").lower() in {v.lower() for v in _UNREC} | {"无法判定"}:
+            value = None
+        elif key in WEEK_COUNT_FIELDS:
+            count_text = value.rstrip("。.")
+            value = int(count_text) if re.fullmatch(r"[0-9]+", count_text) else None
+        fields[key] = value
+    return fields
+
+
 def parse(blocks, zf):
     weeks, trades, images_index = [], [], {}
     rules_section = None
@@ -536,6 +561,13 @@ def parse(blocks, zf):
             weeks.append(cur_week)
             cur_trade = None
             continue
+
+        if cur_week is not None and b["kind"] in ("para", "h1", "h2"):
+            week_fields = weekly_review_fields(text)
+            if week_fields is not None:
+                cur_week.setdefault("weekReview", {}).update(week_fields)
+                cur_week.setdefault("weekReviewRaw", []).append(text)
+                continue
 
         if b["kind"] == "h1":
             t = b["text"]

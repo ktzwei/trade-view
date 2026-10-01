@@ -268,7 +268,7 @@ def weeks_page(weeks, manual_weeks):
     parts = ["<div class=nav><a href='/'>← 全部交易</a></div><h1>周复盘手填（需求 §32）</h1>",
              "<form method=post action='/weeks'>"]
     for w in weeks:
-        m = manual_weeks.get(w["label"]) or {}
+        m = {**(w.get("reviewNotes") or {}), **(manual_weeks.get(w["label"]) or {})}
         parts.append(f"<h2>{html.escape(w['label'])} <span class=sub>"
                      f"{html.escape(str(w.get('start') or ''))} ~ {html.escape(str(w.get('end') or ''))} ｜ "
                      f"{w.get('trades')} 笔 ｜ 净 R {html.escape(str(w.get('netR')))} ｜ "
@@ -289,6 +289,43 @@ def weeks_page(weeks, manual_weeks):
         parts.append("</div>")
     parts.append("<div class=card><button class=p type=submit>保存周复盘</button></div></form>")
     return page("周复盘", "".join(parts))
+
+
+def week_corrections(weeks, existing, submitted):
+    """只保存实际订正的字段，未修改的文档字段继续跟随源文档更新。"""
+    data = {label: dict(note) for label, note in existing.items()}
+    by_label = {w["label"]: w for w in weeks}
+    allowed = {k for k, _ in WEEK_KEYS}
+    touched = set()
+
+    def normalize(key, value):
+        text = str(value).strip() if value is not None else ""
+        if not text:
+            return None
+        if key in WEEK_COUNTS:
+            if not text.isascii() or not text.isdigit():
+                raise ValueError("次数必须是非负整数")
+            return int(text)
+        return text
+
+    for name, values in submitted.items():
+        parts = name.split("__", 2)
+        if len(parts) != 3 or parts[0] != "w":
+            continue
+        _, label, key = parts
+        if label not in by_label or key not in allowed:
+            continue
+        new = normalize(key, (values or [None])[0])
+        effective = by_label[label].get("reviewNotes") or {}
+        if new != normalize(key, effective.get(key)):
+            data.setdefault(label, {})[key] = new
+        touched.add(label)
+    for label in touched:
+        effective = {**(by_label[label].get("reviewNotes") or {}), **data.get(label, {})}
+        eligible, completed = (normalize(k, effective.get(k)) for k in ("focusEligible", "focusCompleted"))
+        if eligible is not None and completed is not None and completed > eligible:
+            raise ValueError("完成次数不能超过适用机会数")
+    return data
 
 
 # ---------------------------------------------------------------- handlers
@@ -421,28 +458,10 @@ class H(BaseHTTPRequestHandler):
             IMAGES.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             return self.rebuild_response("图片分类已保存", "/images")
         if u.path == "/weeks":
-            data = load_json(MANUAL / "_weeks.json", {})
-            for k, v in qs.items():
-                if not k.startswith("w__"):
-                    continue
-                _, label, field = k.split("__", 2)
-                if field not in {k for k, _ in WEEK_KEYS}:
-                    continue
-                data.setdefault(label, {})[field] = (v[0] or "").strip() or None
-            for label, note in data.items():
-                counts = [note.get(k) for k in ("focusEligible", "focusCompleted")]
-                parsed = []
-                for value in counts:
-                    if value is None:
-                        parsed.append(None)
-                    elif not str(value).isdigit():
-                        return self.send_html(page("未保存", "<h1>次数必须是非负整数</h1>"), 400)
-                    else:
-                        parsed.append(int(value))
-                if all(v is not None for v in parsed) and parsed[1] > parsed[0]:
-                    return self.send_html(page("未保存", "<h1>完成次数不能超过适用机会数</h1>"), 400)
-                for key, value in zip(("focusEligible", "focusCompleted"), parsed):
-                    note[key] = value
+            try:
+                data = week_corrections(self.weeks, load_json(MANUAL / "_weeks.json", {}), qs)
+            except ValueError as error:
+                return self.send_html(page("未保存", f"<h1>{html.escape(str(error))}</h1>"), 400)
             MANUAL.mkdir(parents=True, exist_ok=True)
             (MANUAL / "_weeks.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
                                                encoding="utf-8")

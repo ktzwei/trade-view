@@ -40,6 +40,13 @@ const excursionHtml = api.maeMfeBlock({ ...t, maeMfe: { mae: -.9, mfe: 2 } });
 assert.doesNotMatch(excursionHtml, /SL 可能偏紧|SL 相对宽松|止盈偏早|出场时机基本合理|NaN/);
 assert.match(excursionHtml, /交易前退出规则/);
 assert.doesNotMatch(api.chainBlock(t), /三选一/);
+assert.match(api.behaviorBlock({}), /Google 文档的【周复盘】/);
+const weeklyHtml = api.behaviorBlock({ behaviorReview: {
+  goal: { week: '第1周', action: '入场前保存截图', trigger: '确认型 Setup', metric: '截图数/适用次数' },
+  eligible: 3, completed: 2, completionRate: 2 / 3, reflection: '漏了一次'
+} });
+assert.match(weeklyHtml, /检查 第1周 的约定：入场前保存截图/);
+assert.match(weeklyHtml, /完成 2 \/ 3 次 · 完成率 67%/);
 for (const html of [api.planSection(t), api.execSection(t), api.reviewSection(t),
   api.behaviorBlock({ behaviorGoal: { action: '<script>', trigger: 'setup', metric: 'count' } })]) {
   assert.doesNotMatch(html, /\[object Object\]|NaN|<script>/);

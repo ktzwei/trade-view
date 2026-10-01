@@ -265,7 +265,148 @@ class WeeklyAndMistakeTests(unittest.TestCase):
         self.assertEqual(stats.mistake_analysis([t])["rows"], [])
 
 
+class DocsIntegrationTests(unittest.TestCase):
+    def doc_trade(self, displacement="Yes / Strong / 15min"):
+        blocks = [
+            {"kind": "h1", "text": "第1周｜2026年9月13日–9月19日"},
+            {"kind": "para", "text": "周总结：1 笔已结束交易"},
+            {"kind": "h2", "text": "1｜ETH/USDT Long｜2026年9月13日｜+1.00R"},
+            {"kind": "para", "text": "【交易时间】2026-09-13 10:00 → 2026-09-13 11:00"},
+            {"kind": "para", "text": "【执行】实际 Entry 100；初始 SL 95；Exit 105"},
+            {"kind": "para", "text": "【结果】实际 +1.00R"},
+        ]
+        labels = {
+            "Review Model": "LTF Confirmation", "Confirmation Mode": "LTF Confirmation",
+            "Required Confirmations": "Displacement", "Plan Timing": "Before Entry",
+            "Planned Entry": "99", "Planned SL": "94", "Planned TP": "109",
+            "Planned RR": "2", "Min RR": "1", "Order Type": "Limit",
+            "Execution Adherence": "Followed Plan", "HTF Bias": "Bullish",
+            "HTF POI": "OB", "HTF POI 周期": "4H", "Invalidation 依据": "Protected Low",
+            "Displacement": displacement,
+        }
+        blocks.extend({"kind": "para", "text": f"【{key}】{value}"} for key, value in labels.items())
+        return blocks
+
+    def test_doc_plan_and_actual_reach_build_without_manual(self):
+        src = parse_gdoc.parse(self.doc_trade(), None)
+        with patch.object(stats, "load_manual", return_value={}):
+            stats.build_result(src["trades"], src)
+        t = src["trades"][0]
+        self.assertEqual(t["plannedVsActual"]["planned"]["entry"], 99)
+        self.assertEqual(t["plannedVsActual"]["actual"]["entry"], 100)
+        self.assertEqual(t["plannedVsActual"]["deviations"][0]["difference"], 1)
+        self.assertEqual(t["fields"]["orderType"]["source"], "doc:label")
+        self.assertEqual(t["complianceV2"]["compliance"], "Fully Compliant")
+
+    def test_doc_displacement_presence_quality_and_tf_are_separate(self):
+        for text, expected in [("Yes", "Fully Compliant"), ("No", "Minor Violation"),
+                               ("Yes / Strong / 15min", "Fully Compliant"),
+                               ("15min: Strong", None), ("Yes / No", None),
+                               ("未记录", None)]:
+            with self.subTest(text=text):
+                src = parse_gdoc.parse(self.doc_trade(text), None)
+                with patch.object(stats, "load_manual", return_value={}):
+                    stats.build_result(src["trades"], src)
+                t = src["trades"][0]
+                self.assertEqual(t["complianceV2"]["compliance"], expected)
+                if text == "Yes / Strong / 15min":
+                    self.assertEqual(t["fields"]["displacement"]["value"], "Yes")
+                    self.assertEqual(t["fields"]["displacementQuality"]["value"], "Strong")
+                    self.assertEqual(t["fields"]["displacementTF"]["value"], ["15m"])
+
+    def test_doc_poi_labels_use_canonical_keys_and_keep_tf(self):
+        extracted = struct_extract.extract_structured({"structRaw": {
+            "htfPOI": ["4H OB + FVG"], "ltfPOI": ["15min FVG"],
+        }})["fields"]
+        self.assertCountEqual(extracted["htfPOIType"]["value"], ["OB", "FVG"])
+        self.assertEqual(extracted["htfPOITF"]["value"], ["4H"])
+        self.assertEqual(extracted["ltfPOIType"]["value"], ["FVG"])
+        self.assertEqual(extracted["ltfPOITF"]["value"], ["15m"])
+        self.assertNotIn("htfPOI", extracted)
+
+    def doc_weeks(self, counts="3", completed="2"):
+        blocks = self.doc_trade()
+        blocks.append({"kind": "para", "text": "【周复盘】本周主要问题：确认记录不足；下周触发条件：确认型 Setup；下周动作：入场前保存截图；下周检查方式：截图数/适用次数"})
+        blocks += [
+            {"kind": "h1", "text": "第2周｜2026年9月20日–9月26日"},
+            {"kind": "para", "text": "周总结：本周检查行为"},
+            {"kind": "h2", "text": f"【Weekly Review】Focus Eligible：{counts}；Focus Completed：{completed}；Focus Result：执行了约定。仍需保持。"},
+        ]
+        return parse_gdoc.parse(blocks, None)
+
+    def test_doc_week_goal_and_next_week_check_reach_build(self):
+        src = self.doc_weeks()
+        with patch.object(stats, "load_manual", return_value={}):
+            v2 = stats.build_result(src["trades"], src)
+        first, second = v2["weekly"]
+        self.assertEqual(first["behaviorGoal"]["action"], "入场前保存截图")
+        self.assertEqual(first["mainProblem"], "确认记录不足")
+        self.assertEqual(first["notesSource"], "doc:label")
+        self.assertEqual(second["behaviorReview"]["goal"], first["behaviorGoal"])
+        self.assertEqual(second["behaviorReview"]["completionRate"], .667)
+        self.assertEqual(second["behaviorReview"]["reflection"], "执行了约定。仍需保持。")
+        self.assertNotIn("下周动作", str(src["trades"][0]["rawSections"]))
+
+    def test_doc_week_zero_unknown_and_invalid_counts_are_distinct(self):
+        for eligible, completed, expected in [("0", "0", 0), ("未记录", "未记录", None),
+                                              ("1.5", "1", None), ("-1", "0", None),
+                                              ("2", "3", None)]:
+            with self.subTest(eligible=eligible, completed=completed):
+                src = self.doc_weeks(eligible, completed)
+                weeks = stats.weekly_v2(src, src["trades"], {})
+                review = weeks[1]["behaviorReview"]
+                self.assertEqual(review["eligible"], expected)
+                self.assertIsNone(review["completionRate"])
+
+    def test_manual_week_correction_overrides_only_given_keys(self):
+        src = self.doc_weeks()
+        manual = {"_weeks": {"第1周": {"focusAction": "更新后的动作", "mainProblem": None}}}
+        weeks = stats.weekly_v2(src, src["trades"], manual)
+        self.assertEqual(weeks[0]["behaviorGoal"]["trigger"], "确认型 Setup")
+        self.assertEqual(weeks[0]["behaviorGoal"]["action"], "更新后的动作")
+        self.assertIsNone(weeks[0]["mainProblem"])
+        self.assertEqual(weeks[0]["noteSources"]["focusTrigger"], "doc:label")
+        self.assertEqual(weeks[0]["noteSources"]["focusAction"], "manual/_weeks.json")
+        self.assertEqual(weeks[1]["behaviorReview"]["goal"]["action"], "更新后的动作")
+
+    def test_week_reflection_preserves_sentences_about_missing_records(self):
+        fields = parse_gdoc.weekly_review_fields("【周复盘】本周主要问题：有一次截图未记录。需要补齐缺失证据。；下周动作：补齐缺失证据；上周行为适用次数：0。")
+        self.assertEqual(fields["mainProblem"], "有一次截图未记录。需要补齐缺失证据。")
+        self.assertEqual(fields["focusAction"], "补齐缺失证据")
+        self.assertEqual(fields["focusEligible"], 0)
+
+
 class EditorTests(unittest.TestCase):
+    def doc_weeks(self):
+        src = DocsIntegrationTests().doc_weeks()
+        return src, stats.weekly_v2(src, src["trades"], {})
+
+    def test_week_form_saves_only_changed_field_and_follows_doc_updates(self):
+        src, weeks = self.doc_weeks()
+        submitted = {f"w__{w['label']}__{key}": [str(w["reviewNotes"].get(key) or "")]
+                     for w in weeks for key, _ in tagedit.WEEK_KEYS}
+        submitted["w__第1周__focusAction"] = ["订正动作"]
+        saved = tagedit.week_corrections(weeks, {}, submitted)
+        self.assertEqual(saved, {"第1周": {"focusAction": "订正动作"}})
+        src["weeks"][0]["weekReview"]["focusTrigger"] = "文档更新后的触发条件"
+        updated = stats.weekly_v2(src, src["trades"], {"_weeks": saved})
+        self.assertEqual(updated[0]["behaviorGoal"]["trigger"], "文档更新后的触发条件")
+        self.assertEqual(updated[0]["behaviorGoal"]["action"], "订正动作")
+
+    def test_week_explicit_clear_does_not_pin_other_doc_fields(self):
+        _, weeks = self.doc_weeks()
+        saved = tagedit.week_corrections(weeks, {}, {"w__第1周__focusAction": [""]})
+        self.assertEqual(saved, {"第1周": {"focusAction": None}})
+
+    def test_week_count_correction_checks_against_document_count(self):
+        _, weeks = self.doc_weeks()
+        for value in ("4", "-1", "NaN"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                tagedit.week_corrections(weeks, {}, {"w__第2周__focusCompleted": [value]})
+        html = tagedit.weeks_page(weeks, {})
+        self.assertIn("入场前保存截图", html)
+        self.assertIn("value='3'", html)
+
     def test_rebuild_is_offline_and_refreshes_state(self):
         success = type("Completed", (), {"returncode": 0, "stdout": "ok", "stderr": ""})()
         with patch.object(tagedit.subprocess, "run", return_value=success) as run, patch.object(tagedit, "load_state") as load:

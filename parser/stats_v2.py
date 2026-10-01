@@ -504,7 +504,11 @@ def weekly_v2(src, trades, manual):
         comp_trades = [t for t in closed if t.get("complianceV2", {}).get("compliance") is not None]
         comp = rate(sum(t["complianceV2"]["compliance"] == "Fully Compliant" for t in comp_trades), len(comp_trades))
         mae = mae_mfe_analysis(wt)
-        n = notes.get(w["label"]) or {}
+        n = dict(w.get("weekReview") or {})
+        note_sources = {k: "doc:label" for k in n}
+        manual_notes = notes.get(w["label"]) or {}
+        n.update(manual_notes)
+        note_sources.update({k: "manual/_weeks.json" for k in manual_notes})
         goal = {k: n.get("focus" + k.title()) for k in ("trigger", "action", "metric")}
         goal = dict(goal, week=w["label"]) if any(goal.values()) else None
         eligible, completed = fnum(n.get("focusEligible")), fnum(n.get("focusCompleted"))
@@ -537,7 +541,8 @@ def weekly_v2(src, trades, manual):
             "didWell": n.get("didWell"), "mainProblem": n.get("mainProblem"),
             "nextFocus": n.get("nextFocus"),
             "behaviorGoal": goal, "behaviorReview": behavior,
-            "notesSource": "manual/_weeks.json" if n else None,
+            "reviewNotes": n, "noteSources": note_sources,
+            "notesSource": " + ".join(sorted(set(note_sources.values()))) or None,
             "summaryRaw": w.get("summaryRaw"),
             "tradeIds": w["tradeIds"],
             "sampleNote": sample_flag(len(rk)),

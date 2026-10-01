@@ -77,7 +77,7 @@ def load():
     haystacks = {t["id"]: trade_haystack(t) for t in src["trades"]}
     week_haystack = {}
     for w in src["weeks"]:
-        parts = [w.get("summaryRaw") or ""]
+        parts = [w.get("summaryRaw") or ""] + (w.get("weekReviewRaw") or [])
         for tid in w["tradeIds"]:
             parts.append(haystacks.get(tid, ""))
         week_haystack[w["label"]] = "\n".join(parts)

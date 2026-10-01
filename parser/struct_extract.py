@@ -115,21 +115,17 @@ def parse_struct_value(field, body):
         extra["tf"] = parse_tf_tokens(body)
         return vals, leftover, extra
     if field == "displacement":
-        per = re.findall(r"(\d+\s*(?:min|m)|15m|5m|15分钟|5分钟)[：:]\s*([^/、，\n]+)", body)
-        tfs, quality = [], None
-        for tf, kind in per:
-            t = TF_ALIASES.get(tf.replace(" ", "").lower())
-            if t and t not in tfs:
-                tfs.append(t)
-            got = False
-            for q in ("Strong", "Medium", "Weak"):
-                if re.search(q, kind, re.I):
-                    quality = quality or q
-                    got = True
-            if re.search(r"\bno\b|没有|无", kind, re.I) and not got:
-                quality = quality or "None"
-        extra["tf"] = tfs
-        return ([quality] if quality else []), "", extra
+        if any(token in body for token in NO_RECORD_TOKENS):
+            return [], body, extra
+        presence = list(dict.fromkeys(v.title() for v in re.findall(r"\b(yes|no)\b", body, re.I)))
+        quality, _ = match_options("displacementQuality", body)
+        extra["tf"] = parse_tf_tokens(body)
+        if len(presence) > 1 or (presence == ["No"] and quality):
+            return [], body, extra
+        if quality:
+            extra["quality"] = quality[0]
+        # 只写质量没有 Yes / No 时，不替文档确认“是否出现”。
+        return presence, ("" if presence or quality or extra["tf"] else body), extra
     if field == "protectedStructure":
         m = re.search(r"(?:约|@|at)?\s*([\d,]+(?:\.\d+)?)", body)
         extra["price"] = num(m.group(1)) if m else None
@@ -278,7 +274,8 @@ def extract_structured(t):
     for field, bodies in struct_raw.items():
         for body in bodies:
             vals, leftover, extra = parse_struct_value(field, body)
-            put(field, vals, "doc:label", body, extra=extra, confirmed=True)
+            canonical_field = {"htfPOI": "htfPOIType", "ltfPOI": "ltfPOIType"}.get(field, field)
+            put(canonical_field, vals, "doc:label", body, extra=extra, confirmed=True)
             if field == "htfPOI" and extra.get("tf"):
                 put("htfPOITF", extra["tf"], "doc:label", body, confirmed=True)
             if field == "ltfPOI" and extra.get("tf"):
@@ -290,8 +287,11 @@ def extract_structured(t):
                     struct["fields"]["htfStructurePerTF"] = {
                         "value": extra["perTF"], "source": "doc:label", "confirmed": True,
                         "evidence": body, "multi": True}
-            if field == "displacement" and extra.get("tf"):
-                put("displacementTF", extra["tf"], "doc:label", body, confirmed=True)
+            if field == "displacement":
+                if extra.get("tf"):
+                    put("displacementTF", extra["tf"], "doc:label", body, confirmed=True)
+                if extra.get("quality"):
+                    put("displacementQuality", [extra["quality"]], "doc:label", body, confirmed=True)
             if field == "protectedStructure":
                 if extra.get("tf"):
                     put("protectedTF", extra["tf"], "doc:label", body, confirmed=True)

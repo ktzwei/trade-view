@@ -4246,6 +4246,8 @@
      "reflection": null,
      "status": "没有上周改进行为"
     },
+    "reviewNotes": {},
+    "noteSources": {},
     "notesSource": null,
     "summaryRaw": "周总结：3 笔已结束交易，3 胜 0 负；其中 2 笔可计算 R，合计 +3.56R；QQQ 因未记录准确 SL，不纳入 R 统计。",
     "tradeIds": [
@@ -4295,6 +4297,8 @@
      "reflection": null,
      "status": "没有上周改进行为"
     },
+    "reviewNotes": {},
+    "noteSources": {},
     "notesSource": null,
     "summaryRaw": "周总结：2 笔已结束交易，1 胜 1 负；XAU Long 约 -1R，XAU Short 约 +2.05R；已知合计约 +1.05R。XAU Short 为本周未完成持仓，于 2026年9月28日完成。",
     "tradeIds": [
@@ -4343,6 +4347,8 @@
      "reflection": null,
      "status": "没有上周改进行为"
     },
+    "reviewNotes": {},
+    "noteSources": {},
     "notesSource": null,
     "summaryRaw": "周总结：1 笔已结束交易，0 胜 1 负，合计 -1R；另有 1 笔 BTC/USDT Long 挂单未成交，不计入结果统计。",
     "tradeIds": [
