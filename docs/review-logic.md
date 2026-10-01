@@ -2,7 +2,7 @@
 
 保留 PLAN → EXECUTION → REVIEW。交易事实、记录完整度、执行判定分别展示；自动识别只提供建议。
 主要录入流程为：交易截图 → ChatGPT 识别缺项并提问 → 回答或明确跳过 → Google 文档 → 夜一解析与生成页面。
-给 ChatGPT 的固定写入约定见 [chatgpt-recording.md](chatgpt-recording.md)。
+给 ChatGPT 的完整约定见 [chatgpt-recording.md](chatgpt-recording.md)，代码块内包含复盘规则、提问与写入流程，可整段复制到网页版。
 
 ## 交易前计划
 

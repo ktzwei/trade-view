@@ -676,13 +676,19 @@ def answers(trades, dims, mis, mae, sve, dash):
     # 4 HTF POI
     rows = [r for r in dims["htfPOITF"]["rows"] if r["key"] != "(未记录)"]
     if rows:
-        best = max(rows, key=lambda r: (r["rCounted"] > 0, r["expectancy"] or -9))
+        candidates = sorted([r for r in rows if r["expectancy"] is not None and r["rCounted"] >= MIN_Q_SAMPLE],
+                            key=lambda r: r["expectancy"], reverse=True)
+        txt, why = (None, "至少两个周期各有 " + str(MIN_Q_SAMPLE) + " 笔可计 R 的已结束交易才比较")
+        if len(candidates) >= 2:
+            first, second = candidates[:2]
+            txt, why = _cmp(first, second, first["key"], second["key"])
         add("1D / 4H / 1H 哪种 HTF POI 对我最有效？",
-            "记录到的 HTF POI 周期： " + "，".join(r["key"] + "（" + str(r["count"]) + " 笔，Expectancy " + _rr(r["expectancy"]) + "）" for r in rows)
-            + ("；样本内均值较高 " + best["key"] if best["rCounted"] >= MIN_Q_SAMPLE else "；样本不足，暂不排名"),
-            "按 HTF POI 周期分组；注意 1D POI 目前可能完全没有出现")
+            "记录到的 HTF POI 周期： " + "，".join(r["key"] + "（" + str(r["count"]) + " 笔，" + str(r["rCounted"]) + " 笔可计 R，Expectancy " + _rr(r["expectancy"]) + "）" for r in rows)
+            + ("；仅比较样本达标的周期：" + txt if txt else "；暂不比较（" + why + "）"),
+            "按 HTF POI 周期分组；仅比较每组至少 " + str(MIN_Q_SAMPLE) + " 笔可计 R 的已结束交易，结果只描述样本内表现",
+            txt is None)
     else:
-        add("1D / 4H / 1H 哪种 HTF POI 对我最有效？", "HTF POI 周期没记录", "按 HTF POI 周期分组")
+        add("1D / 4H / 1H 哪种 HTF POI 对我最有效？", "HTF POI 周期没记录", "按 HTF POI 周期分组", True)
 
     # 5 Market Condition
     rows = [r for r in dims["marketCondition"]["rows"] if r["key"] != "(未记录)"]

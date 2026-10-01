@@ -265,6 +265,49 @@ class WeeklyAndMistakeTests(unittest.TestCase):
         self.assertEqual(stats.mistake_analysis([t])["rows"], [])
 
 
+class StatsAnswerTests(unittest.TestCase):
+    def poi_trades(self, tf, count, r, result="win"):
+        ts = [assessed(trade(f"{tf}-{i}", result, r)) for i in range(count)]
+        for t in ts:
+            t["fields"]["htfPOITF"] = field([tf])
+        return ts
+
+    def poi_answer(self, ts):
+        answers = stats.answers(ts, stats.dimension_tables(ts), {}, {}, {}, stats.dashboard(ts))
+        return next(a for a in answers if a["q"] == "1D / 4H / 1H 哪种 HTF POI 对我最有效？")
+
+    def test_poi_comparison_requires_two_qualified_groups(self):
+        for small_r in (.5, 5):
+            with self.subTest(small_r=small_r):
+                a = self.poi_answer(self.poi_trades("1D", 10, 1) + self.poi_trades("4H", 1, small_r))
+                self.assertIn("暂不比较", a["a"])
+                self.assertNotIn("均值较高", a["a"])
+                self.assertTrue(a["insufficient"])
+
+    def test_poi_comparison_excludes_small_group_with_higher_mean(self):
+        a = self.poi_answer(self.poi_trades("1D", 10, 1) + self.poi_trades("4H", 10, .5)
+                            + self.poi_trades("1H", 1, 5))
+        self.assertIn("1D 样本内平均 R 较高", a["a"])
+        comparison = a["a"].split("；仅比较样本达标的周期：")[1]
+        self.assertIn("vs 4H", comparison)
+        self.assertNotIn("1H", comparison)
+        self.assertFalse(a["insufficient"])
+
+    def test_poi_comparison_counts_only_closed_trades_with_r(self):
+        for r, result in ((None, "win"), (1, "open"), (1, None)):
+            with self.subTest(r=r, result=result):
+                ts = self.poi_trades("1D", 10, 1) + self.poi_trades("4H", 9, .5)
+                ts += self.poi_trades("4H", 1, r, result)
+                a = self.poi_answer(ts)
+                self.assertIn("暂不比较", a["a"])
+                self.assertTrue(a["insufficient"])
+
+    def test_poi_comparison_treats_zero_mean_as_recorded(self):
+        a = self.poi_answer(self.poi_trades("1D", 10, 0, "be") + self.poi_trades("4H", 10, -1, "loss"))
+        self.assertIn("1D 样本内平均 R 较高", a["a"])
+        self.assertFalse(a["insufficient"])
+
+
 class DocsIntegrationTests(unittest.TestCase):
     def doc_trade(self, displacement="Yes / Strong / 15min"):
         blocks = [

@@ -4401,8 +4401,8 @@
    },
    {
     "q": "1D / 4H / 1H 哪种 HTF POI 对我最有效？",
-    "a": "记录到的 HTF POI 周期： 1H（4 笔，Expectancy +0.65R）；样本不足，暂不排名",
-    "basis": "按 HTF POI 周期分组；注意 1D POI 目前可能完全没有出现",
+    "a": "记录到的 HTF POI 周期： 1H（4 笔，2 笔可计 R，Expectancy +0.65R）；暂不比较（至少两个周期各有 10 笔可计 R 的已结束交易才比较）",
+    "basis": "按 HTF POI 周期分组；仅比较每组至少 10 笔可计 R 的已结束交易，结果只描述样本内表现",
     "insufficient": true,
     "sample": "5 笔可计 R / 6 笔已结束 / 共 7 笔"
    },
