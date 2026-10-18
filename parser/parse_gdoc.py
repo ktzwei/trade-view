@@ -203,7 +203,7 @@ def heading_trade(text: str):
         return None
     no = parts[0]
     sym_dir = parts[1]
-    m = re.match(r"([A-Za-z/]+)\s+(Long|Short)", sym_dir, re.I)
+    m = re.match(r"([A-Za-z0-9/]+)\s+(Long|Short)", sym_dir, re.I)
     if not m:
         return None
     symbol = m.group(1).upper().replace("/", "")
@@ -735,9 +735,9 @@ def parse(blocks, zf):
             v = num(m2.group(1).replace(",", ""))
             return v, ("约" in m2.group(0))
 
-        entry_val, entry_approx = _price(r"(?:实际\s*)?Entry\s*(?:约\s*)?" + NUM)
-        sl_val, sl_approx = _price(r"(?:初始\s*)?SL\s*(?:约\s*)?" + NUM)
-        exit_val, _ = _price(r"Exit\s*(?:约\s*)?" + NUM)
+        entry_val, entry_approx = _price(r"(?:实际\s*)?Entry\s*[=:：]?\s*(?:约\s*)?" + NUM)
+        sl_val, sl_approx = _price(r"(?:初始\s*)?SL\s*[=:：]?\s*(?:约\s*)?" + NUM)
+        exit_val, _ = _price(r"Exit\s*[=:：]?\s*(?:约\s*)?" + NUM)
         d["entry"] = entry_val
         d["entryApprox"] = True if (entry_val is not None and entry_approx) else None
         d["stopLoss"] = sl_val
@@ -745,7 +745,7 @@ def parse(blocks, zf):
         d["exit"] = exit_val
         plan_poi = re.search(r"计划\s*POI\s*约?\s*" + NUM, ex)
         d["plannedPOI"] = num(plan_poi.group(1).replace(",", "")) if plan_poi else None
-        mrk = re.search(r"总止损风险\s*" + NUM, ex)
+        mrk = re.search(r"(?:总止损风险\s*|1\s*R\s*[=＝]\s*)" + NUM, ex)
         d["riskAmount"] = num(mrk.group(1).replace(",", "")) if mrk else None
         d["riskAmountIsOneR"] = bool(mrk and re.search(r"总止损风险\s*[\d,]+\s*=?\s*1\s*R", ex)) or None
 
@@ -769,7 +769,7 @@ def parse(blocks, zf):
                             "source": "execution"})
         if not targets and s.get("targetLogic"):
             # 文档把目标写成了句子（例如「图中目标设在约 84,924.1」）——记原文数字，不补逻辑
-            m3 = re.search(r"(?:目标设在|目标|TP)\s*约?\s*" + NUM, s.get("targetLogic", ""))
+            m3 = re.search(r"(?:目标设在|目标(?:为|是)?|TP(?!\d))\s*约?\s*" + NUM + r"(?![\d.,]|\s*R\b)", s.get("targetLogic", ""), re.I)
             if m3:
                 v = num(m3.group(1).replace(",", ""))
                 targets.append({"label": "Planned Target", "priceLow": v, "priceHigh": v,
@@ -791,21 +791,35 @@ def parse(blocks, zf):
         res = s.get("result", "")
         combo = " ".join([res or "", t["headingResult"] or ""])
         status, actualR, plannedR, rIncluded = None, None, None, None
-        if re.search(r"止损|亏损", combo):
+        # Explicit result labels outrank words mentioned later in the review.
+        explicit = re.match(r"\s*(?:Result\s*[:：]\s*)?(Win|Loss|BE|Pending|Open)\b", res, re.I)
+        if explicit:
+            status = {"win": "win", "loss": "loss", "be": "be",
+                      "pending": None, "open": "open"}[explicit.group(1).lower()]
+        elif re.search(r"止损|亏损", combo):
             status = "loss"
         elif re.search(r"盈利|获利|已结束", combo):
             status = "win"
         elif re.search(r"持平|\bBE\b", combo):
             status = "be"
-        mr = re.findall(r"([+-]?\d+(?:\.\d+)?)\s*R", res)
+        # Restrict numbers to an actual-R clause; plans and the 1R risk unit
+        # elsewhere in a paragraph are not realized returns.
+        actual_clauses = re.findall(r"(?:Actual\s*R|实际(?:收益)?\s*R?|实际约)([^。；;\n]*)", res, re.I)
+        for clause in actual_clauses:
+            values = re.findall(r"([+-]?\d+(?:\.\d+)?)\s*R\b", clause, re.I)
+            if values:
+                actualR = num(values[-1])
+        if not actual_clauses:
+            # Legacy result lines explicitly state a signed return.
+            values = re.findall(r"([+-]\d+(?:\.\d+)?)\s*R\b", res)
+            if len(values) == 1:
+                actualR = num(values[0])
+        if explicit and explicit.group(1).lower() in ("pending", "open"):
+            actualR = None
+        rIncluded = actualR is not None
         mplan = re.search(r"原计划约\s*([\d.]+)\s*R", res)
         if mplan:
             plannedR = num(mplan.group(1))
-        if mr:
-            vals = [num(x) for x in mr]
-            # 「原计划约 1.5R，实际约 +1.26R」→ 取最后一个（实际）
-            actualR = vals[-1]
-            rIncluded = True
         if status is None and actualR is not None:
             status = "win" if actualR > 0 else ("loss" if actualR < 0 else "be")
         if status == "win" and actualR is None:

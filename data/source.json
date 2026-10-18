@@ -3,7 +3,7 @@
     "sourceTitle": "交易复盘",
     "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
     "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
-    "parsedAt": "2026-10-01T20:54:51+08:00",
+    "parsedAt": "2026-10-18T12:34:46+08:00",
     "schemaVersion": "2.1",
     "vocab": {
       "version": "2.1",
@@ -1238,10 +1238,10 @@
         ]
       }
     },
-    "sourceVersion": "cf026c69bb25170c",
-    "exportBytesHash": "912987406a423055",
-    "sourceBytes": 1375884,
-    "blocks": 234,
+    "sourceVersion": "72cbb9467c0f42eb",
+    "exportBytesHash": "b7f1532a92d7b507",
+    "sourceBytes": 3004213,
+    "blocks": 339,
     "unresolvedImageCount": 0,
     "exportedImages": [
       "images/2026-09-13-ethusdt-long-01-1.png",
@@ -1250,8 +1250,17 @@
       "images/undated-xauusdt-short-02-1.png",
       "images/undated-xauusdt-short-02-2.png",
       "images/2026-09-28-hypeusdt-long-01-1.png",
+      "images/2026-10-02-hypeusdt-long-02-1.png",
+      "images/2026-10-02-hypeusdt-long-02-2.png",
+      "images/2026-10-02-hypeusdt-long-02-3.png",
+      "images/2026-10-02-hypeusdt-long-02-4.png",
+      "images/2026-10-02-qqqusdt-short-03-1.png",
       "images/2026-09-28-btcusdt-long-挂单-1.png",
-      "images/2026-09-28-btcusdt-long-挂单-2.png"
+      "images/2026-09-28-btcusdt-long-挂单-2.png",
+      "images/2026-10-09-jp225usdt-long-01-1.png",
+      "images/2026-10-08-btcusdt-long-02-1.png",
+      "images/2026-10-14-xauusdt-long-02-1.png",
+      "images/2026-10-15-qqqusdt-long-03-1.png"
     ]
   },
   "weeks": [
@@ -1305,24 +1314,73 @@
     {
       "label": "第3周",
       "index": 3,
-      "rawHeading": "第3周｜2026年9月27日–10月3日（截至9月28日）",
+      "rawHeading": "第3周｜2026年9月27日–10月3日（跨周交易截至10月6日结算）",
       "start": "2026-09-27",
       "end": "2026-10-03",
       "year": 2026,
       "isoWeek": 39,
-      "summaryRaw": "周总结：1 笔已结束交易，0 胜 1 负，合计 -1R；另有 1 笔 BTC/USDT Long 挂单未成交，不计入结果统计。",
-      "headingKind": "para",
+      "summaryRaw": "周总结：按开仓所在周归档，3 笔已结束交易，1 胜 2 负。HYPE 9月28日 -1R；HYPE 10月2日 +3R；QQQ 10月2日开仓、10月6日平仓净损益 -0.161 U，预设 1R = 0.160 U，实际约 -1.01R（含费用）。已知合计约 +0.99R。另有 1 笔 BTC/USDT Long 挂单未成交，不计入结果统计。",
+      "headingKind": "h1",
       "tradeIds": [
         "2026-09-28-hypeusdt-long-01",
+        "2026-10-02-hypeusdt-long-02",
+        "2026-10-02-qqqusdt-short-03",
         "2026-09-28-btcusdt-long-挂单"
       ],
       "stats": {
+        "closed": 4,
+        "wins": 1,
+        "losses": 2,
+        "be": 0,
+        "knownNetR": 0.99,
+        "rCounted": 3
+      }
+    },
+    {
+      "label": "第4周",
+      "index": 4,
+      "rawHeading": "第4周｜2026年10月4日–10月10日（跨周 JP225 于10月13日平仓）",
+      "start": "2026-10-04",
+      "end": "2026-10-10",
+      "year": 2026,
+      "isoWeek": 40,
+      "summaryRaw": "周记录（按开仓所在周归档）：JP225/USDT Long（10月9日→10月13日，净-0.271 U，Actual R≈-0.65R）与 BTC/USDT Long（10月8日→10月14日，净+0.387 U，Actual R≈+0.72R）均已结束；合计2笔，1胜1负，按分笔舍入净额相加约+0.116 U、Actual R合计约+0.07R。两笔均于下一个自然周平仓；在“10月12日当周”网页按平仓周展示，但本文依开仓周归档，避免重复计数。BTC分批退出原因尚需单独复盘。",
+      "headingKind": "h1",
+      "tradeIds": [
+        "2026-10-09-jp225usdt-long-01",
+        "2026-10-08-btcusdt-long-02"
+      ],
+      "stats": {
         "closed": 2,
-        "wins": 0,
+        "wins": 1,
         "losses": 1,
         "be": 0,
-        "knownNetR": -1.0,
-        "rCounted": 1
+        "knownNetR": 0.07,
+        "rCounted": 2
+      }
+    },
+    {
+      "label": "第5周",
+      "index": 5,
+      "rawHeading": "第5周｜2026年10月11日–10月17日（已核对至10月17日平仓交易）",
+      "start": "2026-10-11",
+      "end": "2026-10-17",
+      "year": 2026,
+      "isoWeek": 41,
+      "summaryRaw": "周总结（按开仓周，2026-10-11至10-17）：CL/USDT Long（10月12日，净+1.068 U）、XAU/USDT Long（10月14日，净-0.742 U）与QQQ/USDT Long（10月15日，净-0.526 U）3笔均已结束；1胜2负，按分笔展示精度合计净约-0.200 U。XAU事前1R=0.643 U、净Actual R≈-1.15R；QQQ用户表示风险预算约1 U、按已确认原始仓位与SL实际风险0.72 U，净Actual R≈-0.73R；CL原始1R仍缺，因此完整周R暂不能计算。用户最新《10月12日当周交易面板》按平仓时间统计5笔（另包含10月9日开仓的JP225及10月8日开仓的BTC），2胜3负，网页周净额-0.085 U（毛+0.145、手续费-0.2299），与逐笔显示值约0.001 U的差异来自舍入；本文按开仓周归档避免重复计算。",
+      "headingKind": "h1",
+      "tradeIds": [
+        "2026-10-12-clusdt-long-01",
+        "2026-10-14-xauusdt-long-02",
+        "2026-10-15-qqqusdt-long-03"
+      ],
+      "stats": {
+        "closed": 3,
+        "wins": 1,
+        "losses": 2,
+        "be": 0,
+        "knownNetR": -1.88,
+        "rCounted": 2
       }
     }
   ],
@@ -1513,7 +1571,7 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image7.png",
+          "media": "image2.png",
           "order": 1,
           "file": "images/2026-09-13-ethusdt-long-01-1.png",
           "type": null,
@@ -2028,7 +2086,7 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image4.png",
+          "media": "image17.png",
           "order": 1,
           "file": "images/2026-09-18-ethusdt-long-02-1.png",
           "type": null,
@@ -2518,7 +2576,7 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image2.png",
+          "media": "image10.png",
           "order": 1,
           "file": "images/2026-09-15-qqqusdt-long-03-1.png",
           "type": null,
@@ -3413,7 +3471,7 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image5.png",
+          "media": "image1.png",
           "order": 1,
           "file": "images/undated-xauusdt-short-02-1.png",
           "type": null,
@@ -3426,7 +3484,7 @@
           "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
         },
         {
-          "media": "image1.png",
+          "media": "image13.png",
           "order": 2,
           "file": "images/undated-xauusdt-short-02-2.png",
           "type": null,
@@ -3709,7 +3767,7 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image6.png",
+          "media": "image8.png",
           "order": 1,
           "file": "images/2026-09-28-hypeusdt-long-01-1.png",
           "type": null,
@@ -3992,13 +4050,882 @@
       "analysis": null
     },
     {
+      "num": "02",
+      "symbol": "HYPEUSDT",
+      "symbolLabel": "HYPE/USDT",
+      "direction": "long",
+      "headingResult": "+3.00R（+0.900 U）",
+      "heading": "2｜HYPE/USDT Long｜2026年10月2日–10月5日｜+3.00R（+0.900 U）",
+      "sourceBlockIndex": 201,
+      "entryDate": "2026-10-02",
+      "exitDate": null,
+      "entryTime": null,
+      "exitTime": null,
+      "partialCloses": null,
+      "holdingMinutes": null,
+      "timeText": null,
+      "id": "2026-10-02-hypeusdt-long-02",
+      "entry": 86.44,
+      "entryApprox": null,
+      "stopLoss": null,
+      "stopLossApprox": null,
+      "exit": 91.0175,
+      "plannedPOI": null,
+      "riskAmount": 0.3,
+      "riskAmountIsOneR": null,
+      "targets": [
+        {
+          "label": "Planned Target",
+          "priceLow": null,
+          "priceHigh": null,
+          "priceText": null,
+          "sizePercent": null,
+          "types": null,
+          "note": "用户原目标为上方等高点约 93，计划略低于该水平离场；具体原计划挂出的 TP 价格未单独记录。分批实际退出：TP1 89.475（1 张）、TP2 92.56（1 张）。Planned RR：因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算；Actual R +3.00R。",
+          "source": "targetLogic"
+        }
+      ],
+      "executionRaw": "HYPE/USDT 永续（OKX）；Long；2026-10-02 05:51 开仓，2026-10-05 15:44 完全平仓（北京时间）；Entry 86.44；2 张；平均 Exit 91.0175；净收益 +0.900 U。用户确认预设 1R = 0.300 U，因此 Actual R = +3.00R。Entry Mode：1H POI Limit；HTF 主要看 4H，1H 定位；15min/5min 未用于本次入场确认。 用户确认止损逻辑是放在结构低点下方。图上仓位工具约在 84.065 标示止损参考价，但不能确认这是交易所实际初始 SL；精确初始 SL 价格待核对。用户明确给出的初始账户风险金额为 0.300 U（1R）。",
+      "resultStatus": "win",
+      "actualR": 3.0,
+      "plannedR": null,
+      "rIncluded": true,
+      "resultRaw": "Win；毛收益约 +0.916 U，手续费约 -0.015 U，净收益 +0.900 U；初始风险 0.300 U，Actual R +3.00R。用户自评本笔“无违规”，先按自评记录，不把临时保护利润的 TP1 自动定为违反规则。优势：4H → 1H 的背景与 POI 分层明确，Limit 入场、结构低点止损、分批保护利润及接近目标后退出。待提高可重复性：明确 1H MSB 的 Broken Structure 级别、1H Sweep 属于 Internal/External、TP1 保护利润的触发规则。",
+      "rBasis": "doc:risk_amount",
+      "pnl": null,
+      "fees": null,
+      "plannedRiskPoints": null,
+      "plannedRewardLow": null,
+      "plannedRewardHigh": null,
+      "plannedRRLow": null,
+      "plannedRRHigh": null,
+      "plannedRR": null,
+      "plannedRRMidpointUsed": null,
+      "plannedRRText": "因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算",
+      "riskCheckRaw": null,
+      "minRRThreshold": null,
+      "derived": null,
+      "context": {
+        "raw": "4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。1H：在 Discount 区寻找 OB + IMB 重叠 POI，直接 Limit Long。1H 低点附近另可观察到内部 SSL Sweep 候选，但这是复盘时对截图的附加判断，并非用户本单明确的入场必要条件；不能把它混为 4H 外部流动性 Sweep。",
+        "timeframes": [
+          "1h",
+          "4h"
+        ],
+        "trend": null
+      },
+      "setup": {
+        "raw": "4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。Entry Reason：4H 结构转强，预期回调后延续上涨；1H POI 提供入场位置。Entry Trigger：触及已挂的 1H 限价区域；不等待额外 15min / 5min 确认。",
+        "flow": [
+          "4H 向上突破前方关键短期高点（4H Bullish MSB）",
+          "等待价格回调",
+          "切换 1H",
+          "回撤到 Discount 内的 1H OB + IMB 重叠区",
+          "预设 Limit Long，实际 Entry 86.44。Entry Reason：4H 结构转强，预期回调后延续上涨；1H POI 提供入场位置。Entry Trigger：触及已挂的 1H 限价区域；不等待额外 15min / 5min 确认"
+        ]
+      },
+      "entryReason": {
+        "raw": null,
+        "items": null
+      },
+      "entryModel": {
+        "planned": null,
+        "actual": null,
+        "category": "OTHER",
+        "note": "Entry Mode：1H POI Limit"
+      },
+      "entryModelRaw": "Entry Mode：1H POI Limit",
+      "liquidity": {
+        "raw": "4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。1H：在 Discount 区寻找 OB + IMB 重叠 POI，直接 Limit Long。1H 低点附近另可观察到内部 SSL Sweep 候选，但这是复盘时对截图的附加判断，并非用户本单明确的入场必要条件；不能把它混为 4H 外部流动性 Sweep。 用户原目标为上方等高点约 93，计划略低于该水平离场；具体原计划挂出的 TP 价格未单独记录。分批实际退出：TP1 89.475（1 张）、TP2 92.56（1 张）。Planned RR：因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算；Actual R +3.00R。",
+        "sslSwept": null,
+        "bslTarget": null,
+        "targetLiquidity": null,
+        "internalLiquidity": null,
+        "htfMagnet": null
+      },
+      "structure": {
+        "raw": "4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。1H：在 Discount 区寻找 OB + IMB 重叠 POI，直接 Limit Long。1H 低点附近另可观察到内部 SSL Sweep 候选，但这是复盘时对截图的附加判断，并非用户本单明确的入场必要条件；不能把它混为 4H 外部流动性 Sweep。 主结构信号来自 4H：突破关键短期高点并形成用户标注的 Bullish MSB。1H 用于等待回调与寻找 OB + IMB 入场 POI，而不是此次交易的主要 MSB 确认周期。15min / 5min 额外确认：未等待、未记录。4H MSB 究竟突破 Key LH 还是 Protected High，需要依据其后是否曾推动重要 LL 再分级；暂记录为 4H 关键短期结构突破，不直接升级为 4H 外部趋势完全反转。",
+        "internalMSB": null,
+        "msbNote": "主结构信号来自 4H：突破关键短期高点并形成用户标注的 Bullish MSB。1H 用于等待回调与寻找 OB + IMB 入场 POI，而不是此次交易的主要 MSB 确认周期。15min / 5min 额外确认：未等待、未记录。4H MSB 究竟突破 Key LH 还是 Protected High，需要依据其后是否曾推动重要 LL 再分级；暂记录为 4H 关键短期结构突破，不直接升级为 4H 外部趋势完全反转。",
+        "majorTrendReversal": null,
+        "protectedHigh": null,
+        "protectedLow": null
+      },
+      "displacement": null,
+      "poi": [
+        {
+          "type": "IMB",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        },
+        {
+          "type": "OB",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        }
+      ],
+      "invalidation": {
+        "raw": "用户确认止损逻辑是放在结构低点下方。图上仓位工具约在 84.065 标示止损参考价，但不能确认这是交易所实际初始 SL；精确初始 SL 价格待核对。用户明确给出的初始账户风险金额为 0.300 U（1R）。",
+        "logic": null,
+        "price": null,
+        "priceRecorded": false
+      },
+      "targetLogic": {
+        "raw": "用户原目标为上方等高点约 93，计划略低于该水平离场；具体原计划挂出的 TP 价格未单独记录。分批实际退出：TP1 89.475（1 张）、TP2 92.56（1 张）。Planned RR：因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算；Actual R +3.00R。",
+        "targetType": null,
+        "reason": "用户原目标为上方等高点约 93，计划略低于该水平离场；具体原计划挂出的 TP 价格未单独记录。分批实际退出：TP1 89.475（1 张）、TP2 92.56（1 张）。Planned RR：因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算；Actual R +3.00R。"
+      },
+      "tradeManagement": {
+        "movedSL": null,
+        "partialTP": null,
+        "breakEven": null,
+        "earlyExit": null,
+        "addedPosition": null,
+        "reducedPosition": null,
+        "weekendExit": null,
+        "notes": null
+      },
+      "review": {
+        "worked": null,
+        "improve": null,
+        "mainProblem": null,
+        "nextRules": null
+      },
+      "mae": null,
+      "mfe": null,
+      "protectedLow": null,
+      "protectedHigh": null,
+      "images": [
+        {
+          "media": "image9.png",
+          "order": 1,
+          "file": "images/2026-10-02-hypeusdt-long-02-1.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 215,
+          "width": 2048,
+          "height": 938,
+          "sha256": "03330b80d9bf9c44",
+          "url": "images/2026-10-02-hypeusdt-long-02-1.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        },
+        {
+          "media": "image12.png",
+          "order": 2,
+          "file": "images/2026-10-02-hypeusdt-long-02-2.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 216,
+          "width": 1321,
+          "height": 210,
+          "sha256": "3718b1fc90a51440",
+          "url": "images/2026-10-02-hypeusdt-long-02-2.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        },
+        {
+          "media": "image6.png",
+          "order": 3,
+          "file": "images/2026-10-02-hypeusdt-long-02-3.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 217,
+          "width": 2048,
+          "height": 938,
+          "sha256": "45ce00adc2fd3a1c",
+          "url": "images/2026-10-02-hypeusdt-long-02-3.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        },
+        {
+          "media": "image4.png",
+          "order": 4,
+          "file": "images/2026-10-02-hypeusdt-long-02-4.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 218,
+          "width": 2048,
+          "height": 911,
+          "sha256": "22ad56778424f3c9",
+          "url": "images/2026-10-02-hypeusdt-long-02-4.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        }
+      ],
+      "tags": [
+        {
+          "group": "Direction",
+          "value": "Long"
+        },
+        {
+          "group": "Setup Step",
+          "value": "4H 向上突破前方关键短期高点（4H Bullish MSB）"
+        },
+        {
+          "group": "Setup Step",
+          "value": "等待价格回调"
+        },
+        {
+          "group": "Setup Step",
+          "value": "切换 1H"
+        },
+        {
+          "group": "Setup Step",
+          "value": "回撤到 Discount 内的 1H OB + IMB 重叠区"
+        },
+        {
+          "group": "Setup Step",
+          "value": "预设 Limit Long，实际 Entry 86.44。Entry Reason：4H 结构转强，预期回调后延续上涨；1H POI 提供入场位置。Entry Trigger：触及已挂的 1H 限价区域；不等待额外 15min / 5min 确认"
+        },
+        {
+          "group": "Entry Model",
+          "value": "OTHER"
+        },
+        {
+          "group": "POI",
+          "value": "IMB"
+        },
+        {
+          "group": "POI",
+          "value": "OB"
+        },
+        {
+          "group": "Result",
+          "value": "Win"
+        }
+      ],
+      "rawSections": {
+        "execution": [
+          "HYPE/USDT 永续（OKX）；Long；2026-10-02 05:51 开仓，2026-10-05 15:44 完全平仓（北京时间）；Entry 86.44；2 张；平均 Exit 91.0175；净收益 +0.900 U。用户确认预设 1R = 0.300 U，因此 Actual R = +3.00R。Entry Mode：1H POI Limit；HTF 主要看 4H，1H 定位；15min/5min 未用于本次入场确认。",
+          "用户确认止损逻辑是放在结构低点下方。图上仓位工具约在 84.065 标示止损参考价，但不能确认这是交易所实际初始 SL；精确初始 SL 价格待核对。用户明确给出的初始账户风险金额为 0.300 U（1R）。"
+        ],
+        "entryModel": [
+          "Entry Mode：1H POI Limit"
+        ],
+        "_extra": [
+          "【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。4H 看多并等待回调，是本笔交易的主分析依据；不是等 1H MSB 再确认 4H 方向。入场前价格位于关注的 Discount 区域。4H 这次突破属于关键短期结构的转强，尚不能仅凭该突破认定整个 4H 下跌结构的 Protected High 已失守、外部趋势已完全反转。结合后来提供的 4H 图，约93–94 的高点仍属于较大级别结构参考；1D Bias 未记录。",
+          "【Rule Violation / Next Rule】Rule Violation：用户报告无；是否严格满足原先所有管理规则尚需原始交易计划核验。下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High；用可复现的条件记录 TP1 减仓、SL 移动触发，避免只靠结果评价。MAE / MFE：未记录。",
+          "【补充｜4H 结构级别复核】用户最新 4H 标注图明确指出：先在 4H 突破前方关键短期高点，之后等待回调，才切换到 1H 寻找入场。本笔核心结构确认应登记在 4H，而不是 1H。该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。4H 约93–94 的更大结构高点仍是上方参考。因此本笔更准确的模型是“4H Bullish Internal/Key Structure Shift → 1H Discount POI Pullback Limit Long”，不声称在入场前就完成了 4H 外部趋势反转。",
+          "【待补充】精确初始 SL 价格，以及最初 Planned TP 是否已经设置为具体价格。TP1 后未移动 SL 已由用户确认。下方附原始 1H 分析图、交易所平仓截图、4H 结构图及最新 4H 标注截图。"
+        ],
+        "context": [
+          "4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。1H：在 Discount 区寻找 OB + IMB 重叠 POI，直接 Limit Long。1H 低点附近另可观察到内部 SSL Sweep 候选，但这是复盘时对截图的附加判断，并非用户本单明确的入场必要条件；不能把它混为 4H 外部流动性 Sweep。"
+        ],
+        "liquidity": [
+          "4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。1H：在 Discount 区寻找 OB + IMB 重叠 POI，直接 Limit Long。1H 低点附近另可观察到内部 SSL Sweep 候选，但这是复盘时对截图的附加判断，并非用户本单明确的入场必要条件；不能把它混为 4H 外部流动性 Sweep。"
+        ],
+        "reaction": [
+          "15min / 5min Reaction：本笔未等待也未记录；不要按事后走势补写成入场前已有的低周期反转信号。"
+        ],
+        "confirmation": [
+          "主结构信号来自 4H：突破关键短期高点并形成用户标注的 Bullish MSB。1H 用于等待回调与寻找 OB + IMB 入场 POI，而不是此次交易的主要 MSB 确认周期。15min / 5min 额外确认：未等待、未记录。4H MSB 究竟突破 Key LH 还是 Protected High，需要依据其后是否曾推动重要 LL 再分级；暂记录为 4H 关键短期结构突破，不直接升级为 4H 外部趋势完全反转。"
+        ],
+        "structureNote": [
+          "主结构信号来自 4H：突破关键短期高点并形成用户标注的 Bullish MSB。1H 用于等待回调与寻找 OB + IMB 入场 POI，而不是此次交易的主要 MSB 确认周期。15min / 5min 额外确认：未等待、未记录。4H MSB 究竟突破 Key LH 还是 Protected High，需要依据其后是否曾推动重要 LL 再分级；暂记录为 4H 关键短期结构突破，不直接升级为 4H 外部趋势完全反转。"
+        ],
+        "setup": "4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。Entry Reason：4H 结构转强，预期回调后延续上涨；1H POI 提供入场位置。Entry Trigger：触及已挂的 1H 限价区域；不等待额外 15min / 5min 确认。",
+        "invalidation": [
+          "用户确认止损逻辑是放在结构低点下方。图上仓位工具约在 84.065 标示止损参考价，但不能确认这是交易所实际初始 SL；精确初始 SL 价格待核对。用户明确给出的初始账户风险金额为 0.300 U（1R）。"
+        ],
+        "targetLogic": [
+          "用户原目标为上方等高点约 93，计划略低于该水平离场；具体原计划挂出的 TP 价格未单独记录。分批实际退出：TP1 89.475（1 张）、TP2 92.56（1 张）。Planned RR：因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算；Actual R +3.00R。"
+        ],
+        "plannedRRText": [
+          "因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算"
+        ],
+        "tradeManagement": [
+          "2026-10-02 23:10 平 1 张于 89.475（截图显示收益 +0.304）：价格未到前高约 92.6 即发生下跌，用户为保护已有利润主动平掉一半。2026-10-05 15:44 平剩余 1 张于 92.56（收益 +0.612）：已接近用户预期的 93 附近、略低于前高的目标，因此没有贪心继续持有。TP1 后没有移动 SL；剩余 1 张继续持有至 2026-10-05 15:44 平仓。"
+        ],
+        "result": [
+          "Win；毛收益约 +0.916 U，手续费约 -0.015 U，净收益 +0.900 U；初始风险 0.300 U，Actual R +3.00R。用户自评本笔“无违规”，先按自评记录，不把临时保护利润的 TP1 自动定为违反规则。优势：4H → 1H 的背景与 POI 分层明确，Limit 入场、结构低点止损、分批保护利润及接近目标后退出。待提高可重复性：明确 1H MSB 的 Broken Structure 级别、1H Sweep 属于 Internal/External、TP1 保护利润的触发规则。"
+        ]
+      },
+      "structured": {
+        "fields": {
+          "entryMode": {
+            "value": "Limit",
+            "source": "doc:keyword",
+            "evidence": "[execution] Entry Mode：1H POI Limit； ⏐ [entryModel] Entry Mode：1H POI Limit ⏐ [_extra] 因此本笔更准确的模型是“4H Bullish Internal/Key Structure Shift → 1H Discount POI Pullback Limit Long”，不声称在入场前就完成了 4H 外部趋势反转。",
+            "confirmed": false,
+            "multi": false
+          },
+          "invalidationLogic": {
+            "value": [
+              "Structure Invalidated",
+              "Protected High"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[execution] 用户确认止损逻辑是放在结构低点下方。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。 ⏐ [_extra] 4H 约93–94 的更大结构高点仍是上方参考。 ⏐ [invalidation] 用户确认止损逻辑是放在结构低点下方。",
+            "confirmed": false,
+            "multi": true
+          },
+          "structureShiftType": {
+            "value": [
+              "MSB"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [context] 4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。 ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
+            "confirmed": false,
+            "multi": true
+          },
+          "entryTriggerType": {
+            "value": [
+              "MSB"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
+            "confirmed": false,
+            "multi": true
+          },
+          "poiConfluence": {
+            "value": [
+              "Discount"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[_extra] 入场前价格位于关注的 Discount 区域。 ⏐ [_extra] 因此本笔更准确的模型是“4H Bullish Internal/Key Structure Shift → 1H Discount POI Pullback Limit Long”，不声称在入场前就完成了 4H 外部趋势反转。 ⏐ [context] 1H：在 Discount 区寻找 OB + IMB 重叠 POI，直接 Limit Long。 ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
+            "confirmed": false,
+            "multi": true
+          },
+          "brokenStructure": {
+            "value": [
+              "Protected High",
+              "Key LH"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
+            "confirmed": false,
+            "multi": true
+          },
+          "protectedStructure": {
+            "value": "Protected High",
+            "source": "doc:keyword",
+            "evidence": "[_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
+            "confirmed": false,
+            "multi": false
+          },
+          "liquidityType": {
+            "value": [
+              "SSL"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 1H 低点附近另可观察到内部 SSL Sweep 候选，但这是复盘时对截图的附加判断，并非用户本单明确的入场必要条件；",
+            "confirmed": false,
+            "multi": true
+          },
+          "liquiditySweep": {
+            "value": "Yes",
+            "source": "doc:keyword",
+            "evidence": "[context] 1H 低点附近另可观察到内部 SSL Sweep 候选，但这是复盘时对截图的附加判断，并非用户本单明确的入场必要条件； ⏐ [context] 不能把它混为 4H 外部流动性 Sweep。",
+            "confirmed": false,
+            "multi": false
+          },
+          "htfPOIType": {
+            "value": [
+              "OB"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
+            "confirmed": false,
+            "multi": true,
+            "tf": [
+              "1H"
+            ]
+          }
+        },
+        "unparsed": [
+          {
+            "field": "entryMode",
+            "raw": "1H POI Limit",
+            "leftover": "1HPOI"
+          },
+          {
+            "field": "plannedRR",
+            "raw": "因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算",
+            "leftover": "因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算"
+          },
+          {
+            "field": "tradeQuality",
+            "raw": "Win；毛收益约 +0.916 U，手续费约 -0.015 U，净收益 +0.900 U；初始风险 0.300 U，Actual R +3.00R。用户自评本笔“无违规”，先按自评记录，不把临时保护利润的 TP1 自动定为违反规则。优势：4H → 1H 的背景与 POI 分层明确，Limit 入场、结构低点止损、分批保护利润及接近目标后退出。待提高可重复性：明确 1H MSB 的 Broken Structure 级别、1H Sweep 属于 Internal/External、TP1 保护利润的触发规则。",
+            "leftover": "Win；毛收益约0.916U手续费约-0.015U净收益0.900U；初始风险0.300UActualR3.00R。用户自评本笔“无违规”先按自评记录不把临时保护利润的TP1自动定为违反规则。优势：4H→1H的背景POI分层明确Limit入场结构低点止损分批保护利润及接近目标后退出。待提高可重复性：明确1HMSB的BrokenStructure级别1HSweep属于InternalExternalTP1保护利润的触发规则。"
+          }
+        ],
+        "sources": {
+          "doc:label": 1,
+          "doc:keyword": 9
+        },
+        "stats": {
+          "confirmed": 0,
+          "suggested": 10
+        }
+      },
+      "structRaw": {
+        "entryMode": [
+          "1H POI Limit"
+        ],
+        "plannedRR": [
+          "因精确原始 SL 与 Planned TP 尚未确认，不以截图图形工具替代真实订单来计算"
+        ],
+        "tradeQuality": [
+          "Win；毛收益约 +0.916 U，手续费约 -0.015 U，净收益 +0.900 U；初始风险 0.300 U，Actual R +3.00R。用户自评本笔“无违规”，先按自评记录，不把临时保护利润的 TP1 自动定为违反规则。优势：4H → 1H 的背景与 POI 分层明确，Limit 入场、结构低点止损、分批保护利润及接近目标后退出。待提高可重复性：明确 1H MSB 的 Broken Structure 级别、1H Sweep 属于 Internal/External、TP1 保护利润的触发规则。"
+        ]
+      },
+      "dataCompleteness": {
+        "percent": 47,
+        "missing": [
+          "stopLoss",
+          "plannedRR",
+          "entryTime",
+          "exitTime",
+          "displacement",
+          "mae",
+          "mfe",
+          "fees"
+        ],
+        "total": 15,
+        "filled": 7
+      },
+      "analysis": null
+    },
+    {
+      "num": "03",
+      "symbol": "QQQUSDT",
+      "symbolLabel": "QQQ/USDT",
+      "direction": "short",
+      "headingResult": "-1.01R（-0.161 U）",
+      "heading": "3｜QQQ/USDT Short｜2026年10月2日–10月6日｜-1.01R（-0.161 U）",
+      "sourceBlockIndex": 219,
+      "entryDate": "2026-10-02",
+      "exitDate": null,
+      "entryTime": null,
+      "exitTime": null,
+      "partialCloses": null,
+      "holdingMinutes": null,
+      "timeText": null,
+      "id": "2026-10-02-qqqusdt-short-03",
+      "entry": 747.69,
+      "entryApprox": null,
+      "stopLoss": 755.0,
+      "stopLossApprox": null,
+      "exit": null,
+      "plannedPOI": null,
+      "riskAmount": 0.16,
+      "riskAmountIsOneR": null,
+      "targets": [
+        {
+          "label": "Planned Target",
+          "priceLow": 732.81,
+          "priceHigh": 732.81,
+          "priceText": "732.81",
+          "sizePercent": null,
+          "types": [
+            "EQ"
+          ],
+          "note": "目标写在文字描述里，原文照抄：原图下方 EQL 区域约 732.81 是预期目标方向；原始 Planned TP 是否就设置在 732.81 尚未确认。若按实际 Entry 747.69、SL 755、参考目标 732.81 估算，价格空间 Reward 约 14.88 点、Risk 约 7.31 点、参考 RR 约 2.04R；仅作图示位置测算，不作为已确认 Planned RR。用户因逆势将本笔初始资金风险限制在 0.160 U（1R），风险缩小做得合理，但无法替代 LTF Confirmation。",
+          "source": "targetLogic"
+        }
+      ],
+      "executionRaw": "QQQ/USDT 永续；Short；开仓 2026-10-02 15:57，平仓 2026-10-06 01:44（北京时间）；计划限价 Entry 747.69，实际也按 747.69 成交；Exit / SL 755；数量 0.02 张；毛损益 -0.146 U，手续费 -0.0150 U，净损益 -0.161 U。用户确认：因逆 4H 较强上涨背景做空，故主动降低风险预算，预设 1R = 0.160 U。Actual R = -0.161 / 0.160 ≈ -1.01R（含费）；名义止损风险与实际净亏损略有偏差。成交数据核对自用户周报网页对应 GitHub 原始文件 week-2026-10-05.html。 图上明确标注“755 止损”，周报实际 Exit 也为 755。相对实际入场价的价格风险约 7.31 点。具体为何把 755 作为结构失效价、它是否位于有效 Swing/Protected High 之外：待补充。",
+      "resultStatus": "loss",
+      "actualR": -1.01,
+      "plannedR": null,
+      "rIncluded": true,
+      "resultRaw": "Loss，净 -0.161 U，按预设资金风险 0.160 U 计算 Actual R ≈ -1.01R。根据用户确认的规则偏差，本笔归类为 Bad Loss / Execution Rule Violation，而非正常完全按规则执行的策略亏损。做得好的：计划 747.69 限价入场、识别前期 Bearish Pin Bar 与下跌动能，并因逆势主动缩小 1R。主要问题：弱 4H Bearish MSB 且未确认关键 Protected Low 被跌破，仍未等 15min/5min Confirmation 就入场。方向性理由存在，但入场触发证据不足。",
+      "rBasis": "doc:risk_amount",
+      "pnl": null,
+      "fees": null,
+      "plannedRiskPoints": null,
+      "plannedRewardLow": null,
+      "plannedRewardHigh": null,
+      "plannedRRLow": null,
+      "plannedRRHigh": null,
+      "plannedRR": null,
+      "plannedRRMidpointUsed": null,
+      "plannedRRText": null,
+      "riskCheckRaw": null,
+      "minRRThreshold": null,
+      "derived": {
+        "riskPoints": 7.31
+      },
+      "context": {
+        "raw": "4H：前期价格经历强势上涨，用户明确知道此次 Short 属于逆势尝试，故主动缩小单笔风险。用户当时看到前期长上影线、较好的 Bearish Pin Bar，伴随后续一段强势下跌 K 线；下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。这些价格行为构成寻找做空机会的原因，但不能直接证明 4H External Protected Low 失守。1D Bias、1H Structure 未记录。 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应；计划在 4H Premium / 溢价区挂 Limit Short。下方标注 EQL 约 732.81 作为预期行情运行方向。事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。",
+        "timeframes": [
+          "1h",
+          "4h"
+        ],
+        "trend": null
+      },
+      "setup": {
+        "raw": "原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。Entry Reason：4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势。Entry Trigger：价格回到提前计划的限价 747.69 成交。用户确认按计划价格挂单，没有追价；真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。",
+        "flow": [
+          "原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar",
+          "强势下跌 K 线",
+          "跌破短期低点、形成较弱 Bearish MSB",
+          "在 Premium / 溢价区预挂 Limit Short",
+          "期待回到下方 EQL。Entry Reason：4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势。Entry Trigger：价格回到提前计划的限价 747.69 成交。用户确认按计划价格挂单，没有追价；真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划"
+        ]
+      },
+      "entryReason": {
+        "raw": "4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势",
+        "items": [
+          "4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势"
+        ]
+      },
+      "entryModel": {
+        "planned": null,
+        "actual": null,
+        "category": null,
+        "note": null
+      },
+      "entryModelRaw": null,
+      "liquidity": {
+        "raw": "4H：前期价格经历强势上涨，用户明确知道此次 Short 属于逆势尝试，故主动缩小单笔风险。用户当时看到前期长上影线、较好的 Bearish Pin Bar，伴随后续一段强势下跌 K 线；下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。这些价格行为构成寻找做空机会的原因，但不能直接证明 4H External Protected Low 失守。1D Bias、1H Structure 未记录。 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应；计划在 4H Premium / 溢价区挂 Limit Short。下方标注 EQL 约 732.81 作为预期行情运行方向。事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势 原图下方 EQL 区域约 732.81 是预期目标方向；原始 Planned TP 是否就设置在 732.81 尚未确认。若按实际 Entry 747.69、SL 755、参考目标 732.81 估算，价格空间 Reward 约 14.88 点、Risk 约 7.31 点、参考 RR 约 2.04R；仅作图示位置测算，不作为已确认 Planned RR。用户因逆势将本笔初始资金风险限制在 0.160 U（1R），风险缩小做得合理，但无法替代 LTF Confirmation。",
+        "sslSwept": null,
+        "bslTarget": null,
+        "targetLiquidity": null,
+        "internalLiquidity": null,
+        "htfMagnet": null
+      },
+      "structure": {
+        "raw": "4H：前期价格经历强势上涨，用户明确知道此次 Short 属于逆势尝试，故主动缩小单笔风险。用户当时看到前期长上影线、较好的 Bearish Pin Bar，伴随后续一段强势下跌 K 线；下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。这些价格行为构成寻找做空机会的原因，但不能直接证明 4H External Protected Low 失守。1D Bias、1H Structure 未记录。 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应；计划在 4H Premium / 溢价区挂 Limit Short。下方标注 EQL 约 732.81 作为预期行情运行方向。事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 用户明确承认本笔违反交易规则：没有在 15min / 5min 等待确认；而 4H Bearish MSB 本身又属于弱突破，较可能仅打破内部短期低点，未确认已跌破主要 Protected Low。Weak MSB + 逆势使进一步 LTF Bearish Displacement / MSS / 回踩确认的重要性更高。 4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势",
+        "internalMSB": null,
+        "msbNote": "用户明确承认本笔违反交易规则：没有在 15min / 5min 等待确认；而 4H Bearish MSB 本身又属于弱突破，较可能仅打破内部短期低点，未确认已跌破主要 Protected Low。Weak MSB + 逆势使进一步 LTF Bearish Displacement / MSS / 回踩确认的重要性更高。",
+        "majorTrendReversal": null,
+        "protectedHigh": null,
+        "protectedLow": null
+      },
+      "displacement": null,
+      "poi": null,
+      "invalidation": {
+        "raw": "图上明确标注“755 止损”，周报实际 Exit 也为 755。相对实际入场价的价格风险约 7.31 点。具体为何把 755 作为结构失效价、它是否位于有效 Swing/Protected High 之外：待补充。",
+        "logic": null,
+        "price": 755.0,
+        "priceRecorded": true
+      },
+      "targetLogic": {
+        "raw": "原图下方 EQL 区域约 732.81 是预期目标方向；原始 Planned TP 是否就设置在 732.81 尚未确认。若按实际 Entry 747.69、SL 755、参考目标 732.81 估算，价格空间 Reward 约 14.88 点、Risk 约 7.31 点、参考 RR 约 2.04R；仅作图示位置测算，不作为已确认 Planned RR。用户因逆势将本笔初始资金风险限制在 0.160 U（1R），风险缩小做得合理，但无法替代 LTF Confirmation。",
+        "targetType": [
+          "EQ"
+        ],
+        "reason": "原图下方 EQL 区域约 732.81 是预期目标方向；原始 Planned TP 是否就设置在 732.81 尚未确认。若按实际 Entry 747.69、SL 755、参考目标 732.81 估算，价格空间 Reward 约 14.88 点、Risk 约 7.31 点、参考 RR 约 2.04R；仅作图示位置测算，不作为已确认 Planned RR。用户因逆势将本笔初始资金风险限制在 0.160 U（1R），风险缩小做得合理，但无法替代 LTF Confirmation。"
+      },
+      "tradeManagement": {
+        "movedSL": null,
+        "partialTP": null,
+        "breakEven": null,
+        "earlyExit": null,
+        "addedPosition": null,
+        "reducedPosition": null,
+        "weekendExit": null,
+        "notes": null
+      },
+      "review": {
+        "worked": [
+          "计划 747.69 限价入场、识别前期 Bearish Pin Bar 与下跌动能，并因逆势主动缩小 1R"
+        ],
+        "improve": null,
+        "mainProblem": null,
+        "nextRules": null
+      },
+      "mae": null,
+      "mfe": null,
+      "protectedLow": null,
+      "protectedHigh": null,
+      "images": [
+        {
+          "media": "image16.png",
+          "order": 1,
+          "file": "images/2026-10-02-qqqusdt-short-03-1.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 232,
+          "width": 2048,
+          "height": 938,
+          "sha256": "393e63b8804ab934",
+          "url": "images/2026-10-02-qqqusdt-short-03-1.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        }
+      ],
+      "tags": [
+        {
+          "group": "Direction",
+          "value": "Short"
+        },
+        {
+          "group": "Setup Step",
+          "value": "原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar"
+        },
+        {
+          "group": "Setup Step",
+          "value": "强势下跌 K 线"
+        },
+        {
+          "group": "Setup Step",
+          "value": "跌破短期低点、形成较弱 Bearish MSB"
+        },
+        {
+          "group": "Setup Step",
+          "value": "在 Premium / 溢价区预挂 Limit Short"
+        },
+        {
+          "group": "Setup Step",
+          "value": "期待回到下方 EQL。Entry Reason：4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势。Entry Trigger：价格回到提前计划的限价 747.69 成交。用户确认按计划价格挂单，没有追价；真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划"
+        },
+        {
+          "group": "Result",
+          "value": "Loss"
+        }
+      ],
+      "rawSections": {
+        "execution": [
+          "QQQ/USDT 永续；Short；开仓 2026-10-02 15:57，平仓 2026-10-06 01:44（北京时间）；计划限价 Entry 747.69，实际也按 747.69 成交；Exit / SL 755；数量 0.02 张；毛损益 -0.146 U，手续费 -0.0150 U，净损益 -0.161 U。用户确认：因逆 4H 较强上涨背景做空，故主动降低风险预算，预设 1R = 0.160 U。Actual R = -0.161 / 0.160 ≈ -1.01R（含费）；名义止损风险与实际净亏损略有偏差。成交数据核对自用户周报网页对应 GitHub 原始文件 week-2026-10-05.html。",
+          "图上明确标注“755 止损”，周报实际 Exit 也为 755。相对实际入场价的价格风险约 7.31 点。具体为何把 755 作为结构失效价、它是否位于有效 Swing/Protected High 之外：待补充。"
+        ],
+        "context": [
+          "4H：前期价格经历强势上涨，用户明确知道此次 Short 属于逆势尝试，故主动缩小单笔风险。用户当时看到前期长上影线、较好的 Bearish Pin Bar，伴随后续一段强势下跌 K 线；下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。这些价格行为构成寻找做空机会的原因，但不能直接证明 4H External Protected Low 失守。1D Bias、1H Structure 未记录。",
+          "用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应；计划在 4H Premium / 溢价区挂 Limit Short。下方标注 EQL 约 732.81 作为预期行情运行方向。事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。"
+        ],
+        "liquidity": [
+          "用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应；计划在 4H Premium / 溢价区挂 Limit Short。下方标注 EQL 约 732.81 作为预期行情运行方向。事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。"
+        ],
+        "reaction": [
+          "本次没有等待 15min / 5min POI Reaction。用户观察到的长上影线 / Pin Bar + 强势下跌 K 线属于 4H 价格行为证据，不能替代要求的 LTF 反应确认。"
+        ],
+        "confirmation": [
+          "用户明确承认本笔违反交易规则：没有在 15min / 5min 等待确认；而 4H Bearish MSB 本身又属于弱突破，较可能仅打破内部短期低点，未确认已跌破主要 Protected Low。Weak MSB + 逆势使进一步 LTF Bearish Displacement / MSS / 回踩确认的重要性更高。"
+        ],
+        "structureNote": [
+          "用户明确承认本笔违反交易规则：没有在 15min / 5min 等待确认；而 4H Bearish MSB 本身又属于弱突破，较可能仅打破内部短期低点，未确认已跌破主要 Protected Low。Weak MSB + 逆势使进一步 LTF Bearish Displacement / MSS / 回踩确认的重要性更高。"
+        ],
+        "setup": [
+          "原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。Entry Reason：4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势。Entry Trigger：价格回到提前计划的限价 747.69 成交。用户确认按计划价格挂单，没有追价；真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。"
+        ],
+        "entryReason": [
+          "4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势"
+        ],
+        "entryTrigger": [
+          "价格回到提前计划的限价 747.69 成交"
+        ],
+        "invalidation": [
+          "图上明确标注“755 止损”，周报实际 Exit 也为 755。相对实际入场价的价格风险约 7.31 点。具体为何把 755 作为结构失效价、它是否位于有效 Swing/Protected High 之外：待补充。"
+        ],
+        "targetLogic": [
+          "原图下方 EQL 区域约 732.81 是预期目标方向；原始 Planned TP 是否就设置在 732.81 尚未确认。若按实际 Entry 747.69、SL 755、参考目标 732.81 估算，价格空间 Reward 约 14.88 点、Risk 约 7.31 点、参考 RR 约 2.04R；仅作图示位置测算，不作为已确认 Planned RR。用户因逆势将本笔初始资金风险限制在 0.160 U（1R），风险缩小做得合理，但无法替代 LTF Confirmation。"
+        ],
+        "tradeManagement": [
+          "持有至 2026-10-06 01:44，以 755 平掉全部 0.02 张。是否曾移动 SL、分批计划或主动干预：未记录。交易所周报只显示本次单笔平仓。"
+        ],
+        "result": [
+          "Loss，净 -0.161 U，按预设资金风险 0.160 U 计算 Actual R ≈ -1.01R。根据用户确认的规则偏差，本笔归类为 Bad Loss / Execution Rule Violation，而非正常完全按规则执行的策略亏损。做得好的：计划 747.69 限价入场、识别前期 Bearish Pin Bar 与下跌动能，并因逆势主动缩小 1R。主要问题：弱 4H Bearish MSB 且未确认关键 Protected Low 被跌破，仍未等 15min/5min Confirmation 就入场。方向性理由存在，但入场触发证据不足。"
+        ],
+        "worked": [
+          "计划 747.69 限价入场、识别前期 Bearish Pin Bar 与下跌动能，并因逆势主动缩小 1R"
+        ],
+        "_extra": [
+          "【Rule Check / Next Rule】Rule Violation：用户明确自评“有违规”：逆势且 4H 突破较弱时，未等待 LTF Confirmation。下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。缩小仓位属于风险预算控制，不能豁免入场确认；4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+          "【待补充】最初 Planned TP 的精确价格、4H 被跌破的低点究竟属于 Internal HL 还是 Protected Low，以及 SL 755 对应的具体结构失效点。已确认：4H 逆势、747.69 原计划限价成交、1R=0.160 U、未等待 LTF Confirmation 属于违规。原始 4H 复盘截图已附。"
+        ]
+      },
+      "structured": {
+        "fields": {
+          "biasSourceTF": {
+            "value": [
+              "4H",
+              "1D",
+              "1H"
+            ],
+            "source": "doc:label",
+            "evidence": "4H ⏐ 1D ⏐ 1H",
+            "confirmed": true,
+            "multi": true
+          },
+          "tradeQuality": {
+            "value": "Bad Loss",
+            "source": "doc:label",
+            "evidence": "Loss，净 -0.161 U，按预设资金风险 0.160 U 计算 Actual R ≈ -1.01R。根据用户确认的规则偏差，本笔归类为 Bad Loss / Execution Rule Violation，而非正常完全按规则执行的策略亏损。做得好的：计划 747.69 限价入场、识别前期 Bearish Pin Bar 与下跌动能，并因逆势主动缩小 1R。主要问题：弱 4H Bearish MSB 且未确认关键 Protected Low 被跌破，仍未等 15min/5min Confirmation 就入场。方向性理由存在，但入场触发证据不足。",
+            "confirmed": true,
+            "multi": false,
+            "tf": [
+              "4H",
+              "15m",
+              "5m"
+            ]
+          },
+          "reactionType": {
+            "value": [
+              "Rejection"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 用户当时看到前期长上影线、较好的 Bearish Pin Bar，伴随后续一段强势下跌 K 线； ⏐ [context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。",
+            "confirmed": false,
+            "multi": true
+          },
+          "structureShiftType": {
+            "value": [
+              "MSB",
+              "BOS",
+              "MSS"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。 ⏐ [_extra] 下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。",
+            "confirmed": false,
+            "multi": true
+          },
+          "liquidityType": {
+            "value": [
+              "Previous High",
+              "Equal Low",
+              "BSL"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 下方标注 EQL 约 732.81 作为预期行情运行方向。 ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+            "confirmed": false,
+            "multi": true
+          },
+          "liquiditySweep": {
+            "value": "Yes",
+            "source": "doc:keyword",
+            "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+            "confirmed": false,
+            "multi": false
+          },
+          "poiConfluence": {
+            "value": [
+              "Premium"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 计划在 4H Premium / 溢价区挂 Limit Short。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。",
+            "confirmed": false,
+            "multi": true
+          },
+          "entryTriggerType": {
+            "value": [
+              "MSB",
+              "MSS",
+              "Sweep"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [_extra] 下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+            "confirmed": false,
+            "multi": true
+          },
+          "brokenStructure": {
+            "value": [
+              "Key Structure",
+              "Protected Low"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+            "confirmed": false,
+            "multi": true
+          },
+          "htfBias": {
+            "value": "Bearish",
+            "source": "doc:keyword",
+            "evidence": "[entryReason] 4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势",
+            "confirmed": false,
+            "multi": false
+          },
+          "protectedStructure": {
+            "value": "Protected Low",
+            "source": "doc:keyword",
+            "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+            "confirmed": false,
+            "multi": false
+          },
+          "invalidationLogic": {
+            "value": [
+              "Protected Low"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+            "confirmed": false,
+            "multi": true
+          },
+          "targetLevel": {
+            "value": [
+              "HTF Liquidity"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+            "confirmed": false,
+            "multi": true
+          },
+          "entryModePlanned": {
+            "value": "LTF Confirmation",
+            "source": "doc:keyword",
+            "evidence": "[setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。",
+            "confirmed": false,
+            "multi": false
+          },
+          "entryMode": {
+            "value": "Limit",
+            "source": "doc:keyword",
+            "evidence": "[setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。",
+            "confirmed": false,
+            "multi": false
+          }
+        },
+        "unparsed": [
+          {
+            "field": "entryTriggerType",
+            "raw": "价格回到提前计划的限价 747.69 成交",
+            "leftover": "价格回到提前计划的限价747.69成交"
+          },
+          {
+            "field": "tradeQuality",
+            "raw": "Loss，净 -0.161 U，按预设资金风险 0.160 U 计算 Actual R ≈ -1.01R。根据用户确认的规则偏差，本笔归类为 Bad Loss / Execution Rule Violation，而非正常完全按规则执行的策略亏损。做得好的：计划 747.69 限价入场、识别前期 Bearish Pin Bar 与下跌动能，并因逆势主动缩小 1R。主要问题：弱 4H Bearish MSB 且未确认关键 Protected Low 被跌破，仍未等 15min/5min Confirmation 就入场。方向性理由存在，但入场触发证据不足。",
+            "leftover": "Loss净-0.161U按预设资金风险0.160U计算ActualR≈-1.01R。根据用户确认的规则偏差本笔归类为ExecutionRuleViolation而非正常完全按规则执行的策略亏损。做得好的：计划747.69限价入场识别前期BearishPinBar下跌动能并因逆势主动缩小1R。主要问题：弱4HBearishMSB且未确认关键ProtectedLow被跌破仍未等15min5minConfirmation就入场。方向性理由存在但入场触发证据不足。"
+          }
+        ],
+        "sources": {
+          "doc:label": 2,
+          "doc:keyword": 11
+        },
+        "stats": {
+          "confirmed": 2,
+          "suggested": 13
+        }
+      },
+      "structRaw": {
+        "biasSourceTF": [
+          "4H",
+          "1D",
+          "1H"
+        ],
+        "entryTriggerType": [
+          "价格回到提前计划的限价 747.69 成交"
+        ],
+        "tradeQuality": [
+          "Loss，净 -0.161 U，按预设资金风险 0.160 U 计算 Actual R ≈ -1.01R。根据用户确认的规则偏差，本笔归类为 Bad Loss / Execution Rule Violation，而非正常完全按规则执行的策略亏损。做得好的：计划 747.69 限价入场、识别前期 Bearish Pin Bar 与下跌动能，并因逆势主动缩小 1R。主要问题：弱 4H Bearish MSB 且未确认关键 Protected Low 被跌破，仍未等 15min/5min Confirmation 就入场。方向性理由存在，但入场触发证据不足。"
+        ]
+      },
+      "dataCompleteness": {
+        "percent": 47,
+        "missing": [
+          "plannedRR",
+          "entryTime",
+          "exitTime",
+          "poi",
+          "displacement",
+          "mae",
+          "mfe",
+          "fees"
+        ],
+        "total": 15,
+        "filled": 7
+      },
+      "analysis": null
+    },
+    {
       "num": "挂单",
       "symbol": "BTCUSDT",
       "symbolLabel": "BTC/USDT",
       "direction": "long",
       "headingResult": "未成交",
       "heading": "挂单｜BTC/USDT Long｜2026年9月28日｜未成交",
-      "sourceBlockIndex": 201,
+      "sourceBlockIndex": 233,
       "entryDate": "2026-09-28",
       "exitDate": null,
       "entryTime": null,
@@ -4031,7 +4958,7 @@
       "resultStatus": null,
       "actualR": null,
       "plannedR": null,
-      "rIncluded": null,
+      "rIncluded": false,
       "resultRaw": "Pending / 未成交，因此没有 Actual R，也不做 Good/Bad Trade 分类。当前计划层面优点是 HTF Context、LTF Structure、Entry、SL、TP 与 Planned RR 已提前定义。",
       "rBasis": null,
       "pnl": null,
@@ -4142,12 +5069,12 @@
       "protectedHigh": null,
       "images": [
         {
-          "media": "image8.png",
+          "media": "image11.png",
           "order": 1,
           "file": "images/2026-09-28-btcusdt-long-挂单-1.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 215,
+          "sourceBlockIndex": 247,
           "width": 2048,
           "height": 988,
           "sha256": "b8c0635f3d670465",
@@ -4155,12 +5082,12 @@
           "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
         },
         {
-          "media": "image3.png",
+          "media": "image14.png",
           "order": 2,
           "file": "images/2026-09-28-btcusdt-long-挂单-2.png",
           "type": null,
           "timeframe": null,
-          "sourceBlockIndex": 216,
+          "sourceBlockIndex": 248,
           "width": 2048,
           "height": 988,
           "sha256": "689d87277438ee01",
@@ -4441,6 +5368,1705 @@
         "filled": 7
       },
       "analysis": null
+    },
+    {
+      "num": "01",
+      "symbol": "JP225USDT",
+      "symbolLabel": "JP225/USDT",
+      "direction": "long",
+      "headingResult": "Loss（约 -0.65R）",
+      "heading": "1｜JP225/USDT Long｜2026年10月9日–10月13日｜Loss（约 -0.65R）",
+      "sourceBlockIndex": 251,
+      "entryDate": "2026-10-09",
+      "exitDate": null,
+      "entryTime": null,
+      "exitTime": null,
+      "partialCloses": null,
+      "holdingMinutes": null,
+      "timeText": null,
+      "id": "2026-10-09-jp225usdt-long-01",
+      "entry": 68442.25,
+      "entryApprox": null,
+      "stopLoss": 67388.0,
+      "stopLossApprox": null,
+      "exit": null,
+      "plannedPOI": null,
+      "riskAmount": 0.42,
+      "riskAmountIsOneR": null,
+      "targets": [
+        {
+          "label": "Planned Target",
+          "priceLow": 69999.0,
+          "priceHigh": 69999.0,
+          "priceText": "69,999",
+          "sizePercent": null,
+          "types": null,
+          "note": "目标写在文字描述里，原文照抄：用户原计划：Entry 68,442.25；初始 SL 67,388；TP 69,999；0.0004 张；1R=0.42 U。价格风险1,054.25点，奖励空间1,556.75点，Planned RR≈1.48R（未含费）；当时缺少强势看多K线，用户有意选择上方阻力 OB 附近较保守目标。实际 Exit 67,833，低于 Entry 但高于初始 SL 67,388；实际净亏损 -0.271 U，Actual R≈-0.65R。原始 RR 下限规则仍留待后续评估。",
+          "source": "targetLogic"
+        }
+      ],
+      "executionRaw": "JP225/USDT 永续；Long；实际开仓 2026-10-09 00:55，北京时间；Entry 68,442.25；数量 0.0004 张；用户确认原始资金风险 1R=0.42 U。依据 week-2026-10-12.html 实际成交面板，2026-10-13 08:01 已在 67,833 平仓（单批0.0004张），结果 Loss，毛损益 -0.244 U、手续费 -0.0273 U、净损益 -0.271 U。Actual R = -0.271/0.42 ≈ -0.65R（按面板舍入后的净损益计算）。截图制作于2026-10-11，不等于开平仓时间。按开仓周仍归第4周。 用户明确确认：初始 SL = 67,388，止损放在 4H Swing Low 下方，属于 4H 结构级失效位，而不是仅以 1H OB 下沿作止损。实际 Entry 68,442.25，价格风险距离 1,054.25 点。该 4H Swing Low 本身的精确点位、是否也是 Protected Low 尚未进一步标注；记录为“4H Swing Low 失效”，不自动升级。",
+      "resultStatus": "loss",
+      "actualR": -0.65,
+      "plannedR": null,
+      "rIncluded": true,
+      "resultRaw": "Result：Loss，毛 -0.244 U、费 -0.0273 U、净 -0.271 U；计划 1R=0.42 U，因此 Actual R≈-0.65R。交易模型：4H Swing Low 未破+Discount，1H OB/IMB 直接 Limit Long；事前基于动能偏弱主动选择 Planned RR≈1.48R。关键复盘问题：为何在 67,833（原 SL 上方）平仓，是移动止损还是主动提前离场？这直接影响对 Trade Management 的评价。规则合规性仍待用户澄清，不因亏损直接定 Bad Loss。",
+      "rBasis": "doc:risk_amount",
+      "pnl": null,
+      "fees": null,
+      "plannedRiskPoints": null,
+      "plannedRewardLow": null,
+      "plannedRewardHigh": null,
+      "plannedRRLow": null,
+      "plannedRRHigh": null,
+      "plannedRR": null,
+      "plannedRRMidpointUsed": null,
+      "plannedRRText": null,
+      "riskCheckRaw": null,
+      "minRRThreshold": null,
+      "derived": {
+        "riskPoints": 1054.25
+      },
+      "context": {
+        "raw": "主分析周期 4H。用户原始逻辑：4H 价格未跌破其认定的重要低点，因此偏向看多；当价格回到 Dealing Range Discount（折价区），寻找回调做多。1D Bias、具体 4H Protected Low 的位置与判断级别尚未记录。图形表现为前段上涨后快速回落，需继续区分 4H 大结构未失效和短期卖压尚存两个层次。 用户依据 4H Discount 定位方向，再用 1H OB 与 1H IMB（不平衡区）重叠位置作为限价 Long 的 POI。图上分别标注 IMB 1H 与 OB。是否存在下方 SSL Sweep、具体流动性高低点：原始说明未明确，不能自动补记为 Sweep。",
+        "timeframes": [
+          "1h",
+          "4h"
+        ],
+        "trend": null
+      },
+      "setup": {
+        "raw": "原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。Entry Reason：4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域。Entry Trigger：直接在 1H POI 挂限价单成交，不等待 15min/5min Confirmation。实际 Entry 68,442.25；数量 0.0004 张。",
+        "flow": [
+          "原始 Setup Flow：4H Swing Low 仍有效",
+          "保留 4H 看多预期",
+          "价格回到 Discount",
+          "1H OB + IMB Confluence",
+          "在 1H POI 预挂 Limit Long。Entry Reason：4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域。Entry Trigger：直接在 1H POI 挂限价单成交，不等待 15min/5min Confirmation。实际 Entry 68,442.25；数量 0.0004 张"
+        ]
+      },
+      "entryReason": {
+        "raw": "4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域",
+        "items": [
+          "4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域"
+        ]
+      },
+      "entryModel": {
+        "planned": null,
+        "actual": null,
+        "category": null,
+        "note": null
+      },
+      "entryModelRaw": null,
+      "liquidity": {
+        "raw": "主分析周期 4H。用户原始逻辑：4H 价格未跌破其认定的重要低点，因此偏向看多；当价格回到 Dealing Range Discount（折价区），寻找回调做多。1D Bias、具体 4H Protected Low 的位置与判断级别尚未记录。图形表现为前段上涨后快速回落，需继续区分 4H 大结构未失效和短期卖压尚存两个层次。 用户依据 4H Discount 定位方向，再用 1H OB 与 1H IMB（不平衡区）重叠位置作为限价 Long 的 POI。图上分别标注 IMB 1H 与 OB。是否存在下方 SSL Sweep、具体流动性高低点：原始说明未明确，不能自动补记为 Sweep。 4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域 用户原计划：Entry 68,442.25；初始 SL 67,388；TP 69,999；0.0004 张；1R=0.42 U。价格风险1,054.25点，奖励空间1,556.75点，Planned RR≈1.48R（未含费）；当时缺少强势看多K线，用户有意选择上方阻力 OB 附近较保守目标。实际 Exit 67,833，低于 Entry 但高于初始 SL 67,388；实际净亏损 -0.271 U，Actual R≈-0.65R。原始 RR 下限规则仍留待后续评估。",
+        "sslSwept": null,
+        "bslTarget": null,
+        "targetLiquidity": null,
+        "internalLiquidity": null,
+        "htfMagnet": null
+      },
+      "structure": {
+        "raw": "主分析周期 4H。用户原始逻辑：4H 价格未跌破其认定的重要低点，因此偏向看多；当价格回到 Dealing Range Discount（折价区），寻找回调做多。1D Bias、具体 4H Protected Low 的位置与判断级别尚未记录。图形表现为前段上涨后快速回落，需继续区分 4H 大结构未失效和短期卖压尚存两个层次。 用户依据 4H Discount 定位方向，再用 1H OB 与 1H IMB（不平衡区）重叠位置作为限价 Long 的 POI。图上分别标注 IMB 1H 与 OB。是否存在下方 SSL Sweep、具体流动性高低点：原始说明未明确，不能自动补记为 Sweep。 已确认入场模型为“4H Context + 1H OB/IMB POI 直接 Limit Long”，未等待 15min / 5min Sweep、Displacement 或 MSB/MSS/BOS 确认。是否违规不能仅凭未使用 LTF 下结论，须依据本单事前适用的 HTF Limit 模型规则核对。 4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域",
+        "internalMSB": null,
+        "msbNote": "已确认入场模型为“4H Context + 1H OB/IMB POI 直接 Limit Long”，未等待 15min / 5min Sweep、Displacement 或 MSB/MSS/BOS 确认。是否违规不能仅凭未使用 LTF 下结论，须依据本单事前适用的 HTF Limit 模型规则核对。",
+        "majorTrendReversal": null,
+        "protectedHigh": null,
+        "protectedLow": null
+      },
+      "displacement": null,
+      "poi": [
+        {
+          "type": "IMB",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        },
+        {
+          "type": "OB",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        },
+        {
+          "type": "Discount",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        }
+      ],
+      "invalidation": {
+        "raw": "用户明确确认：初始 SL = 67,388，止损放在 4H Swing Low 下方，属于 4H 结构级失效位，而不是仅以 1H OB 下沿作止损。实际 Entry 68,442.25，价格风险距离 1,054.25 点。该 4H Swing Low 本身的精确点位、是否也是 Protected Low 尚未进一步标注；记录为“4H Swing Low 失效”，不自动升级。",
+        "logic": "止损放在 4H Swing Low 下方",
+        "price": 67388.0,
+        "priceRecorded": true
+      },
+      "targetLogic": {
+        "raw": "用户原计划：Entry 68,442.25；初始 SL 67,388；TP 69,999；0.0004 张；1R=0.42 U。价格风险1,054.25点，奖励空间1,556.75点，Planned RR≈1.48R（未含费）；当时缺少强势看多K线，用户有意选择上方阻力 OB 附近较保守目标。实际 Exit 67,833，低于 Entry 但高于初始 SL 67,388；实际净亏损 -0.271 U，Actual R≈-0.65R。原始 RR 下限规则仍留待后续评估。",
+        "targetType": null,
+        "reason": "用户原计划：Entry 68,442.25；初始 SL 67,388；TP 69,999；0.0004 张；1R=0.42 U。价格风险1,054.25点，奖励空间1,556.75点，Planned RR≈1.48R（未含费）；当时缺少强势看多K线，用户有意选择上方阻力 OB 附近较保守目标。实际 Exit 67,833，低于 Entry 但高于初始 SL 67,388；实际净亏损 -0.271 U，Actual R≈-0.65R。原始 RR 下限规则仍留待后续评估。"
+      },
+      "tradeManagement": {
+        "movedSL": null,
+        "partialTP": null,
+        "breakEven": null,
+        "earlyExit": null,
+        "addedPosition": null,
+        "reducedPosition": null,
+        "weekendExit": null,
+        "notes": null
+      },
+      "review": {
+        "worked": null,
+        "improve": null,
+        "mainProblem": null,
+        "nextRules": null
+      },
+      "mae": null,
+      "mfe": null,
+      "protectedLow": null,
+      "protectedHigh": null,
+      "images": [
+        {
+          "media": "image15.png",
+          "order": 1,
+          "file": "images/2026-10-09-jp225usdt-long-01-1.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 264,
+          "width": 2048,
+          "height": 988,
+          "sha256": "6dab7b712af7b1aa",
+          "url": "images/2026-10-09-jp225usdt-long-01-1.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        }
+      ],
+      "tags": [
+        {
+          "group": "Direction",
+          "value": "Long"
+        },
+        {
+          "group": "Setup Step",
+          "value": "原始 Setup Flow：4H Swing Low 仍有效"
+        },
+        {
+          "group": "Setup Step",
+          "value": "保留 4H 看多预期"
+        },
+        {
+          "group": "Setup Step",
+          "value": "价格回到 Discount"
+        },
+        {
+          "group": "Setup Step",
+          "value": "1H OB + IMB Confluence"
+        },
+        {
+          "group": "Setup Step",
+          "value": "在 1H POI 预挂 Limit Long。Entry Reason：4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域。Entry Trigger：直接在 1H POI 挂限价单成交，不等待 15min/5min Confirmation。实际 Entry 68,442.25；数量 0.0004 张"
+        },
+        {
+          "group": "POI",
+          "value": "IMB"
+        },
+        {
+          "group": "POI",
+          "value": "OB"
+        },
+        {
+          "group": "POI",
+          "value": "Discount"
+        },
+        {
+          "group": "Result",
+          "value": "Loss"
+        }
+      ],
+      "rawSections": {
+        "execution": [
+          "JP225/USDT 永续；Long；实际开仓 2026-10-09 00:55，北京时间；Entry 68,442.25；数量 0.0004 张；用户确认原始资金风险 1R=0.42 U。依据 week-2026-10-12.html 实际成交面板，2026-10-13 08:01 已在 67,833 平仓（单批0.0004张），结果 Loss，毛损益 -0.244 U、手续费 -0.0273 U、净损益 -0.271 U。Actual R = -0.271/0.42 ≈ -0.65R（按面板舍入后的净损益计算）。截图制作于2026-10-11，不等于开平仓时间。按开仓周仍归第4周。",
+          "用户明确确认：初始 SL = 67,388，止损放在 4H Swing Low 下方，属于 4H 结构级失效位，而不是仅以 1H OB 下沿作止损。实际 Entry 68,442.25，价格风险距离 1,054.25 点。该 4H Swing Low 本身的精确点位、是否也是 Protected Low 尚未进一步标注；记录为“4H Swing Low 失效”，不自动升级。"
+        ],
+        "context": [
+          "主分析周期 4H。用户原始逻辑：4H 价格未跌破其认定的重要低点，因此偏向看多；当价格回到 Dealing Range Discount（折价区），寻找回调做多。1D Bias、具体 4H Protected Low 的位置与判断级别尚未记录。图形表现为前段上涨后快速回落，需继续区分 4H 大结构未失效和短期卖压尚存两个层次。",
+          "用户依据 4H Discount 定位方向，再用 1H OB 与 1H IMB（不平衡区）重叠位置作为限价 Long 的 POI。图上分别标注 IMB 1H 与 OB。是否存在下方 SSL Sweep、具体流动性高低点：原始说明未明确，不能自动补记为 Sweep。"
+        ],
+        "liquidity": [
+          "用户依据 4H Discount 定位方向，再用 1H OB 与 1H IMB（不平衡区）重叠位置作为限价 Long 的 POI。图上分别标注 IMB 1H 与 OB。是否存在下方 SSL Sweep、具体流动性高低点：原始说明未明确，不能自动补记为 Sweep。"
+        ],
+        "reaction": [
+          "本笔执行为 HTF Limit：用户明确没有等待 15min / 5min Reaction，也没有将 LTF Sweep、Displacement 或 MSB/MSS/BOS 作为成交前提。未观察到的低周期信号不根据后来走势补写。"
+        ],
+        "confirmation": [
+          "已确认入场模型为“4H Context + 1H OB/IMB POI 直接 Limit Long”，未等待 15min / 5min Sweep、Displacement 或 MSB/MSS/BOS 确认。是否违规不能仅凭未使用 LTF 下结论，须依据本单事前适用的 HTF Limit 模型规则核对。"
+        ],
+        "structureNote": [
+          "已确认入场模型为“4H Context + 1H OB/IMB POI 直接 Limit Long”，未等待 15min / 5min Sweep、Displacement 或 MSB/MSS/BOS 确认。是否违规不能仅凭未使用 LTF 下结论，须依据本单事前适用的 HTF Limit 模型规则核对。"
+        ],
+        "setup": [
+          "原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。Entry Reason：4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域。Entry Trigger：直接在 1H POI 挂限价单成交，不等待 15min/5min Confirmation。实际 Entry 68,442.25；数量 0.0004 张。"
+        ],
+        "entryReason": [
+          "4H 结构尚未失效 + Discount + 1H OB/IMB 重叠区域"
+        ],
+        "entryTrigger": [
+          "直接在 1H POI 挂限价单成交，不等待 15min/5min Confirmation"
+        ],
+        "invalidation": [
+          "用户明确确认：初始 SL = 67,388，止损放在 4H Swing Low 下方，属于 4H 结构级失效位，而不是仅以 1H OB 下沿作止损。实际 Entry 68,442.25，价格风险距离 1,054.25 点。该 4H Swing Low 本身的精确点位、是否也是 Protected Low 尚未进一步标注；记录为“4H Swing Low 失效”，不自动升级。"
+        ],
+        "targetLogic": [
+          "用户原计划：Entry 68,442.25；初始 SL 67,388；TP 69,999；0.0004 张；1R=0.42 U。价格风险1,054.25点，奖励空间1,556.75点，Planned RR≈1.48R（未含费）；当时缺少强势看多K线，用户有意选择上方阻力 OB 附近较保守目标。实际 Exit 67,833，低于 Entry 但高于初始 SL 67,388；实际净亏损 -0.271 U，Actual R≈-0.65R。原始 RR 下限规则仍留待后续评估。"
+        ],
+        "tradeManagement": [
+          "week-2026-10-12.html 成交记录：2026-10-13 08:01，在 67,833 一次性平仓全部 0.0004 张。该价高于原始 SL 67,388，因此不是按原始止损价格 67,388 平仓；是否曾移动止损、主动提前离场或另有退出规则，面板未说明，不能自行归因。持仓约4天7小时6分钟。"
+        ],
+        "result": [
+          "Result：Loss，毛 -0.244 U、费 -0.0273 U、净 -0.271 U；计划 1R=0.42 U，因此 Actual R≈-0.65R。交易模型：4H Swing Low 未破+Discount，1H OB/IMB 直接 Limit Long；事前基于动能偏弱主动选择 Planned RR≈1.48R。关键复盘问题：为何在 67,833（原 SL 上方）平仓，是移动止损还是主动提前离场？这直接影响对 Trade Management 的评价。规则合规性仍待用户澄清，不因亏损直接定 Bad Loss。"
+        ],
+        "_extra": [
+          "【Rule Check / Next Rule】本笔采用 HTF Limit，未等待 15min/5min 确认，不能单凭这一点认定违规；SL 放在 4H Swing Low 下方。用户明确表示目前尚不能确定 HTF Limit 是否允许在上涨动能偏弱时以约 1.48R 入场，RR 最低门槛和例外规则留待后续评估。本笔 RR ≈ 1.48R 是入场前有意采用的保守止盈方案，并非事后解释。当前 Execution Quality / Rule Violation：暂不判定（待规则确认）。未来结合足够样本评估最低 RR、1H POI 直接 Limit 的条件以及保守 TP 的实际表现，不用本单最后输赢倒推规则。",
+          "【待补充】已核实真实平仓：10月13日08:01，Exit 67,833，数量0.0004，净 -0.271 U；Actual R≈-0.65R。原始 Entry 68,442.25、SL 67,388、TP 69,999、1R 0.42 U、Planned RR≈1.48R 不变。仍待补充：① 67,833 提前于原始 SL 的退出原因（移动 SL / 主动止损 / 其他）；② 本笔当时适用的最低 RR 与 HTF Limit 规则；③ MAE/MFE。原始4H图已附。"
+        ]
+      },
+      "structured": {
+        "fields": {
+          "biasSourceTF": {
+            "value": [
+              "4H",
+              "1D"
+            ],
+            "source": "doc:label",
+            "evidence": "4H ⏐ 1D",
+            "confirmed": true,
+            "multi": true
+          },
+          "tradeQuality": {
+            "value": "Bad Loss",
+            "source": "doc:label",
+            "evidence": "Result：Loss，毛 -0.244 U、费 -0.0273 U、净 -0.271 U；计划 1R=0.42 U，因此 Actual R≈-0.65R。交易模型：4H Swing Low 未破+Discount，1H OB/IMB 直接 Limit Long；事前基于动能偏弱主动选择 Planned RR≈1.48R。关键复盘问题：为何在 67,833（原 SL 上方）平仓，是移动止损还是主动提前离场？这直接影响对 Trade Management 的评价。规则合规性仍待用户澄清，不因亏损直接定 Bad Loss。",
+            "confirmed": true,
+            "multi": false,
+            "tf": [
+              "4H",
+              "1H"
+            ]
+          },
+          "poiConfluence": {
+            "value": [
+              "Discount"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 当价格回到 Dealing Range Discount（折价区），寻找回调做多。 ⏐ [context] 用户依据 4H Discount 定位方向，再用 1H OB 与 1H IMB（不平衡区）重叠位置作为限价 Long 的 POI。 ⏐ [setup] 原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。",
+            "confirmed": false,
+            "multi": true
+          },
+          "liquiditySweep": {
+            "value": "No",
+            "source": "doc:keyword",
+            "evidence": "[context] 是否存在下方 SSL Sweep、具体流动性高低点：原始说明未明确，不能自动补记为 Sweep。",
+            "confirmed": false,
+            "multi": false
+          },
+          "htfPOIType": {
+            "value": [
+              "OB"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[setup] 原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。",
+            "confirmed": false,
+            "multi": true,
+            "tf": [
+              "1H"
+            ]
+          },
+          "targetLevel": {
+            "value": [
+              "HTF Swing High/Low"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[setup] 原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。 ⏐ [_extra] SL 放在 4H Swing Low 下方。",
+            "confirmed": false,
+            "multi": true
+          },
+          "entryMode": {
+            "value": "Limit",
+            "source": "doc:keyword",
+            "evidence": "[setup] 原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。 ⏐ [setup] Entry Trigger：直接在 1H POI 挂限价单成交，不等待 15min/5min Confirmation。 ⏐ [_extra] ② 本笔当时适用的最低 RR 与 HTF Limit 规则；",
+            "confirmed": false,
+            "multi": false
+          }
+        },
+        "unparsed": [
+          {
+            "field": "entryTriggerType",
+            "raw": "直接在 1H POI 挂限价单成交，不等待 15min/5min Confirmation",
+            "leftover": "直接在1HPOI挂限价单成交不等待15min5minConfirmation"
+          },
+          {
+            "field": "tradeQuality",
+            "raw": "Result：Loss，毛 -0.244 U、费 -0.0273 U、净 -0.271 U；计划 1R=0.42 U，因此 Actual R≈-0.65R。交易模型：4H Swing Low 未破+Discount，1H OB/IMB 直接 Limit Long；事前基于动能偏弱主动选择 Planned RR≈1.48R。关键复盘问题：为何在 67,833（原 SL 上方）平仓，是移动止损还是主动提前离场？这直接影响对 Trade Management 的评价。规则合规性仍待用户澄清，不因亏损直接定 Bad Loss。",
+            "leftover": "Result：Loss毛-0.244U费-0.0273U净-0.271U；计划1R=0.42U因此ActualR≈-0.65R。交易模型：4HSwingLow未破Discount1HOBIMB直接LimitLong；事前基于动能偏弱主动选择PlannedRR≈1.48R。关键复盘问题：为何在67833（原SL上方）平仓是移动止损还是主动提前离场？这直接影响对TradeManagement的评价。规则合规性仍待用户澄清不因亏损直接定。"
+          }
+        ],
+        "sources": {
+          "doc:label": 2,
+          "doc:keyword": 4
+        },
+        "stats": {
+          "confirmed": 2,
+          "suggested": 5
+        }
+      },
+      "structRaw": {
+        "biasSourceTF": [
+          "4H",
+          "1D"
+        ],
+        "entryTriggerType": [
+          "直接在 1H POI 挂限价单成交，不等待 15min/5min Confirmation"
+        ],
+        "tradeQuality": [
+          "Result：Loss，毛 -0.244 U、费 -0.0273 U、净 -0.271 U；计划 1R=0.42 U，因此 Actual R≈-0.65R。交易模型：4H Swing Low 未破+Discount，1H OB/IMB 直接 Limit Long；事前基于动能偏弱主动选择 Planned RR≈1.48R。关键复盘问题：为何在 67,833（原 SL 上方）平仓，是移动止损还是主动提前离场？这直接影响对 Trade Management 的评价。规则合规性仍待用户澄清，不因亏损直接定 Bad Loss。"
+        ]
+      },
+      "dataCompleteness": {
+        "percent": 53,
+        "missing": [
+          "plannedRR",
+          "entryTime",
+          "exitTime",
+          "displacement",
+          "mae",
+          "mfe",
+          "fees"
+        ],
+        "total": 15,
+        "filled": 8
+      },
+      "analysis": null
+    },
+    {
+      "num": "02",
+      "symbol": "BTCUSDT",
+      "symbolLabel": "BTC/USDT",
+      "direction": "long",
+      "headingResult": "Win（净+0.387 U，约+0.72R）",
+      "heading": "2｜BTC/USDT Long｜2026年10月8日–10月14日｜Win（净+0.387 U，约+0.72R）",
+      "sourceBlockIndex": 265,
+      "entryDate": "2026-10-08",
+      "exitDate": null,
+      "entryTime": null,
+      "exitTime": null,
+      "partialCloses": null,
+      "holdingMinutes": null,
+      "timeText": null,
+      "id": "2026-10-08-btcusdt-long-02",
+      "entry": 81714.6,
+      "entryApprox": null,
+      "stopLoss": 79926.6,
+      "stopLossApprox": null,
+      "exit": 82763.2,
+      "plannedPOI": null,
+      "riskAmount": 0.54,
+      "riskAmountIsOneR": null,
+      "targets": [
+        {
+          "label": "Planned Target",
+          "priceLow": null,
+          "priceHigh": null,
+          "priceText": null,
+          "sizePercent": null,
+          "types": null,
+          "note": "用户已确认原始计划：Entry=81,714.6，SL=79,926.6，计划TP1=84,737.9，0.04张，1R=0.54 U。价格Risk=1,788.0点，目标Reward=3,023.3点，Planned RR≈1.69R（未含费用）；这不是最终成交结果。最新面板显示实际先在83,806平0.02张，后在81,720.4平0.02张，均非原始计划TP1=84,737.9；是否原本就打算分批及原因尚未核实。总毛+0.419 U、手续费-0.0329 U、净+0.387 U，Actual R=0.387÷0.54≈+0.72R。",
+          "source": "targetLogic"
+        }
+      ],
+      "executionRaw": "BTC/USDT Long，已由用户确认与交易面板同一单；2026-10-08 21:42（北京时间）开仓，实际Entry=81,714.6，数量0.04张，事前1R=0.54 U。2026-10-12当周最新版交易面板更新结果：2026-10-14 22:49最后一批平仓，已全部结束，实际加权平均Exit=82,763.2，毛盈利+0.419 U，手续费-0.0329 U，净盈利+0.387 U（显示值舍入）；Actual R≈+0.72R。2026-10-11提供的4H图是入场分析截图，不能替代最终管理记录。此单不是2026-09-28仍待成交的BTC 82,953.7计划挂单。 用户已确认实际初始止损 SL = 79,926.6，与截图标注一致。实际 Entry = 81,714.6，价格风险距离 1,788.0 点。该 SL 对应 4H Swing Low、Protected Low 或 IMB / POI 失效中的哪一种具体结构依据尚待用户说明；不能仅凭截图位置自动认定其结构级别。",
+      "resultStatus": "win",
+      "actualR": 0.72,
+      "plannedR": null,
+      "rIncluded": true,
+      "resultRaw": "Win，10月14日22:49已完全平仓。毛收益+0.419 U、手续费-0.0329 U、净收益+0.387 U；以初始风险1R=0.54 U计算，净Actual R≈+0.72R。原始计划TP1=84,737.9，真实第1批83,806、第2批81,720.4；与原计划目标不同，需追问为何第1批提前减仓、为何第2批几乎在BE附近退出。入场结构4H折价、扫流动性候选、4H IMB HTF Limit已经记录；但实际分批/移动SL规则和4H结构有效性尚未复核，Good Win/Bad Win暂不判定。",
+      "rBasis": "doc:risk_amount",
+      "pnl": null,
+      "fees": null,
+      "plannedRiskPoints": null,
+      "plannedRewardLow": null,
+      "plannedRewardHigh": null,
+      "plannedRRLow": null,
+      "plannedRRHigh": null,
+      "plannedRR": null,
+      "plannedRRMidpointUsed": null,
+      "plannedRRText": null,
+      "riskCheckRaw": null,
+      "minRRThreshold": null,
+      "derived": {
+        "riskPoints": 1788.0,
+        "rewardPoints": 1048.6,
+        "rComputed": 0.586
+      },
+      "context": {
+        "raw": "用户原图写明“大框架偏向做多”，分析周期 4H；所选 Dealing Range 价格回调到 50% 以下的 Discount（折价区）。4H 近期出现快速下跌，是否已恢复结构性看涨、1D Bias / 1H Structure 尚未记录。大级别看多预期与当前是否已经出现 Bullish MSB/Protected High Break 需区分。 用户原图给出：①价格回调至 50% 以下；②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）；③价格已进入 4H IMB 内部。图上另标有 Discount/Gold Zone 区域。这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement；4H IMB 为高周期 POI，具体边界未单独记录。",
+        "timeframes": [
+          "1h",
+          "4h"
+        ],
+        "trend": null
+      },
+      "setup": {
+        "raw": "原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。Entry Reason 是 4H 折价与流动性/IMB 共振；Entry Trigger 是已提前挂好的限价单触发，不是 15min/5min 结构确认。用户已确认实际成交价 81,714.6，仓位 0.04 张，且与周报同一笔。",
+        "flow": [
+          "原始 Setup Flow：4H Bullish Bias",
+          "Discount（50% 以下）",
+          "下方被止损多单导致的 Liq Sweep 候选",
+          "进入 4H IMB",
+          "寻找适合的入场 K",
+          "Limit Long。Entry Reason 是 4H 折价与流动性/IMB 共振；Entry Trigger 是已提前挂好的限价单触发，不是 15min/5min 结构确认。用户已确认实际成交价 81,714.6，仓位 0.04 张，且与周报同一笔"
+        ]
+      },
+      "entryReason": {
+        "raw": null,
+        "items": null
+      },
+      "entryModel": {
+        "planned": null,
+        "actual": null,
+        "category": null,
+        "note": null
+      },
+      "entryModelRaw": null,
+      "liquidity": {
+        "raw": "用户原图写明“大框架偏向做多”，分析周期 4H；所选 Dealing Range 价格回调到 50% 以下的 Discount（折价区）。4H 近期出现快速下跌，是否已恢复结构性看涨、1D Bias / 1H Structure 尚未记录。大级别看多预期与当前是否已经出现 Bullish MSB/Protected High Break 需区分。 用户原图给出：①价格回调至 50% 以下；②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）；③价格已进入 4H IMB 内部。图上另标有 Discount/Gold Zone 区域。这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement；4H IMB 为高周期 POI，具体边界未单独记录。 用户已确认原始计划：Entry=81,714.6，SL=79,926.6，计划TP1=84,737.9，0.04张，1R=0.54 U。价格Risk=1,788.0点，目标Reward=3,023.3点，Planned RR≈1.69R（未含费用）；这不是最终成交结果。最新面板显示实际先在83,806平0.02张，后在81,720.4平0.02张，均非原始计划TP1=84,737.9；是否原本就打算分批及原因尚未核实。总毛+0.419 U、手续费-0.0329 U、净+0.387 U，Actual R=0.387÷0.54≈+0.72R。",
+        "sslSwept": null,
+        "bslTarget": null,
+        "targetLiquidity": null,
+        "internalLiquidity": null,
+        "htfMagnet": null
+      },
+      "structure": {
+        "raw": "用户原图写明“大框架偏向做多”，分析周期 4H；所选 Dealing Range 价格回调到 50% 以下的 Discount（折价区）。4H 近期出现快速下跌，是否已恢复结构性看涨、1D Bias / 1H Structure 尚未记录。大级别看多预期与当前是否已经出现 Bullish MSB/Protected High Break 需区分。 用户原图给出：①价格回调至 50% 以下；②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）；③价格已进入 4H IMB 内部。图上另标有 Discount/Gold Zone 区域。这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement；4H IMB 为高周期 POI，具体边界未单独记录。 当前确认方式是 4H 折价 / 4H IMB / 下方扫流动性候选 + 适当入场 K 线，再直接 Limit。用户图注“找到好的入场 K”，但尚不清楚具体 K 线周期以及 Pin Bar、吞没或 Displacement 等形态定义。未等待 15min/5min MSB/MSS/BOS；本笔是否符合当时 HTF Limit 规则，先不判违规。",
+        "internalMSB": null,
+        "msbNote": "当前确认方式是 4H 折价 / 4H IMB / 下方扫流动性候选 + 适当入场 K 线，再直接 Limit。用户图注“找到好的入场 K”，但尚不清楚具体 K 线周期以及 Pin Bar、吞没或 Displacement 等形态定义。未等待 15min/5min MSB/MSS/BOS；本笔是否符合当时 HTF Limit 规则，先不判违规。",
+        "majorTrendReversal": null,
+        "protectedHigh": null,
+        "protectedLow": null
+      },
+      "displacement": null,
+      "poi": [
+        {
+          "type": "IMB",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        },
+        {
+          "type": "Discount",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        }
+      ],
+      "invalidation": {
+        "raw": "用户已确认实际初始止损 SL = 79,926.6，与截图标注一致。实际 Entry = 81,714.6，价格风险距离 1,788.0 点。该 SL 对应 4H Swing Low、Protected Low 或 IMB / POI 失效中的哪一种具体结构依据尚待用户说明；不能仅凭截图位置自动认定其结构级别。",
+        "logic": null,
+        "price": 79926.6,
+        "priceRecorded": true
+      },
+      "targetLogic": {
+        "raw": "用户已确认原始计划：Entry=81,714.6，SL=79,926.6，计划TP1=84,737.9，0.04张，1R=0.54 U。价格Risk=1,788.0点，目标Reward=3,023.3点，Planned RR≈1.69R（未含费用）；这不是最终成交结果。最新面板显示实际先在83,806平0.02张，后在81,720.4平0.02张，均非原始计划TP1=84,737.9；是否原本就打算分批及原因尚未核实。总毛+0.419 U、手续费-0.0329 U、净+0.387 U，Actual R=0.387÷0.54≈+0.72R。",
+        "targetType": null,
+        "reason": "用户已确认原始计划：Entry=81,714.6，SL=79,926.6，计划TP1=84,737.9，0.04张，1R=0.54 U。价格Risk=1,788.0点，目标Reward=3,023.3点，Planned RR≈1.69R（未含费用）；这不是最终成交结果。最新面板显示实际先在83,806平0.02张，后在81,720.4平0.02张，均非原始计划TP1=84,737.9；是否原本就打算分批及原因尚未核实。总毛+0.419 U、手续费-0.0329 U、净+0.387 U，Actual R=0.387÷0.54≈+0.72R。"
+      },
+      "tradeManagement": {
+        "movedSL": null,
+        "partialTP": null,
+        "breakEven": null,
+        "earlyExit": null,
+        "addedPosition": null,
+        "reducedPosition": null,
+        "weekendExit": null,
+        "notes": null
+      },
+      "review": {
+        "worked": null,
+        "improve": null,
+        "mainProblem": null,
+        "nextRules": null
+      },
+      "mae": null,
+      "mfe": null,
+      "protectedLow": null,
+      "protectedHigh": null,
+      "images": [
+        {
+          "media": "image7.png",
+          "order": 1,
+          "file": "images/2026-10-08-btcusdt-long-02-1.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 278,
+          "width": 2048,
+          "height": 988,
+          "sha256": "b21b3a58982f0eeb",
+          "url": "images/2026-10-08-btcusdt-long-02-1.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        }
+      ],
+      "tags": [
+        {
+          "group": "Direction",
+          "value": "Long"
+        },
+        {
+          "group": "Setup Step",
+          "value": "原始 Setup Flow：4H Bullish Bias"
+        },
+        {
+          "group": "Setup Step",
+          "value": "Discount（50% 以下）"
+        },
+        {
+          "group": "Setup Step",
+          "value": "下方被止损多单导致的 Liq Sweep 候选"
+        },
+        {
+          "group": "Setup Step",
+          "value": "进入 4H IMB"
+        },
+        {
+          "group": "Setup Step",
+          "value": "寻找适合的入场 K"
+        },
+        {
+          "group": "Setup Step",
+          "value": "Limit Long。Entry Reason 是 4H 折价与流动性/IMB 共振；Entry Trigger 是已提前挂好的限价单触发，不是 15min/5min 结构确认。用户已确认实际成交价 81,714.6，仓位 0.04 张，且与周报同一笔"
+        },
+        {
+          "group": "POI",
+          "value": "IMB"
+        },
+        {
+          "group": "POI",
+          "value": "Discount"
+        },
+        {
+          "group": "Result",
+          "value": "Win"
+        }
+      ],
+      "rawSections": {
+        "execution": [
+          "BTC/USDT Long，已由用户确认与交易面板同一单；2026-10-08 21:42（北京时间）开仓，实际Entry=81,714.6，数量0.04张，事前1R=0.54 U。2026-10-12当周最新版交易面板更新结果：2026-10-14 22:49最后一批平仓，已全部结束，实际加权平均Exit=82,763.2，毛盈利+0.419 U，手续费-0.0329 U，净盈利+0.387 U（显示值舍入）；Actual R≈+0.72R。2026-10-11提供的4H图是入场分析截图，不能替代最终管理记录。此单不是2026-09-28仍待成交的BTC 82,953.7计划挂单。",
+          "用户已确认实际初始止损 SL = 79,926.6，与截图标注一致。实际 Entry = 81,714.6，价格风险距离 1,788.0 点。该 SL 对应 4H Swing Low、Protected Low 或 IMB / POI 失效中的哪一种具体结构依据尚待用户说明；不能仅凭截图位置自动认定其结构级别。"
+        ],
+        "context": [
+          "用户原图写明“大框架偏向做多”，分析周期 4H；所选 Dealing Range 价格回调到 50% 以下的 Discount（折价区）。4H 近期出现快速下跌，是否已恢复结构性看涨、1D Bias / 1H Structure 尚未记录。大级别看多预期与当前是否已经出现 Bullish MSB/Protected High Break 需区分。",
+          "用户原图给出：①价格回调至 50% 以下；②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）；③价格已进入 4H IMB 内部。图上另标有 Discount/Gold Zone 区域。这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement；4H IMB 为高周期 POI，具体边界未单独记录。"
+        ],
+        "liquidity": [
+          "用户原图给出：①价格回调至 50% 以下；②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）；③价格已进入 4H IMB 内部。图上另标有 Discount/Gold Zone 区域。这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement；4H IMB 为高周期 POI，具体边界未单独记录。"
+        ],
+        "reaction": [
+          "用户截图明确注明“直接挂的限价单，没有等低小时级别入场”。15min / 5min 反应形态、Sweep、首次回踩均没有作为实际入场条件；不根据事后走势补造。"
+        ],
+        "confirmation": [
+          "当前确认方式是 4H 折价 / 4H IMB / 下方扫流动性候选 + 适当入场 K 线，再直接 Limit。用户图注“找到好的入场 K”，但尚不清楚具体 K 线周期以及 Pin Bar、吞没或 Displacement 等形态定义。未等待 15min/5min MSB/MSS/BOS；本笔是否符合当时 HTF Limit 规则，先不判违规。"
+        ],
+        "structureNote": [
+          "当前确认方式是 4H 折价 / 4H IMB / 下方扫流动性候选 + 适当入场 K 线，再直接 Limit。用户图注“找到好的入场 K”，但尚不清楚具体 K 线周期以及 Pin Bar、吞没或 Displacement 等形态定义。未等待 15min/5min MSB/MSS/BOS；本笔是否符合当时 HTF Limit 规则，先不判违规。"
+        ],
+        "setup": [
+          "原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。Entry Reason 是 4H 折价与流动性/IMB 共振；Entry Trigger 是已提前挂好的限价单触发，不是 15min/5min 结构确认。用户已确认实际成交价 81,714.6，仓位 0.04 张，且与周报同一笔。"
+        ],
+        "invalidation": [
+          "用户已确认实际初始止损 SL = 79,926.6，与截图标注一致。实际 Entry = 81,714.6，价格风险距离 1,788.0 点。该 SL 对应 4H Swing Low、Protected Low 或 IMB / POI 失效中的哪一种具体结构依据尚待用户说明；不能仅凭截图位置自动认定其结构级别。"
+        ],
+        "targetLogic": [
+          "用户已确认原始计划：Entry=81,714.6，SL=79,926.6，计划TP1=84,737.9，0.04张，1R=0.54 U。价格Risk=1,788.0点，目标Reward=3,023.3点，Planned RR≈1.69R（未含费用）；这不是最终成交结果。最新面板显示实际先在83,806平0.02张，后在81,720.4平0.02张，均非原始计划TP1=84,737.9；是否原本就打算分批及原因尚未核实。总毛+0.419 U、手续费-0.0329 U、净+0.387 U，Actual R=0.387÷0.54≈+0.72R。"
+        ],
+        "tradeManagement": [
+          "最新版面板已确认分两次平仓：第1批2026-10-13 13:23（北京时间）在83,806平仓0.02张，毛收益+0.418 U；第2批2026-10-14 22:49在81,720.4平仓剩余0.02张，毛收益+0.001 U。加权平均退出价82,763.2，合计毛+0.419 U，手续费-0.0329 U，净+0.387 U。分批原因、第2批接近入场价退出是否属于保护止损/移动SL、实际原定TP层级尚待用户确认，不推断已有BE规则。"
+        ],
+        "result": [
+          "Win，10月14日22:49已完全平仓。毛收益+0.419 U、手续费-0.0329 U、净收益+0.387 U；以初始风险1R=0.54 U计算，净Actual R≈+0.72R。原始计划TP1=84,737.9，真实第1批83,806、第2批81,720.4；与原计划目标不同，需追问为何第1批提前减仓、为何第2批几乎在BE附近退出。入场结构4H折价、扫流动性候选、4H IMB HTF Limit已经记录；但实际分批/移动SL规则和4H结构有效性尚未复核，Good Win/Bad Win暂不判定。"
+        ],
+        "_extra": [
+          "【Rule Check / Next Rule】此单为 HTF POI 直接 Limit，未等低周期确认是主动选择，先不直接认定违纪。需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；不能用最终结果倒推出“可以/不可以不等 LTF”。",
+          "【待补充】已确认实际结果：10-08 21:42 →10-14 22:49，Entry81,714.6，0.04张，分批Exit 83,806（0.02张）及81,720.4（0.02张），毛+0.419 U、费-0.0329 U、净+0.387 U，1R=0.54 U，Actual R≈+0.72R。原始SL79,926.6、原始TP1 84,737.9、Planned RR≈1.69R。重点补充：①两次实际平仓分别基于何种管理规则，第二批是否移至BE/保护止损；②原始是否计划分批及目标；③4H所指入场K线定义和SL结构失效原因；④用户执行质量自评、MAE/MFE。原始4H图已附。"
+        ]
+      },
+      "structured": {
+        "fields": {
+          "biasSourceTF": {
+            "value": [
+              "4H",
+              "1D",
+              "1H"
+            ],
+            "source": "doc:label",
+            "evidence": "4H ⏐ 1D ⏐ 1H",
+            "confirmed": true,
+            "multi": true
+          },
+          "invalidationLogic": {
+            "value": [
+              "Protected Low",
+              "Structure Invalidated"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[execution] 该 SL 对应 4H Swing Low、Protected Low 或 IMB / POI 失效中的哪一种具体结构依据尚待用户说明； ⏐ [invalidation] 该 SL 对应 4H Swing Low、Protected Low 或 IMB / POI 失效中的哪一种具体结构依据尚待用户说明； ⏐ [_extra] ③4H所指入场K线定义和SL结构失效原因；",
+            "confirmed": false,
+            "multi": true
+          },
+          "poiConfluence": {
+            "value": [
+              "Discount"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 所选 Dealing Range 价格回调到 50% 以下的 Discount（折价区）。 ⏐ [context] 图上另标有 Discount/Gold Zone 区域。 ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [setup] Entry Reason 是 4H 折价与流动性/IMB 共振；",
+            "confirmed": false,
+            "multi": true
+          },
+          "liquiditySweep": {
+            "value": "Yes",
+            "source": "doc:keyword",
+            "evidence": "[context] ②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）； ⏐ [context] 这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement； ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+            "confirmed": false,
+            "multi": false
+          },
+          "htfPOIType": {
+            "value": [
+              "IMB"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] ③价格已进入 4H IMB 内部。 ⏐ [context] 4H IMB 为高周期 POI，具体边界未单独记录。 ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [setup] Entry Reason 是 4H 折价与流动性/IMB 共振； ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+            "confirmed": false,
+            "multi": true,
+            "tf": [
+              "4H"
+            ]
+          },
+          "entryTriggerType": {
+            "value": [
+              "Sweep"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+            "confirmed": false,
+            "multi": true
+          },
+          "targetLevel": {
+            "value": [
+              "HTF Liquidity"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[setup] Entry Reason 是 4H 折价与流动性/IMB 共振；",
+            "confirmed": false,
+            "multi": true
+          },
+          "brokenStructure": {
+            "value": [
+              "Protected Low"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[invalidation] 该 SL 对应 4H Swing Low、Protected Low 或 IMB / POI 失效中的哪一种具体结构依据尚待用户说明；",
+            "confirmed": false,
+            "multi": true
+          },
+          "protectedStructure": {
+            "value": "Protected Low",
+            "source": "doc:keyword",
+            "evidence": "[invalidation] 该 SL 对应 4H Swing Low、Protected Low 或 IMB / POI 失效中的哪一种具体结构依据尚待用户说明；",
+            "confirmed": false,
+            "multi": false
+          },
+          "entryModePlanned": {
+            "value": "Limit",
+            "source": "doc:keyword",
+            "evidence": "[execution] 此单不是2026-09-28仍待成交的BTC 82,953.7计划挂单。 ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [setup] Entry Trigger 是已提前挂好的限价单触发，不是 15min/5min 结构确认。",
+            "confirmed": false,
+            "multi": false
+          },
+          "entryMode": {
+            "value": "Limit",
+            "source": "doc:keyword",
+            "evidence": "[execution] 此单不是2026-09-28仍待成交的BTC 82,953.7计划挂单。 ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [setup] Entry Trigger 是已提前挂好的限价单触发，不是 15min/5min 结构确认。",
+            "confirmed": false,
+            "multi": false
+          }
+        },
+        "unparsed": [],
+        "sources": {
+          "doc:label": 1,
+          "doc:keyword": 8
+        },
+        "stats": {
+          "confirmed": 1,
+          "suggested": 10
+        }
+      },
+      "structRaw": {
+        "biasSourceTF": [
+          "4H",
+          "1D",
+          "1H"
+        ]
+      },
+      "dataCompleteness": {
+        "percent": 53,
+        "missing": [
+          "plannedRR",
+          "entryTime",
+          "exitTime",
+          "displacement",
+          "mae",
+          "mfe",
+          "fees"
+        ],
+        "total": 15,
+        "filled": 8
+      },
+      "analysis": null
+    },
+    {
+      "num": "01",
+      "symbol": "CLUSDT",
+      "symbolLabel": "CL/USDT",
+      "direction": "long",
+      "headingResult": "Win（净 +1.068 U）",
+      "heading": "1｜CL/USDT Long｜2026年10月12日–10月14日｜Win（净 +1.068 U）",
+      "sourceBlockIndex": 281,
+      "entryDate": "2026-10-12",
+      "exitDate": null,
+      "entryTime": null,
+      "exitTime": null,
+      "partialCloses": null,
+      "holdingMinutes": null,
+      "timeText": null,
+      "id": "2026-10-12-clusdt-long-01",
+      "entry": 89.69,
+      "entryApprox": null,
+      "stopLoss": null,
+      "stopLossApprox": null,
+      "exit": null,
+      "plannedPOI": null,
+      "riskAmount": null,
+      "riskAmountIsOneR": null,
+      "targets": [
+        {
+          "label": "Planned Target",
+          "priceLow": null,
+          "priceHigh": null,
+          "priceText": null,
+          "sizePercent": null,
+          "types": null,
+          "note": "原始 TP / Planned RR 未提供；实际分批平仓价不代表下单前预设 TP；Actual R 暂无法计算。",
+          "source": "targetLogic"
+        }
+      ],
+      "executionRaw": "依据用户指定的 week-2026-10-12.html 交易面板：CL/USDT；Long；2026-10-12 09:00（北京时间）开仓，实际 Entry 89.69，数量3张；2026-10-14 00:59 最后一批平仓，订单已全部结束；持有约39小时59分钟。交易面板综合实际平仓均价 93.34；结果 Win。交易所、原始模型、1R 风险金额尚未提供。 原始 SL 和 Invalidation 结构依据未记录，因此无法反推原始价格风险或本金 1R。",
+      "resultStatus": "win",
+      "actualR": null,
+      "plannedR": null,
+      "rIncluded": false,
+      "resultRaw": "Win，面板实际加权平均平仓价93.34；毛 +1.095 U，费 -0.0275 U，净 +1.068 U。缺少事前模型与 1R，暂不归类 Good Win / Bad Win，也不计算 Actual R。",
+      "rBasis": null,
+      "pnl": null,
+      "fees": null,
+      "plannedRiskPoints": null,
+      "plannedRewardLow": null,
+      "plannedRewardHigh": null,
+      "plannedRRLow": null,
+      "plannedRRHigh": null,
+      "plannedRR": null,
+      "plannedRRMidpointUsed": null,
+      "plannedRRText": null,
+      "riskCheckRaw": null,
+      "minRRThreshold": null,
+      "derived": null,
+      "context": {
+        "raw": "未提供此 CL 多单的 1D / 4H / 1H Bias、结构、Premium/Discount、流动性背景；不能凭最终盈利补造。 未提供原始关注的 HTF POI / Liquidity Sweep、OB/IMB/FVG、供需或目标逻辑。",
+        "timeframes": [
+          "1h",
+          "4h"
+        ],
+        "trend": null
+      },
+      "setup": {
+        "raw": "已核实实际成交均价 89.69、3 张、10月12日09:00；原始 Limit / Market 方式与 Entry Reason、Entry Trigger 未记录。",
+        "flow": [
+          "已核实实际成交均价 89.69、3 张、10月12日09:00；原始 Limit / Market 方式与 Entry Reason、Entry Trigger 未记录"
+        ]
+      },
+      "entryReason": {
+        "raw": null,
+        "items": null
+      },
+      "entryModel": {
+        "planned": null,
+        "actual": null,
+        "category": null,
+        "note": null
+      },
+      "entryModelRaw": null,
+      "liquidity": {
+        "raw": "未提供此 CL 多单的 1D / 4H / 1H Bias、结构、Premium/Discount、流动性背景；不能凭最终盈利补造。 未提供原始关注的 HTF POI / Liquidity Sweep、OB/IMB/FVG、供需或目标逻辑。 原始 TP / Planned RR 未提供；实际分批平仓价不代表下单前预设 TP；Actual R 暂无法计算。",
+        "sslSwept": null,
+        "bslTarget": null,
+        "targetLiquidity": null,
+        "internalLiquidity": null,
+        "htfMagnet": null
+      },
+      "structure": {
+        "raw": "未提供此 CL 多单的 1D / 4H / 1H Bias、结构、Premium/Discount、流动性背景；不能凭最终盈利补造。 未提供原始关注的 HTF POI / Liquidity Sweep、OB/IMB/FVG、供需或目标逻辑。 是否有 LTF MSS/MSB/BOS、Displacement、首次回踩：未记录。",
+        "internalMSB": null,
+        "msbNote": "是否有 LTF MSS/MSB/BOS、Displacement、首次回踩：未记录。",
+        "majorTrendReversal": null,
+        "protectedHigh": null,
+        "protectedLow": null
+      },
+      "displacement": null,
+      "poi": [
+        {
+          "type": "IMB",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        },
+        {
+          "type": "OB",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        },
+        {
+          "type": "FVG",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        }
+      ],
+      "invalidation": {
+        "raw": "原始 SL 和 Invalidation 结构依据未记录，因此无法反推原始价格风险或本金 1R。",
+        "logic": null,
+        "price": null,
+        "priceRecorded": false
+      },
+      "targetLogic": {
+        "raw": "原始 TP / Planned RR 未提供；实际分批平仓价不代表下单前预设 TP；Actual R 暂无法计算。",
+        "targetType": null,
+        "reason": "原始 TP / Planned RR 未提供；实际分批平仓价不代表下单前预设 TP；Actual R 暂无法计算。"
+      },
+      "tradeManagement": {
+        "movedSL": null,
+        "partialTP": null,
+        "breakEven": null,
+        "earlyExit": null,
+        "addedPosition": null,
+        "reducedPosition": null,
+        "weekendExit": null,
+        "notes": null
+      },
+      "review": {
+        "worked": null,
+        "improve": null,
+        "mainProblem": null,
+        "nextRules": null
+      },
+      "mae": null,
+      "mfe": null,
+      "protectedLow": null,
+      "protectedHigh": null,
+      "images": [],
+      "tags": [
+        {
+          "group": "Direction",
+          "value": "Long"
+        },
+        {
+          "group": "Setup Step",
+          "value": "已核实实际成交均价 89.69、3 张、10月12日09:00；原始 Limit / Market 方式与 Entry Reason、Entry Trigger 未记录"
+        },
+        {
+          "group": "POI",
+          "value": "IMB"
+        },
+        {
+          "group": "POI",
+          "value": "OB"
+        },
+        {
+          "group": "POI",
+          "value": "FVG"
+        },
+        {
+          "group": "Result",
+          "value": "Win"
+        }
+      ],
+      "rawSections": {
+        "execution": [
+          "依据用户指定的 week-2026-10-12.html 交易面板：CL/USDT；Long；2026-10-12 09:00（北京时间）开仓，实际 Entry 89.69，数量3张；2026-10-14 00:59 最后一批平仓，订单已全部结束；持有约39小时59分钟。交易面板综合实际平仓均价 93.34；结果 Win。交易所、原始模型、1R 风险金额尚未提供。",
+          "原始 SL 和 Invalidation 结构依据未记录，因此无法反推原始价格风险或本金 1R。"
+        ],
+        "context": [
+          "未提供此 CL 多单的 1D / 4H / 1H Bias、结构、Premium/Discount、流动性背景；不能凭最终盈利补造。",
+          "未提供原始关注的 HTF POI / Liquidity Sweep、OB/IMB/FVG、供需或目标逻辑。"
+        ],
+        "liquidity": [
+          "未提供原始关注的 HTF POI / Liquidity Sweep、OB/IMB/FVG、供需或目标逻辑。"
+        ],
+        "reaction": [
+          "15min/5min 反应和入场K线尚未提供。"
+        ],
+        "confirmation": [
+          "是否有 LTF MSS/MSB/BOS、Displacement、首次回踩：未记录。"
+        ],
+        "structureNote": [
+          "是否有 LTF MSS/MSB/BOS、Displacement、首次回踩：未记录。"
+        ],
+        "setup": [
+          "已核实实际成交均价 89.69、3 张、10月12日09:00；原始 Limit / Market 方式与 Entry Reason、Entry Trigger 未记录。"
+        ],
+        "invalidation": [
+          "原始 SL 和 Invalidation 结构依据未记录，因此无法反推原始价格风险或本金 1R。"
+        ],
+        "targetLogic": [
+          "原始 TP / Planned RR 未提供；实际分批平仓价不代表下单前预设 TP；Actual R 暂无法计算。"
+        ],
+        "tradeManagement": [
+          "交易面板确认分两批退出：10月12日20:29，以92.74平1张，面板该批毛盈 +0.305 U；10月14日00:59，以93.64平2张，面板该批毛盈 +0.790 U。合计毛 +1.095 U，合计手续费 -0.0275 U，净 +1.068 U（按网页舍入）。是否移动 SL、为何分批平仓，未记录。"
+        ],
+        "result": [
+          "Win，面板实际加权平均平仓价93.34；毛 +1.095 U，费 -0.0275 U，净 +1.068 U。缺少事前模型与 1R，暂不归类 Good Win / Bad Win，也不计算 Actual R。"
+        ],
+        "_extra": [
+          "【Rule Check / Next Rule】待用户提供进场原因、初始 SL/TP、资金 1R 和分批 TP 的管理规则后再判执行质量；盈利本身不是合规证明。",
+          "【待补充】此条暂为用户指定交易面板的成交结果记录。需补原计划模型、SL、TP、1R、确认周期、分批退出原因、MAE/MFE。"
+        ]
+      },
+      "structured": {
+        "fields": {
+          "biasSourceTF": {
+            "value": [
+              "1D",
+              "4H",
+              "1H"
+            ],
+            "source": "doc:label",
+            "evidence": "1D ⏐ 4H ⏐ 1H",
+            "confirmed": true,
+            "multi": true
+          },
+          "liquiditySweep": {
+            "value": "No",
+            "source": "doc:keyword",
+            "evidence": "[context] 未提供原始关注的 HTF POI / Liquidity Sweep、OB/IMB/FVG、供需或目标逻辑。",
+            "confirmed": false,
+            "multi": false
+          }
+        },
+        "unparsed": [],
+        "sources": {
+          "doc:label": 1,
+          "doc:keyword": 1
+        },
+        "stats": {
+          "confirmed": 1,
+          "suggested": 1
+        }
+      },
+      "structRaw": {
+        "biasSourceTF": [
+          "1D",
+          "4H",
+          "1H"
+        ]
+      },
+      "dataCompleteness": {
+        "percent": 40,
+        "missing": [
+          "stopLoss",
+          "plannedRR",
+          "actualR",
+          "entryTime",
+          "exitTime",
+          "displacement",
+          "mae",
+          "mfe",
+          "fees"
+        ],
+        "total": 15,
+        "filled": 6
+      },
+      "analysis": null
+    },
+    {
+      "num": "02",
+      "symbol": "XAUUSDT",
+      "symbolLabel": "XAU/USDT",
+      "direction": "long",
+      "headingResult": "Loss（净 -0.742 U，约 -1.15R）",
+      "heading": "2｜XAU/USDT Long｜2026年10月14日｜Loss（净 -0.742 U，约 -1.15R）",
+      "sourceBlockIndex": 294,
+      "entryDate": "2026-10-14",
+      "exitDate": null,
+      "entryTime": null,
+      "exitTime": null,
+      "partialCloses": null,
+      "holdingMinutes": null,
+      "timeText": null,
+      "id": "2026-10-14-xauusdt-long-02",
+      "entry": 4134.8,
+      "entryApprox": null,
+      "stopLoss": 4108.0,
+      "stopLossApprox": null,
+      "exit": 4108.0,
+      "plannedPOI": null,
+      "riskAmount": 0.643,
+      "riskAmountIsOneR": null,
+      "targets": [
+        {
+          "label": "Planned Target",
+          "priceLow": null,
+          "priceHigh": null,
+          "priceText": null,
+          "sizePercent": null,
+          "types": null,
+          "note": "用户补充原始计划目标为2R，Planned RR=2R；准确的实际预设TP委托价格未提供。以真实 Entry=4134.8、SL=4108、价格风险26.8点计算，若纯按2倍价格风险设固定TP，则理论 TP=4188.4（推算参考，非已证实委托价）。仓位24张；事前资金1R=0.643 U，毛损失-0.643 U≈-1.00R，手续费-0.0989 U≈-0.15R，净损失-0.742 U，Actual R≈-1.15R。OB附近SL是否在结构失效处需进一步核对；不预设所有4H多单必须把SL放到Sweep Low下。",
+          "source": "targetLogic"
+        }
+      ],
+      "executionRaw": "XAU/USDT 永续；图上 Binance；Long；4H 策略分析。原图标注 4134.48 是用户确认的手动标注失误，真实 Entry 以周报实际成交价 4134.8 为准。2026-10-12 当周交易面板记录为 2026-10-14 20:30 开仓、实际 Entry 4134.8、24 张；2026-10-14 20:41 全部平仓，实际 Exit 4108。开仓至平仓约11分钟（北京时间）。毛损益 -0.643 U、手续费 -0.0989 U、净亏损 -0.742 U（面板显示的舍入结果）。初始 SL 4108，实际成交价格风险 26.8 点。用户已确认触发止损平仓；用户确认预设资金 1R = 0.643 U。实际净亏损 -0.742 U，Actual R ≈ -0.742 ÷ 0.643 = -1.15R（含手续费）；不以毛损失 -0.643 U 充当净亏损。已归档于按开仓日期计算的第5周。 用户进一步确认：过去通常把止损放在 Swing Low / Swing High 之外，现在为了试验 ICT OB 止损，选择将本笔 SL=4108 放在 OB 下沿附近；其位置是近似标注，并未精确对齐OB边界。因此不能声称4108已证实处于OB失效下方，也不能只因被止损就判设置错误。实际 Entry=4134.8，SL/Exit=4108，价格风险26.8点。图上此前约4080附近 Sweep Low 低于4108，代表 OB 止损与整个4H Sweep Low 失效止损是两种不同模型；不能事后随意移到更远低点而维持原仓位/1R。后续需保存 OB 精确上下沿、OB 周期、边缘缓冲、真正 Invalidation，并与Swing止损分组比较。",
+      "resultStatus": "loss",
+      "actualR": -1.15,
+      "plannedR": null,
+      "rIncluded": true,
+      "resultRaw": "Result：Loss。2026-10-14 20:30以4134.8成交，20:41在4108退出；24张；毛-0.643 U、费-0.0989 U、净-0.742 U；事前1R=0.643 U，Actual R≈-1.15R。原计划目标2R。本次已进一步确认入场模型为4H-only HTF Limit：4H分析找到适当POI便提前挂Limit，1H及15min/5min确认都不是该入场模型的前置要求。因此撤销此前因不看1H而判Major Violation/Bad Loss的结论，入场方式按本单测试模型视为符合。SL=4108在OB下沿附近（近似），OB区间及有效失效点尚未精确确认；Trade Quality目前仍为待判定、Good Loss候选，而非已确认Fully Compliant。模型有效性需通过后续样本验证，不能根据本次亏损断言无效。",
+      "rBasis": "doc:risk_amount",
+      "pnl": null,
+      "fees": null,
+      "plannedRiskPoints": null,
+      "plannedRewardLow": null,
+      "plannedRewardHigh": null,
+      "plannedRRLow": null,
+      "plannedRRHigh": null,
+      "plannedRR": null,
+      "plannedRRMidpointUsed": null,
+      "plannedRRText": null,
+      "riskCheckRaw": null,
+      "minRRThreshold": null,
+      "derived": {
+        "riskPoints": 26.8,
+        "rewardPoints": -26.8,
+        "rComputed": -1.0
+      },
+      "context": {
+        "raw": "用户最新明确：本笔测试中的实际计划就是分析4H，在4H找到合适POI后直接提前挂Limit；1H并非本笔入场前必需检查项，不可将未看1H视为已确认违规。1D Bias及1H结构未单独记录，属于额外上下文缺失，不当作该测试模型要求失败。4H图左侧仍有较大的下降结构，底部Sweep及后续Bullish MSB暂按Internal MSB候选，不等于主要Protected High突破或4H完整趋势反转。通用复盘分析顺序1D→4H→1H与本次明确采用的4H-only测试入场模型应分别记录，今后可比较两者信息充分性及表现。 用户原始交易理由：“基于4h，在底部流动性被清扫后，出现msb，因此在回调到50%下方入场做多。”下方 SSL Sweep 属于用户原图标注，具体扫掉哪个历史低点及收回质量待核对。关注的入场区域是所选 4H dealing range 的 50% 以下（Discount），靠近图上 0.7/0.8 深折价带与灰色反应区；精确 POI 边界未记录。",
+        "timeframes": [
+          "4h"
+        ],
+        "trend": null
+      },
+      "setup": {
+        "raw": "本笔计划与实际一致的入场方式：分析4H → 根据图上4H下方Sweep候选、Bullish MSB及回调到Dealing Range 50%下方Discount/OB，选择合适POI → 直接预挂Limit Long → POI触及成交。用户确认图上4134.48为标注误差，真实Entry=4134.8（2026-10-14 20:30，北京时间），24张。Entry Reason为4H Sweep/MSB/Discount-OB；Entry Trigger为限价触发。测试模型事前不要求额外1H、15min/5min确认；模型合理性待样本检验。",
+        "flow": [
+          "本笔计划与实际一致的入场方式：分析4H",
+          "根据图上4H下方Sweep候选、Bullish MSB及回调到Dealing Range 50%下方Discount/OB，选择合适POI",
+          "直接预挂Limit Long",
+          "POI触及成交。用户确认图上4134.48为标注误差，真实Entry=4134.8（2026-10-14 20:30，北京时间），24张。Entry Reason为4H Sweep/MSB/Discount-OB；Entry Trigger为限价触发。测试模型事前不要求额外1H、15min/5min确认；模型合理性待样本检验"
+        ]
+      },
+      "entryReason": {
+        "raw": null,
+        "items": null
+      },
+      "entryModel": {
+        "planned": null,
+        "actual": null,
+        "category": null,
+        "note": null
+      },
+      "entryModelRaw": null,
+      "liquidity": {
+        "raw": "用户最新明确：本笔测试中的实际计划就是分析4H，在4H找到合适POI后直接提前挂Limit；1H并非本笔入场前必需检查项，不可将未看1H视为已确认违规。1D Bias及1H结构未单独记录，属于额外上下文缺失，不当作该测试模型要求失败。4H图左侧仍有较大的下降结构，底部Sweep及后续Bullish MSB暂按Internal MSB候选，不等于主要Protected High突破或4H完整趋势反转。通用复盘分析顺序1D→4H→1H与本次明确采用的4H-only测试入场模型应分别记录，今后可比较两者信息充分性及表现。 用户原始交易理由：“基于4h，在底部流动性被清扫后，出现msb，因此在回调到50%下方入场做多。”下方 SSL Sweep 属于用户原图标注，具体扫掉哪个历史低点及收回质量待核对。关注的入场区域是所选 4H dealing range 的 50% 以下（Discount），靠近图上 0.7/0.8 深折价带与灰色反应区；精确 POI 边界未记录。 用户补充原始计划目标为2R，Planned RR=2R；准确的实际预设TP委托价格未提供。以真实 Entry=4134.8、SL=4108、价格风险26.8点计算，若纯按2倍价格风险设固定TP，则理论 TP=4188.4（推算参考，非已证实委托价）。仓位24张；事前资金1R=0.643 U，毛损失-0.643 U≈-1.00R，手续费-0.0989 U≈-0.15R，净损失-0.742 U，Actual R≈-1.15R。OB附近SL是否在结构失效处需进一步核对；不预设所有4H多单必须把SL放到Sweep Low下。",
+        "sslSwept": null,
+        "bslTarget": null,
+        "targetLiquidity": null,
+        "internalLiquidity": null,
+        "htfMagnet": null
+      },
+      "structure": {
+        "raw": "用户最新明确：本笔测试中的实际计划就是分析4H，在4H找到合适POI后直接提前挂Limit；1H并非本笔入场前必需检查项，不可将未看1H视为已确认违规。1D Bias及1H结构未单独记录，属于额外上下文缺失，不当作该测试模型要求失败。4H图左侧仍有较大的下降结构，底部Sweep及后续Bullish MSB暂按Internal MSB候选，不等于主要Protected High突破或4H完整趋势反转。通用复盘分析顺序1D→4H→1H与本次明确采用的4H-only测试入场模型应分别记录，今后可比较两者信息充分性及表现。 用户原始交易理由：“基于4h，在底部流动性被清扫后，出现msb，因此在回调到50%下方入场做多。”下方 SSL Sweep 属于用户原图标注，具体扫掉哪个历史低点及收回质量待核对。关注的入场区域是所选 4H dealing range 的 50% 以下（Discount），靠近图上 0.7/0.8 深折价带与灰色反应区；精确 POI 边界未记录。 已确定交易前采用4H-only HTF Limit / POI Touch：4H确认大级别位置后，在POI直接预挂Limit，不要求额外1H结构审核，也不要求15min/5min MSS/MSB/BOS、Displacement或First Retracement。实际未等待低周期确认符合该测试入场模型，而非遗漏必需条件。模型整体胜率/合理性尚未验证；4H MSB突破的是Internal LH还是Key/Protected High仍需结构核实。",
+        "internalMSB": "bullish",
+        "msbNote": "已确定交易前采用4H-only HTF Limit / POI Touch：4H确认大级别位置后，在POI直接预挂Limit，不要求额外1H结构审核，也不要求15min/5min MSS/MSB/BOS、Displacement或First Retracement。实际未等待低周期确认符合该测试入场模型，而非遗漏必需条件。模型整体胜率/合理性尚未验证；4H MSB突破的是Internal LH还是Key/Protected High仍需结构核实。",
+        "majorTrendReversal": null,
+        "protectedHigh": null,
+        "protectedLow": null
+      },
+      "displacement": null,
+      "poi": [
+        {
+          "type": "OB",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        },
+        {
+          "type": "Discount",
+          "timeframes": [
+            "4h",
+            "1h"
+          ],
+          "source": "context/entryReason"
+        }
+      ],
+      "invalidation": {
+        "raw": "用户进一步确认：过去通常把止损放在 Swing Low / Swing High 之外，现在为了试验 ICT OB 止损，选择将本笔 SL=4108 放在 OB 下沿附近；其位置是近似标注，并未精确对齐OB边界。因此不能声称4108已证实处于OB失效下方，也不能只因被止损就判设置错误。实际 Entry=4134.8，SL/Exit=4108，价格风险26.8点。图上此前约4080附近 Sweep Low 低于4108，代表 OB 止损与整个4H Sweep Low 失效止损是两种不同模型；不能事后随意移到更远低点而维持原仓位/1R。后续需保存 OB 精确上下沿、OB 周期、边缘缓冲、真正 Invalidation，并与Swing止损分组比较。",
+        "logic": null,
+        "price": 4108.0,
+        "priceRecorded": true
+      },
+      "targetLogic": {
+        "raw": "用户补充原始计划目标为2R，Planned RR=2R；准确的实际预设TP委托价格未提供。以真实 Entry=4134.8、SL=4108、价格风险26.8点计算，若纯按2倍价格风险设固定TP，则理论 TP=4188.4（推算参考，非已证实委托价）。仓位24张；事前资金1R=0.643 U，毛损失-0.643 U≈-1.00R，手续费-0.0989 U≈-0.15R，净损失-0.742 U，Actual R≈-1.15R。OB附近SL是否在结构失效处需进一步核对；不预设所有4H多单必须把SL放到Sweep Low下。",
+        "targetType": null,
+        "reason": "用户补充原始计划目标为2R，Planned RR=2R；准确的实际预设TP委托价格未提供。以真实 Entry=4134.8、SL=4108、价格风险26.8点计算，若纯按2倍价格风险设固定TP，则理论 TP=4188.4（推算参考，非已证实委托价）。仓位24张；事前资金1R=0.643 U，毛损失-0.643 U≈-1.00R，手续费-0.0989 U≈-0.15R，净损失-0.742 U，Actual R≈-1.15R。OB附近SL是否在结构失效处需进一步核对；不预设所有4H多单必须把SL放到Sweep Low下。"
+      },
+      "tradeManagement": {
+        "movedSL": null,
+        "partialTP": null,
+        "breakEven": null,
+        "earlyExit": null,
+        "addedPosition": null,
+        "reducedPosition": null,
+        "weekendExit": null,
+        "notes": null
+      },
+      "review": {
+        "worked": null,
+        "improve": null,
+        "mainProblem": null,
+        "nextRules": null
+      },
+      "mae": null,
+      "mfe": null,
+      "protectedLow": null,
+      "protectedHigh": null,
+      "images": [
+        {
+          "media": "image3.png",
+          "order": 1,
+          "file": "images/2026-10-14-xauusdt-long-02-1.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 307,
+          "width": 2048,
+          "height": 988,
+          "sha256": "e2f4d074c44d6cef",
+          "url": "images/2026-10-14-xauusdt-long-02-1.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        }
+      ],
+      "tags": [
+        {
+          "group": "Direction",
+          "value": "Long"
+        },
+        {
+          "group": "Setup Step",
+          "value": "本笔计划与实际一致的入场方式：分析4H"
+        },
+        {
+          "group": "Setup Step",
+          "value": "根据图上4H下方Sweep候选、Bullish MSB及回调到Dealing Range 50%下方Discount/OB，选择合适POI"
+        },
+        {
+          "group": "Setup Step",
+          "value": "直接预挂Limit Long"
+        },
+        {
+          "group": "Setup Step",
+          "value": "POI触及成交。用户确认图上4134.48为标注误差，真实Entry=4134.8（2026-10-14 20:30，北京时间），24张。Entry Reason为4H Sweep/MSB/Discount-OB；Entry Trigger为限价触发。测试模型事前不要求额外1H、15min/5min确认；模型合理性待样本检验"
+        },
+        {
+          "group": "POI",
+          "value": "OB"
+        },
+        {
+          "group": "POI",
+          "value": "Discount"
+        },
+        {
+          "group": "Result",
+          "value": "Loss"
+        }
+      ],
+      "rawSections": {
+        "execution": [
+          "XAU/USDT 永续；图上 Binance；Long；4H 策略分析。原图标注 4134.48 是用户确认的手动标注失误，真实 Entry 以周报实际成交价 4134.8 为准。2026-10-12 当周交易面板记录为 2026-10-14 20:30 开仓、实际 Entry 4134.8、24 张；2026-10-14 20:41 全部平仓，实际 Exit 4108。开仓至平仓约11分钟（北京时间）。毛损益 -0.643 U、手续费 -0.0989 U、净亏损 -0.742 U（面板显示的舍入结果）。初始 SL 4108，实际成交价格风险 26.8 点。用户已确认触发止损平仓；用户确认预设资金 1R = 0.643 U。实际净亏损 -0.742 U，Actual R ≈ -0.742 ÷ 0.643 = -1.15R（含手续费）；不以毛损失 -0.643 U 充当净亏损。已归档于按开仓日期计算的第5周。",
+          "用户进一步确认：过去通常把止损放在 Swing Low / Swing High 之外，现在为了试验 ICT OB 止损，选择将本笔 SL=4108 放在 OB 下沿附近；其位置是近似标注，并未精确对齐OB边界。因此不能声称4108已证实处于OB失效下方，也不能只因被止损就判设置错误。实际 Entry=4134.8，SL/Exit=4108，价格风险26.8点。图上此前约4080附近 Sweep Low 低于4108，代表 OB 止损与整个4H Sweep Low 失效止损是两种不同模型；不能事后随意移到更远低点而维持原仓位/1R。后续需保存 OB 精确上下沿、OB 周期、边缘缓冲、真正 Invalidation，并与Swing止损分组比较。"
+        ],
+        "context": [
+          "用户最新明确：本笔测试中的实际计划就是分析4H，在4H找到合适POI后直接提前挂Limit；1H并非本笔入场前必需检查项，不可将未看1H视为已确认违规。1D Bias及1H结构未单独记录，属于额外上下文缺失，不当作该测试模型要求失败。4H图左侧仍有较大的下降结构，底部Sweep及后续Bullish MSB暂按Internal MSB候选，不等于主要Protected High突破或4H完整趋势反转。通用复盘分析顺序1D→4H→1H与本次明确采用的4H-only测试入场模型应分别记录，今后可比较两者信息充分性及表现。",
+          "用户原始交易理由：“基于4h，在底部流动性被清扫后，出现msb，因此在回调到50%下方入场做多。”下方 SSL Sweep 属于用户原图标注，具体扫掉哪个历史低点及收回质量待核对。关注的入场区域是所选 4H dealing range 的 50% 以下（Discount），靠近图上 0.7/0.8 深折价带与灰色反应区；精确 POI 边界未记录。"
+        ],
+        "liquidity": [
+          "用户原始交易理由：“基于4h，在底部流动性被清扫后，出现msb，因此在回调到50%下方入场做多。”下方 SSL Sweep 属于用户原图标注，具体扫掉哪个历史低点及收回质量待核对。关注的入场区域是所选 4H dealing range 的 50% 以下（Discount），靠近图上 0.7/0.8 深折价带与灰色反应区；精确 POI 边界未记录。"
+        ],
+        "reaction": [
+          "本笔已明确采用4H-only HTF Limit / POI Touch模型：先分析4H，在合适位置预挂限价单成交。事前不要求15min/5min Reaction，按此模型该项不适用；未等LTF不算执行违规，不补造事后低周期反应信号。"
+        ],
+        "confirmation": [
+          "已确定交易前采用4H-only HTF Limit / POI Touch：4H确认大级别位置后，在POI直接预挂Limit，不要求额外1H结构审核，也不要求15min/5min MSS/MSB/BOS、Displacement或First Retracement。实际未等待低周期确认符合该测试入场模型，而非遗漏必需条件。模型整体胜率/合理性尚未验证；4H MSB突破的是Internal LH还是Key/Protected High仍需结构核实。"
+        ],
+        "structureNote": [
+          "已确定交易前采用4H-only HTF Limit / POI Touch：4H确认大级别位置后，在POI直接预挂Limit，不要求额外1H结构审核，也不要求15min/5min MSS/MSB/BOS、Displacement或First Retracement。实际未等待低周期确认符合该测试入场模型，而非遗漏必需条件。模型整体胜率/合理性尚未验证；4H MSB突破的是Internal LH还是Key/Protected High仍需结构核实。"
+        ],
+        "setup": [
+          "本笔计划与实际一致的入场方式：分析4H → 根据图上4H下方Sweep候选、Bullish MSB及回调到Dealing Range 50%下方Discount/OB，选择合适POI → 直接预挂Limit Long → POI触及成交。用户确认图上4134.48为标注误差，真实Entry=4134.8（2026-10-14 20:30，北京时间），24张。Entry Reason为4H Sweep/MSB/Discount-OB；Entry Trigger为限价触发。测试模型事前不要求额外1H、15min/5min确认；模型合理性待样本检验。"
+        ],
+        "invalidation": [
+          "用户进一步确认：过去通常把止损放在 Swing Low / Swing High 之外，现在为了试验 ICT OB 止损，选择将本笔 SL=4108 放在 OB 下沿附近；其位置是近似标注，并未精确对齐OB边界。因此不能声称4108已证实处于OB失效下方，也不能只因被止损就判设置错误。实际 Entry=4134.8，SL/Exit=4108，价格风险26.8点。图上此前约4080附近 Sweep Low 低于4108，代表 OB 止损与整个4H Sweep Low 失效止损是两种不同模型；不能事后随意移到更远低点而维持原仓位/1R。后续需保存 OB 精确上下沿、OB 周期、边缘缓冲、真正 Invalidation，并与Swing止损分组比较。"
+        ],
+        "targetLogic": [
+          "用户补充原始计划目标为2R，Planned RR=2R；准确的实际预设TP委托价格未提供。以真实 Entry=4134.8、SL=4108、价格风险26.8点计算，若纯按2倍价格风险设固定TP，则理论 TP=4188.4（推算参考，非已证实委托价）。仓位24张；事前资金1R=0.643 U，毛损失-0.643 U≈-1.00R，手续费-0.0989 U≈-0.15R，净损失-0.742 U，Actual R≈-1.15R。OB附近SL是否在结构失效处需进一步核对；不预设所有4H多单必须把SL放到Sweep Low下。"
+        ],
+        "tradeManagement": [
+          "10月14日 20:30 Entry 4134.8；20:41 在 4108 全部平仓（24 张），单批平仓，用户明确确认初始 SL 触发。截图22:19左右的 4098.74 报价是后续价格，而非本单 Exit。交易面板未披露是否期间移动过 SL，暂不补写其他管理行为。持有约11分钟。"
+        ],
+        "result": [
+          "Result：Loss。2026-10-14 20:30以4134.8成交，20:41在4108退出；24张；毛-0.643 U、费-0.0989 U、净-0.742 U；事前1R=0.643 U，Actual R≈-1.15R。原计划目标2R。本次已进一步确认入场模型为4H-only HTF Limit：4H分析找到适当POI便提前挂Limit，1H及15min/5min确认都不是该入场模型的前置要求。因此撤销此前因不看1H而判Major Violation/Bad Loss的结论，入场方式按本单测试模型视为符合。SL=4108在OB下沿附近（近似），OB区间及有效失效点尚未精确确认；Trade Quality目前仍为待判定、Good Loss候选，而非已确认Fully Compliant。模型有效性需通过后续样本验证，不能根据本次亏损断言无效。"
+        ],
+        "_extra": [
+          "【Rule Check / Next Rule】用户明确确认事前测试方案：仅看4H，在合适POI直接预挂Limit；并不要求1H或15min/5min额外确认。所以本单“未看1H、未等LTF”均不构成已确认的入场规则违反；此前据通用1D→4H→1H流程评定Major Violation/Bad Loss的依据撤销。继续保留：HTF Limit方案测试中、未经验证；OB止损也是相较既往Swing Low/High之外的新实验，4108仅约在OB下沿附近，OB确切边界与失效缓冲未知。执行质量暂未判定（Good Loss候选），不加入已判定合规率或Good/Bad统计。之后分别记录并对照入场模型与止损模型，避免将模型有效性和是否依计划执行混为一谈。",
+          "【待补充】已核实：10-14 20:30→20:41，24张，真实Entry4134.8（图上4134.48为标注失误），Exit4108；毛-0.643 U、费-0.0989 U、净-0.742 U，预设1R=0.643 U，Actual R≈-1.15R，原计划TP=2R。入场模式已明确：只看4H，在合适POI直接挂Limit，未额外核验1H及15min/5min；这符合当时测试方案，不按遗漏确认判违规。OB止损实验：4108在OB下沿附近，为近似位置。质量为Good Loss候选/待判定；后续核对OB确切范围与失效位置、其他事前约定的筛选条件、MAE/MFE。原始4H截图附下。"
+        ]
+      },
+      "structured": {
+        "fields": {
+          "biasSourceTF": {
+            "value": [
+              "4H",
+              "1H",
+              "1D"
+            ],
+            "source": "doc:label",
+            "evidence": "4H ⏐ 1H ⏐ 1D",
+            "confirmed": true,
+            "multi": true
+          },
+          "liquiditySweep": {
+            "value": "Yes",
+            "source": "doc:keyword",
+            "evidence": "[execution] 图上此前约4080附近 Sweep Low 低于4108，代表 OB 止损与整个4H Sweep Low 失效止损是两种不同模型； ⏐ [context] 4H图左侧仍有较大的下降结构，底部Sweep及后续Bullish MSB暂按Internal MSB候选，不等于主要Protected High突破或4H完整趋势反转。 ⏐ [context] ”下方 SSL Sweep 属于用户原图标注，具体扫掉哪个历史低点及收回质量待核对。 ⏐ [setup] 本笔计划与实际一致的入场方式：分析4H → 根据图上4H下方Sweep候选、Bullish MSB及回调到Dealing Range 50%下方Discount/OB，选择合适POI → 直接预挂Limit Long → POI触及成交。 ⏐ [setup] Entry Reason为4H Sweep/MSB/Discount-OB；",
+            "confirmed": false,
+            "multi": false
+          },
+          "entryTriggerType": {
+            "value": [
+              "Sweep"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[execution] 图上此前约4080附近 Sweep Low 低于4108，代表 OB 止损与整个4H Sweep Low 失效止损是两种不同模型； ⏐ [setup] 本笔计划与实际一致的入场方式：分析4H → 根据图上4H下方Sweep候选、Bullish MSB及回调到Dealing Range 50%下方Discount/OB，选择合适POI → 直接预挂Limit Long → POI触及成交。 ⏐ [setup] Entry Reason为4H Sweep/MSB/Discount-OB；",
+            "confirmed": false,
+            "multi": true
+          },
+          "liquidityType": {
+            "value": [
+              "SSL"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] ”下方 SSL Sweep 属于用户原图标注，具体扫掉哪个历史低点及收回质量待核对。",
+            "confirmed": false,
+            "multi": true
+          },
+          "poiConfluence": {
+            "value": [
+              "Discount"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 关注的入场区域是所选 4H dealing range 的 50% 以下（Discount），靠近图上 0.7/0.8 深折价带与灰色反应区； ⏐ [setup] 本笔计划与实际一致的入场方式：分析4H → 根据图上4H下方Sweep候选、Bullish MSB及回调到Dealing Range 50%下方Discount/OB，选择合适POI → 直接预挂Limit Long → POI触及成交。 ⏐ [setup] Entry Reason为4H Sweep/MSB/Discount-OB；",
+            "confirmed": false,
+            "multi": true
+          },
+          "structureShiftType": {
+            "value": [
+              "MSB"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[setup] Entry Reason为4H Sweep/MSB/Discount-OB；",
+            "confirmed": false,
+            "multi": true
+          },
+          "invalidationLogic": {
+            "value": [
+              "Sweep Low"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[invalidation] 图上此前约4080附近 Sweep Low 低于4108，代表 OB 止损与整个4H Sweep Low 失效止损是两种不同模型；",
+            "confirmed": false,
+            "multi": true
+          }
+        },
+        "unparsed": [
+          {
+            "field": "tradeQuality",
+            "raw": "Result：Loss。2026-10-14 20:30以4134.8成交，20:41在4108退出；24张；毛-0.643 U、费-0.0989 U、净-0.742 U；事前1R=0.643 U，Actual R≈-1.15R。原计划目标2R。本次已进一步确认入场模型为4H-only HTF Limit：4H分析找到适当POI便提前挂Limit，1H及15min/5min确认都不是该入场模型的前置要求。因此撤销此前因不看1H而判Major Violation/Bad Loss的结论，入场方式按本单测试模型视为符合。SL=4108在OB下沿附近（近似），OB区间及有效失效点尚未精确确认；Trade Quality目前仍为待判定、Good Loss候选，而非已确认Fully Compliant。模型有效性需通过后续样本验证，不能根据本次亏损断言无效。",
+            "leftover": "Result：Loss。2026-10-14 20:30以4134.8成交，20:41在4108退出；24张；毛-0.643 U、费-0.0989 U、净-0.742 U；事前1R=0.643 U，Actual R≈-1.15R。原计划目标2R。本次已进一步确认入场模型为4H-only HTF Limit：4H分析找到适当POI便提前挂Limit，1H及15min/5min确认都不是该入场模型的前置要求。因此撤销此前因不看1H而判Major Violation/Bad Loss的结论，入场方式按本单测试模型视为符合。SL=4108在OB下沿附近（近似），OB区间及有效失效点尚未精确确认；Trade Quality目前仍为待判定、Good Loss候选，而非已确认Fully Compliant。模型有效性需通过后续样本验证，不能根据本次亏损断言无效。"
+          }
+        ],
+        "sources": {
+          "doc:label": 1,
+          "doc:keyword": 6
+        },
+        "stats": {
+          "confirmed": 1,
+          "suggested": 6
+        }
+      },
+      "structRaw": {
+        "biasSourceTF": [
+          "4H",
+          "1H",
+          "1D"
+        ],
+        "tradeQuality": [
+          "Result：Loss。2026-10-14 20:30以4134.8成交，20:41在4108退出；24张；毛-0.643 U、费-0.0989 U、净-0.742 U；事前1R=0.643 U，Actual R≈-1.15R。原计划目标2R。本次已进一步确认入场模型为4H-only HTF Limit：4H分析找到适当POI便提前挂Limit，1H及15min/5min确认都不是该入场模型的前置要求。因此撤销此前因不看1H而判Major Violation/Bad Loss的结论，入场方式按本单测试模型视为符合。SL=4108在OB下沿附近（近似），OB区间及有效失效点尚未精确确认；Trade Quality目前仍为待判定、Good Loss候选，而非已确认Fully Compliant。模型有效性需通过后续样本验证，不能根据本次亏损断言无效。"
+        ]
+      },
+      "dataCompleteness": {
+        "percent": 53,
+        "missing": [
+          "plannedRR",
+          "entryTime",
+          "exitTime",
+          "displacement",
+          "mae",
+          "mfe",
+          "fees"
+        ],
+        "total": 15,
+        "filled": 8
+      },
+      "analysis": null
+    },
+    {
+      "num": "03",
+      "symbol": "QQQUSDT",
+      "symbolLabel": "QQQ/USDT",
+      "direction": "long",
+      "headingResult": "Loss（净-0.526 U，约-0.73R）",
+      "heading": "3｜QQQ/USDT Long｜2026年10月15日–10月17日｜Loss（净-0.526 U，约-0.73R）",
+      "sourceBlockIndex": 308,
+      "entryDate": "2026-10-15",
+      "exitDate": null,
+      "entryTime": null,
+      "exitTime": null,
+      "partialCloses": null,
+      "holdingMinutes": null,
+      "timeText": null,
+      "id": "2026-10-15-qqqusdt-long-03",
+      "entry": 727.0,
+      "entryApprox": null,
+      "stopLoss": 715.0,
+      "stopLossApprox": null,
+      "exit": 718.95,
+      "plannedPOI": null,
+      "riskAmount": null,
+      "riskAmountIsOneR": null,
+      "targets": [
+        {
+          "label": "Planned Target",
+          "priceLow": null,
+          "priceHigh": null,
+          "priceText": null,
+          "sizePercent": null,
+          "types": null,
+          "note": "用户已确认真实原始计划：Entry=727，SL=715（结构低点），TP=745，仓位=0.06张；价格风险12点，目标空间18点，因此Planned RR=18÷12=1.50R（不含费用）。用户说事前预设风险预算“在1 U左右”；但按订单实际仓位和价格距离，初始毛风险=0.06×12=0.72 U，交易面板分批毛PnL也验证该合约的数量/盈亏对应关系。因此将“约1 U”为粗略风险预算，实际用于计算R的该笔原始仓位毛风险为0.72 U；含费Actual R≈-0.526÷0.72=-0.73R。若以后确认原始1R另有不同统一计量，应保留原数据并重新校核。截图参考TP744.86并非用户确认的实际TP745。",
+          "source": "targetLogic"
+        }
+      ],
+      "executionRaw": "用户2026-10-18提供更新的week-2026-10-12.html实际交易面板，新增QQQ/USDT Long：2026-10-15 06:19（北京时间）开仓；Entry=727，数量0.06张；2026-10-17 01:03最后一批退出；面板加权平均Exit=718.95；结果Loss。持仓约1天18小时44分钟。毛亏损-0.483 U、手续费-0.0434 U、净亏损-0.526 U（面板各字段经过舍入）。之前尚无该笔单独入场逻辑复盘，现先记实际成交记录。 用户明确确认实际原始SL=715，设置依据为“结构低点位置”；该低点的具体周期、是否属于Protected Low、是否留有缓冲尚未进一步确认。原图上‘sl’约718、仓位工具下沿约715.68是截图标注参考，不代表真实订单初始SL；实际应以用户确认的715为准。第2批0.03张由止损触发，2026-10-17 01:03实际Exit=715.85，高于原始SL=715；执行细节及是否有移动止损的订单记录未提供，不能据差值武断归因。实际Entry=727、风险距离=12点。",
+      "resultStatus": "loss",
+      "actualR": -0.73,
+      "plannedR": null,
+      "rIncluded": true,
+      "resultRaw": "Loss。真实Entry=727，0.06张，2026-10-15 06:19→10-17 01:03（北京时间），2批Exit：722.05（主动风险减仓半仓）及715.85（结构低点止损余仓）。毛-0.483 U，手续费-0.0434 U，净-0.526 U。原始SL715，TP745，Planned RR=1.50R；用户风险预算约1 U，订单原始仓位毛风险0.72 U，实际净Actual R≈-0.73R。入场为4H上涨波段回调0.8附近预挂限价多单。盘中因判断继续下跌风险增加，主动减半仓，仍保留半仓等待潜在反弹，最终后半仓止损。对风险主动管理本身不自动判错，但第1批是原计划允许的管理操作还是临场偏离尚待确认；4H结构是否已失效也待核对。Good Loss/Bad Loss暂不判定，不能由亏损结果反推策略违规。",
+      "rBasis": "doc:r_stated",
+      "pnl": null,
+      "fees": null,
+      "plannedRiskPoints": null,
+      "plannedRewardLow": null,
+      "plannedRewardHigh": null,
+      "plannedRRLow": null,
+      "plannedRRHigh": null,
+      "plannedRR": null,
+      "plannedRRMidpointUsed": null,
+      "plannedRRText": null,
+      "riskCheckRaw": null,
+      "minRRThreshold": null,
+      "derived": {
+        "riskPoints": 12.0,
+        "rewardPoints": -8.05,
+        "rComputed": -0.671
+      },
+      "context": {
+        "raw": "用户提供2026-10-18 12:14（UTC+8）的4H原图。图上以此前约720附近低点与约762附近高点构成的整段上涨波段为Dealing Range，随后价格自高位显著回落，入场前最近4H呈现快速下跌动量。本次计划是押注上涨波段深回调后在折价位反弹，而非已确认的4H看涨结构重建。4H Protected Low、是否已发生有效结构破坏、1D/1H独立Bias尚未记录；不能只因最终亏损认定用户违反逆势规则，也不能只因位于0.8认定更高级别涨势一定保留。 用户4H原图明确文字标注：‘4h级别，在整个波段回调0.8位置附近，挂限价多单’。0.8深回撤/Discount即该笔HTF Entry POI；图上0.7与0.8水平线约位于732与728附近。另有下方约715–718灰色价格区，但图中并未明确把该区域标为OB、FVG或Sweep，不要自行加上POI类别。尚未确认事前是否核验4H结构保护低点或扫流动性，不能从后来跌破图示区域倒推。",
+        "timeframes": [
+          "4h"
+        ],
+        "trend": null
+      },
+      "setup": {
+        "raw": "实际交易面板确认2026-10-15 06:19（北京时间）Entry=727，0.06张Long。用户截图说明入场理由：4H整段上涨波段回撤到Fibonacci 0.8附近，提前挂限价多单，等待反弹；Entry Trigger为Limit触价，不是图中已确认的LTF MSB。仓位工具在图上约727.75的参考线不等于真实成交价，实际统计统一使用727，不预设标注差异原因。",
+        "flow": [
+          "实际交易面板确认2026-10-15 06:19（北京时间）Entry=727，0.06张Long。用户截图说明入场理由：4H整段上涨波段回撤到Fibonacci 0.8附近，提前挂限价多单，等待反弹；Entry Trigger为Limit触价，不是图中已确认的LTF MSB。仓位工具在图上约727.75的参考线不等于真实成交价，实际统计统一使用727，不预设标注差异原因"
+        ]
+      },
+      "entryReason": {
+        "raw": null,
+        "items": null
+      },
+      "entryModel": {
+        "planned": null,
+        "actual": null,
+        "category": null,
+        "note": null
+      },
+      "entryModelRaw": null,
+      "liquidity": {
+        "raw": "用户提供2026-10-18 12:14（UTC+8）的4H原图。图上以此前约720附近低点与约762附近高点构成的整段上涨波段为Dealing Range，随后价格自高位显著回落，入场前最近4H呈现快速下跌动量。本次计划是押注上涨波段深回调后在折价位反弹，而非已确认的4H看涨结构重建。4H Protected Low、是否已发生有效结构破坏、1D/1H独立Bias尚未记录；不能只因最终亏损认定用户违反逆势规则，也不能只因位于0.8认定更高级别涨势一定保留。 用户4H原图明确文字标注：‘4h级别，在整个波段回调0.8位置附近，挂限价多单’。0.8深回撤/Discount即该笔HTF Entry POI；图上0.7与0.8水平线约位于732与728附近。另有下方约715–718灰色价格区，但图中并未明确把该区域标为OB、FVG或Sweep，不要自行加上POI类别。尚未确认事前是否核验4H结构保护低点或扫流动性，不能从后来跌破图示区域倒推。 用户已确认真实原始计划：Entry=727，SL=715（结构低点），TP=745，仓位=0.06张；价格风险12点，目标空间18点，因此Planned RR=18÷12=1.50R（不含费用）。用户说事前预设风险预算“在1 U左右”；但按订单实际仓位和价格距离，初始毛风险=0.06×12=0.72 U，交易面板分批毛PnL也验证该合约的数量/盈亏对应关系。因此将“约1 U”为粗略风险预算，实际用于计算R的该笔原始仓位毛风险为0.72 U；含费Actual R≈-0.526÷0.72=-0.73R。若以后确认原始1R另有不同统一计量，应保留原数据并重新校核。截图参考TP744.86并非用户确认的实际TP745。",
+        "sslSwept": null,
+        "bslTarget": null,
+        "targetLiquidity": null,
+        "internalLiquidity": null,
+        "htfMagnet": null
+      },
+      "structure": {
+        "raw": "用户提供2026-10-18 12:14（UTC+8）的4H原图。图上以此前约720附近低点与约762附近高点构成的整段上涨波段为Dealing Range，随后价格自高位显著回落，入场前最近4H呈现快速下跌动量。本次计划是押注上涨波段深回调后在折价位反弹，而非已确认的4H看涨结构重建。4H Protected Low、是否已发生有效结构破坏、1D/1H独立Bias尚未记录；不能只因最终亏损认定用户违反逆势规则，也不能只因位于0.8认定更高级别涨势一定保留。 用户4H原图明确文字标注：‘4h级别，在整个波段回调0.8位置附近，挂限价多单’。0.8深回撤/Discount即该笔HTF Entry POI；图上0.7与0.8水平线约位于732与728附近。另有下方约715–718灰色价格区，但图中并未明确把该区域标为OB、FVG或Sweep，不要自行加上POI类别。尚未确认事前是否核验4H结构保护低点或扫流动性，不能从后来跌破图示区域倒推。 截图明确展示基于4H Fibonacci 0.8附近预挂限价做多（4H HTF Limit）。但该笔交易是否事前明确不要求额外1H/15min/5min确认，尚未由用户针对QQQ独立确认；也不可把对XAU实验模型的说明未经核对就自动套到QQQ。未提供真实LTF MSB/MSS/BOS或Displacement证据，执行合规暂不判定。",
+        "internalMSB": null,
+        "msbNote": "截图明确展示基于4H Fibonacci 0.8附近预挂限价做多（4H HTF Limit）。但该笔交易是否事前明确不要求额外1H/15min/5min确认，尚未由用户针对QQQ独立确认；也不可把对XAU实验模型的说明未经核对就自动套到QQQ。未提供真实LTF MSB/MSS/BOS或Displacement证据，执行合规暂不判定。",
+        "majorTrendReversal": null,
+        "protectedHigh": null,
+        "protectedLow": null
+      },
+      "displacement": null,
+      "poi": [
+        {
+          "type": "FVG",
+          "timeframes": [
+            "4h"
+          ],
+          "source": "context/entryReason"
+        },
+        {
+          "type": "Discount",
+          "timeframes": [
+            "4h"
+          ],
+          "source": "context/entryReason"
+        }
+      ],
+      "invalidation": {
+        "raw": "用户明确确认实际原始SL=715，设置依据为“结构低点位置”；该低点的具体周期、是否属于Protected Low、是否留有缓冲尚未进一步确认。原图上‘sl’约718、仓位工具下沿约715.68是截图标注参考，不代表真实订单初始SL；实际应以用户确认的715为准。第2批0.03张由止损触发，2026-10-17 01:03实际Exit=715.85，高于原始SL=715；执行细节及是否有移动止损的订单记录未提供，不能据差值武断归因。实际Entry=727、风险距离=12点。",
+        "logic": null,
+        "price": 715.0,
+        "priceRecorded": true
+      },
+      "targetLogic": {
+        "raw": "用户已确认真实原始计划：Entry=727，SL=715（结构低点），TP=745，仓位=0.06张；价格风险12点，目标空间18点，因此Planned RR=18÷12=1.50R（不含费用）。用户说事前预设风险预算“在1 U左右”；但按订单实际仓位和价格距离，初始毛风险=0.06×12=0.72 U，交易面板分批毛PnL也验证该合约的数量/盈亏对应关系。因此将“约1 U”为粗略风险预算，实际用于计算R的该笔原始仓位毛风险为0.72 U；含费Actual R≈-0.526÷0.72=-0.73R。若以后确认原始1R另有不同统一计量，应保留原数据并重新校核。截图参考TP744.86并非用户确认的实际TP745。",
+        "targetType": null,
+        "reason": "用户已确认真实原始计划：Entry=727，SL=715（结构低点），TP=745，仓位=0.06张；价格风险12点，目标空间18点，因此Planned RR=18÷12=1.50R（不含费用）。用户说事前预设风险预算“在1 U左右”；但按订单实际仓位和价格距离，初始毛风险=0.06×12=0.72 U，交易面板分批毛PnL也验证该合约的数量/盈亏对应关系。因此将“约1 U”为粗略风险预算，实际用于计算R的该笔原始仓位毛风险为0.72 U；含费Actual R≈-0.526÷0.72=-0.73R。若以后确认原始1R另有不同统一计量，应保留原数据并重新校核。截图参考TP744.86并非用户确认的实际TP745。"
+      },
+      "tradeManagement": {
+        "movedSL": null,
+        "partialTP": null,
+        "breakEven": null,
+        "earlyExit": null,
+        "addedPosition": null,
+        "reducedPosition": null,
+        "weekendExit": null,
+        "notes": null
+      },
+      "review": {
+        "worked": null,
+        "improve": null,
+        "mainProblem": null,
+        "nextRules": null
+      },
+      "mae": null,
+      "mfe": null,
+      "protectedLow": null,
+      "protectedHigh": null,
+      "images": [
+        {
+          "media": "image5.png",
+          "order": 1,
+          "file": "images/2026-10-15-qqqusdt-long-03-1.png",
+          "type": null,
+          "timeframe": null,
+          "sourceBlockIndex": 321,
+          "width": 2048,
+          "height": 1032,
+          "sha256": "433be8d66ba1a6be",
+          "url": "images/2026-10-15-qqqusdt-long-03-1.png",
+          "caption": "文档内嵌交易图（原图，未标注 Timeframe）"
+        }
+      ],
+      "tags": [
+        {
+          "group": "Direction",
+          "value": "Long"
+        },
+        {
+          "group": "Setup Step",
+          "value": "实际交易面板确认2026-10-15 06:19（北京时间）Entry=727，0.06张Long。用户截图说明入场理由：4H整段上涨波段回撤到Fibonacci 0.8附近，提前挂限价多单，等待反弹；Entry Trigger为Limit触价，不是图中已确认的LTF MSB。仓位工具在图上约727.75的参考线不等于真实成交价，实际统计统一使用727，不预设标注差异原因"
+        },
+        {
+          "group": "POI",
+          "value": "FVG"
+        },
+        {
+          "group": "POI",
+          "value": "Discount"
+        },
+        {
+          "group": "Result",
+          "value": "Loss"
+        }
+      ],
+      "rawSections": {
+        "execution": [
+          "用户2026-10-18提供更新的week-2026-10-12.html实际交易面板，新增QQQ/USDT Long：2026-10-15 06:19（北京时间）开仓；Entry=727，数量0.06张；2026-10-17 01:03最后一批退出；面板加权平均Exit=718.95；结果Loss。持仓约1天18小时44分钟。毛亏损-0.483 U、手续费-0.0434 U、净亏损-0.526 U（面板各字段经过舍入）。之前尚无该笔单独入场逻辑复盘，现先记实际成交记录。",
+          "用户明确确认实际原始SL=715，设置依据为“结构低点位置”；该低点的具体周期、是否属于Protected Low、是否留有缓冲尚未进一步确认。原图上‘sl’约718、仓位工具下沿约715.68是截图标注参考，不代表真实订单初始SL；实际应以用户确认的715为准。第2批0.03张由止损触发，2026-10-17 01:03实际Exit=715.85，高于原始SL=715；执行细节及是否有移动止损的订单记录未提供，不能据差值武断归因。实际Entry=727、风险距离=12点。"
+        ],
+        "context": [
+          "用户提供2026-10-18 12:14（UTC+8）的4H原图。图上以此前约720附近低点与约762附近高点构成的整段上涨波段为Dealing Range，随后价格自高位显著回落，入场前最近4H呈现快速下跌动量。本次计划是押注上涨波段深回调后在折价位反弹，而非已确认的4H看涨结构重建。4H Protected Low、是否已发生有效结构破坏、1D/1H独立Bias尚未记录；不能只因最终亏损认定用户违反逆势规则，也不能只因位于0.8认定更高级别涨势一定保留。",
+          "用户4H原图明确文字标注：‘4h级别，在整个波段回调0.8位置附近，挂限价多单’。0.8深回撤/Discount即该笔HTF Entry POI；图上0.7与0.8水平线约位于732与728附近。另有下方约715–718灰色价格区，但图中并未明确把该区域标为OB、FVG或Sweep，不要自行加上POI类别。尚未确认事前是否核验4H结构保护低点或扫流动性，不能从后来跌破图示区域倒推。"
+        ],
+        "liquidity": [
+          "用户4H原图明确文字标注：‘4h级别，在整个波段回调0.8位置附近，挂限价多单’。0.8深回撤/Discount即该笔HTF Entry POI；图上0.7与0.8水平线约位于732与728附近。另有下方约715–718灰色价格区，但图中并未明确把该区域标为OB、FVG或Sweep，不要自行加上POI类别。尚未确认事前是否核验4H结构保护低点或扫流动性，不能从后来跌破图示区域倒推。"
+        ],
+        "reaction": [
+          "该4H截图未展示15min/5min入场前Reaction；用户图中文字表明直接在4H深回调位挂Limit。是否曾观察但不要求LTF确认尚未得到此单的单独回答。不要补造低周期扫流动性、Displacement或反应K线。"
+        ],
+        "confirmation": [
+          "截图明确展示基于4H Fibonacci 0.8附近预挂限价做多（4H HTF Limit）。但该笔交易是否事前明确不要求额外1H/15min/5min确认，尚未由用户针对QQQ独立确认；也不可把对XAU实验模型的说明未经核对就自动套到QQQ。未提供真实LTF MSB/MSS/BOS或Displacement证据，执行合规暂不判定。"
+        ],
+        "structureNote": [
+          "截图明确展示基于4H Fibonacci 0.8附近预挂限价做多（4H HTF Limit）。但该笔交易是否事前明确不要求额外1H/15min/5min确认，尚未由用户针对QQQ独立确认；也不可把对XAU实验模型的说明未经核对就自动套到QQQ。未提供真实LTF MSB/MSS/BOS或Displacement证据，执行合规暂不判定。"
+        ],
+        "setup": [
+          "实际交易面板确认2026-10-15 06:19（北京时间）Entry=727，0.06张Long。用户截图说明入场理由：4H整段上涨波段回撤到Fibonacci 0.8附近，提前挂限价多单，等待反弹；Entry Trigger为Limit触价，不是图中已确认的LTF MSB。仓位工具在图上约727.75的参考线不等于真实成交价，实际统计统一使用727，不预设标注差异原因。"
+        ],
+        "invalidation": [
+          "用户明确确认实际原始SL=715，设置依据为“结构低点位置”；该低点的具体周期、是否属于Protected Low、是否留有缓冲尚未进一步确认。原图上‘sl’约718、仓位工具下沿约715.68是截图标注参考，不代表真实订单初始SL；实际应以用户确认的715为准。第2批0.03张由止损触发，2026-10-17 01:03实际Exit=715.85，高于原始SL=715；执行细节及是否有移动止损的订单记录未提供，不能据差值武断归因。实际Entry=727、风险距离=12点。"
+        ],
+        "targetLogic": [
+          "用户已确认真实原始计划：Entry=727，SL=715（结构低点），TP=745，仓位=0.06张；价格风险12点，目标空间18点，因此Planned RR=18÷12=1.50R（不含费用）。用户说事前预设风险预算“在1 U左右”；但按订单实际仓位和价格距离，初始毛风险=0.06×12=0.72 U，交易面板分批毛PnL也验证该合约的数量/盈亏对应关系。因此将“约1 U”为粗略风险预算，实际用于计算R的该笔原始仓位毛风险为0.72 U；含费Actual R≈-0.526÷0.72=-0.73R。若以后确认原始1R另有不同统一计量，应保留原数据并重新校核。截图参考TP744.86并非用户确认的实际TP745。"
+        ],
+        "tradeManagement": [
+          "用户解释第1批为主动风险控制：判断价格继续下跌可能较大，为防范更大损失，在市场短暂反弹时（实际平仓价722.05仍低于入场价727）于2026-10-16 22:30卖出0.03张，毛亏约-0.148 U。未一次性平仓是因为仍预期价格可能反弹，保留0.03张底仓。第2批属于触发结构低点止损：2026-10-17 01:03剩余0.03张在715.85退出，毛亏约-0.334 U；原始SL=715，实成交715.85，不能由价差推断止损一定曾移动。两批毛合计约-0.483 U，手续费-0.0434 U，净-0.526 U。第1批属于盘中主动作出的风险判断，是否为既定管理规则尚待用户确认。"
+        ],
+        "result": [
+          "Loss。真实Entry=727，0.06张，2026-10-15 06:19→10-17 01:03（北京时间），2批Exit：722.05（主动风险减仓半仓）及715.85（结构低点止损余仓）。毛-0.483 U，手续费-0.0434 U，净-0.526 U。原始SL715，TP745，Planned RR=1.50R；用户风险预算约1 U，订单原始仓位毛风险0.72 U，实际净Actual R≈-0.73R。入场为4H上涨波段回调0.8附近预挂限价多单。盘中因判断继续下跌风险增加，主动减半仓，仍保留半仓等待潜在反弹，最终后半仓止损。对风险主动管理本身不自动判错，但第1批是原计划允许的管理操作还是临场偏离尚待确认；4H结构是否已失效也待核对。Good Loss/Bad Loss暂不判定，不能由亏损结果反推策略违规。"
+        ],
+        "_extra": [
+          "【Rule Check / Next Rule】本笔用户已经确认4H波段Fibonacci 0.8附近预挂Limit；原始SL=715，对应结构低点，TP=745，计划1.50R。第1批722.05是见下跌风险上升后主动止损减半仓；第2批715.85是剩余仓位被打止损。主动减仓可能降低进一步损失，不能只凭分批亏损判违规，但需核实是否事前允许临场主动风控、依据什么触发；不把保留半仓解释成必然合理或必然违规。仍须检查交易前4H波段Protected Structure有无失效、是否和XAU同属只看4H HTF Limit实验。1R以仓位×原SL价差=0.72 U做可复核计量，预算约1 U的说法单独保留。",
+          "【待补充】已确认4H回调0.8附近Limit Long；实际Entry727，原始SL715（结构低点）、TP745，Planned RR1.50R；数量0.06张，原始仓位毛风险0.72 U（用户估计预算约1 U），净Actual R约-0.73R。2026-10-16 22:30主动在722.05减仓0.03张以控制下跌风险，但因仍预期可能反弹而保留0.03底仓；2026-10-17 01:03剩余0.03张止损在715.85。仍待核实：①入场前是否依照本笔4H-only HTF Limit测试模型，以及当时4H结构是否仍有效；②第一次临场主动减仓是否符合事前交易管理规则；③SL=715对应具体结构低点的周期/失效标准；④MAE/MFE。原始4H截图已附。"
+        ]
+      },
+      "structured": {
+        "fields": {
+          "biasSourceTF": {
+            "value": [
+              "4H",
+              "1D",
+              "1H"
+            ],
+            "source": "doc:label",
+            "evidence": "4H ⏐ 1D ⏐ 1H",
+            "confirmed": true,
+            "multi": true
+          },
+          "invalidationLogic": {
+            "value": [
+              "Structure Invalidated"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[execution] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [invalidation] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [_extra] 原始SL=715，对应结构低点，TP=745，计划1.50R。 ⏐ [_extra] 实际Entry727，原始SL715（结构低点）、TP745，Planned RR1.50R； ⏐ [_extra] ③SL=715对应具体结构低点的周期/失效标准；",
+            "confirmed": false,
+            "multi": true
+          },
+          "poiConfluence": {
+            "value": [
+              "Discount"
+            ],
+            "source": "doc:keyword",
+            "evidence": "[context] 本次计划是押注上涨波段深回调后在折价位反弹，而非已确认的4H看涨结构重建。 ⏐ [context] 0.8深回撤/Discount即该笔HTF Entry POI；",
+            "confirmed": false,
+            "multi": true
+          },
+          "liquiditySweep": {
+            "value": "No",
+            "source": "doc:keyword",
+            "evidence": "[context] 另有下方约715–718灰色价格区，但图中并未明确把该区域标为OB、FVG或Sweep，不要自行加上POI类别。",
+            "confirmed": false,
+            "multi": false
+          }
+        },
+        "unparsed": [],
+        "sources": {
+          "doc:label": 1,
+          "doc:keyword": 3
+        },
+        "stats": {
+          "confirmed": 1,
+          "suggested": 3
+        }
+      },
+      "structRaw": {
+        "biasSourceTF": [
+          "4H",
+          "1D",
+          "1H"
+        ]
+      },
+      "dataCompleteness": {
+        "percent": 53,
+        "missing": [
+          "plannedRR",
+          "entryTime",
+          "exitTime",
+          "displacement",
+          "mae",
+          "mfe",
+          "fees"
+        ],
+        "total": 15,
+        "filled": 8
+      },
+      "analysis": null
     }
   ],
   "rules": {
@@ -4450,73 +7076,73 @@
         "id": "规则一",
         "title": "先做 HTF Context",
         "body": "固定按 1D → 4H → 1H 分析 Bias、Market Condition、Major Structure、Liquidity、POI、Premium/Discount 与 HTF Target。HTF 负责回答“市场在哪里、方向是什么、主要流动性/POI/目标在哪里”。",
-        "sourceBlockIndex": 218
+        "sourceBlockIndex": 323
       },
       {
         "id": "规则二",
         "title": "再做 LTF Confirmation",
         "body": "固定按 15min → 5min 观察 POI 到达后的 Reaction、Liquidity Sweep、Displacement、MSB/MSS/BOS、Broken Structure、First Retracement 与 Entry。Internal MSB 只说明内部结构变化，不能自动等同主要趋势反转。",
-        "sourceBlockIndex": 219
+        "sourceBlockIndex": 324
       },
       {
         "id": "规则三",
         "title": "POI 必须分层记录",
         "body": "HTF POI 与 LTF Entry POI 分开。POI 必须带 Timeframe；允许 OB、FVG、IMB、Breaker、Mitigation Block、Support/Resistance、Premium/Discount、OTE、Supply/Demand 等。多重 POI 记录为 Confluence，但不为了记录而记录。",
-        "sourceBlockIndex": 220
+        "sourceBlockIndex": 325
       },
       {
         "id": "规则四",
         "title": "Entry、Invalidation、Target 必须成对",
         "body": "Entry Reason 与 Entry Trigger 分开；SL 对应明确的结构失效；TP 对应 Liquidity / Swing / IMB / HTF Target。下单前记录 Planned Entry、SL、TP 与 Planned RR，RR 不符合预设标准则跳过。",
-        "sourceBlockIndex": 221
+        "sourceBlockIndex": 326
       },
       {
         "id": "规则五",
         "title": "复盘区分执行质量与交易结果",
         "body": "完全符合交易前适用规则的亏损记为 Good Loss，只表示执行合规，不能据单笔止损认定策略失效。提前进场、未到 POI、未等 Sweep/Displacement、弱结构突破、FOMO、RR 不合格、SL 放错、逆 HTF Bias 等，须结合本笔交易前约定与明确证据判定；HTF POI 不默认要求全部 LTF 条件，逆势是否允许也以原计划为准。Execution Adherence 只作汇总，具体确认项失败记 Minor，具体核心/Avoid 失败记 Major；只有 Deviation 而没有具体证据时保持未判。盈利不证明执行正确，亏损不证明执行违规。缺少可靠记录保持未记录，不反推、不补造；原文标注与清单冲突时保留双方依据，订正前质量暂不计入已判统计。",
-        "sourceBlockIndex": 222
+        "sourceBlockIndex": 327
       }
     ],
     "template": [
       {
         "text": "① Basic Info：日期/时间、Symbol、Long/Short、Exchange、Setup、Entry Mode；HTF 使用周期（1D/4H/1H）与 LTF 使用周期（15min/5min）；Planned/Actual Entry、SL、TP、Planned R、Actual R、Result。",
-        "sourceBlockIndex": 224
+        "sourceBlockIndex": 329
       },
       {
         "text": "② HTF Context：分别记录 1D / 4H / 1H 的 Bias（Bullish/Bearish/Neutral）、Market Condition（Trending/Range/Expansion/Compression/Reversal/Unclear）、Structure（Bullish/Bearish/Range/Transition）、Premium/Discount、主要 Liquidity、HTF POI 与 HTF Target。",
-        "sourceBlockIndex": 225
+        "sourceBlockIndex": 330
       },
       {
         "text": "③ HTF Liquidity & POI：Liquidity Type、Timeframe、是否 Sweep、Sweep Quality；HTF POI Type + Timeframe；若存在多个因素，记录 POI Confluence。HTF POI 与 LTF Entry POI 必须分开。",
-        "sourceBlockIndex": 226
+        "sourceBlockIndex": 331
       },
       {
         "text": "④ LTF Reaction：在 15min / 5min 记录 Reaction（Strong/Weak/No Reaction）及 Reaction Type（Rejection/Sweep/Momentum Shift/Candle Reversal/Consolidation/Immediate Displacement）。",
-        "sourceBlockIndex": 227
+        "sourceBlockIndex": 332
       },
       {
         "text": "⑤ LTF Confirmation：记录 Sweep（Yes/No/Partial）、Displacement（Yes/No + Strong/Medium/Weak + Timeframe）、Structure Shift（MSB/MSS/BOS/CHOCH/None）以及 Broken Structure（Internal LH/HL、Key LH/HL、Protected High/Low、External Structure）。",
-        "sourceBlockIndex": 228
+        "sourceBlockIndex": 333
       },
       {
         "text": "⑥ Entry：先写完整 Setup Flow，再区分 Entry Reasons 与 Entry Trigger；明确属于 HTF Limit、HTF + LTF Confirmation、Market Entry 或其他。若为 Limit Entry，说明为什么允许不等额外 LTF Confirmation。",
-        "sourceBlockIndex": 229
+        "sourceBlockIndex": 334
       },
       {
         "text": "⑦ Invalidation & SL：说明“什么发生就证明我错了”，并对应具体 SL。优先记录 Protected High/Low、Swing、POI 失效或接受到失效区之外等结构原因，而不只记录一个价格。",
-        "sourceBlockIndex": 230
+        "sourceBlockIndex": 335
       },
       {
         "text": "⑧ Target & Risk Check：Target 说明对应的 BSL/SSL、Internal/External Liquidity、Swing、IMB/FVG 或 HTF Target；同时检查 Planned RR、是否追价、是否偏离 POI、是否逆 HTF Bias。",
-        "sourceBlockIndex": 231
+        "sourceBlockIndex": 336
       },
       {
         "text": "⑨ Trade Management：记录减仓、分批止盈、移动 SL、Break Even、提前退出、加仓/减仓以及每次操作的结构原因；避免只记录“移动了止损”而没有原因。",
-        "sourceBlockIndex": 232
+        "sourceBlockIndex": 337
       },
       {
         "text": "⑩ Result & Review：记录 Win/Loss/BE、PnL、Actual R、Holding Time、Fees、MAE/MFE；判断本笔属于策略亏损还是执行亏损，并区分 Good Win / Bad Win / Good Loss / Bad Loss；记录 Rule Violation、做得好的、需要改进、下一次可执行规则。",
-        "sourceBlockIndex": 233
+        "sourceBlockIndex": 338
       }
     ]
   },

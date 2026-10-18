@@ -368,6 +368,50 @@ class StatsAnswerTests(unittest.TestCase):
 
 
 class DocsIntegrationTests(unittest.TestCase):
+    def test_latest_doc_results_do_not_read_plans_or_review_words_as_returns(self):
+        cases = [
+            ("Win；Actual R +3.00R。结构低点止损。", "win", 3.0),
+            ("Loss，Actual R ≈ -1.01R。因逆势缩小 1R。", "loss", -1.01),
+            ("Result：Loss。Actual R≈-1.15R。原计划目标2R。", "loss", -1.15),
+            ("Win，缺少事前模型与 1R，也不计算 Actual R。", "win", None),
+            ("Pending / 未成交，没有 Actual R。", None, None),
+            ("Win；Actual R = 0.821 ÷ 0.4 ≈ +2.05R。", "win", 2.05),
+        ]
+        for result, status, actual_r in cases:
+            with self.subTest(result=result):
+                blocks = [
+                    {"kind": "h1", "text": "第1周｜2026年10月4日–10月10日"},
+                    {"kind": "h2", "text": "1｜JP225/USDT Long｜2026年10月9日｜已结束"},
+                    {"kind": "para", "text": "【① Basic Info】Entry=68,442.25；初始 SL = 67,388；Exit：67,833；1R=0.42 U。"},
+                    {"kind": "para", "text": "【⑩ Result & Review】" + result},
+                ]
+                t = parse_gdoc.parse(blocks, None)["trades"][0]
+                self.assertEqual(t["symbol"], "JP225USDT")
+                self.assertEqual(t["resultStatus"], status)
+                self.assertEqual(t["actualR"], actual_r)
+                self.assertEqual(t["entry"], 68442.25)
+                self.assertEqual(t["stopLoss"], 67388)
+                self.assertEqual(t["exit"], 67833)
+                self.assertEqual(t["riskAmount"], .42)
+
+    def test_target_r_and_partial_close_labels_are_not_target_prices(self):
+        for target in ("原计划目标为2R。", "分批退出TP1 89.475，TP2 92.56。"):
+            blocks = [
+                {"kind": "h1", "text": "第1周｜2026年10月4日–10月10日"},
+                {"kind": "h2", "text": "1｜HYPE/USDT Long｜2026年10月9日｜Win"},
+                {"kind": "para", "text": "【⑧ Target & Risk Check】" + target},
+            ]
+            t = parse_gdoc.parse(blocks, None)["trades"][0]
+            self.assertIsNone(t["targets"][0]["priceLow"])
+
+    def test_candidate_and_retracted_quality_are_not_confirmed(self):
+        for body in ("Trade Quality目前仍为待判定、Good Loss候选，而非已确认Fully Compliant。",
+                     "撤销此前Bad Loss的结论。", "暂不对 Good Win / Bad Win 做最终定级。"):
+            with self.subTest(body=body):
+                extracted = struct_extract.extract_structured({"structRaw": {"tradeQuality": [body]}})
+                self.assertNotIn("tradeQuality", extracted["fields"])
+                self.assertEqual(extracted["unparsed"][0]["raw"], body)
+
     def test_rule_lines_preserve_all_rules_regardless_of_heading_style(self):
         for kind in ("para", "h1", "h2"):
             with self.subTest(kind=kind):

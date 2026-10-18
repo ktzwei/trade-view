@@ -273,6 +273,10 @@ def extract_structured(t):
     # ---------- 1) 文档里直接写的结构化字段行（最强证据，视为已确认）
     for field, bodies in struct_raw.items():
         for body in bodies:
+            if field == "tradeQuality" and re.search(
+                    r"待判定|候选|暂不|不做最终|未.*定级|不能.*判定|撤销", body):
+                struct["unparsed"].append({"field": field, "raw": body, "leftover": body})
+                continue
             vals, leftover, extra = parse_struct_value(field, body)
             canonical_field = {"htfPOI": "htfPOIType", "ltfPOI": "ltfPOIType"}.get(field, field)
             put(canonical_field, vals, "doc:label", body, extra=extra, confirmed=True)
