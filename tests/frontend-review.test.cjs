@@ -8,7 +8,7 @@ const source = fs.readFileSync(path.join(root, 'assets/app.js'), 'utf8');
 const context = { fetch: () => new Promise(() => {}), URLSearchParams, Date };
 vm.createContext(context);
 vm.runInContext(source.replace(/\}\)\(\);\s*$/, `globalThis.reviewTest = {
-  state, metrics, srcBadge, entryModeCol, planSection, execSection, reviewSection,
+  state, narrativeSection, metrics, srcBadge, entryModeCol, planSection, execSection, reviewSection,
   behaviorBlock, overviewView, analyticsView, rulesBuckets, weekV2, maeMfeBlock, chainBlock, filtered
 };})();`), context);
 const api = context.reviewTest;
@@ -79,3 +79,20 @@ assert.match(view.innerHTML, /已判/);
 assert.match(view.innerHTML, /每周只验证一个行为/);
 assert.doesNotMatch(view.innerHTML, /\[object Object\]|NaN/);
 console.log('Frontend review regression checks passed.');
+
+const narrative = api.narrativeSection({ rawSections: {
+  setup: ['4H结构突破 → 1H POI限价入场'],
+  reviewNotes: ['撤销此前违规结论，Good Loss候选，仍待核对。'],
+  _extra: ['<script>unsafe</script>', '长段落'.repeat(700) + '原文结尾'],
+} });
+assert.match(narrative, /4H结构突破 → 1H POI限价入场/);
+assert.match(narrative, /撤销此前违规结论，Good Loss候选，仍待核对/);
+assert.match(narrative, /原文结尾/);
+assert.doesNotMatch(narrative, /<script>/);
+assert.match(narrative, /&lt;script&gt;/);
+assert.doesNotMatch(narrative, /<details/);
+for (const trade of api.state.data.trades) {
+  const html = api.narrativeSection(trade);
+  assert.match(html, /交易思路与复盘原文/);
+  assert.doesNotMatch(html, /本地尚未提取到复盘原文/);
+}

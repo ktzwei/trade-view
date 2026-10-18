@@ -156,7 +156,7 @@ def build_trades(src, ana):
         rc = []
         for c in checklist:
             item = provided.get(c["key"], {"status": "unknown",
-                                           "note": "文档未记录，AI 不做推测。"})
+                                           "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。"})
             item = dict(item)
             item["label"] = labels[c["key"]]
             rc.append(item)
@@ -174,6 +174,7 @@ def build_trades(src, ana):
         t2 = dict(t)
         t2["analysis"] = {
             "source": "ai-review",
+            "status": "available" if a else "pending",
             "errorType": a.get("errorType"),
             "classification": a.get("classification"),
             "ruleViolations": a.get("ruleViolations", []),

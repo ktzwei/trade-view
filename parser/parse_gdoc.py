@@ -267,6 +267,8 @@ COMPACT_HEADS = {
     "rule violation / 改进": "violation",
     "rule violation": "violation",
     "next rule": "nextrule",
+    "rule check / next rule": "reviewnotes",
+    "rule violation / next rule": "reviewnotes",
 }
 
 # 子键 → 结构化字段（值直接交给 schema/options 匹配，认不出就不写）
@@ -457,6 +459,8 @@ def compact_sections(text: str):
     elif sec == "violation":
         add("improve", body, raw=True)
         add("mainProblem", body, raw=True)
+    elif sec == "reviewnotes":
+        add("reviewNotes", body, raw=True)
     elif sec == "nextrule":
         add("nextRule", body, raw=True)
 

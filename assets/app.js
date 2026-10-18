@@ -516,6 +516,27 @@
     return phase('EXECUTION', '实际市场发生了什么 / 最终怎么入场', 'LTF Confirmation · 实际执行', body);
   }
 
+  function narrativeSection(t) {
+    const raw = t.rawSections || {};
+    const groups = [
+      ['市场背景与交易思路', ['context', 'liquidity', 'setup', 'entryReason', 'entryModel', 'entryTrigger']],
+      ['入场确认与风险计划', ['reaction', 'confirmation', 'structureNote', 'invalidation', 'targetLogic', 'riskCheck']],
+      ['实际执行与持仓管理', ['execution', 'tradeManagement']],
+      ['复盘结论与下次改进', ['result', 'worked', 'improve', 'mainProblem', 'nextRule', 'reviewNotes']],
+      ['补充记录与待确认事项', ['_extra']],
+    ];
+    const seen = new Set();
+    const blocks = groups.map(([title, keys]) => {
+      const paragraphs = keys.flatMap((key) => Array.isArray(raw[key]) ? raw[key] : raw[key] ? [raw[key]] : [])
+        .filter((text) => { if (!text || seen.has(text)) return false; seen.add(text); return true; });
+      return paragraphs.length ? `<div class="panel"><h3>${esc(title)}</h3>${paragraphs.map((text) =>
+        `<p style="white-space:pre-wrap;line-height:1.8;overflow-wrap:anywhere">${esc(text)}</p>`).join('')}</div>` : '';
+    }).join('');
+    return `<section class="sec"><h2>交易思路与复盘原文</h2>
+      <div class="small muted">来自 Google 文档，保留原文中的待确认与更正说明。下面的结构化判定单独展示。</div>
+      ${blocks || '<div class="callout">本地尚未提取到复盘原文，请核对 Google 文档。</div>'}</section>`;
+  }
+
   function reviewSection(t) {
     const a = t.analysis || {}, r = t.review || {};
     const q = qualityCol(t);
@@ -529,8 +550,8 @@
           <div class="small muted" style="margin-top:6px">${q ? esc((t.quality || {}).basis || "") + srcBadge(t.quality) : "尚未判定：" + esc((t.quality || {}).basis || "证据不足")} · Good = 按规则执行；Bad = 存在已确认违规。</div></div>
       </div>
       <div class="review-grid" style="margin-top:12px">
-        <div class="rbox"><div class="k">主要问题与经过</div>${cfield(t, "primaryMistake")}${cfield(t, "causeChain")}<details><summary>其他观察与原文依据</summary><div class="rv">${mis || vio || NR}</div><div class="small muted">分析标签用于回看，人工确认后才进入错误统计。</div></details></div>
-        <div class="rbox"><div class="k">Lesson · 下次怎么改</div><div class="rv">${r.mainProblem ? esc(short(r.mainProblem, 180)) : next ? esc(short(next, 180)) : NR}</div>
+        <div class="rbox"><div class="k">主要问题与经过</div>${cfield(t, "primaryMistake")}${cfield(t, "causeChain")}<details><summary>其他观察与原文依据</summary><div class="rv">${mis || vio || '尚未形成独立分析标签，请参阅上方复盘原文。'}</div><div class="small muted">分析标签用于回看，人工确认后才进入错误统计。</div></details></div>
+        <div class="rbox"><div class="k">Lesson · 下次怎么改</div><div class="rv">${r.mainProblem ? esc(short(r.mainProblem, 180)) : next ? esc(short(next, 180)) : '尚未提取为单独条目，请参阅上方复盘原文。'}</div>
           ${next && r.mainProblem ? `<div class="small muted">改进动作：${esc(short(next, 140))}</div>` : ''}
           ${(r.worked || []).length ? `<div class="small muted">做对了：${esc(short(r.worked[0], 120))}</div>` : ''}</div>
       </div>
@@ -562,6 +583,7 @@
         <div class="rr"><div class="small muted">Actual R</div><div class="big">${rTxt(t.rIncluded ? t.actualR : null)}</div><div>${resChip(t)}</div></div>
       </div>
       ${imgTabsBlock(t)}
+      ${narrativeSection(t)}
       ${planSection(t)}
       ${execSection(t)}
       ${reviewSection(t)}

@@ -3,7 +3,7 @@
   "sourceTitle": "交易复盘",
   "sourceDocId": "16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU",
   "sourceUrl": "https://docs.google.com/document/d/16gYSHlO1vvtG8lGN8UGj2v-8K3cLcXS3uli6nIHy-dU/edit",
-  "parsedAt": "2026-10-18T12:34:46+08:00",
+  "parsedAt": "2026-10-18T13:02:02+08:00",
   "schemaVersion": "2.1",
   "vocab": {
    "version": "2.1",
@@ -3548,29 +3548,30 @@
      {
       "key": "(未记录)",
       "label": "(未记录)",
-      "count": 7,
+      "count": 8,
       "trades": [
        "2026-09-13-ethusdt-long-01",
        "2026-09-15-qqqusdt-long-03",
        "undated-xauusdt-short-02",
+       "2026-09-28-hypeusdt-long-01",
        "2026-10-09-jp225usdt-long-01",
        "2026-10-08-btcusdt-long-02",
        "2026-10-12-clusdt-long-01",
        "2026-10-15-qqqusdt-long-03"
       ],
-      "closed": 7,
+      "closed": 8,
       "wins": 5,
-      "winRate": 0.714,
-      "rCounted": 5,
-      "netR": 3.69,
-      "avgR": 0.74,
-      "expectancy": 0.74,
-      "totalR": 3.69,
-      "profitFactor": 3.67,
+      "winRate": 0.625,
+      "rCounted": 6,
+      "netR": 2.69,
+      "avgR": 0.45,
+      "expectancy": 0.45,
+      "totalR": 2.69,
+      "profitFactor": 2.13,
       "goodTradeRate": 0.0,
-      "qualityJudged": 2,
+      "qualityJudged": 3,
       "qualityUnknown": 5,
-      "qualityCoverage": 0.286,
+      "qualityCoverage": 0.375,
       "complianceRate": null,
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
@@ -3631,32 +3632,6 @@
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
       "sampleNote": "样本不足"
-     },
-     {
-      "key": "MSS",
-      "label": "MSS",
-      "count": 2,
-      "trades": [
-       "2026-09-28-hypeusdt-long-01",
-       "2026-10-02-qqqusdt-short-03"
-      ],
-      "closed": 2,
-      "wins": 0,
-      "winRate": 0.0,
-      "rCounted": 2,
-      "netR": -2.01,
-      "avgR": -1.0,
-      "expectancy": -1.0,
-      "totalR": -2.01,
-      "profitFactor": 0.0,
-      "goodTradeRate": 0.0,
-      "qualityJudged": 2,
-      "qualityUnknown": 0,
-      "qualityCoverage": 1.0,
-      "complianceRate": null,
-      "complianceJudged": 0,
-      "complianceCoverage": 0.0,
-      "sampleNote": "样本不足"
      }
     ]
    },
@@ -3699,34 +3674,8 @@
       "sampleNote": null
      },
      {
-      "key": "Protected Low",
-      "label": "Protected Low",
-      "count": 2,
-      "trades": [
-       "2026-10-02-qqqusdt-short-03",
-       "2026-10-08-btcusdt-long-02"
-      ],
-      "closed": 2,
-      "wins": 1,
-      "winRate": 0.5,
-      "rCounted": 2,
-      "netR": -0.29,
-      "avgR": -0.15,
-      "expectancy": -0.15,
-      "totalR": -0.29,
-      "profitFactor": 0.71,
-      "goodTradeRate": 0.0,
-      "qualityJudged": 1,
-      "qualityUnknown": 1,
-      "qualityCoverage": 0.5,
-      "complianceRate": null,
-      "complianceJudged": 0,
-      "complianceCoverage": 0.0,
-      "sampleNote": "样本不足"
-     },
-     {
-      "key": "Protected High",
-      "label": "Protected High",
+      "key": "Key LH",
+      "label": "Key LH",
       "count": 1,
       "trades": [
        "2026-10-02-hypeusdt-long-02"
@@ -3750,20 +3699,20 @@
       "sampleNote": "样本不足"
      },
      {
-      "key": "Key LH",
-      "label": "Key LH",
+      "key": "Protected Low",
+      "label": "Protected Low",
       "count": 1,
       "trades": [
-       "2026-10-02-hypeusdt-long-02"
+       "2026-10-08-btcusdt-long-02"
       ],
       "closed": 1,
       "wins": 1,
       "winRate": 1.0,
       "rCounted": 1,
-      "netR": 3.0,
-      "avgR": 3.0,
-      "expectancy": 3.0,
-      "totalR": 3.0,
+      "netR": 0.72,
+      "avgR": 0.72,
+      "expectancy": 0.72,
+      "totalR": 0.72,
       "profitFactor": "∞",
       "goodTradeRate": null,
       "qualityJudged": 0,
@@ -3833,7 +3782,7 @@
      {
       "key": "(未记录)",
       "label": "(未记录)",
-      "count": 11,
+      "count": 12,
       "trades": [
        "2026-09-13-ethusdt-long-01",
        "2026-09-18-ethusdt-long-02",
@@ -3841,55 +3790,30 @@
        "2026-09-21-xauusdt-long-01",
        "undated-xauusdt-short-02",
        "2026-09-28-hypeusdt-long-01",
+       "2026-10-02-qqqusdt-short-03",
        "2026-09-28-btcusdt-long-挂单",
        "2026-10-09-jp225usdt-long-01",
        "2026-10-12-clusdt-long-01",
        "2026-10-14-xauusdt-long-02",
        "2026-10-15-qqqusdt-long-03"
       ],
-      "closed": 10,
+      "closed": 11,
       "wins": 5,
-      "winRate": 0.5,
-      "rCounted": 8,
-      "netR": 1.08,
-      "avgR": 0.13,
-      "expectancy": 0.13,
-      "totalR": 1.08,
-      "profitFactor": 1.24,
+      "winRate": 0.455,
+      "rCounted": 9,
+      "netR": 0.07,
+      "avgR": 0.01,
+      "expectancy": 0.01,
+      "totalR": 0.07,
+      "profitFactor": 1.01,
       "goodTradeRate": 0.0,
-      "qualityJudged": 4,
+      "qualityJudged": 5,
       "qualityUnknown": 6,
-      "qualityCoverage": 0.4,
+      "qualityCoverage": 0.455,
       "complianceRate": null,
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
       "sampleNote": null
-     },
-     {
-      "key": "Protected Low",
-      "label": "Protected Low",
-      "count": 2,
-      "trades": [
-       "2026-10-02-qqqusdt-short-03",
-       "2026-10-08-btcusdt-long-02"
-      ],
-      "closed": 2,
-      "wins": 1,
-      "winRate": 0.5,
-      "rCounted": 2,
-      "netR": -0.29,
-      "avgR": -0.15,
-      "expectancy": -0.15,
-      "totalR": -0.29,
-      "profitFactor": 0.71,
-      "goodTradeRate": 0.0,
-      "qualityJudged": 1,
-      "qualityUnknown": 1,
-      "qualityCoverage": 0.5,
-      "complianceRate": null,
-      "complianceJudged": 0,
-      "complianceCoverage": 0.0,
-      "sampleNote": "样本不足"
      },
      {
       "key": "Protected High",
@@ -3906,6 +3830,31 @@
       "avgR": 3.0,
       "expectancy": 3.0,
       "totalR": 3.0,
+      "profitFactor": "∞",
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
+      "sampleNote": "样本不足"
+     },
+     {
+      "key": "Protected Low",
+      "label": "Protected Low",
+      "count": 1,
+      "trades": [
+       "2026-10-08-btcusdt-long-02"
+      ],
+      "closed": 1,
+      "wins": 1,
+      "winRate": 1.0,
+      "rCounted": 1,
+      "netR": 0.72,
+      "avgR": 0.72,
+      "expectancy": 0.72,
+      "totalR": 0.72,
       "profitFactor": "∞",
       "goodTradeRate": null,
       "qualityJudged": 0,
@@ -4037,35 +3986,62 @@
      {
       "key": "Sweep",
       "label": "Sweep",
-      "count": 9,
+      "count": 7,
       "trades": [
        "2026-09-13-ethusdt-long-01",
        "2026-09-18-ethusdt-long-02",
        "2026-09-15-qqqusdt-long-03",
        "2026-09-21-xauusdt-long-01",
-       "2026-09-28-hypeusdt-long-01",
-       "2026-10-02-qqqusdt-short-03",
        "2026-09-28-btcusdt-long-挂单",
        "2026-10-08-btcusdt-long-02",
        "2026-10-14-xauusdt-long-02"
       ],
-      "closed": 8,
+      "closed": 6,
       "wins": 4,
-      "winRate": 0.5,
-      "rCounted": 7,
-      "netR": 0.12,
-      "avgR": 0.02,
-      "expectancy": 0.02,
-      "totalR": 0.12,
-      "profitFactor": 1.03,
+      "winRate": 0.667,
+      "rCounted": 5,
+      "netR": 2.13,
+      "avgR": 0.43,
+      "expectancy": 0.43,
+      "totalR": 2.13,
+      "profitFactor": 1.99,
       "goodTradeRate": 0.0,
-      "qualityJudged": 4,
+      "qualityJudged": 2,
       "qualityUnknown": 4,
-      "qualityCoverage": 0.5,
+      "qualityCoverage": 0.333,
       "complianceRate": null,
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
       "sampleNote": null
+     },
+     {
+      "key": "(未记录)",
+      "label": "(未记录)",
+      "count": 5,
+      "trades": [
+       "undated-xauusdt-short-02",
+       "2026-09-28-hypeusdt-long-01",
+       "2026-10-09-jp225usdt-long-01",
+       "2026-10-12-clusdt-long-01",
+       "2026-10-15-qqqusdt-long-03"
+      ],
+      "closed": 5,
+      "wins": 2,
+      "winRate": 0.4,
+      "rCounted": 4,
+      "netR": -0.33,
+      "avgR": -0.08,
+      "expectancy": -0.08,
+      "totalR": -0.33,
+      "profitFactor": 0.86,
+      "goodTradeRate": 0.0,
+      "qualityJudged": 2,
+      "qualityUnknown": 3,
+      "qualityCoverage": 0.4,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
+      "sampleNote": "样本不足"
      },
      {
       "key": "MSB",
@@ -4090,34 +4066,6 @@
       "qualityJudged": 2,
       "qualityUnknown": 1,
       "qualityCoverage": 0.667,
-      "complianceRate": null,
-      "complianceJudged": 0,
-      "complianceCoverage": 0.0,
-      "sampleNote": "样本不足"
-     },
-     {
-      "key": "(未记录)",
-      "label": "(未记录)",
-      "count": 4,
-      "trades": [
-       "undated-xauusdt-short-02",
-       "2026-10-09-jp225usdt-long-01",
-       "2026-10-12-clusdt-long-01",
-       "2026-10-15-qqqusdt-long-03"
-      ],
-      "closed": 4,
-      "wins": 2,
-      "winRate": 0.5,
-      "rCounted": 3,
-      "netR": 0.67,
-      "avgR": 0.22,
-      "expectancy": 0.22,
-      "totalR": 0.67,
-      "profitFactor": 1.49,
-      "goodTradeRate": 0.0,
-      "qualityJudged": 1,
-      "qualityUnknown": 3,
-      "qualityCoverage": 0.25,
       "complianceRate": null,
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
@@ -4168,31 +4116,6 @@
       "qualityJudged": 0,
       "qualityUnknown": 1,
       "qualityCoverage": 0.0,
-      "complianceRate": null,
-      "complianceJudged": 0,
-      "complianceCoverage": 0.0,
-      "sampleNote": "样本不足"
-     },
-     {
-      "key": "MSS",
-      "label": "MSS",
-      "count": 1,
-      "trades": [
-       "2026-10-02-qqqusdt-short-03"
-      ],
-      "closed": 1,
-      "wins": 0,
-      "winRate": 0.0,
-      "rCounted": 1,
-      "netR": -1.01,
-      "avgR": -1.01,
-      "expectancy": -1.01,
-      "totalR": -1.01,
-      "profitFactor": 0.0,
-      "goodTradeRate": 0.0,
-      "qualityJudged": 1,
-      "qualityUnknown": 0,
-      "qualityCoverage": 1.0,
       "complianceRate": null,
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
@@ -4251,28 +4174,29 @@
      {
       "key": "(未记录)",
       "label": "(未记录)",
-      "count": 6,
+      "count": 7,
       "trades": [
        "2026-09-13-ethusdt-long-01",
        "2026-09-21-xauusdt-long-01",
        "undated-xauusdt-short-02",
        "2026-09-28-hypeusdt-long-01",
+       "2026-10-02-qqqusdt-short-03",
        "2026-10-09-jp225usdt-long-01",
        "2026-10-12-clusdt-long-01"
       ],
-      "closed": 6,
+      "closed": 7,
       "wins": 3,
-      "winRate": 0.5,
-      "rCounted": 5,
-      "netR": 1.7,
-      "avgR": 0.34,
-      "expectancy": 0.34,
-      "totalR": 1.7,
-      "profitFactor": 1.64,
+      "winRate": 0.429,
+      "rCounted": 6,
+      "netR": 0.69,
+      "avgR": 0.11,
+      "expectancy": 0.11,
+      "totalR": 0.69,
+      "profitFactor": 1.19,
       "goodTradeRate": 0.0,
-      "qualityJudged": 3,
+      "qualityJudged": 4,
       "qualityUnknown": 3,
-      "qualityCoverage": 0.5,
+      "qualityCoverage": 0.571,
       "complianceRate": null,
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
@@ -4308,32 +4232,6 @@
       "sampleNote": "样本不足"
      },
      {
-      "key": "Protected Low",
-      "label": "Protected Low",
-      "count": 2,
-      "trades": [
-       "2026-10-02-qqqusdt-short-03",
-       "2026-10-08-btcusdt-long-02"
-      ],
-      "closed": 2,
-      "wins": 1,
-      "winRate": 0.5,
-      "rCounted": 2,
-      "netR": -0.29,
-      "avgR": -0.15,
-      "expectancy": -0.15,
-      "totalR": -0.29,
-      "profitFactor": 0.71,
-      "goodTradeRate": 0.0,
-      "qualityJudged": 1,
-      "qualityUnknown": 1,
-      "qualityCoverage": 0.5,
-      "complianceRate": null,
-      "complianceJudged": 0,
-      "complianceCoverage": 0.0,
-      "sampleNote": "样本不足"
-     },
-     {
       "key": "Protected High",
       "label": "Protected High",
       "count": 1,
@@ -4348,6 +4246,31 @@
       "avgR": 3.0,
       "expectancy": 3.0,
       "totalR": 3.0,
+      "profitFactor": "∞",
+      "goodTradeRate": null,
+      "qualityJudged": 0,
+      "qualityUnknown": 1,
+      "qualityCoverage": 0.0,
+      "complianceRate": null,
+      "complianceJudged": 0,
+      "complianceCoverage": 0.0,
+      "sampleNote": "样本不足"
+     },
+     {
+      "key": "Protected Low",
+      "label": "Protected Low",
+      "count": 1,
+      "trades": [
+       "2026-10-08-btcusdt-long-02"
+      ],
+      "closed": 1,
+      "wins": 1,
+      "winRate": 1.0,
+      "rCounted": 1,
+      "netR": 0.72,
+      "avgR": 0.72,
+      "expectancy": 0.72,
+      "totalR": 0.72,
       "profitFactor": "∞",
       "goodTradeRate": null,
       "qualityJudged": 0,
@@ -4393,31 +4316,32 @@
      {
       "key": "(未记录)",
       "label": "(未记录)",
-      "count": 9,
+      "count": 10,
       "trades": [
        "2026-09-18-ethusdt-long-02",
        "2026-09-15-qqqusdt-long-03",
        "undated-xauusdt-short-02",
        "2026-09-28-hypeusdt-long-01",
        "2026-10-02-hypeusdt-long-02",
+       "2026-10-02-qqqusdt-short-03",
        "2026-09-28-btcusdt-long-挂单",
        "2026-10-12-clusdt-long-01",
        "2026-10-14-xauusdt-long-02",
        "2026-10-15-qqqusdt-long-03"
       ],
-      "closed": 8,
+      "closed": 9,
       "wins": 5,
-      "winRate": 0.625,
-      "rCounted": 6,
-      "netR": 3.43,
-      "avgR": 0.57,
-      "expectancy": 0.57,
-      "totalR": 3.43,
-      "profitFactor": 2.19,
+      "winRate": 0.556,
+      "rCounted": 7,
+      "netR": 2.42,
+      "avgR": 0.35,
+      "expectancy": 0.35,
+      "totalR": 2.42,
+      "profitFactor": 1.62,
       "goodTradeRate": 0.0,
-      "qualityJudged": 2,
+      "qualityJudged": 3,
       "qualityUnknown": 6,
-      "qualityCoverage": 0.25,
+      "qualityCoverage": 0.333,
       "complianceRate": null,
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
@@ -4426,26 +4350,25 @@
      {
       "key": "HTF Liquidity",
       "label": "HTF Liquidity",
-      "count": 4,
+      "count": 3,
       "trades": [
        "2026-09-13-ethusdt-long-01",
        "2026-09-21-xauusdt-long-01",
-       "2026-10-02-qqqusdt-short-03",
        "2026-10-08-btcusdt-long-02"
       ],
-      "closed": 4,
+      "closed": 3,
       "wins": 2,
-      "winRate": 0.5,
-      "rCounted": 4,
-      "netR": 1.01,
-      "avgR": 0.25,
-      "expectancy": 0.25,
-      "totalR": 1.01,
-      "profitFactor": 1.5,
+      "winRate": 0.667,
+      "rCounted": 3,
+      "netR": 2.02,
+      "avgR": 0.67,
+      "expectancy": 0.67,
+      "totalR": 2.02,
+      "profitFactor": 3.02,
       "goodTradeRate": 0.0,
-      "qualityJudged": 2,
+      "qualityJudged": 1,
       "qualityUnknown": 2,
-      "qualityCoverage": 0.5,
+      "qualityCoverage": 0.333,
       "complianceRate": null,
       "complianceJudged": 0,
       "complianceCoverage": 0.0,
@@ -5081,29 +5004,30 @@
     {
      "key": "(未记录)",
      "label": "(未记录)",
-     "count": 7,
+     "count": 8,
      "trades": [
       "2026-09-13-ethusdt-long-01",
       "2026-09-15-qqqusdt-long-03",
       "undated-xauusdt-short-02",
+      "2026-09-28-hypeusdt-long-01",
       "2026-10-09-jp225usdt-long-01",
       "2026-10-08-btcusdt-long-02",
       "2026-10-12-clusdt-long-01",
       "2026-10-15-qqqusdt-long-03"
      ],
-     "closed": 7,
+     "closed": 8,
      "wins": 5,
-     "winRate": 0.714,
-     "rCounted": 5,
-     "netR": 3.69,
-     "avgR": 0.74,
-     "expectancy": 0.74,
-     "totalR": 3.69,
-     "profitFactor": 3.67,
+     "winRate": 0.625,
+     "rCounted": 6,
+     "netR": 2.69,
+     "avgR": 0.45,
+     "expectancy": 0.45,
+     "totalR": 2.69,
+     "profitFactor": 2.13,
      "goodTradeRate": 0.0,
-     "qualityJudged": 2,
+     "qualityJudged": 3,
      "qualityUnknown": 5,
-     "qualityCoverage": 0.286,
+     "qualityCoverage": 0.375,
      "complianceRate": null,
      "complianceJudged": 0,
      "complianceCoverage": 0.0,
@@ -5160,32 +5084,6 @@
      "qualityJudged": 1,
      "qualityUnknown": 1,
      "qualityCoverage": 0.5,
-     "complianceRate": null,
-     "complianceJudged": 0,
-     "complianceCoverage": 0.0,
-     "sampleNote": "样本不足"
-    },
-    {
-     "key": "MSS",
-     "label": "MSS",
-     "count": 2,
-     "trades": [
-      "2026-09-28-hypeusdt-long-01",
-      "2026-10-02-qqqusdt-short-03"
-     ],
-     "closed": 2,
-     "wins": 0,
-     "winRate": 0.0,
-     "rCounted": 2,
-     "netR": -2.01,
-     "avgR": -1.0,
-     "expectancy": -1.0,
-     "totalR": -2.01,
-     "profitFactor": 0.0,
-     "goodTradeRate": 0.0,
-     "qualityJudged": 2,
-     "qualityUnknown": 0,
-     "qualityCoverage": 1.0,
      "complianceRate": null,
      "complianceJudged": 0,
      "complianceCoverage": 0.0,
@@ -5823,7 +5721,7 @@
   ],
   "dataQuality": {
    "fieldsConfirmed": 45,
-   "fieldsAuto": 74,
+   "fieldsAuto": 68,
    "note": "自动识别值只是建议（需求 §37），在网站里以「自动识别·待确认」标记；确认/修改后写进 data/manual/。"
   }
  },
@@ -7490,6 +7388,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "available",
     "errorType": {
      "primary": "No Error",
      "secondary": [],
@@ -8572,6 +8471,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "available",
     "errorType": {
      "primary": "No Error",
      "secondary": [],
@@ -9632,6 +9532,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "available",
     "errorType": {
      "primary": "Front-run POI",
      "secondary": [
@@ -10679,6 +10580,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "available",
     "errorType": {
      "primary": "Low RR",
      "secondary": [
@@ -11475,8 +11377,8 @@
     "result": [
      "Win；已实现收益 +0.821；Actual R = 0.821 ÷ 0.4 ≈ +2.05R。由于 Setup、Trigger、Invalidation 与 Planned Target 缺失，不能仅因为盈利就判定为 Good Win。"
     ],
-    "_extra": [
-     "【Rule Violation / Next Rule】Rule Violation：无法判定。MAE/MFE：未记录。后续若找到原始分析图或计划，补齐 HTF Context、Liquidity/POI、LTF Confirmation、Entry Trigger、Invalidation 与 Planned Target 后，再判定 Good Win / Bad Win。"
+    "reviewNotes": [
+     "Rule Violation：无法判定。MAE/MFE：未记录。后续若找到原始分析图或计划，补齐 HTF Context、Liquidity/POI、LTF Confirmation、Entry Trigger、Invalidation 与 Planned Target 后，再判定 Good Win / Bad Win。"
     ]
    },
    "structured": {
@@ -11498,13 +11400,6 @@
       "evidence": "[context] Liquidity、Sweep、HTF POI、POI Confluence：未记录。",
       "confirmed": false,
       "multi": false
-     },
-     "entryModePlanned": {
-      "value": "LTF Confirmation",
-      "source": "doc:keyword",
-      "evidence": "[_extra] 后续若找到原始分析图或计划，补齐 HTF Context、Liquidity/POI、LTF Confirmation、Entry Trigger、Invalidation 与 Planned Target 后，再判定 Good Win / Bad Win。",
-      "confirmed": false,
-      "multi": false
      }
     },
     "unparsed": [],
@@ -11514,7 +11409,7 @@
     },
     "stats": {
      "confirmed": 1,
-     "suggested": 2
+     "suggested": 1
     }
    },
    "structRaw": {
@@ -11542,6 +11437,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "available",
     "errorType": {
      "primary": "记录缺失（无法判定）",
      "secondary": [],
@@ -11740,13 +11636,6 @@
      "evidence": "[context] Liquidity、Sweep、HTF POI、POI Confluence：未记录。",
      "confirmed": false,
      "multi": false
-    },
-    "entryModePlanned": {
-     "value": "LTF Confirmation",
-     "source": "doc:keyword",
-     "evidence": "[_extra] 后续若找到原始分析图或计划，补齐 HTF Context、Liquidity/POI、LTF Confirmation、Entry Trigger、Invalidation 与 Planned Target 后，再判定 Good Win / Bad Win。",
-     "confirmed": false,
-     "multi": false
     }
    },
    "planRecordedAt": null,
@@ -11754,8 +11643,8 @@
    "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 1,
-    "auto": 2,
-    "total": 3
+    "auto": 1,
+    "total": 2
    },
    "complianceV2": {
     "groups": {
@@ -12260,8 +12149,8 @@
     "result": [
      "Loss，Actual R -1R（实际损失 -0.07）。按当前规则归类为 Bad Loss / Execution Issue：主要问题是把 EQL 附近作为偏支撑式入场依据、HTF Limit 缺少明确免确认条件，以及移动 SL 没有结构触发记录。"
     ],
-    "_extra": [
-     "【Rule Violation / Next Rule】Rule Violation：Liquidity Misread / Confirmation Incomplete / SL Management Rule Missing。看到 EQL 先标记为 Liquidity；优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。若使用 HTF Limit，必须记录更强 HTF POI、清晰 Invalidation、合格 Planned RR，以及为什么允许不等 LTF。SL 仅按预定义结构条件移动。MAE/MFE：未记录。"
+    "reviewNotes": [
+     "Rule Violation：Liquidity Misread / Confirmation Incomplete / SL Management Rule Missing。看到 EQL 先标记为 Liquidity；优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。若使用 HTF Limit，必须记录更强 HTF POI、清晰 Invalidation、合格 Planned RR，以及为什么允许不等 LTF。SL 仅按预定义结构条件移动。MAE/MFE：未记录。"
     ]
    },
    "structured": {
@@ -12290,7 +12179,7 @@
        "SSL"
       ],
       "source": "doc:label",
-      "evidence": "EQL（Equal Low，属于下方 Sell-side Liquidity） ⏐ [context] 1H 主要关注 EQL 附近与 1H IMB。 ⏐ [context] Liquidity：EQL（Equal Low，属于下方 Sell-side Liquidity）； ⏐ [context] POI Confluence：EQL 附近 + 1H IMB，但 EQL 本身不能等同支撑。 ⏐ [setup] Setup Flow：EQL 附近 + 1H IMB → HTF Limit Long。 ⏐ [setup] EQL 附近 + 1H IMB → HTF Limit Long ⏐ [_extra] 看到 EQL 先标记为 Liquidity；",
+      "evidence": "EQL（Equal Low，属于下方 Sell-side Liquidity） ⏐ [context] 1H 主要关注 EQL 附近与 1H IMB。 ⏐ [context] Liquidity：EQL（Equal Low，属于下方 Sell-side Liquidity）； ⏐ [context] POI Confluence：EQL 附近 + 1H IMB，但 EQL 本身不能等同支撑。 ⏐ [setup] Setup Flow：EQL 附近 + 1H IMB → HTF Limit Long。 ⏐ [setup] EQL 附近 + 1H IMB → HTF Limit Long",
       "confirmed": true,
       "multi": true
      },
@@ -12337,27 +12226,9 @@
      "liquiditySweep": {
       "value": "No",
       "source": "doc:keyword",
-      "evidence": "[context] 是否已 Sweep EQL、Sweep Quality：入场前未明确记录。 ⏐ [_extra] 优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。",
+      "evidence": "[context] 是否已 Sweep EQL、Sweep Quality：入场前未明确记录。",
       "confirmed": false,
       "multi": false
-     },
-     "structureShiftType": {
-      "value": [
-       "MSS"
-      ],
-      "source": "doc:keyword",
-      "evidence": "[_extra] 优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。",
-      "confirmed": false,
-      "multi": true
-     },
-     "entryTriggerType": {
-      "value": [
-       "Sweep"
-      ],
-      "source": "doc:keyword",
-      "evidence": "[_extra] 优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。",
-      "confirmed": false,
-      "multi": true
      }
     },
     "unparsed": [
@@ -12394,11 +12265,11 @@
     ],
     "sources": {
      "doc:label": 7,
-     "doc:keyword": 3
+     "doc:keyword": 1
     },
     "stats": {
      "confirmed": 6,
-     "suggested": 4
+     "suggested": 2
     }
    },
    "structRaw": {
@@ -12445,6 +12316,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "available",
     "errorType": {
      "primary": "Liquidity Misread & Confirmation Incomplete",
      "secondary": [
@@ -12685,7 +12557,7 @@
       "SSL"
      ],
      "source": "doc:label",
-     "evidence": "EQL（Equal Low，属于下方 Sell-side Liquidity） ⏐ [context] 1H 主要关注 EQL 附近与 1H IMB。 ⏐ [context] Liquidity：EQL（Equal Low，属于下方 Sell-side Liquidity）； ⏐ [context] POI Confluence：EQL 附近 + 1H IMB，但 EQL 本身不能等同支撑。 ⏐ [setup] Setup Flow：EQL 附近 + 1H IMB → HTF Limit Long。 ⏐ [setup] EQL 附近 + 1H IMB → HTF Limit Long ⏐ [_extra] 看到 EQL 先标记为 Liquidity；",
+     "evidence": "EQL（Equal Low，属于下方 Sell-side Liquidity） ⏐ [context] 1H 主要关注 EQL 附近与 1H IMB。 ⏐ [context] Liquidity：EQL（Equal Low，属于下方 Sell-side Liquidity）； ⏐ [context] POI Confluence：EQL 附近 + 1H IMB，但 EQL 本身不能等同支撑。 ⏐ [setup] Setup Flow：EQL 附近 + 1H IMB → HTF Limit Long。 ⏐ [setup] EQL 附近 + 1H IMB → HTF Limit Long",
      "confirmed": true,
      "multi": true
     },
@@ -12732,27 +12604,9 @@
     "liquiditySweep": {
      "value": "No",
      "source": "doc:keyword",
-     "evidence": "[context] 是否已 Sweep EQL、Sweep Quality：入场前未明确记录。 ⏐ [_extra] 优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。",
+     "evidence": "[context] 是否已 Sweep EQL、Sweep Quality：入场前未明确记录。",
      "confirmed": false,
      "multi": false
-    },
-    "structureShiftType": {
-     "value": [
-      "MSS"
-     ],
-     "source": "doc:keyword",
-     "evidence": "[_extra] 优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。",
-     "confirmed": false,
-     "multi": true
-    },
-    "entryTriggerType": {
-     "value": [
-      "Sweep"
-     ],
-     "source": "doc:keyword",
-     "evidence": "[_extra] 优先等待 Sweep → Bullish Displacement → MSS/BOS → Pullback。",
-     "confirmed": false,
-     "multi": true
     }
    },
    "planRecordedAt": null,
@@ -12760,8 +12614,8 @@
    "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 6,
-    "auto": 4,
-    "total": 10
+    "auto": 2,
+    "total": 8
    },
    "complianceV2": {
     "groups": {
@@ -12887,7 +12741,7 @@
        "mode": "set",
        "status": "未记录",
        "value": null,
-       "source": "doc:keyword",
+       "source": null,
        "note": "未确认交易前模型，不能判定该条件是否适用"
       }
      ],
@@ -13283,7 +13137,6 @@
     ],
     "_extra": [
      "【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。4H 看多并等待回调，是本笔交易的主分析依据；不是等 1H MSB 再确认 4H 方向。入场前价格位于关注的 Discount 区域。4H 这次突破属于关键短期结构的转强，尚不能仅凭该突破认定整个 4H 下跌结构的 Protected High 已失守、外部趋势已完全反转。结合后来提供的 4H 图，约93–94 的高点仍属于较大级别结构参考；1D Bias 未记录。",
-     "【Rule Violation / Next Rule】Rule Violation：用户报告无；是否严格满足原先所有管理规则尚需原始交易计划核验。下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High；用可复现的条件记录 TP1 减仓、SL 移动触发，避免只靠结果评价。MAE / MFE：未记录。",
      "【补充｜4H 结构级别复核】用户最新 4H 标注图明确指出：先在 4H 突破前方关键短期高点，之后等待回调，才切换到 1H 寻找入场。本笔核心结构确认应登记在 4H，而不是 1H。该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。4H 约93–94 的更大结构高点仍是上方参考。因此本笔更准确的模型是“4H Bullish Internal/Key Structure Shift → 1H Discount POI Pullback Limit Long”，不声称在入场前就完成了 4H 外部趋势反转。",
      "【待补充】精确初始 SL 价格，以及最初 Planned TP 是否已经设置为具体价格。TP1 后未移动 SL 已由用户确认。下方附原始 1H 分析图、交易所平仓截图、4H 结构图及最新 4H 标注截图。"
     ],
@@ -13317,6 +13170,9 @@
     ],
     "result": [
      "Win；毛收益约 +0.916 U，手续费约 -0.015 U，净收益 +0.900 U；初始风险 0.300 U，Actual R +3.00R。用户自评本笔“无违规”，先按自评记录，不把临时保护利润的 TP1 自动定为违反规则。优势：4H → 1H 的背景与 POI 分层明确，Limit 入场、结构低点止损、分批保护利润及接近目标后退出。待提高可重复性：明确 1H MSB 的 Broken Structure 级别、1H Sweep 属于 Internal/External、TP1 保护利润的触发规则。"
+    ],
+    "reviewNotes": [
+     "Rule Violation：用户报告无；是否严格满足原先所有管理规则尚需原始交易计划核验。下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High；用可复现的条件记录 TP1 减仓、SL 移动触发，避免只靠结果评价。MAE / MFE：未记录。"
     ]
    },
    "structured": {
@@ -13334,7 +13190,7 @@
        "Protected High"
       ],
       "source": "doc:keyword",
-      "evidence": "[execution] 用户确认止损逻辑是放在结构低点下方。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。 ⏐ [_extra] 4H 约93–94 的更大结构高点仍是上方参考。 ⏐ [invalidation] 用户确认止损逻辑是放在结构低点下方。",
+      "evidence": "[execution] 用户确认止损逻辑是放在结构低点下方。 ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。 ⏐ [_extra] 4H 约93–94 的更大结构高点仍是上方参考。 ⏐ [invalidation] 用户确认止损逻辑是放在结构低点下方。",
       "confirmed": false,
       "multi": true
      },
@@ -13343,7 +13199,7 @@
        "MSB"
       ],
       "source": "doc:keyword",
-      "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [context] 4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。 ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
+      "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [context] 4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。 ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
       "confirmed": false,
       "multi": true
      },
@@ -13352,7 +13208,7 @@
        "MSB"
       ],
       "source": "doc:keyword",
-      "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
+      "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
       "confirmed": false,
       "multi": true
      },
@@ -13367,18 +13223,17 @@
      },
      "brokenStructure": {
       "value": [
-       "Protected High",
        "Key LH"
       ],
       "source": "doc:keyword",
-      "evidence": "[_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
+      "evidence": "[_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
       "confirmed": false,
       "multi": true
      },
      "protectedStructure": {
       "value": "Protected High",
       "source": "doc:keyword",
-      "evidence": "[_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
+      "evidence": "[_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
       "confirmed": false,
       "multi": false
      },
@@ -13465,6 +13320,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "pending",
     "errorType": null,
     "classification": null,
     "ruleViolations": [],
@@ -13472,52 +13328,52 @@
     "riskCheck": [
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "流动性被扫 (Liquidity Sweep)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "位移 (Displacement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "结构变化 (Structure Shift)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "计划 POI"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "入场在 POI 内 (Entry at POI)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 结构逻辑一致 (SL Logical)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "RR 达到要求 (RR Meets Requirement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "未追价 (No Chasing)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "新闻风险已评估 (News Risk)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 已记录 (SL Recorded)"
      }
     ],
@@ -13626,7 +13482,7 @@
       "Protected High"
      ],
      "source": "doc:keyword",
-     "evidence": "[execution] 用户确认止损逻辑是放在结构低点下方。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。 ⏐ [_extra] 4H 约93–94 的更大结构高点仍是上方参考。 ⏐ [invalidation] 用户确认止损逻辑是放在结构低点下方。",
+     "evidence": "[execution] 用户确认止损逻辑是放在结构低点下方。 ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。 ⏐ [_extra] 4H 约93–94 的更大结构高点仍是上方参考。 ⏐ [invalidation] 用户确认止损逻辑是放在结构低点下方。",
      "confirmed": false,
      "multi": true
     },
@@ -13635,7 +13491,7 @@
       "MSB"
      ],
      "source": "doc:keyword",
-     "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [context] 4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。 ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
+     "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [context] 4H：突破前方关键短期高点（4H Bullish MSB）后，等待回调。 ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
      "confirmed": false,
      "multi": true
     },
@@ -13644,7 +13500,7 @@
       "MSB"
      ],
      "source": "doc:keyword",
-     "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
+     "evidence": "[_extra] 【② HTF Context｜原始判断已更正】用户明确说明：10月1日前后，4H 已向上突破所标注的关键短期高点，出现 4H Bullish MSB / 关键结构改变。 ⏐ [setup] 4H 向上突破前方关键短期高点（4H Bullish MSB）→ 等待价格回调 → 切换 1H → 回撤到 Discount 内的 1H OB + IMB 重叠区 → 预设 Limit Long，实际 Entry 86.44。",
      "confirmed": false,
      "multi": true
     },
@@ -13659,18 +13515,17 @@
     },
     "brokenStructure": {
      "value": [
-      "Protected High",
       "Key LH"
      ],
      "source": "doc:keyword",
-     "evidence": "[_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
+     "evidence": "[_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
      "confirmed": false,
      "multi": true
     },
     "protectedStructure": {
      "value": "Protected High",
      "source": "doc:keyword",
-     "evidence": "[_extra] 下一次：继续区分 HTF Bias（4H）与 HTF Entry POI（1H），明确 MSB 打破的是哪个 LH / Protected High； ⏐ [_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
+     "evidence": "[_extra] 该被突破的高点可以记为“4H Key LH / 关键短期高点（用户定义）”，但是否符合严格的 4H Protected High，需独立验证其此前是否造成主要 Swing Low 被有效跌破。",
      "confirmed": false,
      "multi": false
     },
@@ -14194,8 +14049,10 @@
     "worked": [
      "计划 747.69 限价入场、识别前期 Bearish Pin Bar 与下跌动能，并因逆势主动缩小 1R"
     ],
+    "reviewNotes": [
+     "Rule Violation：用户明确自评“有违规”：逆势且 4H 突破较弱时，未等待 LTF Confirmation。下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。缩小仓位属于风险预算控制，不能豁免入场确认；4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。"
+    ],
     "_extra": [
-     "【Rule Check / Next Rule】Rule Violation：用户明确自评“有违规”：逆势且 4H 突破较弱时，未等待 LTF Confirmation。下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。缩小仓位属于风险预算控制，不能豁免入场确认；4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
      "【待补充】最初 Planned TP 的精确价格、4H 被跌破的低点究竟属于 Internal HL 还是 Protected Low，以及 SL 755 对应的具体结构失效点。已确认：4H 逆势、747.69 原计划限价成交、1R=0.160 U、未等待 LTF Confirmation 属于违规。原始 4H 复盘截图已附。"
     ]
    },
@@ -14236,11 +14093,10 @@
      "structureShiftType": {
       "value": [
        "MSB",
-       "BOS",
-       "MSS"
+       "BOS"
       ],
       "source": "doc:keyword",
-      "evidence": "[context] 下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。 ⏐ [_extra] 下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。",
+      "evidence": "[context] 下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。",
       "confirmed": false,
       "multi": true
      },
@@ -14251,14 +14107,14 @@
        "BSL"
       ],
       "source": "doc:keyword",
-      "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 下方标注 EQL 约 732.81 作为预期行情运行方向。 ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+      "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 下方标注 EQL 约 732.81 作为预期行情运行方向。 ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。",
       "confirmed": false,
       "multi": true
      },
      "liquiditySweep": {
       "value": "Yes",
       "source": "doc:keyword",
-      "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+      "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。",
       "confirmed": false,
       "multi": false
      },
@@ -14273,22 +14129,19 @@
      },
      "entryTriggerType": {
       "value": [
-       "MSB",
-       "MSS",
-       "Sweep"
+       "MSB"
       ],
       "source": "doc:keyword",
-      "evidence": "[setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [_extra] 下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+      "evidence": "[setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。",
       "confirmed": false,
       "multi": true
      },
      "brokenStructure": {
       "value": [
-       "Key Structure",
-       "Protected Low"
+       "Key Structure"
       ],
       "source": "doc:keyword",
-      "evidence": "[setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+      "evidence": "[setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。",
       "confirmed": false,
       "multi": true
      },
@@ -14298,31 +14151,6 @@
       "evidence": "[entryReason] 4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势",
       "confirmed": false,
       "multi": false
-     },
-     "protectedStructure": {
-      "value": "Protected Low",
-      "source": "doc:keyword",
-      "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
-      "confirmed": false,
-      "multi": false
-     },
-     "invalidationLogic": {
-      "value": [
-       "Protected Low"
-      ],
-      "source": "doc:keyword",
-      "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
-      "confirmed": false,
-      "multi": true
-     },
-     "targetLevel": {
-      "value": [
-       "HTF Liquidity"
-      ],
-      "source": "doc:keyword",
-      "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
-      "confirmed": false,
-      "multi": true
      },
      "entryModePlanned": {
       "value": "LTF Confirmation",
@@ -14353,11 +14181,11 @@
     ],
     "sources": {
      "doc:label": 2,
-     "doc:keyword": 11
+     "doc:keyword": 8
     },
     "stats": {
      "confirmed": 2,
-     "suggested": 13
+     "suggested": 10
     }
    },
    "structRaw": {
@@ -14390,6 +14218,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "pending",
     "errorType": null,
     "classification": null,
     "ruleViolations": [],
@@ -14397,52 +14226,52 @@
     "riskCheck": [
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "流动性被扫 (Liquidity Sweep)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "位移 (Displacement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "结构变化 (Structure Shift)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "计划 POI"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "入场在 POI 内 (Entry at POI)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 结构逻辑一致 (SL Logical)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "RR 达到要求 (RR Meets Requirement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "未追价 (No Chasing)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "新闻风险已评估 (News Risk)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 已记录 (SL Recorded)"
      }
     ],
@@ -14585,11 +14414,10 @@
     "structureShiftType": {
      "value": [
       "MSB",
-      "BOS",
-      "MSS"
+      "BOS"
      ],
      "source": "doc:keyword",
-     "evidence": "[context] 下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。 ⏐ [_extra] 下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。",
+     "evidence": "[context] 下跌破了较短期低点，出现用户自评较弱的 Bearish MSB。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。",
      "confirmed": false,
      "multi": true
     },
@@ -14600,14 +14428,14 @@
       "BSL"
      ],
      "source": "doc:keyword",
-     "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 下方标注 EQL 约 732.81 作为预期行情运行方向。 ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+     "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 下方标注 EQL 约 732.81 作为预期行情运行方向。 ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 ⏐ [setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。",
      "confirmed": false,
      "multi": true
     },
     "liquiditySweep": {
      "value": "Yes",
      "source": "doc:keyword",
-     "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+     "evidence": "[context] 用户原图标注上方“liq sweep”：原始做空关注点为前高附近长上影线 / Bearish Pin Bar 与强势下跌反应； ⏐ [context] 事后从上涨至此前高点上方并停留的走势看，是否真发生了有效 BSL Sweep + Rejection 尚需谨慎验证，不应把原图的 Sweep 标注当作已证实事实。",
      "confirmed": false,
      "multi": false
     },
@@ -14622,22 +14450,19 @@
     },
     "entryTriggerType": {
      "value": [
-      "MSB",
-      "MSS",
-      "Sweep"
+      "MSB"
      ],
      "source": "doc:keyword",
-     "evidence": "[setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。 ⏐ [_extra] 下次遇到 4H Bearish Pin Bar + 强下跌 K 线，可以形成看空候选，但若只是 Weak/Internal MSB，必须先等待 15min/5min Bearish Displacement + MSS/BOS + 首次回踩再考虑 Short，或者按既定策略要求跳过。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+     "evidence": "[setup] 原始 Setup Flow：4H 前高附近长上影线 + Bearish Pin Bar → 强势下跌 K 线 → 跌破短期低点、形成较弱 Bearish MSB → 在 Premium / 溢价区预挂 Limit Short → 期待回到下方 EQL。",
      "confirmed": false,
      "multi": true
     },
     "brokenStructure": {
      "value": [
-      "Key Structure",
-      "Protected Low"
+      "Key Structure"
      ],
      "source": "doc:keyword",
-     "evidence": "[setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。 ⏐ [_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
+     "evidence": "[setup] 真正的违规是缺少 LTF Confirmation、且明知结构突破偏弱仍执行，而不是入场价偏离计划。",
      "confirmed": false,
      "multi": true
     },
@@ -14647,31 +14472,6 @@
      "evidence": "[entryReason] 4H 反转 K 线特征、随后有较强看跌动能，但整体属于逆势",
      "confirmed": false,
      "multi": false
-    },
-    "protectedStructure": {
-     "value": "Protected Low",
-     "source": "doc:keyword",
-     "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
-     "confirmed": false,
-     "multi": false
-    },
-    "invalidationLogic": {
-     "value": [
-      "Protected Low"
-     ],
-     "source": "doc:keyword",
-     "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
-     "confirmed": false,
-     "multi": true
-    },
-    "targetLevel": {
-     "value": [
-      "HTF Liquidity"
-     ],
-     "source": "doc:keyword",
-     "evidence": "[_extra] 4H Protected Low、BSL Sweep 是否有效应独立验证，不用最终输赢反推。",
-     "confirmed": false,
-     "multi": true
     },
     "entryModePlanned": {
      "value": "LTF Confirmation",
@@ -14693,8 +14493,8 @@
    "manualClearedFields": [],
    "fieldStats": {
     "confirmed": 2,
-    "auto": 13,
-    "total": 15
+    "auto": 10,
+    "total": 12
    },
    "complianceV2": {
     "groups": {
@@ -14746,7 +14546,7 @@
        "mode": "invalidation",
        "status": "未记录",
        "value": null,
-       "source": "doc:keyword",
+       "source": null,
        "note": "缺少已确认记录"
       },
       {
@@ -15400,6 +15200,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "available",
     "errorType": {
      "primary": "N/A（未成交）",
      "secondary": [],
@@ -16218,8 +16019,10 @@
     "result": [
      "Result：Loss，毛 -0.244 U、费 -0.0273 U、净 -0.271 U；计划 1R=0.42 U，因此 Actual R≈-0.65R。交易模型：4H Swing Low 未破+Discount，1H OB/IMB 直接 Limit Long；事前基于动能偏弱主动选择 Planned RR≈1.48R。关键复盘问题：为何在 67,833（原 SL 上方）平仓，是移动止损还是主动提前离场？这直接影响对 Trade Management 的评价。规则合规性仍待用户澄清，不因亏损直接定 Bad Loss。"
     ],
+    "reviewNotes": [
+     "本笔采用 HTF Limit，未等待 15min/5min 确认，不能单凭这一点认定违规；SL 放在 4H Swing Low 下方。用户明确表示目前尚不能确定 HTF Limit 是否允许在上涨动能偏弱时以约 1.48R 入场，RR 最低门槛和例外规则留待后续评估。本笔 RR ≈ 1.48R 是入场前有意采用的保守止盈方案，并非事后解释。当前 Execution Quality / Rule Violation：暂不判定（待规则确认）。未来结合足够样本评估最低 RR、1H POI 直接 Limit 的条件以及保守 TP 的实际表现，不用本单最后输赢倒推规则。"
+    ],
     "_extra": [
-     "【Rule Check / Next Rule】本笔采用 HTF Limit，未等待 15min/5min 确认，不能单凭这一点认定违规；SL 放在 4H Swing Low 下方。用户明确表示目前尚不能确定 HTF Limit 是否允许在上涨动能偏弱时以约 1.48R 入场，RR 最低门槛和例外规则留待后续评估。本笔 RR ≈ 1.48R 是入场前有意采用的保守止盈方案，并非事后解释。当前 Execution Quality / Rule Violation：暂不判定（待规则确认）。未来结合足够样本评估最低 RR、1H POI 直接 Limit 的条件以及保守 TP 的实际表现，不用本单最后输赢倒推规则。",
      "【待补充】已核实真实平仓：10月13日08:01，Exit 67,833，数量0.0004，净 -0.271 U；Actual R≈-0.65R。原始 Entry 68,442.25、SL 67,388、TP 69,999、1R 0.42 U、Planned RR≈1.48R 不变。仍待补充：① 67,833 提前于原始 SL 的退出原因（移动 SL / 主动止损 / 其他）；② 本笔当时适用的最低 RR 与 HTF Limit 规则；③ MAE/MFE。原始4H图已附。"
     ]
    },
@@ -16279,7 +16082,7 @@
        "HTF Swing High/Low"
       ],
       "source": "doc:keyword",
-      "evidence": "[setup] 原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。 ⏐ [_extra] SL 放在 4H Swing Low 下方。",
+      "evidence": "[setup] 原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。",
       "confirmed": false,
       "multi": true
      },
@@ -16340,6 +16143,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "pending",
     "errorType": null,
     "classification": null,
     "ruleViolations": [],
@@ -16347,52 +16151,52 @@
     "riskCheck": [
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "流动性被扫 (Liquidity Sweep)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "位移 (Displacement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "结构变化 (Structure Shift)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "计划 POI"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "入场在 POI 内 (Entry at POI)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 结构逻辑一致 (SL Logical)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "RR 达到要求 (RR Meets Requirement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "未追价 (No Chasing)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "新闻风险已评估 (News Risk)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 已记录 (SL Recorded)"
      }
     ],
@@ -16547,7 +16351,7 @@
       "HTF Swing High/Low"
      ],
      "source": "doc:keyword",
-     "evidence": "[setup] 原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。 ⏐ [_extra] SL 放在 4H Swing Low 下方。",
+     "evidence": "[setup] 原始 Setup Flow：4H Swing Low 仍有效 → 保留 4H 看多预期 → 价格回到 Discount → 1H OB + IMB Confluence → 在 1H POI 预挂 Limit Long。",
      "confirmed": false,
      "multi": true
     },
@@ -17067,8 +16871,10 @@
     "result": [
      "Win，10月14日22:49已完全平仓。毛收益+0.419 U、手续费-0.0329 U、净收益+0.387 U；以初始风险1R=0.54 U计算，净Actual R≈+0.72R。原始计划TP1=84,737.9，真实第1批83,806、第2批81,720.4；与原计划目标不同，需追问为何第1批提前减仓、为何第2批几乎在BE附近退出。入场结构4H折价、扫流动性候选、4H IMB HTF Limit已经记录；但实际分批/移动SL规则和4H结构有效性尚未复核，Good Win/Bad Win暂不判定。"
     ],
+    "reviewNotes": [
+     "此单为 HTF POI 直接 Limit，未等低周期确认是主动选择，先不直接认定违纪。需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；不能用最终结果倒推出“可以/不可以不等 LTF”。"
+    ],
     "_extra": [
-     "【Rule Check / Next Rule】此单为 HTF POI 直接 Limit，未等低周期确认是主动选择，先不直接认定违纪。需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；不能用最终结果倒推出“可以/不可以不等 LTF”。",
      "【待补充】已确认实际结果：10-08 21:42 →10-14 22:49，Entry81,714.6，0.04张，分批Exit 83,806（0.02张）及81,720.4（0.02张），毛+0.419 U、费-0.0329 U、净+0.387 U，1R=0.54 U，Actual R≈+0.72R。原始SL79,926.6、原始TP1 84,737.9、Planned RR≈1.69R。重点补充：①两次实际平仓分别基于何种管理规则，第二批是否移至BE/保护止损；②原始是否计划分批及目标；③4H所指入场K线定义和SL结构失效原因；④用户执行质量自评、MAE/MFE。原始4H图已附。"
     ]
    },
@@ -17107,7 +16913,7 @@
      "liquiditySweep": {
       "value": "Yes",
       "source": "doc:keyword",
-      "evidence": "[context] ②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）； ⏐ [context] 这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement； ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+      "evidence": "[context] ②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）； ⏐ [context] 这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement； ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。",
       "confirmed": false,
       "multi": false
      },
@@ -17116,7 +16922,7 @@
        "IMB"
       ],
       "source": "doc:keyword",
-      "evidence": "[context] ③价格已进入 4H IMB 内部。 ⏐ [context] 4H IMB 为高周期 POI，具体边界未单独记录。 ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [setup] Entry Reason 是 4H 折价与流动性/IMB 共振； ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+      "evidence": "[context] ③价格已进入 4H IMB 内部。 ⏐ [context] 4H IMB 为高周期 POI，具体边界未单独记录。 ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [setup] Entry Reason 是 4H 折价与流动性/IMB 共振；",
       "confirmed": false,
       "multi": true,
       "tf": [
@@ -17128,7 +16934,7 @@
        "Sweep"
       ],
       "source": "doc:keyword",
-      "evidence": "[setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+      "evidence": "[setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。",
       "confirmed": false,
       "multi": true
      },
@@ -17205,6 +17011,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "pending",
     "errorType": null,
     "classification": null,
     "ruleViolations": [],
@@ -17212,52 +17019,52 @@
     "riskCheck": [
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "流动性被扫 (Liquidity Sweep)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "位移 (Displacement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "结构变化 (Structure Shift)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "计划 POI"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "入场在 POI 内 (Entry at POI)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 结构逻辑一致 (SL Logical)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "RR 达到要求 (RR Meets Requirement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "未追价 (No Chasing)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "新闻风险已评估 (News Risk)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 已记录 (SL Recorded)"
      }
     ],
@@ -17380,7 +17187,7 @@
     "liquiditySweep": {
      "value": "Yes",
      "source": "doc:keyword",
-     "evidence": "[context] ②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）； ⏐ [context] 这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement； ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+     "evidence": "[context] ②前期做多被止损，出现 Liquidity Sweep（用户对下方扫止损的原始判断）； ⏐ [context] 这里将“扫过多头止损”作为用户原始分析，而非已独立确认的有效 Sweep + Displacement； ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。",
      "confirmed": false,
      "multi": false
     },
@@ -17389,7 +17196,7 @@
       "IMB"
      ],
      "source": "doc:keyword",
-     "evidence": "[context] ③价格已进入 4H IMB 内部。 ⏐ [context] 4H IMB 为高周期 POI，具体边界未单独记录。 ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [setup] Entry Reason 是 4H 折价与流动性/IMB 共振； ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+     "evidence": "[context] ③价格已进入 4H IMB 内部。 ⏐ [context] 4H IMB 为高周期 POI，具体边界未单独记录。 ⏐ [setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [setup] Entry Reason 是 4H 折价与流动性/IMB 共振；",
      "confirmed": false,
      "multi": true,
      "tf": [
@@ -17401,7 +17208,7 @@
       "Sweep"
      ],
      "source": "doc:keyword",
-     "evidence": "[setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。 ⏐ [_extra] 需记录与 4H Sweep/IMB 相关的入场触发标准、结构 SL、计划 RR，并同后续其他 HTF Limit 单一起做样本比较；",
+     "evidence": "[setup] 原始 Setup Flow：4H Bullish Bias → Discount（50% 以下）→ 下方被止损多单导致的 Liq Sweep 候选 → 进入 4H IMB → 寻找适合的入场 K → Limit Long。",
      "confirmed": false,
      "multi": true
     },
@@ -17920,8 +17727,10 @@
     "result": [
      "Win，面板实际加权平均平仓价93.34；毛 +1.095 U，费 -0.0275 U，净 +1.068 U。缺少事前模型与 1R，暂不归类 Good Win / Bad Win，也不计算 Actual R。"
     ],
+    "reviewNotes": [
+     "待用户提供进场原因、初始 SL/TP、资金 1R 和分批 TP 的管理规则后再判执行质量；盈利本身不是合规证明。"
+    ],
     "_extra": [
-     "【Rule Check / Next Rule】待用户提供进场原因、初始 SL/TP、资金 1R 和分批 TP 的管理规则后再判执行质量；盈利本身不是合规证明。",
      "【待补充】此条暂为用户指定交易面板的成交结果记录。需补原计划模型、SL、TP、1R、确认周期、分批退出原因、MAE/MFE。"
     ]
    },
@@ -17981,6 +17790,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "pending",
     "errorType": null,
     "classification": null,
     "ruleViolations": [],
@@ -17988,52 +17798,52 @@
     "riskCheck": [
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "流动性被扫 (Liquidity Sweep)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "位移 (Displacement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "结构变化 (Structure Shift)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "计划 POI"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "入场在 POI 内 (Entry at POI)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 结构逻辑一致 (SL Logical)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "RR 达到要求 (RR Meets Requirement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "未追价 (No Chasing)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "新闻风险已评估 (News Risk)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 已记录 (SL Recorded)"
      }
     ],
@@ -18640,8 +18450,10 @@
     "result": [
      "Result：Loss。2026-10-14 20:30以4134.8成交，20:41在4108退出；24张；毛-0.643 U、费-0.0989 U、净-0.742 U；事前1R=0.643 U，Actual R≈-1.15R。原计划目标2R。本次已进一步确认入场模型为4H-only HTF Limit：4H分析找到适当POI便提前挂Limit，1H及15min/5min确认都不是该入场模型的前置要求。因此撤销此前因不看1H而判Major Violation/Bad Loss的结论，入场方式按本单测试模型视为符合。SL=4108在OB下沿附近（近似），OB区间及有效失效点尚未精确确认；Trade Quality目前仍为待判定、Good Loss候选，而非已确认Fully Compliant。模型有效性需通过后续样本验证，不能根据本次亏损断言无效。"
     ],
+    "reviewNotes": [
+     "用户明确确认事前测试方案：仅看4H，在合适POI直接预挂Limit；并不要求1H或15min/5min额外确认。所以本单“未看1H、未等LTF”均不构成已确认的入场规则违反；此前据通用1D→4H→1H流程评定Major Violation/Bad Loss的依据撤销。继续保留：HTF Limit方案测试中、未经验证；OB止损也是相较既往Swing Low/High之外的新实验，4108仅约在OB下沿附近，OB确切边界与失效缓冲未知。执行质量暂未判定（Good Loss候选），不加入已判定合规率或Good/Bad统计。之后分别记录并对照入场模型与止损模型，避免将模型有效性和是否依计划执行混为一谈。"
+    ],
     "_extra": [
-     "【Rule Check / Next Rule】用户明确确认事前测试方案：仅看4H，在合适POI直接预挂Limit；并不要求1H或15min/5min额外确认。所以本单“未看1H、未等LTF”均不构成已确认的入场规则违反；此前据通用1D→4H→1H流程评定Major Violation/Bad Loss的依据撤销。继续保留：HTF Limit方案测试中、未经验证；OB止损也是相较既往Swing Low/High之外的新实验，4108仅约在OB下沿附近，OB确切边界与失效缓冲未知。执行质量暂未判定（Good Loss候选），不加入已判定合规率或Good/Bad统计。之后分别记录并对照入场模型与止损模型，避免将模型有效性和是否依计划执行混为一谈。",
      "【待补充】已核实：10-14 20:30→20:41，24张，真实Entry4134.8（图上4134.48为标注失误），Exit4108；毛-0.643 U、费-0.0989 U、净-0.742 U，预设1R=0.643 U，Actual R≈-1.15R，原计划TP=2R。入场模式已明确：只看4H，在合适POI直接挂Limit，未额外核验1H及15min/5min；这符合当时测试方案，不按遗漏确认判违规。OB止损实验：4108在OB下沿附近，为近似位置。质量为Good Loss候选/待判定；后续核对OB确切范围与失效位置、其他事前约定的筛选条件、MAE/MFE。原始4H截图附下。"
     ]
    },
@@ -18753,6 +18565,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "pending",
     "errorType": null,
     "classification": null,
     "ruleViolations": [],
@@ -18760,52 +18573,52 @@
     "riskCheck": [
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "流动性被扫 (Liquidity Sweep)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "位移 (Displacement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "结构变化 (Structure Shift)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "计划 POI"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "入场在 POI 内 (Entry at POI)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 结构逻辑一致 (SL Logical)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "RR 达到要求 (RR Meets Requirement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "未追价 (No Chasing)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "新闻风险已评估 (News Risk)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 已记录 (SL Recorded)"
      }
     ],
@@ -19439,8 +19252,10 @@
     "result": [
      "Loss。真实Entry=727，0.06张，2026-10-15 06:19→10-17 01:03（北京时间），2批Exit：722.05（主动风险减仓半仓）及715.85（结构低点止损余仓）。毛-0.483 U，手续费-0.0434 U，净-0.526 U。原始SL715，TP745，Planned RR=1.50R；用户风险预算约1 U，订单原始仓位毛风险0.72 U，实际净Actual R≈-0.73R。入场为4H上涨波段回调0.8附近预挂限价多单。盘中因判断继续下跌风险增加，主动减半仓，仍保留半仓等待潜在反弹，最终后半仓止损。对风险主动管理本身不自动判错，但第1批是原计划允许的管理操作还是临场偏离尚待确认；4H结构是否已失效也待核对。Good Loss/Bad Loss暂不判定，不能由亏损结果反推策略违规。"
     ],
+    "reviewNotes": [
+     "本笔用户已经确认4H波段Fibonacci 0.8附近预挂Limit；原始SL=715，对应结构低点，TP=745，计划1.50R。第1批722.05是见下跌风险上升后主动止损减半仓；第2批715.85是剩余仓位被打止损。主动减仓可能降低进一步损失，不能只凭分批亏损判违规，但需核实是否事前允许临场主动风控、依据什么触发；不把保留半仓解释成必然合理或必然违规。仍须检查交易前4H波段Protected Structure有无失效、是否和XAU同属只看4H HTF Limit实验。1R以仓位×原SL价差=0.72 U做可复核计量，预算约1 U的说法单独保留。"
+    ],
     "_extra": [
-     "【Rule Check / Next Rule】本笔用户已经确认4H波段Fibonacci 0.8附近预挂Limit；原始SL=715，对应结构低点，TP=745，计划1.50R。第1批722.05是见下跌风险上升后主动止损减半仓；第2批715.85是剩余仓位被打止损。主动减仓可能降低进一步损失，不能只凭分批亏损判违规，但需核实是否事前允许临场主动风控、依据什么触发；不把保留半仓解释成必然合理或必然违规。仍须检查交易前4H波段Protected Structure有无失效、是否和XAU同属只看4H HTF Limit实验。1R以仓位×原SL价差=0.72 U做可复核计量，预算约1 U的说法单独保留。",
      "【待补充】已确认4H回调0.8附近Limit Long；实际Entry727，原始SL715（结构低点）、TP745，Planned RR1.50R；数量0.06张，原始仓位毛风险0.72 U（用户估计预算约1 U），净Actual R约-0.73R。2026-10-16 22:30主动在722.05减仓0.03张以控制下跌风险，但因仍预期可能反弹而保留0.03底仓；2026-10-17 01:03剩余0.03张止损在715.85。仍待核实：①入场前是否依照本笔4H-only HTF Limit测试模型，以及当时4H结构是否仍有效；②第一次临场主动减仓是否符合事前交易管理规则；③SL=715对应具体结构低点的周期/失效标准；④MAE/MFE。原始4H截图已附。"
     ]
    },
@@ -19462,7 +19277,7 @@
        "Structure Invalidated"
       ],
       "source": "doc:keyword",
-      "evidence": "[execution] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [invalidation] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [_extra] 原始SL=715，对应结构低点，TP=745，计划1.50R。 ⏐ [_extra] 实际Entry727，原始SL715（结构低点）、TP745，Planned RR1.50R； ⏐ [_extra] ③SL=715对应具体结构低点的周期/失效标准；",
+      "evidence": "[execution] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [invalidation] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [_extra] 实际Entry727，原始SL715（结构低点）、TP745，Planned RR1.50R； ⏐ [_extra] ③SL=715对应具体结构低点的周期/失效标准；",
       "confirmed": false,
       "multi": true
      },
@@ -19516,6 +19331,7 @@
    },
    "analysis": {
     "source": "ai-review",
+    "status": "pending",
     "errorType": null,
     "classification": null,
     "ruleViolations": [],
@@ -19523,52 +19339,52 @@
     "riskCheck": [
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "流动性被扫 (Liquidity Sweep)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "位移 (Displacement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "结构变化 (Structure Shift)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "计划 POI"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "入场在 POI 内 (Entry at POI)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 结构逻辑一致 (SL Logical)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "RR 达到要求 (RR Meets Requirement)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "未追价 (No Chasing)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "新闻风险已评估 (News Risk)"
      },
      {
       "status": "unknown",
-      "note": "文档未记录，AI 不做推测。",
+      "note": "此项尚未完成独立分析，请参阅文档原文；不代表原文未记录。",
       "label": "SL 已记录 (SL Recorded)"
      }
     ],
@@ -19674,7 +19490,7 @@
       "Structure Invalidated"
      ],
      "source": "doc:keyword",
-     "evidence": "[execution] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [invalidation] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [_extra] 原始SL=715，对应结构低点，TP=745，计划1.50R。 ⏐ [_extra] 实际Entry727，原始SL715（结构低点）、TP745，Planned RR1.50R； ⏐ [_extra] ③SL=715对应具体结构低点的周期/失效标准；",
+     "evidence": "[execution] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [invalidation] 用户明确确认实际原始SL=715，设置依据为“结构低点位置”； ⏐ [_extra] 实际Entry727，原始SL715（结构低点）、TP745，Planned RR1.50R； ⏐ [_extra] ③SL=715对应具体结构低点的周期/失效标准；",
      "confirmed": false,
      "multi": true
     },

@@ -394,6 +394,13 @@ class DocsIntegrationTests(unittest.TestCase):
                 self.assertEqual(t["exit"], 67833)
                 self.assertEqual(t["riskAmount"], .42)
 
+    def test_combined_review_heading_preserves_uncertain_conclusions(self):
+        for heading in ("Rule Check / Next Rule", "Rule Violation / Next Rule"):
+            body = "无明确违规；质量暂不判定；下一次记录管理触发条件。"
+            parsed = parse_gdoc.compact_sections(f"【{heading}】{body}")
+            self.assertEqual(parsed["sections"]["reviewNotes"], body)
+            self.assertNotIn("mainProblem", parsed["sections"])
+
     def test_target_r_and_partial_close_labels_are_not_target_prices(self):
         for target in ("原计划目标为2R。", "分批退出TP1 89.475，TP2 92.56。"):
             blocks = [
